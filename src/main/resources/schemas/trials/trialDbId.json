@@ -1,0 +1,103 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/trials/trialDbId",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false, 
+            "properties": {
+                "active": {
+                    "type": ["boolean", "null"]
+                }, 
+                "additionalInfo": { 
+                    "type": ["object", "null"]
+                }, 
+                "contacts": {
+                    "items": {
+                        "additionalProperties": false, 
+                        "properties": {
+                            "contactDbId": {
+                                "type": ["string", "null"]
+                            }, 
+                            "email": {
+                                "type": ["string", "null"]
+                            }, 
+                            "instituteName": {
+                                "type": ["string", "null"]
+                            }, 
+                            "name": {
+                                "type": ["string", "null"]
+                            }, 
+                            "orcid": {
+                                "type": ["string", "null"]
+                            }, 
+                            "type": {
+                                "type": ["string", "null"]
+                            }
+                        }, 
+                        "type": "object"
+                    }, 
+                    "minItems": 1, 
+                    "type": ["array", "null"]
+                }, 
+                "datasetAuthorship": {
+                    "additionalProperties": false, 
+                    "properties": {
+                        "datasetPUI": {
+                            "type": "string"
+                        }, 
+                        "license": {
+                            "type": "string"
+                        }
+                    }, 
+                    "type": "object"
+                }, 
+                "endDate": {
+                    "type": ["string", "null"]
+                }, 
+                "programDbId": {
+                    "type": ["string", "null"]
+                }, 
+                "programName": {
+                  "type": ["string", "null"]
+                }, 
+                "startDate": {
+                    "type": ["string", "null"]
+                }, 
+                "studies": {
+                    "items": {
+                        "additionalProperties": false, 
+                        "properties": {
+                            "locationDbId": {
+                                "type": ["string", "null"]
+                            }, 
+                            "locationName": {
+                                "type": ["string", "null"]
+                            }, 
+                            "studyDbId": {
+                                "type": ["string", "null"]
+                            }, 
+                            "studyName": {
+                                "type":["string", "null"]
+                            }
+                        }, 
+                        "type": "object"
+                    }, 
+                    "minItems": 1, 
+                    "type": ["array", "null"]
+                }, 
+                "trialDbId": {
+                    "type": "string"
+                }, 
+                "trialName": {
+                    "type": "string"
+                }
+            }, 
+            "type": "object",
+            "required": ["trialDbId", "trialName"]
+        },
+        "required": [
+            "result"
+        ]
+    }
+}

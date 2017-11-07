@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/ontologies",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "authors": {
+                                "type": "string"
+                            },
+                            "copyright": {
+                                "type": "string"
+                            },
+                            "licence": {
+                                "type": "string"
+                            },
+                            "ontologyDbId": {
+                                "type": "string"
+                            },
+                            "ontologyName": {
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "copyright",
+                            "ontologyDbId",
+                            "version",
+                            "licence",
+                            "authors",
+                            "ontologyName"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

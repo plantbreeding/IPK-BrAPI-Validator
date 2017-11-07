@@ -1,0 +1,36 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/calls",
+	"type": "object",
+	"properties": {
+		"result": {
+			"type": "object",
+			"properties": {
+				"data": {
+					"type": "array",
+					"items": {
+						"type":"object",
+						"properties":{
+							"call": {"type":"string"},
+							"methods": {
+								"type": "array",
+								"items": {"type": "string"}
+							},
+							"datatypes": {
+								"type": "array",
+								"items": {"type": "string"}
+							}
+						},
+						"additionalProperties": false
+						
+					},
+					"minItems": 1
+				}
+			},
+			"additionalProperties": false
+			
+		}
+	},
+	"required": ["result"]
+
+}

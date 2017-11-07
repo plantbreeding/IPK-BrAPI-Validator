@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/attributes/categories",
+	"type": "object",
+	"properties": {
+		"result": {
+			"type": "object",
+			"properties": {
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties":{
+							"attributeCategoryDbId": {"type": "string"},
+							"name": {"type": "string"}
+						},
+						"required": ["attributeCategoryDbId", "name"],
+						"additionalProperties": false
+					},
+					"minItems" : 1
+				}
+			},
+			"additionalProperties": false
+		}
+	},
+	"required": ["result"]
+
+}

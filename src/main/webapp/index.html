@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>BrAVa - Breeding API Validator</title>
+  <meta name="description" content="Breeding API Validator">
+  <meta name="author" content="IPK Gatersleben">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/selectize.bootstrap3.css">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1 class="text-center">BrAVa - Breeding API Validator</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <form id="testform" class="well">
+          <div class="form-group">
+            <label for="serverurl">
+            BrAPI server URL
+            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top" title="Enter your own server URL or test the public servers available in the official BrAPI repository."></span>
+          </label>
+            <select type="url" name="url" id="serverurl" class="form-control" placeholder="Example: https://test.brapi.org/brapi/v1/" required>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="radio" name="test" value="single" checked>
+              Schema: Single resources
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="test" value="all">
+              Schema: All non-parametric resources
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="test" value="data">
+              Data: Full Resource schema and data test
+            </label>
+          </div>
+          <div class="form-group" id="resourceDiv">
+            <label for="testresource">Resource</label>
+            <select name="name" id="testresource" class="form-control">
+              <option class="del" value="#">/calls</option>
+            </select>
+          </div>
+          <div class="form-group" id="dataTestDiv" style="display: none">
+            <label for="dataTest">Data test</label>
+            <select name="name" id="dataTest" class="form-control">
+              <option value="GermplasmData">Germplasm</option>
+              <option value="GermplasmMarketprofilesData">Germplasm/markerprofile</option>
+            </select>
+          </div>
+          <div id="paramListDiv">
+          </div>
+          <div class="form-group">
+            <label for="fullurl">Tested URL<span id="multiURL"></span></label>
+            <br>
+            <div id="fullUrl">
+              <a target="_blank" href="http://test.brapi.org/brapi/v1/calls">http://test.brapi.org/brapi/v1/calls</a>
+            </div>
+          </div>
+          <div id="statusBar" class="alert alert-danger hidden" role="alert">...</div>
+          <button type="submit" class="btn btn-primary">Test it!</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 hidden" id="resultDiv">
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="http://spin.js.org/spin.min.js"></script>
+  <script src="js/selectize.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+{
+	"info": {
+		"name": "BrAPI Germplasm Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "default",
+			"description": "",
+			"item" : [
+				{
+					"name": "/germplasm-search",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm-search",
+								"GetValue:/result/data/0/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/pedigree",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/pedigree",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/pedigree",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/markerprofiles",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/markeprofiles",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/markerprofiles",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/attributes",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/attributes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/attributes",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

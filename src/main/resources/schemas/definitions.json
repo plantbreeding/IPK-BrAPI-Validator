@@ -1,0 +1,369 @@
+{
+	"$schema" : "http://json-schema.org/draft-04/schema" ,
+  	"id": "resource:/schemas/definitions.json#",
+	"definitions": {
+		"metadata" : {
+			"description": "test for the presence of metadata object",
+			"type": "object",
+			"properties" : {
+				"pagination" : {
+					"type" : "object",
+					"properties" : {
+						"currentPage" : {
+							"type" : "integer",
+							"minimum" : 0
+						},
+						"totalPages" : {
+							"type" : "integer",
+							"minimum" : 0 
+						},
+						"totalCount" : {
+							"type" : "integer",
+							"minimum" : 0
+						},
+						"pageSize" : {
+							"type" : "integer",
+							"minimum" : 0
+						}
+					},
+					"required" : ["currentPage", "totalPages", "totalCount", "pageSize"],
+					"additionalProperties": false
+				}, 
+				
+				"status": {
+					"type" : "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"code": {"type": "string"},
+							"message": {"type": "string"}
+						}
+					}
+				}, 
+				
+				"datafiles": {
+					"type": "array",
+					"items": {"type":"string"}
+				} 
+				
+			},
+			"required" : ["pagination", "status", "datafiles"],
+			"additionalProperties": false
+		},
+		"germplasm" : {
+			"type": "object",
+			"properties": {
+				"germplasmDbId": {"type": "string"},
+				"defaultDisplayName": {"type": "string"},
+				"accessionNumber": {"type": ["string", "null"]},
+				"germplasmName": {"type": ["string", "null"]},
+				"germplasmPUI": {"type": ["string", "null"]},
+				"pedigree": {"type": ["string", "null"]},
+				"seedSource": {"type": ["string", "null"]},
+				"synonyms": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "string"
+					}
+				},
+				"commonCropName": {"type": ["string", "null"]},
+				"instituteCode": {"type": "string"},
+				"instituteName": {"type": ["string", "null"]},
+				"biologicalStatusOfAccessionCode": {"type": ["string", "null"]},
+				"countryOfOriginCode": {"type": ["string", "null"]},
+				"typeOfGermplasmStorageCode": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "string"
+					}
+				},
+				"genus": {"type": ["string", "null"]},
+				"species": {"type": ["string", "null"]},
+				"taxonIds": {
+					"type": ["array", "null"],
+					"items": { 
+						"type": "object",
+						"properties": {
+							"source" : {"type": ["string", "null"]},
+							"id": {"type": ["string", "null"]}
+						},
+						"additionalProperties": false
+					}
+				},
+				"speciesAuthority": {"type": ["string", "null"]},
+				"subtaxa": {"type": ["string", "null"]},
+				"subtaxaAuthority": {"type": ["string", "null"]},
+				"donors": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "object",
+						"properties": {
+							"donorAccessionNumber": {"type": ["string", "null"]},
+							"donorInstituteCode": {"type": ["string", "null"]},
+							"germplasmPUI": {"type": ["string", "null"]}
+						},
+						"additionalProperties": false
+					}
+				},
+				"acquisitionDate": {"type": ["string", "null"]}
+
+			},
+			"required": ["germplasmDbId", "defaultDisplayName", "instituteCode"],
+			"additionalProperties": false	
+		},
+		"marker" : {
+			"additionalProperties": false,
+			"properties": {
+			 	"analysisMethods": {
+			     	"items": {
+			         	"type": ["string", "null"]
+					},
+					"minItems": 1,
+					"type": ["array", "null"]
+				},
+				"defaultDisplayName": {
+				 	"type": "string"
+				},
+				"markerDbId": {
+				 	"type": "string"
+				},
+				"refAlt": {
+				 	"items": {
+				     	"type": "string"
+				 	},
+				 	"minItems": 1,
+				 	"type": ["array", "null"]
+				},
+			 	"synonyms": {
+			     	"items": {
+			         	"type": "string"
+			     	},
+			     	"type": ["array", "null"]
+			 	},
+			 	"type": {
+			     	"type": "string"
+			 	}
+			},
+			"required": [
+			 	"defaultDisplayName",
+			 	"markerDbId",
+			 	"type"
+			],
+			"type": "object"
+		},
+		"trait" : {
+            "additionalProperties": false,
+            "properties": {
+                "defaultValue": {
+                    "type": ["string", "null"]
+                },
+                "description": {
+                    "type": ["string", "null"]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "observationVariables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "traitDbId": {
+                    "type": "string"
+                },
+                "traitId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "traitDbId",
+                "traitId",
+                "name",
+                "observationVariables"
+            ],
+            "type": "object"
+        },
+        "variable": {
+            "additionalProperties": false,
+            "properties": {
+                "contextOfUse": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": ["array", "null"]
+                },
+                "crop": {
+                    "type": ["string", "null"]
+                },
+                "date": {
+                    "type": ["string", "null"]
+                },
+                "defaultValue": {
+                    "type": ["string", "null"]
+                },
+                "growthStage": {
+                    "type": ["string", "null"]
+                },
+                "institution": {
+                    "type": ["string", "null"]
+                },
+                "language": {
+                    "type": ["string", "null"]
+                },
+                "method": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "class": {
+                            "type": ["string", "null"]
+                        },
+                        "description": {
+                            "type": ["string", "null"]
+                        },
+                        "formula": {
+                            "type": ["string", "null"]
+                        },
+                        "methodDbId": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        },
+                        "reference": {
+                            "type": ["string", "null"]
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "observationVariableDbId": {
+                    "type": "string"
+                },
+                "ontologyDbId": {
+                    "type": "string"
+                },
+                "ontologyName": {
+                    "type": "string"
+                },
+                "scale": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "datatype": {
+                            "type": ["string", "null"]
+                        },
+                        "decimalPlaces": {
+                            "type": ["integer", "null"]
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        },
+                        "scaleDbId": {
+                            "type": ["string", "null"]
+                        },
+                        "validValues": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "categories": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "minItems": 1,
+                                    "type": "array"
+                                },
+                                "max": {
+                                    "type": ["integer", "null"]
+                                },
+                                "min": {
+                                    "type": ["integer", "null"]
+                                }
+                            },
+                            "type": ["object", "null"]
+                        },
+                        "xref": {
+                            "type": ["string", "null"]
+                        }
+                    },
+                    "type": "object"
+                },
+                "scientist": {
+                    "type": ["string", "null"]
+                },
+                "status": {
+                    "type": ["string", "null"]
+                },
+                "synonyms": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": ["array", "null"]
+                },
+                "trait": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "alternativeAbbreviations": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": ["array", "null"]
+                        },
+                        "attribute": {
+                            "type": ["string", "null"]
+                        },
+                        "class": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": ["string", "null"]
+                        },
+                        "entity": {
+                            "type": ["string", "null"]
+                        },
+                        "mainAbbreviation": {
+                            "type": ["string", "null"]
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        },
+                        "status": {
+                            "type": ["string", "null"]
+                        },
+                        "synonyms": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": ["array", "null"]
+                        },
+                        "traitDbId": {
+                            "type": "string"
+                        },
+                        "xref": {
+                            "type": ["string", "null"]
+                        }
+                    },
+                    "required": [
+                        "traitDbId",
+                        "class"
+                    ],
+                    "type": "object"
+                },
+                "xref": {
+                    "type": ["string", "null"]
+                }
+            },
+            "required": [
+                "name",
+                "trait",
+                "ontologyDbId",
+                "defaultValue",
+                "method",
+                "observationVariableDbId",
+                "scale",
+                "ontologyName"
+            ],
+            "type": "object"
+        }
+	}
+}

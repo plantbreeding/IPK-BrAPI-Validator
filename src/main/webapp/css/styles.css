@@ -1,0 +1,31 @@
+.formfield {
+	width: 300px;
+}
+
+.test-error {
+	border-color: #a94442;
+}
+
+.fail-p {
+	color: #a94442;
+}
+
+.success-p {
+	color: #3c763d;
+}
+
+.hidden {
+	display: none;
+}
+
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+.panel-heading.collapsed .accordion-toggle:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}

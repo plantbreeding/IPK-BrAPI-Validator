@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/traits/traitDbId",
+    "type": "object",
+    "properties": {
+        "result": { "$ref" : "definitions.json#/definitions/trait" }
+    },
+    "required": [
+        "result"
+    ]
+}

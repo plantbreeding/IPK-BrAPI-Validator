@@ -1,0 +1,182 @@
+{
+	"info": {
+		"name": "BrAPI Germplasm/markerprofiles Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "default",
+			"description": "",
+			"item" : [
+				{
+					"name": "/germplasm-search",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm-search",
+								"GetValue:/result/data/0/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm-search",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm-search",
+						"method": "POST"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm-search"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/markerprofiles",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/markerprofiles",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/markerprofiles",
+								"IsEqual:/result/germplasmDbId:germplasmDbId",
+								"GetValue:/result/markerprofileDbIds/0:markerprofileDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markerprofiles?germplasmDbId={germplasmDbId}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markerprofiles?germplasmDbId={germplasmDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles",
+								"IsEqual:/result/data/0/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markerprofiles/{markerprofileDbId}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markerprofiles/{markerprofileDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles/markerprofileDbId",
+								"IsEqual:/result/germplasmDbId:germplasmDbId",
+								"IsEqual:/result/markerprofileDbId:markerprofileDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/allelematrix-search"
+							]
+						}
+					]
+				},
+				{
+					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"method": "POST"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/allelematrix-search"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
