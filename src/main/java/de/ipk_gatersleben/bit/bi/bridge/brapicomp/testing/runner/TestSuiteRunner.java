@@ -4,7 +4,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
 import java.util.logging.Logger;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;

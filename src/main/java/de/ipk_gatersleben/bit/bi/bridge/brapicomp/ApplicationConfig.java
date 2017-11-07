@@ -25,7 +25,6 @@ public class ApplicationConfig extends ResourceConfig {
 		packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Admin");
 		packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.SimpleTests");
 		packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Users");
-		//register(AuthenticationFilter.class);
 
 	}
 

@@ -1,10 +1,14 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.hash.Hashing;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RandomString;
 
 /**
  * User - table model
@@ -29,8 +33,24 @@ public class User {
 	private String email;
 	
 	@DatabaseField(canBeNull = false)
-	private UUID apiKey;
+	private UUID salt;
+
+	@DatabaseField(canBeNull = false)
+	private String hashed;
 	
+	private String apiKey;
+	
+	@DatabaseField()
+	private String role = "USER";
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public User() {}
 	
 	/**
@@ -65,22 +85,29 @@ public class User {
 	 * Generate a random API key for the user 
 	 */
 	public void generateApiKey() {
-		this.apiKey = UUID.randomUUID();
+		this.salt = UUID.randomUUID();
+		this.apiKey = new RandomString(12).nextString();
+		this.hashed = Hashing.sha256()
+						.hashString(salt.toString() + apiKey, StandardCharsets.UTF_8)
+						.toString();
 	}
+	
 	/**
-	 * @return API key
+	 * Returns API Key.
+	 * @return apiKey
 	 */
 	public String getApiKey() {
-		return this.apiKey.toString();
+		return apiKey;
 	}
-
+	
 	/**
-	 * Test an API key against the user's
-	 * @param tested API key to be tested against the user's
-	 * @return True if the tested key is equal to the user's
+	 * Check if a given apiKey is correct
+	 * @return True if API key is valid.
 	 */
-	public boolean checkApiKey(String tested) {
-		return tested.equals(this.apiKey.toString());
+	public boolean checkApiKey(String apiKey) {
+		return this.hashed.equals(Hashing.sha256()
+				.hashString(this.salt.toString() + apiKey, StandardCharsets.UTF_8)
+				.toString());
 	}
 
 	/**

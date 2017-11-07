@@ -1,6 +1,5 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 

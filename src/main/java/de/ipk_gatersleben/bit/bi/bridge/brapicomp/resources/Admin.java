@@ -12,6 +12,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -20,12 +22,12 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.User;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.UserService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 /**
@@ -47,14 +49,39 @@ public class Admin {
 	@Path("/generaltest")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response generalTest(@QueryParam("apikey") String apikey) {
+	public Response generalTest(@Context HttpHeaders headers) {
 
 		LOGGER.log(Level.FINER, "New POST /generaltest call.");
 		try {
-			if (apikey == null || !apikey.equals(Config.get("adminkey"))) {
+			
+			String[] auth = ResourceService.getAuth(headers);
+			//Check auth header
+			if (auth==null || auth.length != 2) {
+				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
+				return Response.status(Status.UNAUTHORIZED).entity(e).build();
+			}
+			
+			User admin = UserService.getUser(auth[0]);
+			//Check username
+			if (admin == null) {
+				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
+				return Response.status(Status.NOT_FOUND).entity(e).build();
+			}
+
+			
+			String apiKey = auth[1];
+			//Check if api key is correct.
+			if (apiKey == null || admin.checkApiKey(apiKey)) {
 				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
+			
+			//Check if user is admin
+			if (!admin.getRole().equals("ADMIN")) {
+				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4022); 
+				return Response.status(Status.UNAUTHORIZED).entity(e).build();
+			}
+			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			InputStream inJson = TestCollection.class.getResourceAsStream("/BrapiTesting.custom_collection.json");
@@ -79,14 +106,38 @@ public class Admin {
 	@Path("/usertest")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response userTest(@QueryParam("apikey") String apikey, @QueryParam("username") String user) {
+	public Response userTest(@Context HttpHeaders headers, @QueryParam("username") String user) {
 
 		LOGGER.log(Level.FINER, "New POST /usertest call.");
 		try {
-			if (apikey == null || !apikey.equals(Config.get("adminkey"))) {
+			String[] auth = ResourceService.getAuth(headers);
+			//Check auth header
+			if (auth==null || auth.length != 2) {
+				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
+				return Response.status(Status.UNAUTHORIZED).entity(e).build();
+			}
+			
+			User admin = UserService.getUser(auth[0]);
+			//Check username
+			if (admin == null) {
+				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
+				return Response.status(Status.NOT_FOUND).entity(e).build();
+			}
+
+			
+			String apiKey = auth[1];
+			//Check if api key is correct.
+			if (apiKey == null || admin.checkApiKey(apiKey)) {
 				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
+			
+			//Check if user is admin
+			if (!admin.getRole().equals("ADMIN")) {
+				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4022); 
+				return Response.status(Status.UNAUTHORIZED).entity(e).build();
+			}
+			
 			User u = UserService.getUser(user);
 			if (u == null) {
 				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 

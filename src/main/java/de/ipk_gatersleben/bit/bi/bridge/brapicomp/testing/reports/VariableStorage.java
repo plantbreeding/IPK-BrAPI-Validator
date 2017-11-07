@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 /**
  * Stores variables to be used during testing. Variables can be used in URLs (Using {} braces).

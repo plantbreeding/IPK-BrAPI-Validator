@@ -1,5 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
 
+import static de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService.findTestCollection;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -30,7 +32,6 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteRepor
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
-import static de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService.findTestCollection;
 
 /**
  * Request a single test or testcollection against an endpoint

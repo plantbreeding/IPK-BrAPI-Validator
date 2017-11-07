@@ -2,6 +2,13 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+
+import javax.ws.rs.core.HttpHeaders;
+
+import org.glassfish.jersey.internal.util.Base64;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -38,5 +45,41 @@ public class ResourceService {
 			e.printStackTrace();
 		}
 		throw new IllegalArgumentException();
+	}
+
+	public static String[] getAuth(HttpHeaders headers) {
+		// TODO Auto-generated method stub
+        //Fetch authorization header
+        final List<String> authorization = headers.getRequestHeader("Authorization");
+          
+        //If no authorization information present; block access
+        if (authorization == null || authorization.isEmpty()) {
+            return null;
+        }
+
+        //Get encoded username and password
+        final String encodedUserPassword = authorization.get(0).replaceFirst("Basic ", "");
+          
+        //Decode username and password
+        String usernameAndPassword = new String(Base64.decode(encodedUserPassword.getBytes()));;
+
+        //Split username and password tokens
+        final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
+        final String username = tokenizer.nextToken();
+        String password = "";
+        try {
+        	password = tokenizer.nextToken();
+        } catch (NoSuchElementException e) {
+        	return new String[] {"", username};
+        }
+        return new String[]{username, password};
+	}
+	
+	public static String getApiKey(HttpHeaders headers) {
+		String[] auth = getAuth(headers);
+		if (auth == null || auth.length != 2) {
+			return null;
+		}
+		return auth[1];
 	}
 }

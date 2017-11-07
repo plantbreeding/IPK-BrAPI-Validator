@@ -13,7 +13,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -30,6 +31,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.User;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.UserService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService;
 
 /**
  * Groups all user management related endpoints. Create/delete users and endpoints
@@ -84,7 +86,7 @@ public class Users {
 	@Path("/{username}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteUser(@PathParam("username") String username, @QueryParam("apikey") String apiKey) {
+	public Response deleteUser(@PathParam("username") String username, @Context HttpHeaders headers) {
 
 		LOGGER.log(Level.FINER, "New DELETE /users call. username: " + username);
 	
@@ -96,6 +98,8 @@ public class Users {
 				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
 				return Response.status(Status.NOT_FOUND).entity(e).build();
 			}
+			
+			String apiKey = ResourceService.getApiKey(headers);
 			
 			if (apiKey == null || !u.checkApiKey(apiKey)) {
 				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
@@ -125,7 +129,7 @@ public class Users {
 	@Path("/{username}/endpoints")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getEndpoints(@PathParam("username") String username, @QueryParam("apikey") String apiKey) {
+	public Response getEndpoints(@PathParam("username") String username, @Context HttpHeaders headers) {
 
 		LOGGER.log(Level.FINER, "New GET /user/{userID}/endpoints call. userId: " + username);
 		
@@ -135,7 +139,7 @@ public class Users {
 				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
 				return Response.status(Status.NOT_FOUND).entity(e).build();
 			}
-			
+			String apiKey = ResourceService.getApiKey(headers);
 			if (apiKey == null || !u.checkApiKey(apiKey)) {
 				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
@@ -166,7 +170,7 @@ public class Users {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createEndpoint(@PathParam("username") String username,
-									@QueryParam("apikey") String apiKey,
+									@Context HttpHeaders headers,
 									Endpoint endp) {
 
 		LOGGER.log(Level.FINER, "New POST /user/{username}/endpoints call. userId: " + username);
@@ -180,6 +184,7 @@ public class Users {
 				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
 				return Response.status(Status.NOT_FOUND).entity(e).build();
 			}
+			String apiKey = ResourceService.getApiKey(headers);
 			if (apiKey == null || !u.checkApiKey(apiKey)) {
 				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
@@ -217,7 +222,7 @@ public class Users {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteEndpoint(@PathParam("username") String username,
 									@PathParam("endpointId") int endpointId,
-									@QueryParam("apikey") String apiKey) {
+									@Context HttpHeaders headers) {
 
 		LOGGER.log(Level.FINER, "New DELETE /user/{userID}/endpoints call. userId: " + username 
 				+ " endpointUrl: " + endpointId);
@@ -230,6 +235,8 @@ public class Users {
 				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
 				return Response.status(Status.NOT_FOUND).entity(e).build();
 			}
+			
+			String apiKey = ResourceService.getApiKey(headers);
 			if (apiKey == null || !u.checkApiKey(apiKey)) {
 				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
