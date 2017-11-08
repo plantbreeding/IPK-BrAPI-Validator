@@ -153,6 +153,10 @@
 		{
 			"name":"GermplasmMarketprofilesData",
 			"pathToCollection": "/GermplasmMarkerprofilesData.custom_collection.json" 
+		},
+		{
+			"name":"MarkersData",
+			"pathToCollection": "/MarkersData.custom_collection.json" 
 		}
 	]
 }

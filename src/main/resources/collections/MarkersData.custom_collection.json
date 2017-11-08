@@ -1,0 +1,79 @@
+{
+	"info": {
+		"name": "BrAPI Marker Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "default",
+			"description": "",
+			"item" : [
+				{
+					"name": "/markers",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markers",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markers",
+								"GetValue:/result/data/0/markerDbId:markerDbId0",
+								"GetValue:/result/data/1/markerDbId:markerDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markers/{markerDbId0}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markers/{markerDbId0}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markers/markerDbId",
+								"IsEqual:/result/markerDbId:markerDbId0"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markers/{markerDbId1}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markers/{markerDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markers/markerDbId",
+								"IsEqual:/result/markerDbId:markerDbId1"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

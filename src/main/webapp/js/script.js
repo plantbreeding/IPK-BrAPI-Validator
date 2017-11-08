@@ -117,7 +117,7 @@ $(function() {
                 "/germplasm-search",
                 "/germplasm/{germplasmDbId}",
                 "/germplasm/{germplasmDbId}/pedigree",
-                "/germplasm/{germplasmDbId}/markerprofiles"
+                "/germplasm/{germplasmDbId}/markerprofiles",
                 "/germplasm/{germplasmDbId}/attributes"
             ],
             "description" : "<ol><li>Check <code>/germplsam-search</code> structure and get <var>germplasmDbId</var></li><li>Check <code>/germplasm/{germplasmDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/pedigree</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/markerprofiles</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/attributes</code> structure and check that the Id is the same.</li></ol>"
@@ -132,8 +132,15 @@ $(function() {
                 "/allelematrix-search?markerprofileDbId={markerprofileDbId}"
             ],
             "description" : "<ol><li>Check <code>/germplsam-search</code> structure and get <var>germplasmDbId</var></li><li>Check <code>/germplasm/{germplasmDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/markerprofiles</code> structure and save <var>markerprofileDbId</var></li><li>Check <code>/markerprofiles?germplasmDbId={germplasmDbId}</code> structure and check that <var>germplasmDbIdId</var> is the same.</li><li>Check <code>/markerprofiles/{markerprofileDbId}</code> structure and check both <var>germplasmDbIdId</var> and <var>markerprofileDbId</var>.</li><li>Check <code>/allelematrix-search?markerprofileDbId={markerprofileDbId}</code> structure and check only structure.</li></ol>"
+        },
+        'MarkersData' : {
+            'urls' : [
+                "/markers",
+                "/markers/{markerDbId0}",
+                "/markers/{markerDbId1}"
+            ],
+            "description" : "<ol><li>Check <code>/markers</code> structure and get <var>markerDbId</var> for the first two results.</li><li>Check <code>/marker/{markerDbId0}</code> structure and check that the Id is the same.</li><li>Check <code>/marker/{markerDbId1}</code> structure and check that the Id is the same.</li></ol>"
         }
-        
     }
 
     var updateFullUrl = function() {
