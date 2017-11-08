@@ -1,6 +1,6 @@
 # IPK BrAPI Validator
 
-Test suite for BrAPI servers.
+Test suite for BrAPI servers. Test your server at [http://webapps.ipk-gatersleben.de/brapivalidator/](http://webapps.ipk-gatersleben.de/brapivalidator/).
 
 Under development, not carefully tested. If you find any errors or bugs, please report them as an issue!
 
