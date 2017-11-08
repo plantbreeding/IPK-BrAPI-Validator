@@ -157,6 +157,10 @@
 		{
 			"name":"MarkersData",
 			"pathToCollection": "/MarkersData.custom_collection.json" 
+		},
+		{
+			"name":"TrialsData",
+			"pathToCollection": "/TrialsData.custom_collection.json" 
 		}
 	]
 }

@@ -95,9 +95,9 @@
             }, 
             "type": "object",
             "required": ["trialDbId", "trialName"]
-        },
-        "required": [
-            "result"
-        ]
-    }
+        }
+    },
+    "required": [
+        "result"
+    ]
 }

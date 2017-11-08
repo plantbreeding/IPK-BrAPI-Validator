@@ -139,7 +139,15 @@ $(function() {
                 "/markers/{markerDbId0}",
                 "/markers/{markerDbId1}"
             ],
-            "description" : "<ol><li>Check <code>/markers</code> structure and get <var>markerDbId</var> for the first two results.</li><li>Check <code>/marker/{markerDbId0}</code> structure and check that the Id is the same.</li><li>Check <code>/marker/{markerDbId1}</code> structure and check that the Id is the same.</li></ol>"
+            "description" : "<ol><li>Check <code>/markers</code> structure and get <var>markerDbId</var> for the first two results.</li><li>Check <code>/markers/{markerDbId0}</code> structure and check that the Id is the same.</li><li>Check <code>/marker/{markerDbId1}</code> structure and check that the Id is the same.</li></ol>"
+        },
+        'TrialsData' : {
+            'urls' : [
+                "/trials",
+                "/trials/{trialDbId0}",
+                "/trials/{trialDbId1}"
+            ],
+            "description" : "<ol><li>Check <code>/trials</code> structure and get <var>trialDbId</var> for the first two results.</li><li>Check <code>/trials/{trialDbId0}</code> structure and check that the Id is the same.</li><li>Check <code>/trials/{trialDbId1}</code> structure and check that the Id is the same.</li></ol>"
         }
     }
 

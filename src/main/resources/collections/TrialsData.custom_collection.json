@@ -1,0 +1,79 @@
+{
+	"info": {
+		"name": "BrAPI Trials Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "default",
+			"description": "",
+			"item" : [
+				{
+					"name": "/trials",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/trials",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/trials",
+								"GetValue:/result/data/0/trialDbId:trialDbId0",
+								"GetValue:/result/data/1/trialDbId:trialDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/trials/{trialDbId0}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/trials/{trialDbId0}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/trials/trialDbId",
+								"IsEqual:/result/trialDbId:trialDbId0"
+							]
+						}
+					]
+				},
+				{
+					"name": "/trials/{trialDbId1}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/trials/{trialDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/trials/trialDbId",
+								"IsEqual:/result/trialDbId:trialDbId1"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
