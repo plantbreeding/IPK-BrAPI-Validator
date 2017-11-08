@@ -40,4 +40,11 @@
 
 .container .text-muted {
   margin: 20px 0;
+  display:inline-block;
+}
+
+.footer-logo {
+    height: 40px;
+    float:right;
+    margin: 10px 10px;
 }
