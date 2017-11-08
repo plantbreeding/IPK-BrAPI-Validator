@@ -8,22 +8,29 @@
   <meta name="description" content="Breeding API Validator">
   <meta name="author" content="IPK Gatersleben">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sb-admin-2.min.css">
   <link rel="stylesheet" href="css/selectize.bootstrap3.css">
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 </head>
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <h1 class="text-center">BrAVa - Breeding API Validator</h1>
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <h1 class="text-center">BrAVa</h1>
+          <p class="text-center"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) validator</p>
+          <p class="text-center">BrAVa is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a>.</p>
+        </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-offset-3 col-md-6" id="formCol">
         <form id="testform" class="well">
+          <h2 style="display:inline-block;">Test a BrAPI server</h2>
+          <a class="pull-right" id="helpLink">Help</a>
           <div class="form-group">
             <label for="serverurl">
-            BrAPI server URL
+            Server URL
             <span class="glyphicon glyphicon-question-sign" aria-hidden="true"
             data-toggle="tooltip" data-placement="top" title="Enter your own server URL or test the public servers available in the official BrAPI repository."></span>
           </label>
@@ -32,18 +39,13 @@
           </div>
           <div class="form-group">
             <label>
-              <input type="radio" name="test" value="single" checked>
-              Schema: Single resources
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="test" value="all">
-              Schema: All non-parametric resources
+              <input type="radio" name="test" value="structure" checked>
+              Structure test: Check structure with <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">JSON schemas</a>
             </label>
             <br>
             <label>
               <input type="radio" name="test" value="data">
-              Data: Full Resource schema and data test
+              Data integrity: Valid structure and data integrity
             </label>
           </div>
           <div class="form-group" id="resourceDiv">
@@ -61,16 +63,34 @@
           </div>
           <div id="paramListDiv">
           </div>
+          <hr>
+          <div class="form-group" id="testDescriptionDiv" style="display:none">
+            <label for="testDescription">Description</label>
+            <span id="testDescription"></span>
+          </div> 
           <div class="form-group">
             <label for="fullurl">Tested URL<span id="multiURL"></span></label>
             <br>
             <div id="fullUrl">
-              <a target="_blank" href="http://test.brapi.org/brapi/v1/calls">http://test.brapi.org/brapi/v1/calls</a>
+              <a target="_blank" href="/calls">/calls</a>
             </div>
           </div>
           <div id="statusBar" class="alert alert-danger hidden" role="alert">...</div>
           <button type="submit" class="btn btn-primary">Test it!</button>
         </form>
+      </div>
+      <div class="col-md-6" id="helpCol" style="display:none">
+        <div class="well">
+          <p>BrAVa will call one or multiple resources in the tested server and test the response. </p>
+          <p>There are two types of tests available: <strong>structure</strong> tests and <strong>data integrity</strong> tests.</p>
+          <p><strong>Structure tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> specific for that resource. The JSON schema compares the structure, parameter name and parameter types of the response object to those defined by the specification.</p>
+          <p>For example, the <code>/germplasm-search</code> test requires the response data object to contain a <var>germplasmDbId</var> attribute with a string value, among others.</p>
+          <p>We created the JSON schemas using the official BrAPI specifications. They are <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">available here</a>, feel free to check them and use them in your own tests.
+
+          <p><strong>Data integrity tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> and <strong>also</strong> make sure the data is consistent across resources. This test works by calling a resource, testing the structure and storing a few values from the response. The specific parameters that are saved depend on the test. The server will make a request to other resources using these values as input.</p>
+          <p>The benefits of this type of test is that you can automatically test some resources that would require manual input for certain parameters.</p>
+          <p>For example, a call to <code>/markerprofiles</code> could store <var>markerprofileDbId</var>. This value can be used as input for <code>/markerprofiles/{markerprofileDbId}</code>.</p>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -87,6 +107,7 @@
     </div>
   </footer>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="http://spin.js.org/spin.min.js"></script>
   <script src="js/selectize.min.js"></script>

@@ -112,47 +112,56 @@ $(function() {
     ]
 
     var dataTests = {
-        'GermplasmData' : [
-            "/germplasm-search",
-            "/germplasm/{germplasmDbId}",
-            "/germplasm/{germplasmDbId}/pedigree",
-            "/germplasm/{germplasmDbId}/markerprofiles"
-        ],
-        'GermplasmMarketprofilesData' : [
-            "/germplasm-search",
-            "/germplasm/{germplasmDbId}",
-            "/germplasm/{germplasmDbId}/markerprofiles",
-            "/markerprofiles?germplasmDbId={germplasmDbId}",
-            "/markerprofiles/{markerprofileDbId}",
-            "/markerprofiles/{markerprofileDbId}"
-        ]
+        'GermplasmData' : {
+            "urls" : [
+                "/germplasm-search",
+                "/germplasm/{germplasmDbId}",
+                "/germplasm/{germplasmDbId}/pedigree",
+                "/germplasm/{germplasmDbId}/markerprofiles"
+            ],
+            "description" : "<ol><li>Check <code>/germplsam-search</code> structure and get <var>germplasmDbId</var></li><li>Check <code>/germplasm/{germplasmDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/pedigree</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/markerprofiles</code> structure and check that the Id is the same.</li></ol>"
+        },
+        'GermplasmMarketprofilesData' : {
+            'urls' : [
+                "/germplasm-search",
+                "/germplasm/{germplasmDbId}",
+                "/germplasm/{germplasmDbId}/markerprofiles",
+                "/markerprofiles?germplasmDbId={germplasmDbId}",
+                "/markerprofiles/{markerprofileDbId}",
+                "/allelematrix-search?markerprofileDbId={markerprofileDbId}"
+            ],
+            "description" : "<ol><li>Check <code>/germplsam-search</code> structure and get <var>germplasmDbId</var></li><li>Check <code>/germplasm/{germplasmDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/markerprofiles</code> structure and save <var>markerprofileDbId</var></li><li>Check <code>/markerprofiles?germplasmDbId={germplasmDbId}</code> structure and check that <var>germplasmDbIdId</var> is the same.</li><li>Check <code>/markerprofiles/{markerprofileDbId}</code> structure and check both <var>germplasmDbIdId</var> and <var>markerprofileDbId</var>.</li><li>Check <code>/allelematrix-search?markerprofileDbId={markerprofileDbId}</code> structure and check only structure.</li></ol>"
+        }
+        
     }
 
     var updateFullUrl = function() {
 
         var fullUrlDiv = $("#fullUrl");
 
-        if ($("input[name=test]:checked").val() === "all") {
-            $("#multiURL").html("s");
-            fullUrlDiv.html('');
-            for (var i = 0; i < allTests.length; i++) {
-                for (var j = 0; j < allTests[i].opts.length; j++) {
-                    if (allTests[i].opts[j].indexOf("{") === -1) {
-                        var fullUrl = getFullUrl(allTests[i].opts[j]);
-                        fullUrlDiv.append("<a target=\"_blank\" href=\"" + fullUrl +
-                            "\">" + fullUrl + "</a><br>");
-                    } 
+        if ($("input[name=test]:checked").val() === "structure") {
+            if ($("#testresource").val() === "all") {
+                $("#multiURL").html("s");
+                fullUrlDiv.html('');
+                for (var i = 0; i < allTests.length; i++) {
+                    for (var j = 0; j < allTests[i].opts.length; j++) {
+                        if (allTests[i].opts[j].indexOf("{") === -1) {
+                            var fullUrl = getFullUrl(allTests[i].opts[j]);
+                            fullUrlDiv.append("<a target=\"_blank\" href=\"" + fullUrl +
+                                "\">" + fullUrl + "</a><br>");
+                        } 
+                    }
                 }
+            } else {
+                var fullUrl = getFullUrl($("#testresource").val());
+                fullUrlDiv.html("<a target=\"_blank\" href=\""
+                    + fullUrl + "\">" + fullUrl + "</a><br>");
+                $("#multiURL").html("");
             }
-        } else if ($("input[name=test]:checked").val() === "single") {
-            var fullUrl = getFullUrl($("#testresource").val());
-            fullUrlDiv.html("<a target=\"_blank\" href=\""
-                + fullUrl + "\">" + fullUrl + "</a><br>");
-            $("#multiURL").html("");
         } else if ($("input[name=test]:checked").val() === "data") {
             $("#multiURL").html("s");
             fullUrlDiv.html('');
-            var test = dataTests[$("#dataTest").val()];
+            var test = dataTests[$("#dataTest").val()].urls;
             for (var i = 0; i < test.length; i++) {
                 var fullUrl = getFullUrl(test[i]);
                 fullUrlDiv.append("<a target=\"_blank\" href=\"" + fullUrl +
@@ -160,6 +169,10 @@ $(function() {
                 
             }
         }
+    }
+
+    var updateTestDescription = function() {
+        $("#testDescription").html(dataTests[$("#dataTest").val()].description);
     }
 
     var paramList = [];
@@ -382,17 +395,25 @@ $(function() {
         
         $('[data-toggle="tooltip"]').tooltip();
         //Add all tests to dropdown
+        $("#testresource").append("<optgroup label=\"all\">"
+            + "<option value=\"all\">Test all resources that don't require a parameter</option>" 
+            + "</optgroup>");
         for (var i = 0; i < allTests.length; i++) {
             var optgroup = $("<optgroup label=\"" + allTests[i].name +  "\">");
             for (var j = 0; j < allTests[i].opts.length; j++) {
-                optgroup.append($("<option>"
-                 + allTests[i].opts[j] + "</option>"));
+                var selected = "<option>";
+                if (i === 0 && j === 0) {
+                    //Select the first test. This prevents the field to have "all"
+                    //as the preselected option
+                    selected = "<option selected>";
+                }
+                optgroup.append($(selected + allTests[i].opts[j] + "</option>"));
             }
             $("#testresource").append(optgroup);
         }
         $(".del").remove();
         $("#serverurl").on("input", updateFullUrl);
-        $("#dataTest").change(updateFullUrl);
+        $("#dataTest").change(function() {updateFullUrl(); updateTestDescription();});
         $("input[name=test]").change(updateResourceForm);
         function updateResourceForm () {
             $("#paramListDiv").html("");
@@ -400,16 +421,32 @@ $(function() {
             $("#dataTest").prop('disabled', true);
             $("#dataTestDiv").hide();
             $("#resourceDiv").hide();
+            $("#testDescriptionDiv").hide();
             $("#testresource").prop('disabled', true);
-            if ($("input[name=test]:checked").val() === 'single') {
+            if ($("input[name=test]:checked").val() === 'structure') {
                 $("#resourceDiv").show();
                 $("#testresource").prop('disabled', false);
             } else if ($("input[name=test]:checked").val() === 'data'){
                 $("#dataTestDiv").show();
                 $("#dataTest").prop('disabled', false);
+                updateTestDescription();
+                $("#testDescriptionDiv").show();
             }
             updateFullUrl();
         }
+        var help = false;
+        $("#helpLink").click(function() {
+            if (help) {
+                $("#helpCol").toggle("fade", 300, function(){
+                    $("#formCol").toggleClass("col-md-offset-3", true, 300, "swing");
+                });
+            } else {
+                $("#formCol").toggleClass("col-md-offset-3", false, 300, "swing", function() {
+                    $("#helpCol").toggle("fade", 300);
+                });
+            }
+            help = !help;
+        })
         
         $("#testresource").change(function(){
             paramList.length = 0;
@@ -483,4 +520,8 @@ $(function() {
     }
     main();
 
+
+
 });
+
+
