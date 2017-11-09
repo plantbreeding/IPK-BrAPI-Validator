@@ -338,10 +338,11 @@ $(function() {
                     cardBodyDiv.append(resultHTML);
                 }
 
+                if (tr.schema) {
+                    cardBodyDiv.append("<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>")
+                }
+
                 if (tr.error.length > 0) {
-                    if (tr.schema) {
-                        cardBodyDiv.append("<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>")
-                    }
                     cardBodyDiv.append("<p class=\"card-text\"><strong>Validation Errors:</strong></p>");
                     for (var j = 0; j < tr.error.length; j++) {
                         cardBodyDiv.append(createError(i, tr.error[j]));
