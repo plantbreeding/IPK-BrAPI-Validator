@@ -2,10 +2,6 @@
 	width: 300px;
 }
 
-.test-error {
-	border-color: #a94442;
-}
-
 .fail-p {
 	color: #a94442;
 }
@@ -18,16 +14,18 @@
 	display: none;
 }
 
-.panel-heading .accordion-toggle:after {
+.card-header.accordion-toggle:after {
     /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    font-family: FontAwesome;  /* essential for enabling fontAwesome */
+    content: "\f0d7";    /* adjust as needed, taken from bootstrap.css */
     float: right;        /* adjust as needed */
-    color: grey;         /* adjust as needed */
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-.panel-heading.collapsed .accordion-toggle:after {
+.card-header.collapsed.accordion-toggle:after {
     /* symbol for "collapsed" panels */
-    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+    content: "\f0da";    /* adjust as needed, taken from bootstrap.css */
 }
 
 
@@ -70,4 +68,8 @@ body {
 
 #helpLink {
     cursor:default;
+}
+
+.font-14 {
+    font-size: 14px;
 }
