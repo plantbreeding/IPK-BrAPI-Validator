@@ -1,7 +1,9 @@
 "use strict"
 
+
 $(function() {
 
+    // All simple tests
     var allTests = [
         {
             name : "Calls",
@@ -111,6 +113,7 @@ $(function() {
         }
     ]
 
+    // All data tests and their descriptions
     var dataTests = {
         'GermplasmData' : {
             "urls" : [
@@ -151,35 +154,47 @@ $(function() {
         }
     }
 
+    //List of parameters for the current test.
+    var paramList = [];
+
     var updateFullUrl = function() {
+        // Updates the tested URL section of the form with one or multiple URLs
 
         var fullUrlDiv = $("#fullUrl");
-
+        var fullUrl = "";
+        var i;
+        // Structure tests
         if ($("input[name=test]:checked").val() === "structure") {
+
+            //Test that includes all non-parametric
             if ($("#testresource").val() === "all") {
                 $("#multiURL").html("s");
                 fullUrlDiv.html('');
-                for (var i = 0; i < allTests.length; i++) {
+                for (i = 0; i < allTests.length; i++) {
                     for (var j = 0; j < allTests[i].opts.length; j++) {
                         if (allTests[i].opts[j].indexOf("{") === -1) {
-                            var fullUrl = getFullUrl(allTests[i].opts[j]);
+                            fullUrl = getFullUrl(allTests[i].opts[j]);
                             fullUrlDiv.append("<a target=\"_blank\" href=\"" + fullUrl +
                                 "\">" + fullUrl + "</a><br>");
                         } 
                     }
                 }
             } else {
-                var fullUrl = getFullUrl($("#testresource").val());
+
+                // Single structure test
+                fullUrl = getFullUrl($("#testresource").val());
                 fullUrlDiv.html("<a target=\"_blank\" href=\""
                     + fullUrl + "\">" + fullUrl + "</a><br>");
                 $("#multiURL").html("");
             }
+
+        // Data test
         } else if ($("input[name=test]:checked").val() === "data") {
             $("#multiURL").html("s");
             fullUrlDiv.html('');
             var test = dataTests[$("#dataTest").val()].urls;
-            for (var i = 0; i < test.length; i++) {
-                var fullUrl = getFullUrl(test[i]);
+            for (i = 0; i < test.length; i++) {
+                fullUrl = getFullUrl(test[i]);
                 fullUrlDiv.append("<a target=\"_blank\" href=\"" + fullUrl +
                     "\">" + fullUrl + "</a><br>");
                 
@@ -187,12 +202,33 @@ $(function() {
         }
     }
 
+    // Update data test description
     var updateTestDescription = function() {
         $("#testDescription").html(dataTests[$("#dataTest").val()].description);
     }
 
-    var paramList = [];
+    // Update the form's visible elements
+    function updateVisibleElements () {
+        $("#paramListDiv").html("");
+        paramList.length = 0;
+        $("#dataTest").prop('disabled', true);
+        $("#dataTestDiv").hide();
+        $("#resourceDiv").hide();
+        $("#testDescriptionDiv").hide();
+        $("#testresource").prop('disabled', true);
+        if ($("input[name=test]:checked").val() === 'structure') {
+            $("#resourceDiv").show();
+            $("#testresource").prop('disabled', false);
+        } else if ($("input[name=test]:checked").val() === 'data'){
+            $("#dataTestDiv").show();
+            $("#dataTest").prop('disabled', false);
+            updateTestDescription();
+            $("#testDescriptionDiv").show();
+        }
+        updateFullUrl();
+    }
 
+    // Calculate the full url given a resource.
     var getFullUrl = function(res) {
         var url = $("#serverurl").val();
         if (url.lastIndexOf('/') === url.length-1) {
@@ -200,26 +236,34 @@ $(function() {
         }
         var fullUrl = url + res;
         var i = 0;
+
+        // Find all parameters
         while (fullUrl.indexOf("{") !== -1 && paramList.length) {
             var paramValue = $("#"+paramList[i]).val();
             fullUrl = fullUrl.replace(/{.*?}/, paramValue);
             i++;
         }
-
         return fullUrl
     }
+
+    // Test form
     var form = document.getElementById('testForm');
     $('#testForm').submit(function(e) {
+
         e.preventDefault();
         e.stopPropagation();
-        form.classList.add('was-validated');
+
+        //Add spinner
         var spinner = new Spinner().spin(form);
         var testType = $("input[name=test]:checked").val();
         report.clear();
+
         $.ajax({
             url: "api/test/" + testType,
             data: $(this).serialize(),
             success: function(data) {
+
+                //Blink (or fade in) result div
                 $("#resultDiv").fadeOut(100, function(){
                     $("#resultDiv").removeClass("hidden");
                     spinner.stop();
@@ -227,6 +271,8 @@ $(function() {
                 });
 
                 statusBar.hide();
+
+                // Report div is different if the response is a test collection or a single test
                 if (data.hasOwnProperty("testCollections")) {
                     report.addTestCollectionList(data.testCollections);
                 } else {
@@ -247,6 +293,7 @@ $(function() {
         });
     });
 
+    // Form alert bar
     var statusBar = {
         show: function(m) {
             $("#statusBar").text(m);
@@ -257,8 +304,8 @@ $(function() {
         }
     }
 
-    var report;
-    report = function () {
+    // Generates the report div.
+    var report = function () {
 
         var reportDiv = $("#resultDiv");
 
@@ -413,11 +460,10 @@ $(function() {
         }
     }();
 
+    // Initializes variables, forms, listeners...
     function main () {
 
-        
-        $('[data-toggle="tooltip"]').tooltip();
-        //Add all tests to dropdown
+        // Add all tests to dropdown
         $("#testresource").append("<optgroup label=\"all\">"
             + "<option value=\"all\">Test all resources that don't require a parameter</option>" 
             + "</optgroup>");
@@ -426,51 +472,23 @@ $(function() {
             for (var j = 0; j < allTests[i].opts.length; j++) {
                 var selected = "<option>";
                 if (i === 0 && j === 0) {
-                    //Select the first test. This prevents the field to have "all"
-                    //as the preselected option
+                    // Select the first test. This prevents the field to have "all"
+                    // as the preselected option
                     selected = "<option selected>";
                 }
                 optgroup.append($(selected + allTests[i].opts[j] + "</option>"));
             }
             $("#testresource").append(optgroup);
         }
+        // Remove initial /calls option as it is replaced by the one on the tests list.
         $(".del").remove();
+
+        // Listeners
         $("#serverurl").on("input", updateFullUrl);
         $("#dataTest").change(function() {updateFullUrl(); updateTestDescription();});
-        $("input[name=test]").change(updateResourceForm);
-        function updateResourceForm () {
-            $("#paramListDiv").html("");
-            paramList.length = 0;
-            $("#dataTest").prop('disabled', true);
-            $("#dataTestDiv").hide();
-            $("#resourceDiv").hide();
-            $("#testDescriptionDiv").hide();
-            $("#testresource").prop('disabled', true);
-            if ($("input[name=test]:checked").val() === 'structure') {
-                $("#resourceDiv").show();
-                $("#testresource").prop('disabled', false);
-            } else if ($("input[name=test]:checked").val() === 'data'){
-                $("#dataTestDiv").show();
-                $("#dataTest").prop('disabled', false);
-                updateTestDescription();
-                $("#testDescriptionDiv").show();
-            }
-            updateFullUrl();
-        }
-        var help = false;
-        $("#helpLink").click(function() {
-            if (help) {
-                $("#helpCol").toggle("fade", 300, function(){
-                    $("#formCol").toggleClass("offset-md-3", true, 300, "swing");
-                });
-            } else {
-                $("#formCol").toggleClass("offset-md-3", false, 300, "swing", function() {
-                    $("#helpCol").toggle("fade", 300);
-                });
-            }
-            help = !help;
-        })
-        
+        $("input[name=test]").change(updateVisibleElements);
+
+        // Update form's params section
         $("#testresource").change(function(){
             paramList.length = 0;
             $("#paramListDiv").html("");
@@ -497,6 +515,22 @@ $(function() {
             updateFullUrl();
         })
 
+        // Handle help card
+        var helpVisible = false;
+        $("#helpLink").click(function() {
+            if (helpVisible) {
+                $("#helpCol").toggle("fade", 300, function(){
+                    $("#formCol").toggleClass("offset-md-3", true, 300, "swing");
+                });
+            } else {
+                $("#formCol").toggleClass("offset-md-3", false, 300, "swing", function() {
+                    $("#helpCol").toggle("fade", 300);
+                });
+            }
+            helpVisible = !helpVisible;
+        })
+
+        // Server URL list initial values
         var resources = [
             {
                 text:'https://test.brapi.org/brapi/v1/', 
@@ -508,7 +542,7 @@ $(function() {
             }
         ];
 
-
+        // Init server Url selectize
         var $serverurl = $('#serverurl').selectize({
             scrollduration: 20,
             create: true,
@@ -516,6 +550,7 @@ $(function() {
             onChange: updateFullUrl,
             persist: false
         });
+        // Download endpoints from github repository
         $.ajax({
             url: 'https://raw.githubusercontent.com/plantbreeding/API/master/brapi-resources.json',
             type: 'GET',
@@ -539,12 +574,7 @@ $(function() {
         $('#dataTest').selectize({
             scrollDuration: 20
         });
-        updateResourceForm();
+        updateVisibleElements();
     }
     main();
-
-
-
 });
-
-
