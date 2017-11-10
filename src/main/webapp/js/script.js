@@ -460,6 +460,42 @@ $(function() {
         }
     }();
 
+
+    // Modal form
+    $("#modalForm").submit(function(e){
+        e.preventDefault();
+        var modalForm = document.getElementById("modalForm");
+        var spinner = new Spinner().spin(modalForm);
+        $("#modalFailure").hide();
+        $("#modalSuccess").hide();
+        $.ajax({
+            url: "api/ci/endpoints",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                url: $("#serverUrlModal").val(),
+                email: $("#emailModal").val(),
+                frequency: $("input[name=frequency]:checked").val()
+            }),
+            success: function(data) {
+                spinner.stop();
+                $("#modalSuccess").show();
+                $("#modalSubmit").prop("disabled", true);
+
+
+            },
+            error: function(a) {
+                spinner.stop();
+                $("#modalFailure").show();
+                if (a.responseJSON) {
+                    $("#modalMessage").text(a.responseJSON.message);
+                }
+
+            }
+        });
+
+    });
+
     // Initializes variables, forms, listeners...
     function main () {
 

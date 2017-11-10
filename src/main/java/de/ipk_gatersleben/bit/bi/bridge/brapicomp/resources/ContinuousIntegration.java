@@ -7,10 +7,12 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -56,21 +58,17 @@ public class ContinuousIntegration {
 		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 		
 		try {
-			
 			Endpoint e = EndpointService.getEndpointWithEmailAndUrl(endp.getEmail(), endp.getUrl());
 			if (e != null) {
-				String e2 = JsonMessageManager.jsonMessage(400, "url already in use", 4021); 
+				String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4021); 
 				return Response.status(Status.BAD_REQUEST).entity(e2).build();
 			}
 			endpointDao.create(endp);
-			ObjectMapper mapper = new ObjectMapper();
 			
-			String json = mapper.writeValueAsString(endp);
-			
-			return Response.status(Status.CREATED).entity(json).build();
-		} catch (SQLException | JsonProcessingException e) {
+			return Response.status(Status.CREATED).entity(JsonMessageManager.jsonMessage(200, "success", 2000)).build();
+		} catch (SQLException e) {
 			e.printStackTrace();
-			String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5020); 
+			String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5020); 
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
 		}
 	}

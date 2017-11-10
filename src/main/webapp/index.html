@@ -157,26 +157,26 @@
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" name="period" value="weekly" class="form-check-input" checked>
+                <input type="radio" name="frequency" value="weekly" class="form-check-input" checked>
                 Weekly report
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" name="period" value="monthly" class="form-check-input">
+                <input type="radio" name="frequency" value="monthly" class="form-check-input">
                 Monthly report
               </label>
             </div>
-            <div class="alert alert-success" role="alert">
-              Got it! We'll send you a confirmation email.
+            <div class="alert alert-success" role="alert" id="modalSuccess" style="display:none">
+              <i class="fa fa-check" aria-hidden="true"></i> Got it! We'll send you a confirmation email.
             </div>
-            <div class="alert alert-danger" role="alert">
-              Oops! There was something wrong.
+            <div class="alert alert-danger" role="alert" id="modalFailure" style="display:none">
+              <i class="fa fa-frown-o" aria-hidden="true"></i> Oops! There was something wrong. <span id="modalMessage"></span>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" id="modalSubmit">Submit</button>
           </div>
         </form>
       </div>

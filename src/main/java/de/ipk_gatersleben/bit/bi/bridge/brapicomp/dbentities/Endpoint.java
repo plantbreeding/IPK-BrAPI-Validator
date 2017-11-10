@@ -29,6 +29,10 @@ public class Endpoint {
 	@DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
 	private String url;
 	
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	@DatabaseField(canBeNull = false, columnName = EMAIL_FIELD_NAME)
 	private String email;
 	
@@ -43,6 +47,12 @@ public class Endpoint {
 	
 	public Endpoint(String url) {
 		this.url = url;
+	}
+
+	public Endpoint(String u, String e, String f) throws IllegalArgumentException {
+		this.setUrl(u);
+		this.setEmail(e);
+		this.setFrequency(f);
 	}
 
 	/**
@@ -76,8 +86,13 @@ public class Endpoint {
 	/**
 	 * @param f Endpoint's testing frequency.
 	 */
-	public void setFrequency(String f) {
-		this.frequency = f;
+	public void setFrequency(String f) throws IllegalArgumentException {
+		if (f.equals("weekly") || f.equals("monthly")) {
+			this.frequency = f;
+		} else {
+			throw new IllegalArgumentException();
+		}
+		
 	}
 	
 	/**
