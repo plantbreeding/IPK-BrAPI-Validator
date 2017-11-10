@@ -1,0 +1,1062 @@
+{
+	"info": {
+		"name": "Full BrAPI Testing",
+		"description": "Includes all resources, schema and data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Calls",
+			"description": "Calls resource",
+			"item": [
+				{
+					"name": "/calls",
+					"description": "Tests structure and if the first two results are not equal.",
+					"request": {
+						"url": "{baseurl}/calls",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/calls",
+								"GetValue:/result/data/0/call:call",
+								"IsNotEqual:/result/data/1/call:call"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Germplasm",
+			"description": "Germplasm resource",
+			"item": [
+				{
+					"name": "/germplasm-search",
+					"description": "Tests structure and stores first germplasmDbId",
+					"request": {
+						"url": "{baseurl}/germplasm-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm-search",
+								"GetValue:/result/data/0/germplasmDbId:germplasmDbId",
+								"GetValue:/result/data/1/germplasmDbId:germplasmDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/id",
+					"description": "Tests schema using stored germplasmDbId and checks id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/id",
+					"description": "Tests schema using second stored germplasmDbId and checks id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId",
+								"IsEqual:/result/germplasmDbId:germplasmDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/pedigree",
+					"description": "Tests schema and id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/pedigree",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/pedigree",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/markerprofiles",
+					"description": "Tests schema and id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/markeprofiles",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/markerprofiles",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Attributes",
+			"description": "Attributes resource",
+			"item": [
+				{
+					"name": "/attributes",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/attributes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/attributes"
+							]
+						}
+					]
+				},
+				{
+					"name": "/attributes/categories",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/attributes/categories",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/attributes/categories"
+							]
+						}
+					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/attributes",
+					"description": "Tests schema and id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/attributes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/attributes",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Markers",
+			"description": "Markers resource",
+			"item": [
+				{
+					"name": "/markers",
+					"description": "Test structure and save two Ids",
+					"request": {
+						"url": "{baseurl}/markers",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markers",
+								"GetValue:/result/data/0/markerDbId:markerDbId0",
+								"GetValue:/result/data/1/markerDbId:markerDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markers/{markerDbId0}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markers/{markerDbId0}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markers/markerDbId",
+								"IsEqual:/result/markerDbId:markerDbId0"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markers/{markerDbId1}",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/markers/{markerDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markers/markerDbId",
+								"IsEqual:/result/markerDbId:markerDbId1"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Markerprofiles",
+			"description": "Markerprofiles resource",
+			"item": [
+				{
+					"name": "/markerprofiles",
+					"description": "Tests markerprofile with no germplasmDbId",
+					"request": {
+						"url": "{baseurl}/markerprofiles",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles",
+								"GetValue:/result/data/0/markerprofileDbId:markerProfileDbId",
+								"GetValue:/result/data/1/markerprofileDbId:markerProfileDbId1"
+
+							]
+						}
+					]
+				},
+				{
+					"name": "/markerprofiles?germplasmDbId={germplasmDbId}",
+					"description": "Tests markerprofile with germplasmDbId",
+					"request": {
+						"url": "{baseurl}/markerprofiles?germplasmDbId={germplasmDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles",
+								"IsEqual:/result/data/0/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markerprofiles/{markerprofileDbId}",
+					"description": "Test schema and same id",
+					"request": {
+						"url": "{baseurl}/markerprofiles/{markerprofileDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles/markerprofileDbId",
+								"IsEqual:/result/markerprofileDbId:markerprofileDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/markerprofiles/{markerprofileDbId1}",
+					"description": "Test schema and same id for second stored id",
+					"request": {
+						"url": "{baseurl}/markerprofiles/{markerprofileDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles/markerprofileDbId",
+								"IsEqual:/result/markerprofileDbId:markerprofileDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+					"description": "Test schema",
+					"request": {
+						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/allelematrix-search"
+							]
+						}
+					]
+				},
+				{
+					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+					"description": "Test schema for POST",
+					"request": {
+						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"method": "POST"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/allelematrix-search"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Programs",
+			"description": "Programs resource",
+			"item": [
+				{
+					"name": "/programs",
+					"description": "Test schema",
+					"request": {
+						"url": "{baseurl}/programs",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/programs"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Crops",
+			"description": "Crops resource",
+			"item": [
+				{
+					"name": "/crops",
+					"description": "tests schema",
+					"request": {
+						"url": "{baseurl}/crops",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/crops"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Trials",
+			"description": "Trials resource",
+			"item": [
+				{
+					"name": "/trials",
+					"description": "Test schema and save two Ids",
+					"request": {
+						"url": "{baseurl}/trials",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/trials",
+								"GetValue:/result/data/0/trialDbId:trialDbId0",
+								"GetValue:/result/data/1/trialDbId:trialDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/trials/{trialDbId0}",
+					"description": "Test schema and check first id",
+					"request": {
+						"url": "{baseurl}/trials/{trialDbId0}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/trials/trialDbId",
+								"IsEqual:/result/trialDbId:trialDbId0"
+							]
+						}
+					]
+				},
+				{
+					"name": "/trials/{trialDbId1}",
+					"description": "Test schema and check second id",
+					"request": {
+						"url": "{baseurl}/trials/{trialDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/trials/trialDbId",
+								"IsEqual:/result/trialDbId:trialDbId1"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Study",
+			"description": "Study resource",
+			"item": [
+				{
+					"name": "/seasons",
+					"description": "Test schema",
+					"request": {
+						"url": "{baseurl}/seasons",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/seasons"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studyTypes",
+					"description": "Test schema",
+					"request": {
+						"url": "{baseurl}/studyTypes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studyTypes"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies-search",
+					"description": "Search with no parameters and save two Ids",
+					"request": {
+						"url": "{baseurl}/studies-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies-search",
+								"GetValue:/result/data/0/studyDbId:studyDbId",
+								"GetValue:/result/data/1/studyDbId:studyDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies-search",
+					"description": "Search with no parameters",
+					"request": {
+						"url": "{baseurl}/studies-search",
+						"method": "POST"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies-search"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}",
+					"description": "Check schema and Id",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId",
+								"IsEqual:/result/studyDbId:studyDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId1}",
+					"description": "Check schema and second Id",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId",
+								"IsEqual:/result/studyDbId:studyDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/observationVariables",
+					"description": "Check schema and Id",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/observationVariables",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/observationVariables",
+								"IsEqual:/result/data/0/studyDbId:studyDbId",
+								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/germplasm",
+					"description": "Check schema and Id",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/germplasm",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/germplasm",
+								"IsEqual:/result/data/0/studyDbId:studyDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/observationLevels",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/observationLevels",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/observationLevels"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/observationUnits",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/observationunits",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/observationunits"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/table",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/table",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/table"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/layout",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/layout",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/layout",
+								"IsEqual:/result/data/studyDbId:studyDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+					"description": "Check schema and id",
+					"request": {
+						"url": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/observations",
+								"IsEqual:/result/data/0/studyDbId:studyDbId",
+								"IsEqual:/result/data/0/observationVariableDbId:observationVariableDbId"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Phenotypes",
+			"description": "Phenotypes resource",
+			"item": [
+				{
+					"name": "/phenotypes-search",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/phenotypes-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/phenotypes-search"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Traits",
+			"description": "Traits resource",
+			"item": [
+				{
+					"name": "/traits",
+					"description": "Check schema and save two ids",
+					"request": {
+						"url": "{baseurl}/traits",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/traits",
+								"GetValue:/result/data/0/traitDbId:traitDbId",
+								"GetValue:/result/data/1/traitDbId:traitDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/traits/{traitDbId}",
+					"description": "Check schema and first id",
+					"request": {
+						"url": "{baseurl}/traits/{traitDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/traits/traitDbId",
+								"IsEqual:/result/traitDbId:traitDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/traits/{traitDbId1}",
+					"description": "Check schema and second id",
+					"request": {
+						"url": "{baseurl}/traits/{traitDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/traits/traitDbId",
+								"IsEqual:/result/traitDbId:traitDbId1"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Observation Variables",
+			"description": "Observation Variables resource",
+			"item": [
+				{
+					"name": "/variables/datatypes",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/variables/datatypes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables/datatypes"
+							]
+						}
+					]
+				},
+				{
+					"name": "/variables",
+					"description": "Check schema and store two variables",
+					"request": {
+						"url": "{baseurl}/variables",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables",
+								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId2",
+								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId3"
+							]
+						}
+					]
+				},
+				{
+					"name": "/variables/{observationVariableDbId}",
+					"description": "Check schema and id",
+					"request": {
+						"url": "{baseurl}/variables/{observationVariableDbId2}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables/observationVariableDbId",
+								"IsEqual:/result/observationVariableDbId:observationVariableDbId2"
+							]
+						}
+					]
+				},
+				{
+					"name": "/variables/{observationVariableDbId}",
+					"description": "Check schema and second id",
+					"request": {
+						"url": "{baseurl}/variables/{observationVariableDbId3}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables/observationVariableDbId",
+								"IsEqual:/result/observationVariableDbId:observationVariableDbId3"
+							]
+						}
+					]
+				},
+				{
+					"name": "/ontologies",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/ontologies",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/ontologies"
+							]
+						}
+					]
+				},
+				{
+					"name": "/maps",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/maps",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps"
+							]
+						}
+					]
+				},
+				{
+					"name": "/locations",
+					"description": "",
+					"request": {
+						"url": "{baseurl}/locations",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/locations"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
