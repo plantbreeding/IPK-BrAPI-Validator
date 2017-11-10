@@ -15,18 +15,18 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteRepor
 public class TestSuiteRunner {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(TestSuiteRunner.class.getName());
-	private int id;
+	private String id;
 	private String url;
 	private TestCollection testCollection;
 	
 	/**
 	 * Constructor
-	 * @param id Some id to set for this test run
+	 * @param string Some id to set for this test run
 	 * @param url Base URL of the endpoint to be tested
 	 * @param tc TestCollection config instance.
 	 */
-	public TestSuiteRunner(int id, String url, TestCollection tc) {
-		this.setId(id);
+	public TestSuiteRunner(String string, String url, TestCollection tc) {
+		this.setId(string);
 		this.setUrl(url);
 		this.setTestCollection(tc);
 	}
@@ -46,14 +46,14 @@ public class TestSuiteRunner {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -15,72 +15,87 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 public class EndpointService {
 	
 	/**
-	 * Get a list of all endpoints that belong to a user.
+	 * Get a list of all endpoints that belong to an email.
 	 * @param u User to search endpoints for
-	 * @return List of endpoints that belong to that user
+	 * @return List of endpoints that belong to that email
 	 * @throws SQLException SQL Error.
 	 */
-	public static List<Endpoint> getEndpointsFromUser(User u) throws SQLException {
+	public static List<Endpoint> getEndpointsWithEmail(String email) throws SQLException {
 		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-		List<Endpoint> l = endpointDao.queryBuilder().where().eq(Endpoint.USER_FIELD_NAME, u.getInternalIdUUID())
+		List<Endpoint> l = endpointDao.queryBuilder().where()
+				.eq(Endpoint.EMAIL_FIELD_NAME, email)
+				.eq(Endpoint.DELETED_FIELD_NAME, false)
 				.query();
 		return l;
 	}
+	
+	/**
+	 * Get a list of all endpoints that belong to an email.
+	 * @param u User to search endpoints for
+	 * @return List of endpoints that belong to that email
+	 * @throws SQLException SQL Error.
+	 */
+	public static Endpoint getEndpointWithEmailAndUrl(String email, String url) throws SQLException {
+		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+		Endpoint e = endpointDao.queryBuilder().where()
+				.eq(Endpoint.EMAIL_FIELD_NAME, email)
+				.eq(Endpoint.URL_FIELD_NAME, url)
+				.eq(Endpoint.DELETED_FIELD_NAME, false)
+				.queryForFirst();
+		return e;
+	}
+	
 
+	/**
+	 * Delete endpoint
+	 * @param endpointId Delete endpoint with this id
+	 * @throws SQLException SQL Error.
+	 */
+	public static boolean deleteEndpointWithId(String endpointId) throws SQLException {
+		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+		Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
+		if (e == null) {
+			// Not found.
+			return false; 
+		}
+		e.setDeleted(true);
+		endpointDao.update(e);
+		return true;
+	}
+	
+	
 	/**
 	 * Delete all endpoints that belong to a user
 	 * @param u User to delete endpoints of
 	 * @throws SQLException SQL Error.
 	 */
-	public static void deleteAllUserEndpoints(User u) throws SQLException {
+	public static void deleteAllEmailEndpoints(String email) throws SQLException {
 		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 		List<Endpoint> e = endpointDao.queryBuilder().where()
-				.eq(Endpoint.USER_FIELD_NAME, u.getInternalIdUUID())
+				.eq(Endpoint.EMAIL_FIELD_NAME, email)
+				.eq(Endpoint.DELETED_FIELD_NAME, false)
 				.query();
 		for (int i = 0; i < e.size(); i++) {
-			endpointDao.delete(e.get(i));
+			e.get(i).setDeleted(true);
+			endpointDao.update(e.get(i));
 		}
-		
+	}
+
+	public static List<Endpoint> getAllEndpointsWithFreq(String freq) throws SQLException {
+		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+		List<Endpoint> l = endpointDao.queryBuilder().where()
+					.eq(Endpoint.FREQUENCY_FIELD_NAME, freq)
+					.eq(Endpoint.DELETED_FIELD_NAME, false)
+					.query();
+				;
+		return l;
 	}
 	
-	/**
-	 * Get a certain endpoint given a user and id
-	 * @param u User that owns the endpoint
-	 * @param id Endpoint's id
-	 * @return Endpoint
-	 * @throws SQLException SQL Error.
-	 */
-	public static Endpoint getUserEndpoint(User u, int id) throws SQLException {
-		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-		Endpoint e = endpointDao.queryBuilder().where()
-				.eq(Endpoint.USER_FIELD_NAME, u.getInternalIdUUID())
-				.and()
-				.eq(Endpoint.ID_FIELD_NAME, id)
-				.queryForFirst();
-		return e;
-		
-	}
-
-	/**
-	 * Get a certain endpoint given a user and url
-	 * @param u User that owns the endpoint
-	 * @param url Endpoint's url
-	 * @return Endpoint
-	 * @throws SQLException SQL Error.
-	 */
-	public static Endpoint getUserEndpointWithUrl(User u, String url) throws SQLException {
-		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-		Endpoint e = endpointDao.queryBuilder().where()
-				.eq(Endpoint.USER_FIELD_NAME, u.getInternalIdUUID())
-				.and()
-				.eq(Endpoint.URL_FIELD_NAME, url)
-				.queryForFirst();
-		return e;
-	}
-
 	public static List<Endpoint> getAllEndpoints() throws SQLException {
 		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-		List<Endpoint> l = endpointDao.queryForAll();
+		List<Endpoint> l = endpointDao.queryBuilder().where()
+					.eq(Endpoint.DELETED_FIELD_NAME, false)
+					.query();
 		return l;
 	}
 }

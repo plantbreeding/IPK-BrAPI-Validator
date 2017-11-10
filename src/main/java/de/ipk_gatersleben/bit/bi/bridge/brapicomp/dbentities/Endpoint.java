@@ -1,5 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
+import java.util.UUID;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -11,20 +13,30 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "endpoints")
 public class Endpoint {
 	
-	public static final String USER_FIELD_NAME = "USER_ID";
+	public static final String EMAIL_FIELD_NAME = "EMAIL";
 
 	public static final String URL_FIELD_NAME = "URL";
 
 	public static final String ID_FIELD_NAME = "ID";
 	
+	public static final String FREQUENCY_FIELD_NAME = "FREQUENCY";
+
+	public static final String DELETED_FIELD_NAME = "DELETED";
+	
 	@DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
-	private int id;
+	private UUID id;
 	
 	@DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
 	private String url;
 	
-	@DatabaseField(canBeNull = false, foreign = true, columnName = USER_FIELD_NAME)
-	private User user;
+	@DatabaseField(canBeNull = false, columnName = EMAIL_FIELD_NAME)
+	private String email;
+	
+	@DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)
+	private String frequency;
+	
+	@DatabaseField(canBeNull = false, columnName = DELETED_FIELD_NAME)
+	private boolean deleted = false;
 	
 	public Endpoint() {
 	}
@@ -36,7 +48,7 @@ public class Endpoint {
 	/**
 	 * @return endpoint's id
 	 */
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
 	
@@ -48,9 +60,32 @@ public class Endpoint {
 	}
 	
 	/**
-	 * @param u Endpoint's owner User.
+	 * @param e Endpoint's owner email.
 	 */
-	public void setUser(User u) {
-		this.user = u;
+	public void setEmail(String e) {
+		this.email = e;
 	}
+	
+	/**
+	 * @return e Endpoint's email
+	 */
+	public String getEmail() {
+		return email;
+	}
+	
+	/**
+	 * @param f Endpoint's testing frequency.
+	 */
+	public void setFrequency(String f) {
+		this.frequency = f;
+	}
+	
+	/**
+	 * @param d Set deleted.
+	 */
+	public void setDeleted(boolean d) {
+		this.deleted = d;
+	}
+
+
 }

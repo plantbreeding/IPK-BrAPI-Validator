@@ -9,7 +9,6 @@ import org.apache.commons.lang3.text.StrSubstitutor;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.User;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
@@ -25,28 +24,44 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestSuiteRunner
 public class RunnerService {
 	private static final Logger LOGGER = Logger.getLogger(RunnerService.class.getName());
 		
+	/**
+	 * Test a single endpoint and return report
+	 * @param ep Endpoint to be tested
+	 * @param testCollection Test to be run
+	 * @return Report
+	 */
 	public static TestSuiteReport testEndpoint(Endpoint ep, TestCollection testCollection) {
-		TestSuiteRunner t = new TestSuiteRunner(ep.getId(),ep.getUrl(), testCollection);
+		TestSuiteRunner t = new TestSuiteRunner(ep.getId().toString(),ep.getUrl(), testCollection);
 		return t.runTests();
 	}
 	
 	/**
-	 * Tests all endpoints belonging to a user.
-	 * @param u User
+	 * Test multiple endpoints
+	 * @param eps Endpoint list
+	 * @param testCollection Test to be run
+	 * @return List of reports
+	 */
+	public static List<TestSuiteReport> testEndpoints(List<Endpoint> eps, TestCollection testCollection) {
+		List<TestSuiteReport> testSuiteList = new ArrayList<TestSuiteReport>();
+		for (int i = 0; i < eps.size(); i++) {
+			Endpoint ep = eps.get(i);
+			testSuiteList.add(testEndpoint(ep, testCollection));
+		}
+		return testSuiteList;
+
+	}
+	
+	/**
+	 * Tests all endpoints belonging to an email.
+	 * @param email Email
 	 * @param testCollection Config instance.
 	 * @return List of TestSuiteReport containing the test results.
 	 * @throws SQLException SQL connection
 	 */
-	public static List<TestSuiteReport> testAllUserEndpoints(User u, TestCollection testCollection) throws SQLException {
-		List<Endpoint> l = EndpointService.getEndpointsFromUser(u);
-				
-		LOGGER.info("Endpoints found: "+ l.size());
-		List<TestSuiteReport> testSuiteList = new ArrayList<TestSuiteReport>();
-		for (int i = 0; i < l.size(); i++) {
-			Endpoint ep = l.get(i);
-			testSuiteList.add(testEndpoint(ep, testCollection));
-		}
-		return testSuiteList;
+	public static List<TestSuiteReport> testAllEmailEndpoints(String email, TestCollection testCollection) throws SQLException {
+		List<Endpoint> l = EndpointService.getEndpointsWithEmail(email);
+		LOGGER.info("Endpoints found: " + l.size());
+		return testEndpoints(l, testCollection);
 	}
 	
 
@@ -58,14 +73,21 @@ public class RunnerService {
 	 */
 	public static List<TestSuiteReport> TestAllEndpoints(TestCollection testCollection) throws SQLException {
 		List<Endpoint> l = EndpointService.getAllEndpoints();
-			
 		LOGGER.info("Endpoints found: " + l.size());
-		List<TestSuiteReport> testSuiteList = new ArrayList<TestSuiteReport>();
-		for (int i = 0; i < l.size(); i++) {
-			Endpoint ep = l.get(i);
-			testSuiteList.add(testEndpoint(ep, testCollection));
-		}
-		return testSuiteList;
+		return testEndpoints(l, testCollection);
+	}
+	
+	/**
+	 * Test all endpoints with a certain frequency set in database
+	 * @param testCollection Config instance.
+	 * @param frequency Get endpoints with this frequency.
+	 * @return List of TestSuiteReport containing the test results.
+	 * @throws SQLException SQL connection
+	 */
+	public static List<TestSuiteReport> TestAllEndpointsWithFreq(TestCollection testCollection, String frequency) throws SQLException {
+		List<Endpoint> l = EndpointService.getAllEndpointsWithFreq(frequency);	
+		LOGGER.info("Endpoints found: " + l.size());
+		return testEndpoints(l, testCollection);
 	}
 	
 	/**

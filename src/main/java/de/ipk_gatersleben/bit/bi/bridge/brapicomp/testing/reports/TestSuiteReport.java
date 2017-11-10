@@ -8,19 +8,19 @@ import java.util.List;
  */
 public class TestSuiteReport {
 	private List<TestCollectionReport> testCollections = new ArrayList<TestCollectionReport>();
-	private int id;
+	private String id;
 	private String baseUrl;
 	
-	public TestSuiteReport(int id, String url) {
+	public TestSuiteReport(String id, String url) {
 		setId(id);
 		setBaseUrl(url); 
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -22,8 +22,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.User;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.UserService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
@@ -46,12 +45,12 @@ public class Admin {
 	 * @return Response with json report
 	 */
 	@POST
-	@Path("/generaltest")
+	@Path("/testall")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response generalTest(@Context HttpHeaders headers) {
+	public Response generalTest(@Context HttpHeaders headers, @QueryParam("frequency") String frequency) {
 
-		LOGGER.log(Level.FINER, "New POST /generaltest call.");
+		LOGGER.log(Level.FINER, "New POST /testall call.");
 		try {
 			
 			String[] auth = ResourceService.getAuth(headers);
@@ -60,34 +59,21 @@ public class Admin {
 				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
-			
-			User admin = UserService.getUser(auth[0]);
-			//Check username
-			if (admin == null) {
-				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
-				return Response.status(Status.NOT_FOUND).entity(e).build();
-			}
 
-			
-			String apiKey = auth[1];
 			//Check if api key is correct.
-			if (apiKey == null || admin.checkApiKey(apiKey)) {
+			//Disabled
+			if (true || auth[0] != Config.get("admin") || auth[1] != Config.get("key")) {
 				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
 			
-			//Check if user is admin
-			if (!admin.getRole().equals("ADMIN")) {
-				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4022); 
-				return Response.status(Status.UNAUTHORIZED).entity(e).build();
-			}
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			InputStream inJson = TestCollection.class.getResourceAsStream("/BrapiTesting.custom_collection.json");
 			TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 			
-			List<TestSuiteReport> testSuiteList = RunnerService.TestAllEndpoints(tc);
+			List<TestSuiteReport> testSuiteList = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
 			
 			return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteList)).build();
 		} catch (SQLException | IOException e) {
@@ -97,7 +83,7 @@ public class Admin {
 		}
 	}
 	/**
-	 * Run the default test over all the user's endpoints
+	 * Run the default test over all the email's endpoints
 	 * @param apikey API key is required for all admin calls.
 	 * @param user Username of the user who's endpoints will be tested
 	 * @return Response with json report
@@ -106,7 +92,7 @@ public class Admin {
 	@Path("/usertest")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response userTest(@Context HttpHeaders headers, @QueryParam("username") String user) {
+	public Response userTest(@Context HttpHeaders headers, @QueryParam("email") String email) {
 
 		LOGGER.log(Level.FINER, "New POST /usertest call.");
 		try {
@@ -116,39 +102,21 @@ public class Admin {
 				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
-			
-			User admin = UserService.getUser(auth[0]);
-			//Check username
-			if (admin == null) {
-				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
-				return Response.status(Status.NOT_FOUND).entity(e).build();
-			}
 
 			
-			String apiKey = auth[1];
 			//Check if api key is correct.
-			if (apiKey == null || admin.checkApiKey(apiKey)) {
+			//Disabled
+			if (true || auth[0] != Config.get("admin") || auth[1] != Config.get("key")) {
 				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
 			
-			//Check if user is admin
-			if (!admin.getRole().equals("ADMIN")) {
-				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4022); 
-				return Response.status(Status.UNAUTHORIZED).entity(e).build();
-			}
-			
-			User u = UserService.getUser(user);
-			if (u == null) {
-				String e = JsonMessageManager.jsonMessage(404, "user not found", 4020); 
-				return Response.status(Status.NOT_FOUND).entity(e).build();
-			}
 			ObjectMapper mapper = new ObjectMapper();
 			
 			InputStream inJson = TestCollection.class.getResourceAsStream("/BrapiTesting.custom_collection.json");
 			TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 			
-			List<TestSuiteReport> testSuiteList = RunnerService.testAllUserEndpoints(u, tc);
+			List<TestSuiteReport> testSuiteList = RunnerService.testAllEmailEndpoints(email, tc);
 			
 			return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteList)).build();
 		} catch (SQLException | IOException e) {
