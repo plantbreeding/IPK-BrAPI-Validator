@@ -99,7 +99,11 @@
       </div>
       <div class="col-md-6 font-14" id="helpCol" style="display:none">
         <div class="card">
+
           <div class="card-body">
+            <button type="button" class="close" id="closeHelp" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
             <p class="card-text">BrAVa will call one or multiple resources in the tested server and test the response. </p>
             <p class="card-text">There are two types of tests available: <strong>structure</strong> tests and <strong>data integrity</strong> tests.</p>
             <p class="card-text"><strong>Structure tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> specific for that resource. The JSON schema compares the structure, parameter name and parameter types of the response object to those defined by the specification.</p>

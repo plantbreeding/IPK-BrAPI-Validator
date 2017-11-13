@@ -553,7 +553,8 @@ $(function() {
 
         // Handle help card
         var helpVisible = false;
-        $("#helpLink").click(function() {
+
+        function toggleHelp() {
             if (helpVisible) {
                 $("#helpCol").toggle("fade", 300, function(){
                     $("#formCol").toggleClass("offset-md-3", true, 300, "swing");
@@ -564,7 +565,9 @@ $(function() {
                 });
             }
             helpVisible = !helpVisible;
-        })
+        }
+        $("#closeHelp").click(toggleHelp);
+        $("#helpLink").click(toggleHelp);
 
         // Server URL list initial values
         var resources = [
