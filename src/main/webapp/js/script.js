@@ -313,8 +313,8 @@ $(function() {
             reportDiv.html("");
         }
 
-        function createTestItemResult(k, tir) {
-            function createTestResult(k, i, tr) {
+        function createTestItemResult(l, k, tir) {
+            function createTestResult(l, k, i, tr) {
                 function createError(i, e) {
 
                     var errorDiv = $("<pre class=\"border border-secondary rounded p-1\"/>");
@@ -350,17 +350,17 @@ $(function() {
                 var success = tr.passed ? "success" : "danger";
                 var icon = tr.passed ? "check" : "times";
                 var testResultDiv = $("<div />", {
-                    id: "testResult_" + i + "-" + k,
+                    id: "testResult_" + l + "-" + k + "-" + i,
                     "class": "card mb-2 bg-" + success
                 });
                 var testResultHeader = $("<div />", {
                     "class": "card-header collapsed accordion-toggle text-white",
                     "role": "tab",
-                    "id": "heading" + i,
+                    "id": "heading_" + l + "-" + k + "-" + i,
                     "data-toggle": "collapse",
-                    "data-target": "#collapse" + i + "-" + k,
+                    "data-target": "#collapse_" + l + "-" + k + "-" + i,
                     "aria-expanded": false,
-                    "aria-controls": "collapse" + i + "-" + k,
+                    "aria-controls": "collapse_" + l + "-" + k + "-" + i
                 });
 
                 //var headerHTML = "<h4 class=\"accordion-toggle\">";
@@ -373,13 +373,13 @@ $(function() {
                 testResultDiv.append(testResultHeader);
 
                 var cardBodyDiv = $("<div />", {class: "card-body bg-light"});
-                var collapseDiv = $("<div id=\"collapse" + i + "-" + k + "\" class=\"collapse\"" +
-                    " role=\"tabpanel\" aria-labelledby=\"heading" + i + "-" + k + "\"></div>");
+                var collapseDiv = $("<div id=\"collapse_" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
+                    " role=\"tabpanel\" aria-labelledby=\"heading_" + l + "-" + k + "-" + i + "\"></div>");
 
                 if (tr.message.length > 0) {
                     var resultHTML = "<p class=\"card-text\">";
-                    for (var i = 0; i < tr.message.length; i++) {
-                        resultHTML += tr.message[i] + "\n";
+                    for (var m = 0; m < tr.message.length; m++) {
+                        resultHTML += tr.message[m] + "\n";
                     }
                     resultHTML += "</p>";
                     cardBodyDiv.append(resultHTML);
@@ -404,7 +404,7 @@ $(function() {
 
             var tirDiv = $("<div />");
             var tirAccDiv = $("<div />", {
-                "id": "reportAccordion" + k,
+                "id": "reportAccordion_" + l + "_" + k,
                 "role": "tablist"
             });
             var totalTests = 0;
@@ -414,7 +414,7 @@ $(function() {
             tirDiv.append($("<h3 />").html('Request: ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>'));
             //reportStatsDiv.append($("<p />",{id:"report_stats"}));
             for (var i = 0; i < tir.test.length; i++) {
-                tirAccDiv.append(createTestResult(k, i, tir.test[i]));
+                tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
                 tir.test[i].passed ? 0 : totalFailures++;
                 totalTests += 1;
             }
@@ -432,18 +432,18 @@ $(function() {
 
         function addTestCollectionList(tcl) {
             function createTestCollection(tc) {
-                function createFolder(f) {
+                function createFolder(l, f) {
                     var folderDiv = $("<div />");
                     for (var i = 0; i < f.tests.length; i++) {
-                        folderDiv.append(createTestItemResult(i, f.tests[i]));
+                        folderDiv.append(createTestItemResult(l, i, f.tests[i]));
                     }
                     return folderDiv;
                 }
 
                 var tcDiv = $("<div />");
                 tcDiv.append($("<h2/>").html(tc.name));
-                for (var i = 0; i < tc.folders.length; i++) {
-                    tcDiv.append(createFolder(tc.folders[i]));
+                for (var l = 0; l < tc.folders.length; l++) {
+                    tcDiv.append(createFolder(l, tc.folders[l]));
                 }
                 return tcDiv;
             }
