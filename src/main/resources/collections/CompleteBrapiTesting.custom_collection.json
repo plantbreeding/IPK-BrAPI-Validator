@@ -1015,10 +1015,16 @@
 							]
 						}
 					]
-				},
+				}
+			]
+		},
+		{
+			"name": "Genomic maps",
+			"description": "Genomic maps resource",
+			"item": [
 				{
 					"name": "/maps",
-					"description": "",
+					"description": "Schema and store id",
 					"request": {
 						"url": "{baseurl}/maps",
 						"method": "GET"
@@ -1031,14 +1037,83 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/maps"
+								"Schema:/maps",
+								"GetValue:/result/data/0/mapDbId:mapDbId"
 							]
 						}
 					]
 				},
 				{
+					"name": "/maps/{mapDbId}",
+					"description": "Schema and id check",
+					"request": {
+						"url": "{baseurl}/maps",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps/mapDbId",
+								"IsEqual:/result/mapDbId:mapDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/maps/{mapDbId}/positions",
+					"description": "Schema and id check",
+					"request": {
+						"url": "{baseurl}/maps/positions",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps/mapDbId/positions",
+								"GetValue:/result/data/0/linkageGroup:linkageGroup"
+							]
+						}
+					]
+				},
+				{
+					"name": "/maps/{mapDbId}/positions/{linkageGroup}",
+					"description": "Schema and id check",
+					"request": {
+						"url": "{baseurl}/maps/positions",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps/mapDbId/positions/linkageGroup",
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Locations",
+			"description": "Locations resource",
+			"item": [
+				{
 					"name": "/locations",
-					"description": "",
+					"description": "Check schema and id",
 					"request": {
 						"url": "{baseurl}/locations",
 						"method": "GET"
@@ -1051,7 +1126,29 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/locations"
+								"Schema:/locations",
+								"GetValue:/result/data/0/locationDbId:locationDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/locations/locationDbId",
+					"description": "Check schema and id",
+					"request": {
+						"url": "{baseurl}/locations/{locationDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/locations",
+								"IsEqual:/result/locationDbId:locationDbId"
 							]
 						}
 					]
