@@ -159,8 +159,12 @@
 			"pathToCollection": "/MarkersData.custom_collection.json" 
 		},
 		{
-			"name":"TrialsData",
-			"pathToCollection": "/TrialsData.custom_collection.json" 
+			"name": "TrialsData",
+			"pathToCollection": "/TrialsData.custom_collection.json"
+		},
+		{
+			"name":"Complete",
+			"pathToCollection": "/CompleteBrapiTest.custom_collection.json"
 		}
 	]
 }
