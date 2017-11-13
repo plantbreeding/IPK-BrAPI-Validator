@@ -31,7 +31,11 @@ public class RunnerService {
 	 * @return Report
 	 */
 	public static TestSuiteReport testEndpoint(Endpoint ep, TestCollection testCollection) {
-		TestSuiteRunner t = new TestSuiteRunner(ep.getId().toString(),ep.getUrl(), testCollection);
+		String id = "";
+		if (ep.getId() != null) {
+			id = ep.getId().toString();
+		}
+		TestSuiteRunner t = new TestSuiteRunner(id, ep.getUrl(), testCollection);
 		return t.runTests();
 	}
 	
