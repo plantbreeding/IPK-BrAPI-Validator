@@ -98,4 +98,16 @@ public class EndpointService {
 					.query();
 		return l;
 	}
+
+	public static boolean confirmEndpointWithId(String endpointId) throws SQLException {
+		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+		Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
+		if (e == null) {
+			// Not found.
+			return false; 
+		}
+		e.setConfirmed(true);
+		endpointDao.update(e);
+		return true;
+	}
 }

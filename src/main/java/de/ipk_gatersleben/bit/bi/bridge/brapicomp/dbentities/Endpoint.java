@@ -42,6 +42,11 @@ public class Endpoint {
 	@DatabaseField(canBeNull = false, columnName = DELETED_FIELD_NAME)
 	private boolean deleted = false;
 	
+	@DatabaseField(canBeNull = false)
+	private boolean confirmed = false;
+	
+
+
 	public Endpoint() {
 	}
 	
@@ -92,9 +97,12 @@ public class Endpoint {
 		} else {
 			throw new IllegalArgumentException();
 		}
-		
 	}
 	
+	public String getFrequency() {
+		return frequency;
+	}
+
 	/**
 	 * @param d Set deleted.
 	 */
@@ -102,5 +110,12 @@ public class Endpoint {
 		this.deleted = d;
 	}
 
+	public void setConfirmed(boolean b) {
+		this.confirmed = b;
+	}
 
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	
 }

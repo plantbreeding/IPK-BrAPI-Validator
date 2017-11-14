@@ -61,8 +61,7 @@ public class Admin {
 			}
 
 			//Check if api key is correct.
-			//Disabled
-			if (true || auth[0] != Config.get("admin") || auth[1] != Config.get("key")) {
+			if (!auth[1].equals(Config.get("adminkey"))) {
 				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
 				return Response.status(Status.UNAUTHORIZED).entity(e).build();
 			}
@@ -70,12 +69,12 @@ public class Admin {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
-			InputStream inJson = TestCollection.class.getResourceAsStream("/BrapiTesting.custom_collection.json");
+			InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
 			TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 			
-			List<TestSuiteReport> testSuiteList = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
+			boolean success = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
 			
-			return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteList)).build();
+			return Response.status(Status.ACCEPTED).entity(success).build();
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010); 

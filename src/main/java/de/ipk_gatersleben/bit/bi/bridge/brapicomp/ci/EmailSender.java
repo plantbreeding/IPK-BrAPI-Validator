@@ -1,4 +1,4 @@
-package de.ipk_gatersleben.bit.bi.bridge.brapicomp;
+package de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -12,8 +12,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class Email {
-	private static final Logger LOGGER = Logger.getLogger(Email.class.getName());
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
+
+public class EmailSender {
+	private static final Logger LOGGER = Logger.getLogger(EmailSender.class.getName());
 	protected static void sendEmail(final String message, final String subject, final String emailAddress) {
 
 		javax.mail.Session session = null;

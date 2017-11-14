@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
@@ -88,10 +89,10 @@ public class RunnerService {
 	 * @return List of TestSuiteReport containing the test results.
 	 * @throws SQLException SQL connection
 	 */
-	public static List<TestSuiteReport> TestAllEndpointsWithFreq(TestCollection testCollection, String frequency) throws SQLException {
+	public static boolean TestAllEndpointsWithFreq(TestCollection testCollection, String frequency) throws SQLException {
 		List<Endpoint> l = EndpointService.getAllEndpointsWithFreq(frequency);	
 		LOGGER.info("Endpoints found: " + l.size());
-		return testEndpoints(l, testCollection);
+		return new EmailManager(l.get(0)).runAndSend(testCollection);
 	}
 	
 	/**
