@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Cache;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.RestAssuredRequest;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestExecReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
@@ -30,6 +32,7 @@ public class TestItemRunner {
 	private Item item;
 	private String method;
 	private VariableStorage variables;
+	private boolean cached = false;
 
 	/**
 	 * Set up the test runner
@@ -111,6 +114,7 @@ public class TestItemRunner {
 				}
 			}
 		}
+		tir.setCached(this.cached);
 		return tir;
 	}
 	/**
@@ -187,8 +191,15 @@ public class TestItemRunner {
 	 * @return server response
 	 */
 	private ValidatableResponse connect() {
-		ValidatableResponse vr;
 		LOGGER.info("New Request. URL: " + this.url);
+		ValidatableResponse vr = getResponseIfCached(60);
+		if (vr != null) {
+			this.cached  = true;
+			LOGGER.info("Using cached URL: " + this.url);
+			return vr;
+		}
+		
+		
 		try {
 			vr = given()
 					.request(this.method, this.url)
@@ -204,9 +215,35 @@ public class TestItemRunner {
 			LOGGER.warning(e.getMessage());
 			return null;
 		}
+		saveResponseToCache(vr);
 		return vr;
 	}
 	
+	private void saveResponseToCache(ValidatableResponse vr) {
+		String key = method +":" + url;
+		long time = System.currentTimeMillis();
+		Cache.addRequest(key, new RestAssuredRequest(vr, time));
+	}
+
+	/**
+	 * Get a cached response if not stale
+	 * @param i Number of seconds to consider previous response stale.
+	 * @return Response if not stale, null if stale.
+	 */
+	private ValidatableResponse getResponseIfCached(int sec) {
+		String key = method +":" + url;
+		RestAssuredRequest req = Cache.getRequest(key);
+		if (req == null) {
+			return null;
+		}
+		long age = System.currentTimeMillis() - req.getTimestamp();
+		long millis = (long) sec*1000;
+		if (age < millis) {
+			return req.getVr();
+		}
+		return null;
+	}
+
 	/**
 	 * Check if response has status code
 	 * @param i Status code to be tested.

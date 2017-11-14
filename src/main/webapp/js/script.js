@@ -278,6 +278,7 @@ $(function() {
                 } else {
                     report.addTestItemResult(data);
                 }
+                $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
             },
             error: function(a) {
                 spinner.stop();
@@ -410,8 +411,11 @@ $(function() {
             var totalTests = 0;
             var totalFailures = 0;
             var reportStatsDiv = $("<div />", {id: "report_stats_div", class: "col-md-12"});
-            //tirDiv.append(reportStatsDiv);
-            tirDiv.append($("<h3 />").html('Request: ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>'));
+            var cached = '';
+            if (tir.cached) {
+                cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
+            }
+            tirDiv.append($("<h3 />").html('Request: ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>' + cached));
             //reportStatsDiv.append($("<p />",{id:"report_stats"}));
             for (var i = 0; i < tir.test.length; i++) {
                 tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
@@ -426,7 +430,7 @@ $(function() {
         }
 
         function addTestItemResult(tir) {
-            reportDiv.append(createTestItemResult(0, tir));
+            reportDiv.append(createTestItemResult(0, 0, tir));
         }
 
 

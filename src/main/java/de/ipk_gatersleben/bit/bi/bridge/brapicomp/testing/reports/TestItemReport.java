@@ -12,6 +12,7 @@ public class TestItemReport {
 	private List<TestExecReport> test = new ArrayList<TestExecReport>();
 	private String endpoint;
 	private String method;
+	private boolean cached;
 	
 	public TestItemReport(String name, String endpoint, String method) {
 		setName(name);
@@ -62,6 +63,17 @@ public class TestItemReport {
 	 */
 	public void addTest(TestExecReport test) {
 		this.test.add(test);
+	}
+
+	/**
+	 * @param cached
+	 */
+	public void setCached(boolean cached) {
+		this.cached = cached;	
+	}
+	
+	public boolean isCached() {
+		return cached;
 	}
 
 }
