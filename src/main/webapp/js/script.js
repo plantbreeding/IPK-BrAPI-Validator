@@ -485,6 +485,7 @@ $(function() {
                 spinner.stop();
                 $("#modalSuccess").show();
                 $("#modalSubmit").prop("disabled", true);
+                $(".modalMessage").text(data.message);
 
 
             },
@@ -492,7 +493,7 @@ $(function() {
                 spinner.stop();
                 $("#modalFailure").show();
                 if (a.responseJSON) {
-                    $("#modalMessage").text(a.responseJSON.message);
+                    $(".modalMessage").text(a.responseJSON.message);
                 }
 
             }

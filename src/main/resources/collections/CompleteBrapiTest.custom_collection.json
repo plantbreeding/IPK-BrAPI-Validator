@@ -791,7 +791,7 @@
 					"name": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
 					"description": "Check schema and id",
 					"request": {
-						"url": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+						"url": "{baseurl}/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
 						"method": "GET"
 					},
 					"event": [
@@ -1085,7 +1085,7 @@
 					]
 				},
 				{
-					"name": "/maps/{mapDbId}/positions/{linkageGroup}",
+					"name": "/maps/{mapDbId}/positions/{linkageGroupDbID}",
 					"description": "Schema and id check",
 					"request": {
 						"url": "{baseurl}/maps/positions",
@@ -1099,7 +1099,7 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/maps/mapDbId/positions/linkageGroup"
+								"Schema:/maps/mapDbId/positions/linkageGroupDbId"
 							]
 						}
 					]

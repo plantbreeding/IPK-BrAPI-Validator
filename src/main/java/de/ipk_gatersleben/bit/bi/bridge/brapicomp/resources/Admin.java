@@ -72,8 +72,11 @@ public class Admin {
 			InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
 			TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 			
-			boolean success = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
-			
+			int count = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
+			boolean success = false;
+			if (count > 0) {
+				success = true;
+			}
 			return Response.status(Status.ACCEPTED).entity(success).build();
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();

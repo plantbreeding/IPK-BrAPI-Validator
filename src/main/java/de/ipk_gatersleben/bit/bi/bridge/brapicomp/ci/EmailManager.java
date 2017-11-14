@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.ContinuousIntegration;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestCollectionRunner;
@@ -17,6 +19,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestCollectionR
  *
  */
 public class EmailManager {
+	private static final Logger LOGGER = Logger.getLogger(EmailManager.class.getName());
 	private Endpoint endpoint;
 	
 	public EmailManager(Endpoint endpoint) {
@@ -32,7 +35,7 @@ public class EmailManager {
 			EmailSender.sendEmail(body, "BrAVA: Confirm your email", endpoint.getEmail());
 			return true;
 		} catch (IOException | URISyntaxException e){
-			e.printStackTrace();
+			LOGGER.warning("Problem sending confirmation for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
 		}
 		return false;
 	}	
@@ -64,8 +67,7 @@ public class EmailManager {
 			EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail());
 			return true;
 		} catch (IOException | URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.warning("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
 		}
 		return false;
 	}

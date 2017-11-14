@@ -59,16 +59,22 @@ public class ContinuousIntegration {
 		
 		try {
 			Endpoint e = EndpointService.getEndpointWithEmailAndUrl(endp.getEmail(), endp.getUrl());
-			if (e != null) {
+			if (e != null && e.isConfirmed()) {
 				String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4021); 
 				return Response.status(Status.BAD_REQUEST).entity(e2).build();
+			} else if (e != null && !e.isConfirmed()) {
+				EmailManager em = new EmailManager(endp);
+				em.sendConfirmation();
+				String e2 = JsonMessageManager.jsonMessage(200, "We'll resend you a confirmation email.", 2021); 
+				return Response.status(Status.ACCEPTED).entity(e2).build();
+			} else {
+				endpointDao.create(endp);
+				
+				EmailManager em = new EmailManager(endp);
+				em.sendConfirmation();
+				
+				return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "We'll send you a confirmation email.", 2000)).build();
 			}
-			endpointDao.create(endp);
-			
-			EmailManager em = new EmailManager(endp);
-			em.sendConfirmation();
-			
-			return Response.status(Status.CREATED).entity(JsonMessageManager.jsonMessage(200, "success", 2000)).build();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5020); 
@@ -90,14 +96,16 @@ public class ContinuousIntegration {
 	
 		
 		try {
-			
-			boolean con = EndpointService.confirmEndpointWithId(endpointId);
-			if (!con) {
+			TemplateHTML result = null;
+			Boolean confirmed = EndpointService.confirmEndpointWithId(endpointId);
+			if (confirmed == null) {
 				String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4021); 
 				return Response.status(Status.NOT_FOUND).entity(e2).build();
+			} else if (confirmed) {
+				result = new TemplateHTML("/templates/confirmation.html");
+			} else {
+				result = new TemplateHTML("/templates/already-confirmed.html");
 			}
-
-			TemplateHTML result = new TemplateHTML("/templates/confirmation.html");
 			
 			return Response.ok().entity(result.generateBody()).build();
 		} catch (SQLException | IOException | URISyntaxException e) {
@@ -123,14 +131,16 @@ public class ContinuousIntegration {
 		LOGGER.log(Level.FINER, "New DELETE /ci/unsubscribe call. EndpointId: " + endpointId);
 			
 		try {
-			
-			boolean del = EndpointService.deleteEndpointWithId(endpointId);
-			if (!del) {
+			TemplateHTML result = null;
+			Boolean unsuscribed = EndpointService.deleteEndpointWithId(endpointId);
+			if (unsuscribed == null) {
 				String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4021); 
 				return Response.status(Status.NOT_FOUND).entity(e2).build();
+			} else if (unsuscribed) {
+				result = new TemplateHTML("/templates/unsubscribe.html");
+			} else {
+				result = new TemplateHTML("/templates/already-unsubscribed.html");
 			}
-			
-			TemplateHTML result = new TemplateHTML("/templates/unsubscribe.html");
 			
 			return Response.ok().entity(result.generateBody()).build();
 		} catch (SQLException | IOException | URISyntaxException e) {

@@ -51,12 +51,15 @@ public class EndpointService {
 	 * @param endpointId Delete endpoint with this id
 	 * @throws SQLException SQL Error.
 	 */
-	public static boolean deleteEndpointWithId(String endpointId) throws SQLException {
+	public static Boolean deleteEndpointWithId(String endpointId) throws SQLException {
 		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 		Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
 		if (e == null) {
 			// Not found.
-			return false; 
+			return null; 
+		}
+		if (e.isDeleted()) {
+			return false;
 		}
 		e.setDeleted(true);
 		endpointDao.update(e);
@@ -87,7 +90,6 @@ public class EndpointService {
 					.eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
 					.eq(Endpoint.DELETED_FIELD_NAME, false)
 					.query();
-				;
 		return l;
 	}
 	
@@ -99,12 +101,15 @@ public class EndpointService {
 		return l;
 	}
 
-	public static boolean confirmEndpointWithId(String endpointId) throws SQLException {
+	public static Boolean confirmEndpointWithId(String endpointId) throws SQLException {
 		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 		Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
 		if (e == null) {
 			// Not found.
-			return false; 
+			return null; 
+		}
+		if (e.isConfirmed()) {
+			return false;
 		}
 		e.setConfirmed(true);
 		endpointDao.update(e);

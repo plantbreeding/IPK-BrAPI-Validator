@@ -89,10 +89,18 @@ public class RunnerService {
 	 * @return List of TestSuiteReport containing the test results.
 	 * @throws SQLException SQL connection
 	 */
-	public static boolean TestAllEndpointsWithFreq(TestCollection testCollection, String frequency) throws SQLException {
+	public static int TestAllEndpointsWithFreq(TestCollection testCollection, String frequency) throws SQLException {
 		List<Endpoint> l = EndpointService.getAllEndpointsWithFreq(frequency);	
 		LOGGER.info("Endpoints found: " + l.size());
-		return new EmailManager(l.get(0)).runAndSend(testCollection);
+		int count = 0;
+		boolean sent;
+		for (int i = 0; i < l.size(); i++) {
+			sent = new EmailManager(l.get(i)).runAndSend(testCollection);
+			if (sent) {
+				count += 1;
+			}
+		}
+		return count;
 	}
 	
 	/**

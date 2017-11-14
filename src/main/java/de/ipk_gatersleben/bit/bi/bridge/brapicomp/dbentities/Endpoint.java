@@ -117,5 +117,9 @@ public class Endpoint {
 	public boolean isConfirmed() {
 		return confirmed;
 	}
+
+	public boolean isDeleted() {
+		return this.deleted;
+	}
 	
 }
