@@ -17,7 +17,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <div class="jumbotron">
+        <div class="jumbotron py-4">
           <h1 class="text-center display-3">
             BrAVa
           </h1>
@@ -28,14 +28,14 @@
     </div>
     <div class="row">
       <div class="col-md-6 offset-md-3" id="formCol">
-        <div class="card">
+        <div class="card bg-light">
           <div class="card-body">
             <form id="testForm">
               <div class="d-flex justify-content-between">
                 <h2 class="card-title">Test a BrAPI server</h2>
                 <button type="button" id="helpLink" class="btn btn-link">Help</button>
               </div>
-              <div class="form-group">
+              <div class="form-group mb-5">
                 <label for="serverurl">
                   Server URL
                 </label>
@@ -50,7 +50,7 @@
                   Structure test: Check structure with <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">JSON schemas</a>
                 </label>
               </div>
-              <div class="form-check">
+              <div class="form-check mb-5">
                 <label class="form-check-label">
                   <input type="radio" name="test" value="data" class="form-check-input">
                   Data integrity: Valid structure and data integrity
@@ -100,20 +100,19 @@
         </div>
       </div>
       <div class="col-md-6 font-14" id="helpCol" style="display:none">
-        <div class="card">
-
+        <div class="card bg-light">
           <div class="card-body">
             <button type="button" class="close" id="closeHelp" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <p class="card-text">BrAVa will call one or multiple resources in the tested server and test the response. </p>
+            <p class="card-text">BrAVa calls one or more resources in the tested server and tests the response. </p>
             <p class="card-text">There are two types of tests available: <strong>structure</strong> tests and <strong>data integrity</strong> tests.</p>
-            <p class="card-text"><strong>Structure tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> specific for that resource. The JSON schema compares the structure, parameter name and parameter types of the response object to those defined by the specification.</p>
+            <p class="card-text"><strong>Structure tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> specific for that resource. It checks the structure, parameter name and parameter types.</p>
             <p class="card-text">For example, the <code>/germplasm-search</code> test requires the response data object to contain a <var>germplasmDbId</var> attribute with a string value, among others.</p>
             <p class="card-text">We created the JSON schemas using the official BrAPI specifications. They are <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">available here</a>, feel free to check them and use them in your own tests. They may differ from the official specifications because we update them manually. Let us know of any inconsistencies in the <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/issues"> issue tracker</a>.</p>
 
-            <p class="card-text"><strong>Data integrity tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> and <strong>also</strong> make sure the data is consistent across resources. This test works by calling a resource, testing the structure and storing a few values from the response. The specific parameters that are saved depend on the test. The server will make a request to other resources using these values as input.</p>
-            <p class="card-text">The benefits of this type of test is that you can automatically test some resources that would require manual input for certain parameters.</p>
+            <p class="card-text"><strong>Data integrity tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> and <strong>also</strong> make sure the data is consistent across resources. This test works by storing a few values from the response. The specific parameters that are saved depend on the test. The server will make a request to other resources using these values as input.</p>
+            <p class="card-text">This way you can automatically test some resources that would require manual input for certain parameters.</p>
             <p class="card-text">For example, a call to <code>/markerprofiles</code> could store <var>markerprofileDbId</var>. This value can be used as input for <code>/markerprofiles/{markerprofileDbId}</code>.</p>
           </div>
         </div>
