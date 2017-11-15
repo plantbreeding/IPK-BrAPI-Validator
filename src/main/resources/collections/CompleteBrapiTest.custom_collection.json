@@ -11,7 +11,7 @@
 			"item": [
 				{
 					"name": "/calls",
-					"description": "Tests structure and if the first two results are not equal.",
+					"description": "Tests schema.",
 					"request": {
 						"url": "{baseurl}/calls",
 						"method": "GET"
@@ -24,8 +24,7 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/calls",
-								"GetValue:/result/data/0/call:call"
+								"Schema:/calls"
 							]
 						}
 					]
@@ -38,7 +37,7 @@
 			"item": [
 				{
 					"name": "/germplasm-search",
-					"description": "Tests structure and stores first germplasmDbId",
+					"description": "Tests schema and stores first and second germplasmDbId",
 					"request": {
 						"url": "{baseurl}/germplasm-search",
 						"method": "GET"
@@ -150,7 +149,7 @@
 			"item": [
 				{
 					"name": "/attributes",
-					"description": "",
+					"description": "Tests schema",
 					"request": {
 						"url": "{baseurl}/attributes",
 						"method": "GET"
@@ -170,7 +169,7 @@
 				},
 				{
 					"name": "/attributes/categories",
-					"description": "",
+					"description": "Tests schema",
 					"request": {
 						"url": "{baseurl}/attributes/categories",
 						"method": "GET"
@@ -581,7 +580,7 @@
 				},
 				{
 					"name": "/studies-search",
-					"description": "Search with no parameters and save two Ids",
+					"description": "Search with no parameters and save two ids",
 					"request": {
 						"url": "{baseurl}/studies-search",
 						"method": "GET"
@@ -665,7 +664,7 @@
 				},
 				{
 					"name": "/studies/{studyDbId}/observationVariables",
-					"description": "Check schema and Id",
+					"description": "Check schema and id",
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/observationVariables",
 						"method": "GET"
@@ -687,7 +686,7 @@
 				},
 				{
 					"name": "/studies/{studyDbId}/germplasm",
-					"description": "Check schema and Id",
+					"description": "Check schema and id",
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/germplasm",
 						"method": "GET"
@@ -708,7 +707,7 @@
 				},
 				{
 					"name": "/observationLevels",
-					"description": "",
+					"description": "Check schema",
 					"request": {
 						"url": "{baseurl}/observationLevels",
 						"method": "GET"
@@ -748,7 +747,7 @@
 				},
 				{
 					"name": "/studies/{studyDbId}/table",
-					"description": "Check schema",
+					"description": "Check schema and id",
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/table",
 						"method": "GET"
@@ -1046,7 +1045,7 @@
 					"name": "/maps/{mapDbId}",
 					"description": "Schema and id check",
 					"request": {
-						"url": "{baseurl}/maps",
+						"url": "{baseurl}/maps/{mapDbId}",
 						"method": "GET"
 					},
 					"event": [
@@ -1067,7 +1066,7 @@
 					"name": "/maps/{mapDbId}/positions",
 					"description": "Schema and id check",
 					"request": {
-						"url": "{baseurl}/maps/positions",
+						"url": "{baseurl}/{mapDbId}/positions",
 						"method": "GET"
 					},
 					"event": [
@@ -1079,13 +1078,13 @@
 								"ContentType:application/json",
 								"Schema:/metadata",
 								"Schema:/maps/mapDbId/positions",
-								"GetValue:/result/data/0/linkageGroup:linkageGroup"
+								"GetValue:/result/data/0/linkageGroup:linkageGroupId"
 							]
 						}
 					]
 				},
 				{
-					"name": "/maps/{mapDbId}/positions/{linkageGroupDbID}",
+					"name": "/maps/{mapDbId}/positions/{linkageGroupId}",
 					"description": "Schema and id check",
 					"request": {
 						"url": "{baseurl}/maps/positions",
@@ -1099,7 +1098,7 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/maps/mapDbId/positions/linkageGroupDbId"
+								"Schema:/maps/mapDbId/positions/linkageGroupId"
 							]
 						}
 					]
@@ -1112,7 +1111,7 @@
 			"item": [
 				{
 					"name": "/locations",
-					"description": "Check schema and id",
+					"description": "Check schema and store id",
 					"request": {
 						"url": "{baseurl}/locations",
 						"method": "GET"
