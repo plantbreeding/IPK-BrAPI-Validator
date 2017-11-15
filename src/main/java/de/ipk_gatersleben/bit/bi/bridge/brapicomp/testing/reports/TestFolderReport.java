@@ -10,6 +10,8 @@ public class TestFolderReport {
 	private List<TestItemReport> tests = new ArrayList<TestItemReport>();
 	private String url;
 	private VariableStorage variables;
+	private String name;
+	private String description;
 	
 	public TestFolderReport(String url) {
 		this.url = url;
@@ -39,4 +41,22 @@ public class TestFolderReport {
 	public VariableStorage getVariables() {
 		return variables;
 	}
+
+	public void setName(String name) {
+		this.name = name;		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 }

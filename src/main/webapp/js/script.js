@@ -247,7 +247,7 @@ $(function() {
     }
 
     // Calculate the full url given a resource.
-    var getFullUrl = function(res) {
+    function getFullUrl(res) {
         var url = $("#serverurl").val();
         if (url.lastIndexOf('/') === url.length-1) {
             url = url.slice(0,url.length-1);
@@ -263,6 +263,46 @@ $(function() {
         }
         return fullUrl
     }
+
+    function testStats(test) {
+        var failed = false;
+        test.test.forEach(function(execTest) {
+            if (!execTest.passed) {
+                failed = true;
+            }
+        });
+        test.failed = failed;
+    }
+
+    function generateStats(data) {
+        var totalTests = 0;
+        var totalFails = 0;
+        var folderTests = 0;
+        var folderFails = 0;
+        data.testCollections.forEach(function(testCollection) {
+            totalTests = 0;
+            totalFails = 0;
+            testCollection.folders.forEach(function(folder) {
+                folderTests = 0;
+                folderFails = 0;
+                folder.tests.forEach(function(test) {
+                    testStats(test)
+                    folderTests += 1;
+                    if (test.failed) {
+                        folderFails += 1;
+                    }
+                });
+                folder.folderTests = folderTests;
+                folder.folderFails = folderFails;
+                totalTests += folderTests;
+                totalFails += folderFails;
+            });
+            testCollection.totalTests = totalTests;
+            testCollection.totalFails = totalFails;
+        });
+        return data;
+    }
+
 
     // Test form
     var form = document.getElementById('testForm');
@@ -292,8 +332,10 @@ $(function() {
 
                 // Report div is different if the response is a test collection or a single test
                 if (data.hasOwnProperty("testCollections")) {
+                    data = generateStats(data);
                     report.addTestCollectionList(data.testCollections);
                 } else {
+                    testStats(data);
                     report.addTestItemResult(data);
                 }
                 $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
@@ -304,7 +346,7 @@ $(function() {
                     var message = JSON.parse(a.responseText).metadata.status[0].message;
                     statusBar.show(message);
                 } else if (a.status === 404) {
-                    statusBar.show("Can't connect to server.");
+                    statusBar.show("Can't connect to the server.");
                 } else if (a.status === 500) {
                     statusBar.show("Internal server error.");
                 }
@@ -428,21 +470,26 @@ $(function() {
             });
             var totalTests = 0;
             var totalFailures = 0;
-            var reportStatsDiv = $("<div />", {id: "report_stats_div", class: "col-md-12"});
+
             var cached = '';
             if (tir.cached) {
                 cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
             }
-            tirDiv.append($("<h3 />").html('Request: ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>' + cached));
-            //reportStatsDiv.append($("<p />",{id:"report_stats"}));
+
+            var success;
+            if (tir.failed){
+                success = '<i class="fa fa-times-circle text-danger" aria-hidden="true"></i>';
+            } else {
+                success = '<i class="fa fa-check-circle text-success" aria-hidden="true"></i>';
+            }
+
+            tirDiv.append($("<h4 class='mt-4'/>").html(success + ' ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>' + cached));
             for (var i = 0; i < tir.test.length; i++) {
                 tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
                 tir.test[i].passed ? 0 : totalFailures++;
                 totalTests += 1;
             }
 
-            //$("#report_stats_div").html("<strong>Total tests:</strong> " + totalTests +
-            //    "<br><strong>Total failures:</strong> " + totalFailures);
             tirDiv.append(tirAccDiv);
             return tirDiv;
         }
@@ -456,6 +503,11 @@ $(function() {
             function createTestCollection(tc) {
                 function createFolder(l, f) {
                     var folderDiv = $("<div />");
+                    var success = "text-danger";
+                    if (f.folderFails === 0) {success = "text-success"}
+                    folderDiv.append("<h3 class='mt-4 mb-3'>Test group: "
+                        + f.name + ' <strong class="' + success + '"><small>('
+                        + (f.folderTests - f.folderFails) + '/' + f.folderTests +")</small></strong></h3>");
                     for (var i = 0; i < f.tests.length; i++) {
                         folderDiv.append(createTestItemResult(l, i, f.tests[i]));
                     }
@@ -463,7 +515,8 @@ $(function() {
                 }
 
                 var tcDiv = $("<div />");
-                tcDiv.append($("<h2/>").html(tc.name));
+                tcDiv.append($("<h2/>").html(tc.name
+                    + ' <small>(' + (tc.totalTests - tc.totalFails) + '/' + tc.totalTests + ')</small>'));
                 for (var l = 0; l < tc.folders.length; l++) {
                     tcDiv.append(createFolder(l, tc.folders[l]));
                 }

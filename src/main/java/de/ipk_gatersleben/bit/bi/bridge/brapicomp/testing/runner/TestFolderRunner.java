@@ -37,6 +37,8 @@ public class TestFolderRunner {
 	 */
 	public TestFolderReport runTests() {
 		TestFolderReport tcr = new TestFolderReport(url);
+		tcr.setName(this.folder.getName());
+		tcr.setDescription(this.folder.getDescription());
 		List<Item> itemList = this.folder.getItem();
 		for (int i = 0; i < itemList.size(); i++) {
 			Item item = itemList.get(i);
