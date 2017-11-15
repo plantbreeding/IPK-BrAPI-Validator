@@ -300,8 +300,8 @@
 								"ContentType:application/json",
 								"Schema:/metadata",
 								"Schema:/markerprofiles",
-								"GetValue:/result/data/0/markerprofileDbId:markerProfileDbId",
-								"GetValue:/result/data/1/markerprofileDbId:markerProfileDbId1"
+								"GetValue:/result/data/0/markerprofileDbId:markerprofileDbId",
+								"GetValue:/result/data/1/markerprofileDbId:markerprofileDbId1"
 
 							]
 						}
