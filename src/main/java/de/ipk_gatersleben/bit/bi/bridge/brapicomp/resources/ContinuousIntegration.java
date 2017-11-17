@@ -58,7 +58,7 @@ public class ContinuousIntegration {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 
         try {
-            Endpoint e = EndpointService.getEndpointWithEmailAndUrl(endp.getEmail(), endp.getUrl());
+            Endpoint e = EndpointService.getEndpointWithEmailAndUrlAndFreq(endp.getEmail(), endp.getUrl(), endp.getFrequency());
             if (e != null && e.isConfirmed()) {
                 String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4021);
                 return Response.status(Status.BAD_REQUEST).entity(e2).build();

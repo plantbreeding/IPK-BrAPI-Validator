@@ -48,6 +48,26 @@ public class EndpointService {
         return e;
     }
 
+    /**
+     * Get a list of all endpoints that belong to an email.
+     *
+     * @param email Email to search endpoints for
+     * @param url   Url to search endpoints
+     * @param freq  Frequency to search endpoints
+     * @return List of endpoints that belong to that email
+     * @throws SQLException SQL Error.
+     */
+    public static Endpoint getEndpointWithEmailAndUrlAndFreq(String email, String url, String freq) throws SQLException {
+        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+        Endpoint e = endpointDao.queryBuilder().where()
+                .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
+                .eq(Endpoint.URL_FIELD_NAME, url).and()
+                .eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
+                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
+                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
+                .queryForFirst();
+        return e;
+    }
 
     /**
      * Delete endpoint

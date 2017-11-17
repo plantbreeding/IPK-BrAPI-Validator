@@ -10,6 +10,8 @@ proxyport=
 adminkey=
 # SMTP host to send emails with reports
 mailSmtpHost=
+mailSmtpLogin=
+mailSmtpPassword=
 # Parameters required to send emails
 fromEmailAddress=
 fromPersonalName=
