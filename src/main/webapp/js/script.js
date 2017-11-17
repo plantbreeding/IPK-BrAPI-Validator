@@ -556,7 +556,6 @@ $(function() {
             success: function(data) {
                 spinner.stop();
                 $("#modalSuccess").show();
-                $("#modalSubmit").prop("disabled", true);
                 $(".modalMessage").text(data.message);
 
 
