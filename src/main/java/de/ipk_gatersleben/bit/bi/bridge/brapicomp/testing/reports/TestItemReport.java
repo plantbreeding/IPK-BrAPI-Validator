@@ -4,76 +4,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains information about one config. Item collection of tests (ExecReports). Mostly test results and 
+ * Contains information about one config. Item collection of tests (ExecReports). Mostly test results and
  * some information about the request.
  */
 public class TestItemReport {
-	private String name;
-	private List<TestExecReport> test = new ArrayList<TestExecReport>();
-	private String endpoint;
-	private String method;
-	private boolean cached;
-	
-	public TestItemReport(String name, String endpoint, String method) {
-		setName(name);
-		setEndpoint(endpoint);
-		setMethod(method);
-		
-	}
-	
-	public String getEndpoint() {
-		return endpoint;
-	}
+    private String name;
+    private List<TestExecReport> test = new ArrayList<TestExecReport>();
+    private String endpoint;
+    private String method;
+    private boolean cached;
 
-	public void setEndpoint(String endpoint) {
-		this.endpoint = endpoint;
-	}
+    public TestItemReport(String name, String endpoint, String method) {
+        setName(name);
+        setEndpoint(endpoint);
+        setMethod(method);
 
-	public String getMethod() {
-		return method;
-	}
+    }
 
-	public void setMethod(String method) {
-		this.method = method;
-	}
+    public String getEndpoint() {
+        return endpoint;
+    }
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
 
-	/**
-	 * @return the messageList
-	 */
-	public List<TestExecReport> getTest() {
-		return test;
-	}
+    public String getMethod() {
+        return method;
+    }
 
-	
-	/**
-	 * @param test Test report to be added.
-	 */
-	public void addTest(TestExecReport test) {
-		this.test.add(test);
-	}
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
-	/**
-	 * @param cached
-	 */
-	public void setCached(boolean cached) {
-		this.cached = cached;	
-	}
-	
-	public boolean isCached() {
-		return cached;
-	}
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the messageList
+     */
+    public List<TestExecReport> getTest() {
+        return test;
+    }
+
+
+    /**
+     * @param test Test report to be added.
+     */
+    public void addTest(TestExecReport test) {
+        this.test.add(test);
+    }
+
+    public void setCached(boolean cached) {
+        this.cached = cached;
+    }
+
+    public boolean isCached() {
+        return cached;
+    }
 
 }

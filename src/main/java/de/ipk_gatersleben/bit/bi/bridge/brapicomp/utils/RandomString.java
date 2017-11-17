@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * Generates random string for password. 
+ * Generates random string for password.
  * Taken from https://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string
  */
 public class RandomString {

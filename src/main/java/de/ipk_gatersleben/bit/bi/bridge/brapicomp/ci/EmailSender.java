@@ -4,87 +4,106 @@ import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Transport;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 
-public class EmailSender {
-	private static final Logger LOGGER = Logger.getLogger(EmailSender.class.getName());
-	protected static void sendEmail(final String message, final String subject, final String emailAddress) {
+class EmailSender {
+    private static final Logger LOGGER = Logger.getLogger(EmailSender.class.getName());
 
-		javax.mail.Session session = null;
+    static void sendEmail(final String message, final String subject, final String emailAddress, Attachment attachment) {
 
-		InternetAddress addressFrom = null;
+        javax.mail.Session session;
 
-		final Properties properties = new Properties();
+        InternetAddress addressFrom = null;
 
-		properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
+        final Properties properties = new Properties();
 
-		if (Config.get("mailSmtpLogin") == null
-				|| Config.get("mailSmtpLogin").isEmpty()) {
+        properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
 
-			session = javax.mail.Session.getDefaultInstance(properties);
+        if (Config.get("mailSmtpLogin") == null
+                || Config.get("mailSmtpLogin").isEmpty()) {
 
-			try {
-				addressFrom = new InternetAddress(Config.get("fromEmailAddress"),
-						Config.get("fromPersonalName"));
-			} catch (final UnsupportedEncodingException e) {
-				e.printStackTrace();
+            session = javax.mail.Session.getDefaultInstance(properties);
 
-				LOGGER.severe(emailAddress + " : " + e.getMessage());
-			}
+            try {
+                addressFrom = new InternetAddress(Config.get("fromEmailAddress"),
+                        Config.get("fromPersonalName"));
+            } catch (final UnsupportedEncodingException e) {
+                e.printStackTrace();
 
-		} else {
+                LOGGER.severe(emailAddress + " : " + e.getMessage());
+            }
 
-			properties.put("mail.smtp.auth", "true");
+        } else {
 
-			final Authenticator authenticator = new Authenticator() {
-				private PasswordAuthentication authentication;
+            properties.put("mail.smtp.auth", "true");
 
-				{
-					this.authentication = new PasswordAuthentication(Config.get("mailSmtpLogin"),
-							Config.get("mailSmtpPassword"));
-				}
+            final Authenticator authenticator = new Authenticator() {
+                private PasswordAuthentication authentication;
 
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return this.authentication;
-				}
-			};
+                {
+                    this.authentication = new PasswordAuthentication(Config.get("mailSmtpLogin"),
+                            Config.get("mailSmtpPassword"));
+                }
 
-			session = javax.mail.Session.getInstance(properties, authenticator);
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return this.authentication;
+                }
+            };
 
-			try {
-				addressFrom = new InternetAddress(Config.get("mailSmtpHost"),
-						Config.get("fromPersonalName"));
-			} catch (final UnsupportedEncodingException e) {
-				e.printStackTrace();
-				LOGGER.severe(emailAddress + " : " + e.getMessage());
-			}
+            session = javax.mail.Session.getInstance(properties, authenticator);
 
-		}
+            try {
+                addressFrom = new InternetAddress(Config.get("mailSmtpHost"),
+                        Config.get("fromPersonalName"));
+            } catch (final UnsupportedEncodingException e) {
+                e.printStackTrace();
+                LOGGER.severe(emailAddress + " : " + e.getMessage());
+            }
 
-		final Message mail = new MimeMessage(session);
-		try {
+        }
 
-			mail.setFrom(addressFrom);
-			final InternetAddress addressTo = new InternetAddress(emailAddress);
-			mail.setRecipient(Message.RecipientType.TO, addressTo);
-			mail.setSubject(subject);
-			mail.setContent(message, "text/html; charset=UTF-8");
+        try {
+            final Message mail = new MimeMessage(session);
 
-			Transport.send(mail);
+            final InternetAddress addressTo = new InternetAddress(emailAddress);
+            mail.setRecipient(Message.RecipientType.TO, addressTo);
+            mail.setSubject(subject);
+            mail.setFrom(addressFrom);
 
-		} catch (final MessagingException e) {
-			e.printStackTrace();
+            Multipart multipart = new MimeMultipart();
 
-			LOGGER.severe(emailAddress + " : " + e.getMessage());
-		}
-	}
+            MimeBodyPart content = new MimeBodyPart();
+            content.setText(message, "UTF-8", "html");
+
+            multipart.addBodyPart(content);
+
+            if (attachment != null) {
+                multipart.addBodyPart(attachment.getMailPart());
+            }
+
+            mail.setContent(multipart);
+            Transport.send(mail);
+
+        } catch (final MessagingException e) {
+            e.printStackTrace();
+
+            LOGGER.severe(emailAddress + " : " + e.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void sendEmail(final String message, final String subject, final String emailAddress) {
+        sendEmail(message, subject, emailAddress, null);
+    }
 }

@@ -7,68 +7,67 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Report from one "exec" command.
- *
  */
 public class TestExecReport {
-	private String name;
-	private boolean passed;
-	private List<String> message = new ArrayList<String>();
-	private List<JsonNode> error = new ArrayList<JsonNode>();
-	private String schema;
-	
-	public TestExecReport(String name, boolean passed) {
-		this.setName(name);
-		this.setPassed(passed);
-	}
-	
-	public List<String> getMessage() {
-		return message;
-	}
+    private String name;
+    private boolean passed;
+    private List<String> message = new ArrayList<String>();
+    private List<JsonNode> error = new ArrayList<JsonNode>();
+    private String schema;
 
-	public void addMessage(String message) {
-		this.message.add(message);
-	}
+    public TestExecReport(String name, boolean passed) {
+        this.setName(name);
+        this.setPassed(passed);
+    }
 
-	public boolean isPassed() {
-		return passed;
-	}
+    public List<String> getMessage() {
+        return message;
+    }
 
+    public void addMessage(String message) {
+        this.message.add(message);
+    }
 
-	public void setPassed(boolean passed) {
-		this.passed = passed;
-	}
-
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+    public boolean isPassed() {
+        return passed;
+    }
 
 
-	public List<JsonNode> getError() {
-		return error;
-	}
+    public void setPassed(boolean passed) {
+        this.passed = passed;
+    }
 
-	
-	public void addError(JsonNode error) {
-		this.error.add(error);
-	}
 
-	/**
-	 * @return the schema
-	 */
-	public String getSchema() {
-		return schema;
-	}
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param schema the schema to set
-	 */
-	public void setSchema(String schema) {
-		this.schema = schema;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public List<JsonNode> getError() {
+        return error;
+    }
+
+
+    public void addError(JsonNode error) {
+        this.error.add(error);
+    }
+
+    /**
+     * @return the schema
+     */
+    public String getSchema() {
+        return schema;
+    }
+
+    /**
+     * @param schema the schema to set
+     */
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
 
 }

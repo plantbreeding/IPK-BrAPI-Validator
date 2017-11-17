@@ -13,20 +13,19 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 /**
  * Servlet application config.
- *
  */
 @ApplicationPath("/")
 public class ApplicationConfig extends ResourceConfig {
-	private static final Logger LOGGER = Logger.getLogger(ApplicationConfig.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ApplicationConfig.class.getName());
 
-	public ApplicationConfig(@Context ServletContext servletContext) throws SQLException, IOException {
-		LOGGER.log(Level.FINE, "Server initialized.");
+    public ApplicationConfig(@Context ServletContext servletContext) throws SQLException, IOException {
+        LOGGER.log(Level.FINE, "Server initialized.");
 
-		packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Admin");
-		packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.SimpleTests");
-		packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Users");
+        packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Admin");
+        packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.SimpleTests");
+        packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Users");
 
-	}
+    }
 
 
 }

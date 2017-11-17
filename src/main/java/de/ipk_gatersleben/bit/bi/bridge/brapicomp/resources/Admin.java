@@ -37,94 +37,95 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 @RequestScoped
 public class Admin {
 
-	private static final Logger LOGGER = Logger.getLogger(Admin.class.getName());
-	
-	/**
-	 * Run the default test on all endpoints
-	 * @param apikey API key is required for all admin calls.
-	 * @return Response with json report
-	 */
-	@POST
-	@Path("/testall")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response generalTest(@Context HttpHeaders headers, @QueryParam("frequency") String frequency) {
+    private static final Logger LOGGER = Logger.getLogger(Admin.class.getName());
 
-		LOGGER.log(Level.FINER, "New POST /testall call.");
-		try {
-			
-			String[] auth = ResourceService.getAuth(headers);
-			//Check auth header
-			if (auth==null || auth.length != 2) {
-				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
-				return Response.status(Status.UNAUTHORIZED).entity(e).build();
-			}
+    /**
+     * Run the default test on all endpoints
+     *
+     * @return Response with json report
+     */
+    @POST
+    @Path("/testall")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response generalTest(@Context HttpHeaders headers, @QueryParam("frequency") String frequency) {
 
-			//Check if api key is correct.
-			if (!auth[1].equals(Config.get("adminkey"))) {
-				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
-				return Response.status(Status.UNAUTHORIZED).entity(e).build();
-			}
-			
-			
-			ObjectMapper mapper = new ObjectMapper();
-			
-			InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
-			TestCollection tc = mapper.readValue(inJson, TestCollection.class);
-			
-			int count = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
-			boolean success = false;
-			if (count > 0) {
-				success = true;
-			}
-			return Response.status(Status.ACCEPTED).entity(success).build();
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-			String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010); 
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
-		}
-	}
-	/**
-	 * Run the default test over all the email's endpoints
-	 * @param apikey API key is required for all admin calls.
-	 * @param user Username of the user who's endpoints will be tested
-	 * @return Response with json report
-	 */
-	@POST
-	@Path("/usertest")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response userTest(@Context HttpHeaders headers, @QueryParam("email") String email) {
+        LOGGER.log(Level.FINER, "New POST /testall call.");
+        try {
 
-		LOGGER.log(Level.FINER, "New POST /usertest call.");
-		try {
-			String[] auth = ResourceService.getAuth(headers);
-			//Check auth header
-			if (auth==null || auth.length != 2) {
-				String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021); 
-				return Response.status(Status.UNAUTHORIZED).entity(e).build();
-			}
+            String[] auth = ResourceService.getAuth(headers);
+            //Check auth header
+            if (auth == null || auth.length != 2) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
 
-			
-			//Check if api key is correct.
-			//Disabled
-			if (true || auth[0] != Config.get("admin") || auth[1] != Config.get("key")) {
-				String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010); 
-				return Response.status(Status.UNAUTHORIZED).entity(e).build();
-			}
-			
-			ObjectMapper mapper = new ObjectMapper();
-			
-			InputStream inJson = TestCollection.class.getResourceAsStream("/BrapiTesting.custom_collection.json");
-			TestCollection tc = mapper.readValue(inJson, TestCollection.class);
-			
-			List<TestSuiteReport> testSuiteList = RunnerService.testAllEmailEndpoints(email, tc);
-			
-			return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteList)).build();
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
-			String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010); 
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
-		}
-	}
+            //Check if api key is correct.
+            if (!auth[1].equals(Config.get("adminkey"))) {
+                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
+            TestCollection tc = mapper.readValue(inJson, TestCollection.class);
+
+            int count = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
+            boolean success = false;
+            if (count > 0) {
+                success = true;
+            }
+            return Response.status(Status.ACCEPTED).entity(success).build();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
+
+    /**
+     * Run the default test over all the email's endpoints
+     *
+     * @param email Email who's endpoints will be tested
+     * @return Response with json report
+     */
+    @POST
+    @Path("/usertest")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response userTest(@Context HttpHeaders headers, @QueryParam("email") String email) {
+
+        LOGGER.log(Level.FINER, "New POST /usertest call.");
+        try {
+            String[] auth = ResourceService.getAuth(headers);
+            //Check auth header
+            if (auth == null || auth.length != 2) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+
+
+            //Check if api key is correct.
+            //Disabled
+            if (true || auth[0] != Config.get("admin") || auth[1] != Config.get("key")) {
+                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            InputStream inJson = TestCollection.class.getResourceAsStream("/BrapiTesting.custom_collection.json");
+            TestCollection tc = mapper.readValue(inJson, TestCollection.class);
+
+            List<TestSuiteReport> testSuiteList = RunnerService.testAllEmailEndpoints(email, tc);
+
+            return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteList)).build();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
 }

@@ -10,6 +10,9 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.RestAssuredRequest;
  *
  */
 public class Cache {
+	// Stores RestAssured responses.
+	// The key is the method followed by the url.
+	// The value is the response and the timestamp.
 	private static final Map<String, RestAssuredRequest> requests = new HashMap<String, RestAssuredRequest>();
 
 	public Cache() {}
