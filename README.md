@@ -34,7 +34,8 @@ The tomcat server location must be defined as maven parameters. For example as a
 ```
 Also remember to add the server user and encrypted password to settings.xml.
 
-Configure the local h2 db user and password, as well as any proxy settings in the src/main/resources/config.properties
+Configure the local h2 db user and password, as well as any proxy settings in the src/main/resources/config.properties.
+Use config.properties.examples as a guide.
 
 
 ## Docs
