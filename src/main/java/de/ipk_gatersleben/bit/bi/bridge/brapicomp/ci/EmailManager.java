@@ -93,7 +93,8 @@ public class EmailManager {
         map.put("baseDomain", Config.get("baseDomain"));
         map.put("endpointId", endpoint.getId().toString());
         map.put("testName", tsr.getTestCollections().get(0).getName());
-        map.put("failed", Integer.toString(tsr.getTestCollections().get(0).getFails()));
+        map.put("passed", Integer.toString(tsr.getTestCollections().get(0).getTotal()
+                - tsr.getTestCollections().get(0).getFails()));
         map.put("total", Integer.toString(tsr.getTestCollections().get(0).getTotal()));
         map.put("failList", tsr.getTestCollections().get(0).getFailListAsHTML());
         return map;
