@@ -15,4 +15,4 @@ fromEmailAddress=
 fromPersonalName=
 senderName=
 contactEmail=
-baseDomain=
+baseDomain=http://www.example.com
