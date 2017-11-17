@@ -17,8 +17,5 @@ src/main/resources/config.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
-src/main/webapp/WEB-INF/brapivalDB.mv.db
-src/main/webapp/WEB-INF/brapivalDB.trace.db
-
 
 .idea/
