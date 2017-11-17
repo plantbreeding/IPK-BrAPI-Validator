@@ -16,16 +16,26 @@ To deploy to tomcat use:
 
 `mvn tomcat7:deploy`
 
-The tomcat server location must be defined as parameters. For example: 
+The tomcat server location must be defined as maven parameters. For example as a profile in settings.xml:
 
 ```
-appserver.name=production_server
-appserver.path=/brapivalidator
-appserver.url=http://website.com:1234/manager/text
+<profile>
+  <id>profileid</id>
+  <activation>
+    <activeByDefault>true</activeByDefault>
+  </activation>
+  <properties>
+    <appserver.name>production_server</appserver.name>
+    <appserver.url>http://website.com:1234/manager/text</appserver.url>
+    <appserver.path>/brapivalidator</appserver.path>
+  </properties>
+</profile>
+
 ```
 Also remember to add the server user and encrypted password to settings.xml.
 
-Configure the local h2 db user and password, as well as any proxy settings in the config.properties file.
+Configure the local h2 db user and password, as well as any proxy settings in the src/main/resources/config.properties
+
 
 ## Docs
 
@@ -53,5 +63,4 @@ The complex tests (Test Collections) are stored in the collections/ folder. They
 * Add test to front end form.
 
 ## To-do
-* Add FAQ to readme (tests only schema, no parameters.)
 * Consider variables from configuration file or decide to ignore them at all.
