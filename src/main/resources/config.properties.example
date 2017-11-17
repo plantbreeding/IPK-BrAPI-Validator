@@ -1,4 +1,4 @@
-# Edit this with your parameters!
+# Edit this with your parameters and change the name to config.properties
 # H2 Username, password and path
 dbuser=
 dbpass=
