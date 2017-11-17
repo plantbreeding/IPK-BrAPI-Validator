@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>BrAVa - Breeding API Validator</title>
+  <meta name="description" content="Breeding API Validator">
+  <meta name="author" content="IPK Gatersleben">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/selectize.bootstrap4.css">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+</head>
+<body>
+<!-- Github ribbon -->
+<a href="https://github.com/plantbreeding/IPK-BrAPI-Validator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="jumbotron py-4">
+        <h1 class="text-center display-3">
+          BrAVa
+        </h1>
+        <p class="text-center lead"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) validator</p>
+        <p class="text-center">BrAVa is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a> (v1.0).</p>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-8 offset-md-2 hidden" id="resultDiv">
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">© 2017 | IPK-Gatersleben. This site is licensed under the MIT License. </p>
+    <a href="http://www.ipk-gatersleben.de"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/ipklogo.png" class="footer-logo"></a>
+    <a href="https://www.leibniz-gemeinschaft.de/en/home/"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/sign01.png" class="footer-logo"></a>
+  </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script>
+    "use strict";
+
+
+    $(function() {
+
+        var data = ${report};
+
+        function testStats(test) {
+            var failed = false;
+            test.test.forEach(function(execTest) {
+                if (!execTest.passed) {
+                    failed = true;
+                }
+            });
+            test.failed = failed;
+        }
+
+        function generateStats(data) {
+            var totalTests = 0;
+            var totalFails = 0;
+            var folderTests = 0;
+            var folderFails = 0;
+            data.testCollections.forEach(function(testCollection) {
+                totalTests = 0;
+                totalFails = 0;
+                testCollection.folders.forEach(function(folder) {
+                    folderTests = 0;
+                    folderFails = 0;
+                    folder.tests.forEach(function(test) {
+                        testStats(test)
+                        folderTests += 1;
+                        if (test.failed) {
+                            folderFails += 1;
+                        }
+                    });
+                    folder.folderTests = folderTests;
+                    folder.folderFails = folderFails;
+                    totalTests += folderTests;
+                    totalFails += folderFails;
+                });
+                testCollection.totalTests = totalTests;
+                testCollection.totalFails = totalFails;
+            });
+            return data;
+        }
+        var report = function () {
+
+            var reportDiv = $("#resultDiv");
+
+            function clear() {
+                reportDiv.html("");
+            }
+
+            function createTestItemResult(l, k, tir) {
+                function createTestResult(l, k, i, tr) {
+                    function createError(i, e) {
+
+                        var errorDiv = $("<pre class=\"border border-secondary rounded p-1\"/>");
+                        if (e.level === "fatal") {
+                            errorDiv.append("Error in schema that prevents further testing.");
+                            errorDiv.append("Message: " + e.message);
+                            return errorDiv;
+                        }
+                        errorDiv.append("Error: " + e.domain + " - " + e.keyword + "\n");
+                        if (e.instance) {
+                            errorDiv.append("In element: " + e.instance.pointer + "\n");
+                        }
+                        if (e.expected) {
+                            errorDiv.append("Expected: " + e.expected.join(", ") + "\n");
+                        }
+                        if (e.minItems) {
+                            errorDiv.append("Minimum items: " + e.minItems + "\n");
+                        }
+                        if (e.unwanted) {
+                            errorDiv.append("Invalid items: " + e.unwanted.join(", ") + "\n");
+                        }
+                        if (e.found) {
+                            errorDiv.append("Found: " + e.found + "\n");
+                        }
+                        if (e.missing) {
+                            errorDiv.append("Missing: " + e.missing.join(", ") + "\n");
+                        }
+                        errorDiv.append("Message: " + e.message + "\n");
+
+                        return errorDiv;
+                    }
+
+                    var success = tr.passed ? "success" : "danger";
+                    var icon = tr.passed ? "check" : "times";
+                    var testResultDiv = $("<div />", {
+                        id: "testResult_" + l + "-" + k + "-" + i,
+                        "class": "card mb-2 bg-" + success
+                    });
+                    var testResultHeader = $("<div />", {
+                        "class": "card-header collapsed accordion-toggle text-white",
+                        "role": "tab",
+                        "id": "heading_" + l + "-" + k + "-" + i,
+                        "data-toggle": "collapse",
+                        "data-target": "#collapse_" + l + "-" + k + "-" + i,
+                        "aria-expanded": false,
+                        "aria-controls": "collapse_" + l + "-" + k + "-" + i
+                    });
+
+                    //var headerHTML = "<h4 class=\"accordion-toggle\">";
+                    var headerHTML = "";
+                    headerHTML += "<i class=\"fa fa-" + icon + "\" aria-hidden=\"true\"></i>" +
+                        "</span> Test: " + tr.name;
+
+                    headerHTML += "";
+                    testResultHeader.html(headerHTML);
+                    testResultDiv.append(testResultHeader);
+
+                    var cardBodyDiv = $("<div />", {class: "card-body bg-light"});
+                    var collapseDiv = $("<div id=\"collapse_" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
+                        " role=\"tabpanel\" aria-labelledby=\"heading_" + l + "-" + k + "-" + i + "\"></div>");
+
+                    if (tr.message.length > 0) {
+                        var resultHTML = "<p class=\"card-text\">";
+                        for (var m = 0; m < tr.message.length; m++) {
+                            resultHTML += tr.message[m] + "\n";
+                        }
+                        resultHTML += "</p>";
+                        cardBodyDiv.append(resultHTML);
+                    }
+
+                    if (tr.schema) {
+                        cardBodyDiv.append("<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>")
+                    }
+
+                    if (tr.error.length > 0) {
+                        cardBodyDiv.append("<p class=\"card-text\"><strong>Validation Errors:</strong></p>");
+                        for (var j = 0; j < tr.error.length; j++) {
+                            cardBodyDiv.append(createError(i, tr.error[j]));
+                        }
+                    }
+                    collapseDiv.append(cardBodyDiv);
+                    testResultDiv.append(collapseDiv);
+
+                    return testResultDiv
+
+                }
+
+                var tirDiv = $("<div />");
+                var tirAccDiv = $("<div />", {
+                    "id": "reportAccordion_" + l + "_" + k,
+                    "role": "tablist"
+                });
+                var totalTests = 0;
+                var totalFailures = 0;
+
+                var cached = '';
+                if (tir.cached) {
+                    cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
+                }
+
+                var success;
+                if (tir.failed){
+                    success = '<i class="fa fa-times-circle text-danger" aria-hidden="true"></i>';
+                } else {
+                    success = '<i class="fa fa-check-circle text-success" aria-hidden="true"></i>';
+                }
+
+                tirDiv.append($("<h4 class='mt-4'/>").html(success + ' ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>' + cached));
+                for (var i = 0; i < tir.test.length; i++) {
+                    tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
+                    tir.test[i].passed ? 0 : totalFailures++;
+                    totalTests += 1;
+                }
+
+                tirDiv.append(tirAccDiv);
+                return tirDiv;
+            }
+
+            function addTestItemResult(tir) {
+                reportDiv.append(createTestItemResult(0, 0, tir));
+            }
+
+
+            function addTestCollectionList(tcl) {
+                function createTestCollection(tc) {
+                    function createFolder(l, f) {
+                        var folderDiv = $("<div />");
+                        var success = "text-danger";
+                        if (f.folderFails === 0) {success = "text-success"}
+                        folderDiv.append("<h3 class='mt-4 mb-3'>Test group: "
+                            + f.name + ' <strong class="' + success + '"><small>('
+                            + (f.folderTests - f.folderFails) + '/' + f.folderTests +")</small></strong></h3>");
+                        for (var i = 0; i < f.tests.length; i++) {
+                            folderDiv.append(createTestItemResult(l, i, f.tests[i]));
+                        }
+                        return folderDiv;
+                    }
+
+                    var tcDiv = $("<div />");
+                    tcDiv.append($("<h2/>").html(tc.name
+                        + ' <small>(' + (tc.totalTests - tc.totalFails) + '/' + tc.totalTests + ')</small>'));
+                    tcDiv.append("<p>for: <a target='_blank' href='" + tc.url + "'>" + tc.url + "</a>")
+                    for (var l = 0; l < tc.folders.length; l++) {
+                        tcDiv.append(createFolder(l, tc.folders[l]));
+                    }
+                    return tcDiv;
+                }
+
+                for (var i = 0; i < tcl.length; i++) {
+                    reportDiv.append(createTestCollection(tcl[i]));
+                }
+            }
+
+            return {
+                clear: clear,
+                addTestItemResult: addTestItemResult,
+                addTestCollectionList: addTestCollectionList
+            }
+        }();
+        function main() {
+            if (data.hasOwnProperty("testCollections")) {
+                data = generateStats(data);
+                report.addTestCollectionList(data.testCollections);
+            } else {
+                testStats(data);
+                report.addTestItemResult(data);
+            }
+            $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
+        }
+        main();
+    });
+</script>
+</body>
+</html>

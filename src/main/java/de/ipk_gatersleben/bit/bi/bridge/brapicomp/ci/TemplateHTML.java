@@ -31,7 +31,7 @@ public class TemplateHTML {
     }
 
     public String generateBody() throws IOException, URISyntaxException {
-        StrSubstitutor sub = new StrSubstitutor(this.variables, "{", "}");
+        StrSubstitutor sub = new StrSubstitutor(this.variables);
         return sub.replace(this.template);
     }
 

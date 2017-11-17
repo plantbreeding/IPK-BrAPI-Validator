@@ -1,7 +1,9 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Report object that contains the tests results and various messages, organized by folders.
@@ -11,6 +13,7 @@ public class TestCollectionReport {
     private List<TestFolderReport> folders = new ArrayList<>();
     private String url;
     private String name;
+    private List<String> failList = new ArrayList<>();
 
     private int total;
     private int fails;
@@ -51,13 +54,19 @@ public class TestCollectionReport {
     }
 
     public int getFails() {
-
         return fails;
     }
 
     public void setFails(int fails) {
-
         this.fails = fails;
+    }
+
+    public String getFailListAsHTML() {
+        String html = "<ul>\n";
+        for (int i = 0; i < failList.size() ; i++) {
+            html += "<li>" + failList.get(i) + "</li>\n";
+        }
+        return html + "</ul>";
     }
 
     public int getTotal() {
@@ -81,6 +90,7 @@ public class TestCollectionReport {
                 }
                 if (failed) {
                     folderFails += 1;
+                    failList.add(testList.get(j).getMethod() + " " + testList.get(j).getName());
                 }
                 folderTotal += 1;
             }

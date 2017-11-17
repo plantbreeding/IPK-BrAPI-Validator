@@ -58,7 +58,7 @@
 					]
 				},
 				{
-					"name": "/germplasm/id",
+					"name": "/germplasm/{germplasmDbId}",
 					"description": "Tests schema using stored germplasmDbId and checks id",
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}",
@@ -79,7 +79,7 @@
 					]
 				},
 				{
-					"name": "/germplasm/id",
+					"name": "/germplasm/{germplasmDbId} with second id",
 					"description": "Tests schema using second stored germplasmDbId and checks id",
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId1}",
@@ -237,7 +237,7 @@
 					]
 				},
 				{
-					"name": "/markers/{markerDbId0}",
+					"name": "/markers/{markerDbId}",
 					"description": "",
 					"request": {
 						"url": "{baseurl}/markers/{markerDbId0}",
@@ -258,7 +258,7 @@
 					]
 				},
 				{
-					"name": "/markers/{markerDbId1}",
+					"name": "/markers/{markerDbId} with second id",
 					"description": "",
 					"request": {
 						"url": "{baseurl}/markers/{markerDbId1}",
@@ -350,7 +350,7 @@
 					]
 				},
 				{
-					"name": "/markerprofiles/{markerprofileDbId1}",
+					"name": "/markerprofiles/{markerprofileDbId} with second id",
 					"description": "Test schema and same id for second stored id",
 					"request": {
 						"url": "{baseurl}/markerprofiles/{markerprofileDbId1}",
@@ -491,7 +491,7 @@
 					]
 				},
 				{
-					"name": "/trials/{trialDbId0}",
+					"name": "/trials/{trialDbId}",
 					"description": "Test schema and check first id",
 					"request": {
 						"url": "{baseurl}/trials/{trialDbId0}",
@@ -512,7 +512,7 @@
 					]
 				},
 				{
-					"name": "/trials/{trialDbId1}",
+					"name": "/trials/{trialDbId} with second id",
 					"description": "Test schema and check second id",
 					"request": {
 						"url": "{baseurl}/trials/{trialDbId1}",
@@ -642,7 +642,7 @@
 					]
 				},
 				{
-					"name": "/studies/{studyDbId1}",
+					"name": "/studies/{studyDbId} with second id",
 					"description": "Check schema and second Id",
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId1}",
@@ -884,7 +884,7 @@
 					]
 				},
 				{
-					"name": "/traits/{traitDbId1}",
+					"name": "/traits/{traitDbId} with second id",
 					"description": "Check schema and second id",
 					"request": {
 						"url": "{baseurl}/traits/{traitDbId1}",
@@ -974,7 +974,7 @@
 					]
 				},
 				{
-					"name": "/variables/{observationVariableDbId}",
+					"name": "/variables/{observationVariableDbId} with second id",
 					"description": "Check schema and second id",
 					"request": {
 						"url": "{baseurl}/variables/{observationVariableDbId3}",

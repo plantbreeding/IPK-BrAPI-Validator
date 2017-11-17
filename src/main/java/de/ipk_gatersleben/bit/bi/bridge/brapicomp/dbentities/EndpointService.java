@@ -42,7 +42,8 @@ public class EndpointService {
         Endpoint e = endpointDao.queryBuilder().where()
                 .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
                 .eq(Endpoint.URL_FIELD_NAME, url).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false)
+                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
+                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
                 .queryForFirst();
         return e;
     }
@@ -80,7 +81,8 @@ public class EndpointService {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         List<Endpoint> e = endpointDao.queryBuilder().where()
                 .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false)
+                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
+                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
                 .query();
         for (int i = 0; i < e.size(); i++) {
             e.get(i).setDeleted(true);
@@ -92,7 +94,8 @@ public class EndpointService {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         List<Endpoint> l = endpointDao.queryBuilder().where()
                 .eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false)
+                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
+                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
                 .query();
         return l;
     }
@@ -100,7 +103,8 @@ public class EndpointService {
     public static List<Endpoint> getAllEndpoints() throws SQLException {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         List<Endpoint> l = endpointDao.queryBuilder().where()
-                .eq(Endpoint.DELETED_FIELD_NAME, false)
+                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
+                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
                 .query();
         return l;
     }

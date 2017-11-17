@@ -13,7 +13,9 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.ContinuousIntegration;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestCollectionRunner;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 /**
  * Sends transactional emails.
@@ -60,13 +62,20 @@ public class EmailManager {
      * @return True if no errors occurred.
      */
     public boolean runAndSend(TestCollection testCollection) {
-        TestCollectionReport ter = new TestCollectionRunner(testCollection, endpoint.getUrl()).runTests();
+        TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
         String body;
         try {
-            Map<String, String> variables = getReportTemplateVariables(ter);
+            Map<String, String> variables = getReportTemplateVariables(testSuiteReport);
             TemplateHTML email = new TemplateHTML("/templates/email.html", variables);
             body = email.generateBody();
-            EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail());
+
+            Map<String, String> attVariables = new HashMap<>();
+            ObjectMapper mapper = new ObjectMapper();
+            attVariables.put("report", mapper.writeValueAsString(testSuiteReport));
+            TemplateHTML attachmentHTML = new TemplateHTML("/templates/report.html", attVariables);
+
+            Attachment attachment = new Attachment("report.html", attachmentHTML.generateBody());
+            EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail(), attachment);
             return true;
         } catch (IOException | URISyntaxException e) {
             LOGGER.warning("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
@@ -74,28 +83,19 @@ public class EmailManager {
         return false;
     }
 
-    private Map<String, String> getReportTemplateVariables(TestCollectionReport tcr) {
-        ObjectMapper mapper = new ObjectMapper();
-        tcr.addStats();
-        Map<String, String> map = new HashMap<String, String>();
+    private Map<String, String> getReportTemplateVariables(TestSuiteReport tsr) {
+        tsr.getTestCollections().get(0).addStats();
+        Map<String, String> map = new HashMap<>();
         map.put("frequency", endpoint.getFrequency());
         map.put("url", endpoint.getUrl());
         map.put("contactEmail", Config.get("contactEmail"));
         map.put("senderName", Config.get("senderName"));
         map.put("baseDomain", Config.get("baseDomain"));
         map.put("endpointId", endpoint.getId().toString());
-        map.put("testName", tcr.getName());
-        map.put("timestamp", "TODO");
-        map.put("passed", "0");
-        map.put("failed", "30");
-        map.put("total", "30");
-        try {
-            map.put("report", mapper.writeValueAsString(tcr));
-        } catch (JsonProcessingException e) {
-            map.put("report", "Invalid report");
-            LOGGER.warning("Invalid report: " + e.getMessage());
-        }
-
+        map.put("testName", tsr.getTestCollections().get(0).getName());
+        map.put("failed", Integer.toString(tsr.getTestCollections().get(0).getFails()));
+        map.put("total", Integer.toString(tsr.getTestCollections().get(0).getTotal()));
+        map.put("failList", tsr.getTestCollections().get(0).getFailListAsHTML());
         return map;
     }
 }

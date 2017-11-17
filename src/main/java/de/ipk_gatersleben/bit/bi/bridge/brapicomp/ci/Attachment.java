@@ -10,15 +10,15 @@ import java.io.UnsupportedEncodingException;
 public class Attachment {
     private String filename;
     private String content;
-    private String type;
 
-    public Attachment(String filename, String content, String type) {
-
+    public Attachment(String filename, String content) {
+        this.filename = filename;
+        this.content = content;
     }
 
     public MimeBodyPart getMailPart () throws MessagingException, UnsupportedEncodingException {
         MimeBodyPart attachPart = new MimeBodyPart();
-        DataSource ds = new ByteArrayDataSource(content.getBytes("UTF-8"), type);
+        DataSource ds = new ByteArrayDataSource(content.getBytes("UTF-8"), "application/octet-stream");
         attachPart.setDataHandler(new DataHandler(ds));
         attachPart.setFileName(filename);
         return attachPart;

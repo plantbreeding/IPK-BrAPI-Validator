@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 
 $(function() {
@@ -264,44 +264,7 @@ $(function() {
         return fullUrl
     }
 
-    function testStats(test) {
-        var failed = false;
-        test.test.forEach(function(execTest) {
-            if (!execTest.passed) {
-                failed = true;
-            }
-        });
-        test.failed = failed;
-    }
 
-    function generateStats(data) {
-        var totalTests = 0;
-        var totalFails = 0;
-        var folderTests = 0;
-        var folderFails = 0;
-        data.testCollections.forEach(function(testCollection) {
-            totalTests = 0;
-            totalFails = 0;
-            testCollection.folders.forEach(function(folder) {
-                folderTests = 0;
-                folderFails = 0;
-                folder.tests.forEach(function(test) {
-                    testStats(test)
-                    folderTests += 1;
-                    if (test.failed) {
-                        folderFails += 1;
-                    }
-                });
-                folder.folderTests = folderTests;
-                folder.folderFails = folderFails;
-                totalTests += folderTests;
-                totalFails += folderFails;
-            });
-            testCollection.totalTests = totalTests;
-            testCollection.totalFails = totalFails;
-        });
-        return data;
-    }
 
 
     // Test form
@@ -517,6 +480,7 @@ $(function() {
                 var tcDiv = $("<div />");
                 tcDiv.append($("<h2/>").html(tc.name
                     + ' <small>(' + (tc.totalTests - tc.totalFails) + '/' + tc.totalTests + ')</small>'));
+                tcDiv.append("<p>for:<a target='_blank' href='" + tc.url + "'>" + tc.url + "</a>")
                 for (var l = 0; l < tc.folders.length; l++) {
                     tcDiv.append(createFolder(l, tc.folders[l]));
                 }
