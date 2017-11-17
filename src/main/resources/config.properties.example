@@ -17,4 +17,4 @@ fromEmailAddress=
 fromPersonalName=
 senderName=
 contactEmail=
-baseDomain=http://www.example.com
+baseDomain=http://www.example.com/brapivalidator/
