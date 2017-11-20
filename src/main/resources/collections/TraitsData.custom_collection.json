@@ -1,19 +1,19 @@
 {
 	"info": {
-		"name": "BrAPI Marker Data-Structure Test",
+		"name": "BrAPI Traits Data-Structure Test",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Markers",
-			"description": "Markers resource",
+			"name": "Traits",
+			"description": "Traits resource",
 			"item": [
 				{
-					"name": "/markers",
-					"description": "Test structure and save two Ids",
+					"name": "/traits",
+					"description": "Check schema and save two ids",
 					"request": {
-						"url": "{baseurl}/markers",
+						"url": "{baseurl}/traits",
 						"method": "GET"
 					},
 					"event": [
@@ -24,18 +24,18 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/markers",
-								"GetValue:/result/data/0/markerDbId:markerDbId0",
-								"GetValue:/result/data/1/markerDbId:markerDbId1"
+								"Schema:/traits",
+								"GetValue:/result/data/0/traitDbId:traitDbId",
+								"GetValue:/result/data/1/traitDbId:traitDbId1"
 							]
 						}
 					]
 				},
 				{
-					"name": "/markers/{markerDbId}",
-					"description": "",
+					"name": "/traits/{traitDbId}",
+					"description": "Check schema and first id",
 					"request": {
-						"url": "{baseurl}/markers/{markerDbId0}",
+						"url": "{baseurl}/traits/{traitDbId}",
 						"method": "GET"
 					},
 					"event": [
@@ -46,17 +46,17 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/markers/markerDbId",
-								"IsEqual:/result/markerDbId:markerDbId0"
+								"Schema:/traits/traitDbId",
+								"IsEqual:/result/traitDbId:traitDbId"
 							]
 						}
 					]
 				},
 				{
-					"name": "/markers/{markerDbId} with second id",
-					"description": "",
+					"name": "/traits/{traitDbId} with second id",
+					"description": "Check schema and second id",
 					"request": {
-						"url": "{baseurl}/markers/{markerDbId1}",
+						"url": "{baseurl}/traits/{traitDbId1}",
 						"method": "GET"
 					},
 					"event": [
@@ -67,8 +67,8 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/markers/markerDbId",
-								"IsEqual:/result/markerDbId:markerDbId1"
+								"Schema:/traits/traitDbId",
+								"IsEqual:/result/traitDbId:traitDbId1"
 							]
 						}
 					]

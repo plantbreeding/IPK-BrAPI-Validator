@@ -123,9 +123,9 @@ $(function() {
                 "/germplasm/{germplasmDbId}/markerprofiles",
                 "/germplasm/{germplasmDbId}/attributes"
             ],
-            "description" : "<ol class=\"list-unstyled\"><li>Check <code>/germplsam-search</code> structure and get <var>germplasmDbId</var></li><li>Check <code>/germplasm/{germplasmDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/pedigree</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/markerprofiles</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/attributes</code> structure and check that the Id is the same.</li></ol>"
+            "description" : "<ol><li>Check <code>/germplsam-search</code> structure and get <var>germplasmDbId</var></li><li>Check <code>/germplasm/{germplasmDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/pedigree</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/markerprofiles</code> structure and check that the Id is the same.</li><li>Check <code>/germplasm/{germplasmDbId}/attributes</code> structure and check that the Id is the same.</li></ol>"
         },
-        'GermplasmMarketprofilesData' : {
+        'GermplasmMarkerprofilesData' : {
             'urls' : [
                 "/germplasm-search",
                 "/germplasm/{germplasmDbId}",
@@ -152,8 +152,66 @@ $(function() {
             ],
             "description" : "<ol><li>Check <code>/trials</code> structure and get <var>trialDbId</var> for the first two results.</li><li>Check <code>/trials/{trialDbId0}</code> structure and check that the Id is the same.</li><li>Check <code>/trials/{trialDbId1}</code> structure and check that the Id is the same.</li></ol>"
         },
+        'TraitsData' : {
+            'urls' : [
+                "/traits",
+                "/traits/{traitDbId}",
+                "/traits/{traitDbId1}",
+            ],
+            "description" : "<ol><li>Check <code>/traits</code> structure and get <var>traitDbId</var> for the first two results.</li><li>Check <code>/traits/{traitDbId}</code> structure and check that the Id is the same.</li><li>Check <code>/traits/{traitDbId1}</code> structure and check that the Id is the same.</li></ol>"
+        },
+        'StudyData' : {
+            'urls' : [
+                "/seasons",
+                "/studyTypes",
+                "/studies-search",
+                "/studies-search",
+                "/studies/{studyDbId}",
+                "/studies/{studyDbId1}",
+                "/studies/{studyDbId}/observationVariables",
+                "/observationLevels",
+                "/studies/{studyDbId}/observationUnits",
+                "/studies/{studyDbId}/table",
+                "/studies/{studyDbId}/layout",
+                "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}"
+
+            ],
+            "description" : "<ol><li>Check <code>/seasons</code> structure</li><li>Check <code>/studyTypes</code> structure</li><li>Check <code>/studies-search</code> structure with no parameters and save two ids</li><li>Check <code>/studies-search</code> structure with no parameters</li><li>Check <code>/studies/{studyDbId}</code> structure and Id</li><li>Check <code>/studies/{studyDbId}</code> structure and second Id</li><li>Check <code>/studies/{studyDbId}/observationVariables</code> structure and id</li><li>Check <code>/observationLevels</code> structure</li><li>Check <code>/studies/{studyDbId}/observationUnits</code> structure</li><li>Check <code>/studies/{studyDbId}/table</code> structure and id</li><li>Check <code>/studies/{studyDbId}/layout</code> structure</li><li>Check <code>/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}</code> structure and id</li></ol>"
+        },
+        'PhenotypesData' : {
+            'urls' : [
+                "/phenotypes-search"
+            ],
+            "description" : "<ol><li>Check <code>/phenotypes-search</code> structure</li></ol>"
+        },
+        'ObservationVariablesData' : {
+            'urls' : [
+                "/variables/datatypes",
+                "/variables",
+                "/variables/{observationVariableDbId2}",
+                "/variables/{observationVariableDbId3}",
+                "/ontologies"
+            ],
+            "description" : "<ol><li>Check <code>/variables/datatypes</code> schema.</li><li>Check <code>/variables</code> schema and store two ids.</li><li>Check <code>/variables/{observationVariableDbId}</code> schema and first id.</li><li>Check <code>/variables/{observationVariableDbId</code> schema and second id.</li><li>Check <code>/ontologies</code> schema.</li></ol>"
+        },
+        'GenomeMapsData' : {
+            'urls' : [
+                "/maps",
+                "/maps/{mapDbId}",
+                "/maps/{mapDbId}/positions",
+                "/maps/{mapDbId}/positions/{linkageGroupId}"
+            ],
+            "description" : "<ol><li>Check <code>/maps</code> schema and store id.</li><li>Check <code>/maps/{mapDbId}</code> schema and check id.</li><li>Check <code>/maps/{mapDbId}positions</code> schema and check id.</li><li>Check <code>/maps/{mapDbId}/positions/{linkageGroupId}</code> schema and check id.</li></ol>"
+        },
+        'LocationsData' : {
+            'urls' : [
+                "/locations",
+                "/locations/{locationDbId}"
+            ],
+            "description" : "<ol><li>Check <code>/locations</code> schema and store id.</li><li>Check <code>/locations/{locationDbId}</code> schema and id.</li></ol>"
+        },
         'Complete' : {
-            'urls' : ["/calls", "/germplasm", "/germplasm/{germplasmDbId}", "/germplasm/{germplasmDbId1}", "/germplasm/{germplasmDbId}/pedigree", "/germplasm/{germplasmDbId}/markeprofiles", "/attributes", "/attributes/categories", "/germplasm/{germplasmDbId}/attributes", "/markers", "/markers/{markerDbId0}", "/markers/{markerDbId1}", "/markerprofiles", "/markerprofiles?germplasmDbId={germplasmDbId}", "/markerprofiles/{markerprofileDbId}", "/markerprofiles/{markerprofileDbId1}", "/allelematrix", "/allelematrix", "/programs", "/crops", "/trials", "/trials/{trialDbId0}", "/trials/{trialDbId1}", "/seasons", "/studyTypes", "/studies", "/studies", "/studies/{studyDbId}", "/studies/{studyDbId1}", "/studies/{studyDbId}/observationVariables", "/studies/{studyDbId}/germplasm", "/observationLevels", "/studies/{studyDbId}/observationunits", "/studies/{studyDbId}/table", "/studies/{studyDbId}/layout", "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}", "/phenotypes", "/traits", "/traits/{traitDbId}", "/traits/{traitDbId1}", "/variables/datatypes", "/variables", "/variables/{observationVariableDbId2}", "/variables/{observationVariableDbId3}", "/ontologies", "/maps", "/maps", "/maps/positions", "/maps/positions", "/locations", "/locations/{locationDbId}"],
+            'urls' : ["/calls", "/germplasm", "/germplasm/{germplasmDbId}", "/germplasm/{germplasmDbId1}", "/germplasm/{germplasmDbId}/pedigree", "/germplasm/{germplasmDbId}/markeprofiles", "/attributes", "/attributes/categories", "/germplasm/{germplasmDbId}/attributes", "/markers", "/markers/{markerDbId0}", "/markers/{markerDbId1}", "/markerprofiles", "/markerprofiles?germplasmDbId={germplasmDbId}", "/markerprofiles/{markerprofileDbId}", "/markerprofiles/{markerprofileDbId1}", "/allelematrix", "/allelematrix", "/programs", "/crops", "/trials", "/trials/{trialDbId0}", "/trials/{trialDbId1}", "/seasons", "/studyTypes", "/studies", "/studies", "/studies/{studyDbId}", "/studies/{studyDbId1}", "/studies/{studyDbId}/observationVariables", "/studies/{studyDbId}/germplasm", "/observationLevels", "/studies/{studyDbId}/observationunits", "/studies/{studyDbId}/table", "/studies/{studyDbId}/layout", "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}", "/phenotypes", "/traits", "/traits/{traitDbId}", "/traits/{traitDbId1}", "/variables/datatypes", "/variables", "/variables/{observationVariableDbId2}", "/variables/{observationVariableDbId3}", "/ontologies", "/maps", "/maps/{mapDbId}", "/maps/{mapDbId}/positions", "/maps/{mapDbId}/positions/{linkageGroupId}", "/locations", "/locations/{locationDbId}"],
             "description" : "<ol><li>Check <code>/calls</code> schema.</li><li>Check <code>/germplasm-search</code> schema and stores first and second germplasmDbId.</li><li>Check <code>/germplasm/{germplasmDbId}</code> schema using stored germplasmDbId and checks id.</li><li>Check <code>/germplasm/{germplasmDbId}</code> schema using second stored germplasmDbId and checks id.</li><li>Check <code>/germplasm/{germplasmDbId}/pedigree</code> schema and id.</li><li>Check <code>/germplasm/{germplasmDbId}/markeprofiles</code> schema and id.</li><a id=\"descMoreLink\" href=\"#descMore\" data-toggle=\"collapse\" aria-expanded=\"false\"> more...</a><div class=\"collapse\" id=\"descMore\"><li>Check <code>/attributes</code> schema.</li><li>Check <code>/attributes/categories</code> schema.</li><li>Check <code>/germplasm/{germplasmDbId}/attributes</code> schema using stored germplasmDbId and checks id.</li><li>Check <code>/markers</code> schema and save two ids.</li><li>Check <code>/markers/{markerDbId}</code> schema using first stored markerDbId and checks id.</li><li>Check <code>/markers/{markerDbId}</code> schema using second stored markerDbId and checks id.</li><li>Check <code>/markerprofiles</code> schema with no germplasmDbId.</li><li>Check <code>/markerprofiles?germplasmDbId={germplasmDbId}</code> schema using stored germplasmDbId.</li><li>Check <code>/markerprofiles/{markerprofileDbId}</code> schema using stored markerprofileDbId and checks id.</li><li>Check <code>/markerprofiles/{markerprofileDbId}</code> schema using for second stored markerprofileDbId and checks id.</li><li>Check GET <code>/allelematrix-search?markerprofileDbId={markerprofileDbId}</code> schema using stored markerprofileDbId.</li><li>Check POST <code>/allelematrix-search?markerprofileDbId={markerprofileDbId}</code> schema using stored markerprofileDbId.</li><li>Check <code>/programs</code> schema.</li><li>Check <code>/crops</code> schema.</li><li>Check <code>/trials</code> schema and store two ids.</li><li>Check <code>/trials/{trialDbId}</code> schema using first stored germplasmDbId and checks id.</li><li>Check <code>/trials/{trialDbId}</code> schema using second stored germplasmDbId and checks id.</li><li>Check <code>/seasons</code> schema.</li><li>Check <code>/studyTypes</code> schema.</li><li>Check GET <code>/studies-search</code> schema with no parameters and save two ids.</li><li>Check POST <code>/studies-search</code> schema.</li><li>Check <code>/studies/{studyDbId}</code> schema and id.</li><li>Check <code>/studies/{studyDbId}</code> schema and second id.</li><li>Check <code>/studies/{studyDbId}/observationVariables</code> schema and id.</li><li>Check <code>/studies/{studyDbId}/germplasm</code> schema and id.</li><li>Check <code>/observationLevels</code> schema.</li><li>Check <code>/studies/{studyDbId}/observationunits</code> schema and id.</li><li>Check <code>/studies/{studyDbId}/table</code> schema and id.</li><li>Check <code>/studies/{studyDbId}/layout</code> schema and id.</li><li>Check <code>/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}</code> schema and id.</li><li>Check <code>/phenotypes-search</code> schema.</li><li>Check <code>/traits</code> schema and save two ids.</li><li>Check <code>/traits/{traitDbId}</code> schema and first id.</li><li>Check <code>/traits/{traitDbId}</code> schema and second id.</li><li>Check <code>/variables/datatypes</code> schema.</li><li>Check <code>/variables</code> schema and store two ids.</li><li>Check <code>/variables/{observationVariableDbId}</code> schema and first id.</li><li>Check <code>/variables/{observationVariableDbId</code> schema and second id.</li><li>Check <code>/ontologies</code> schema.</li><li>Check <code>/maps</code> schema and store id.</li><li>Check <code>/maps/{mapDbId}</code> schema and check id.</li><li>Check <code>/maps/{mapDbId}positions</code> schema and check id.</li><li>Check <code>/maps/{mapDbId}/positions/{linkageGroupId}</code> schema and check id.</li><li>Check <code>/locations</code> schema and store id.</li><li>Check <code>/locations/{locationDbId}</code> schema and id.</li></div></ol>"
 
         }

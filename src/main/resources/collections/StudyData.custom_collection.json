@@ -6,14 +6,14 @@
 	},
 	"item": [
 		{
-			"name": "default",
-			"description": "",
-			"item" : [
+			"name": "Study",
+			"description": "Study resource",
+			"item": [
 				{
-					"name": "/germplasm-search",
-					"description": "",
+					"name": "/seasons",
+					"description": "Test schema",
 					"request": {
-						"url": "{baseurl}/germplasm-search",
+						"url": "{baseurl}/seasons",
 						"method": "GET"
 					},
 					"event": [
@@ -24,17 +24,58 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/germplasm-search",
-								"GetValue:/result/data/0/germplasmDbId:germplasmDbId"
+								"Schema:/seasons"
 							]
 						}
 					]
 				},
 				{
-					"name": "/germplasm-search",
-					"description": "",
+					"name": "/studyTypes",
+					"description": "Test schema",
 					"request": {
-						"url": "{baseurl}/germplasm-search",
+						"url": "{baseurl}/studyTypes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studyTypes"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies-search",
+					"description": "Search with no parameters and save two ids",
+					"request": {
+						"url": "{baseurl}/studies-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies-search",
+								"GetValue:/result/data/0/studyDbId:studyDbId",
+								"GetValue:/result/data/1/studyDbId:studyDbId1"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies-search",
+					"description": "Search with no parameters",
+					"request": {
+						"url": "{baseurl}/studies-search",
 						"method": "POST"
 					},
 					"event": [
@@ -45,16 +86,16 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/germplasm-search"
+								"Schema:/studies-search"
 							]
 						}
 					]
 				},
 				{
-					"name": "/germplasm/{germplasmDbId}",
-					"description": "",
+					"name": "/studies/{studyDbId}",
+					"description": "Check schema and Id",
 					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}",
+						"url": "{baseurl}/studies/{studyDbId}",
 						"method": "GET"
 					},
 					"event": [
@@ -65,17 +106,17 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId",
-								"IsEqual:/result/germplasmDbId:germplasmDbId"
+								"Schema:/studies/studyDbId",
+								"IsEqual:/result/studyDbId:studyDbId"
 							]
 						}
 					]
 				},
 				{
-					"name": "/germplasm/{germplasmDbId}/markerprofiles",
-					"description": "",
+					"name": "/studies/{studyDbId} with second id",
+					"description": "Check schema and second Id",
 					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}/markerprofiles",
+						"url": "{baseurl}/studies/{studyDbId1}",
 						"method": "GET"
 					},
 					"event": [
@@ -86,18 +127,17 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId/markerprofiles",
-								"IsEqual:/result/germplasmDbId:germplasmDbId",
-								"GetValue:/result/markerprofileDbIds/0:markerprofileDbId"
+								"Schema:/studies/studyDbId",
+								"IsEqual:/result/studyDbId:studyDbId1"
 							]
 						}
 					]
 				},
 				{
-					"name": "/markerprofiles?germplasmDbId={germplasmDbId}",
-					"description": "",
+					"name": "/studies/{studyDbId}/observationVariables",
+					"description": "Check schema and id",
 					"request": {
-						"url": "{baseurl}/markerprofiles?germplasmDbId={germplasmDbId}",
+						"url": "{baseurl}/studies/{studyDbId}/observationVariables",
 						"method": "GET"
 					},
 					"event": [
@@ -108,17 +148,18 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/markerprofiles",
-								"IsEqual:/result/data/0/germplasmDbId:germplasmDbId"
+								"Schema:/studies/studyDbId/observationVariables",
+								"IsEqual:/result/data/0/studyDbId:studyDbId",
+								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId"
 							]
 						}
 					]
 				},
 				{
-					"name": "/markerprofiles/{markerprofileDbId}",
-					"description": "",
+					"name": "/studies/{studyDbId}/germplasm",
+					"description": "Check schema and id",
 					"request": {
-						"url": "{baseurl}/markerprofiles/{markerprofileDbId}",
+						"url": "{baseurl}/studies/{studyDbId}/germplasm",
 						"method": "GET"
 					},
 					"event": [
@@ -129,18 +170,17 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/markerprofiles/markerprofileDbId",
-								"IsEqual:/result/germplasmDbId:germplasmDbId",
-								"IsEqual:/result/markerprofileDbId:markerprofileDbId"
+								"Schema:/studies/studyDbId/germplasm",
+								"IsEqual:/result/data/0/studyDbId:studyDbId"
 							]
 						}
 					]
 				},
 				{
-					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
-					"description": "",
+					"name": "/observationLevels",
+					"description": "Check schema",
 					"request": {
-						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"url": "{baseurl}/observationLevels",
 						"method": "GET"
 					},
 					"event": [
@@ -151,17 +191,17 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/allelematrix-search"
+								"Schema:/observationLevels"
 							]
 						}
 					]
 				},
 				{
-					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
-					"description": "",
+					"name": "/studies/{studyDbId}/observationUnits",
+					"description": "Check schema",
 					"request": {
-						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
-						"method": "POST"
+						"url": "{baseurl}/studies/{studyDbId}/observationunits",
+						"method": "GET"
 					},
 					"event": [
 						{
@@ -171,7 +211,70 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/metadata",
-								"Schema:/allelematrix-search"
+								"Schema:/studies/studyDbId/observationunits"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/table",
+					"description": "Check schema and id",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/table",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/table"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/layout",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/layout",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/layout",
+								"IsEqual:/result/data/studyDbId:studyDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+					"description": "Check schema and id",
+					"request": {
+						"url": "{baseurl}/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/studies/studyDbId/observations",
+								"IsEqual:/result/data/0/studyDbId:studyDbId",
+								"IsEqual:/result/data/0/observationVariableDbId:observationVariableDbId"
 							]
 						}
 					]

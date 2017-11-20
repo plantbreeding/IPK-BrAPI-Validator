@@ -1,0 +1,35 @@
+{
+	"info": {
+		"name": "BrAPI Phenotypes Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Phenotypes",
+			"description": "Phenotypes resource",
+			"item": [
+				{
+					"name": "/phenotypes-search",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/phenotypes-search",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/phenotypes-search"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

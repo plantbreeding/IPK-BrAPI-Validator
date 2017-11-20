@@ -140,6 +140,27 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "/germplasm/{germplasmDbId}/attributes",
+					"description": "Tests schema and id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId}/attributes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId/attributes",
+								"IsEqual:/result/germplasmDbId:germplasmDbId"
+							]
+						}
+					]
 				}
 			]
 		},
@@ -183,27 +204,6 @@
 								"ContentType:application/json",
 								"Schema:/metadata",
 								"Schema:/attributes/categories"
-							]
-						}
-					]
-				},
-				{
-					"name": "/germplasm/{germplasmDbId}/attributes",
-					"description": "Tests schema and id",
-					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}/attributes",
-						"method": "GET"
-					},
-					"event": [
-						{
-							"listen": "test",
-							"type": "text/plain",
-							"exec": [
-								"StatusCode:200:breakiffalse",
-								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId/attributes",
-								"IsEqual:/result/germplasmDbId:germplasmDbId"
 							]
 						}
 					]
@@ -1066,7 +1066,7 @@
 					"name": "/maps/{mapDbId}/positions",
 					"description": "Schema and id check",
 					"request": {
-						"url": "{baseurl}/{mapDbId}/positions",
+						"url": "{baseurl}/maps/{mapDbId}/positions",
 						"method": "GET"
 					},
 					"event": [
@@ -1087,7 +1087,7 @@
 					"name": "/maps/{mapDbId}/positions/{linkageGroupId}",
 					"description": "Schema and id check",
 					"request": {
-						"url": "{baseurl}/maps/positions",
+						"url": "{baseurl}/maps/{mapDbId}/positions/{linkageGroupId}",
 						"method": "GET"
 					},
 					"event": [

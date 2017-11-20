@@ -6,12 +6,12 @@
 	},
 	"item": [
 		{
-			"name": "default",
-			"description": "",
-			"item" : [
+			"name": "Germplasm",
+			"description": "Germplasm resource",
+			"item": [
 				{
 					"name": "/germplasm-search",
-					"description": "",
+					"description": "Tests schema and stores first and second germplasmDbId",
 					"request": {
 						"url": "{baseurl}/germplasm-search",
 						"method": "GET"
@@ -25,14 +25,15 @@
 								"ContentType:application/json",
 								"Schema:/metadata",
 								"Schema:/germplasm-search",
-								"GetValue:/result/data/0/germplasmDbId:germplasmDbId"
+								"GetValue:/result/data/0/germplasmDbId:germplasmDbId",
+								"GetValue:/result/data/1/germplasmDbId:germplasmDbId1"
 							]
 						}
 					]
 				},
 				{
 					"name": "/germplasm/{germplasmDbId}",
-					"description": "",
+					"description": "Tests schema using stored germplasmDbId and checks id",
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}",
 						"method": "GET"
@@ -52,8 +53,29 @@
 					]
 				},
 				{
+					"name": "/germplasm/{germplasmDbId} with second id",
+					"description": "Tests schema using second stored germplasmDbId and checks id",
+					"request": {
+						"url": "{baseurl}/germplasm/{germplasmDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm/germplasmDbId",
+								"IsEqual:/result/germplasmDbId:germplasmDbId1"
+							]
+						}
+					]
+				},
+				{
 					"name": "/germplasm/{germplasmDbId}/pedigree",
-					"description": "",
+					"description": "Tests schema and id",
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}/pedigree",
 						"method": "GET"
@@ -74,7 +96,7 @@
 				},
 				{
 					"name": "/germplasm/{germplasmDbId}/markerprofiles",
-					"description": "",
+					"description": "Tests schema and id",
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}/markeprofiles",
 						"method": "GET"
@@ -95,7 +117,7 @@
 				},
 				{
 					"name": "/germplasm/{germplasmDbId}/attributes",
-					"description": "",
+					"description": "Tests schema and id",
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}/attributes",
 						"method": "GET"

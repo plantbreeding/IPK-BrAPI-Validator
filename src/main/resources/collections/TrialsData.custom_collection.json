@@ -6,12 +6,12 @@
 	},
 	"item": [
 		{
-			"name": "default",
-			"description": "",
-			"item" : [
+			"name": "Trials",
+			"description": "Trials resource",
+			"item": [
 				{
 					"name": "/trials",
-					"description": "",
+					"description": "Test schema and save two Ids",
 					"request": {
 						"url": "{baseurl}/trials",
 						"method": "GET"
@@ -32,8 +32,8 @@
 					]
 				},
 				{
-					"name": "/trials/{trialDbId0}",
-					"description": "",
+					"name": "/trials/{trialDbId}",
+					"description": "Test schema and check first id",
 					"request": {
 						"url": "{baseurl}/trials/{trialDbId0}",
 						"method": "GET"
@@ -53,8 +53,8 @@
 					]
 				},
 				{
-					"name": "/trials/{trialDbId1}",
-					"description": "",
+					"name": "/trials/{trialDbId} with second id",
+					"description": "Test schema and check second id",
 					"request": {
 						"url": "{baseurl}/trials/{trialDbId1}",
 						"method": "GET"

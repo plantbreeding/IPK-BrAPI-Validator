@@ -147,6 +147,10 @@
 	],
 	"dataTests": [
 		{
+			"name":"Complete",
+			"pathToCollection": "/CompleteBrapiTest.custom_collection.json"
+		},
+		{
 			"name":"GermplasmData",
 			"pathToCollection": "/GermplasmData.custom_collection.json" 
 		},
@@ -159,12 +163,28 @@
 			"pathToCollection": "/MarkersData.custom_collection.json" 
 		},
 		{
-			"name": "TrialsData",
+			"name":"TrialsData",
 			"pathToCollection": "/TrialsData.custom_collection.json"
 		},
 		{
-			"name":"Complete",
-			"pathToCollection": "/CompleteBrapiTest.custom_collection.json"
+			"name":"TraitsData",
+			"pathToCollection": "/TraitsData.custom_collection.json"
+		},
+		{
+			"name":"StudyData",
+			"pathToCollection": "/StudyData.custom_collection.json"
+		},
+		{
+			"name":"ObservationVariablesData",
+			"pathToCollection": "/ObservationVariablesData.custom_collection.json"
+		},
+		{
+			"name":"GenomeMapsData",
+			"pathToCollection": "/GenomeMapsData.custom_collection.json"
+		},
+		{
+			"name":"LocationsData",
+			"pathToCollection": "/LocationsData.custom_collection.json"
 		}
 	]
 }

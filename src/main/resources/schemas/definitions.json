@@ -109,7 +109,7 @@
 
 			},
 			"required": ["germplasmDbId", "defaultDisplayName", "instituteCode"],
-			"additionalProperties": false	
+			"additionalProperties": true
 		},
 		"marker" : {
 			"additionalProperties": false,

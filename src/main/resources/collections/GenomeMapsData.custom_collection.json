@@ -1,0 +1,98 @@
+{
+	"info": {
+		"name": "BrAPI Genome Maps Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Genomic maps",
+			"description": "Genomic maps resource",
+			"item": [
+				{
+					"name": "/maps",
+					"description": "Schema and store id",
+					"request": {
+						"url": "{baseurl}/maps",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps",
+								"GetValue:/result/data/0/mapDbId:mapDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/maps/{mapDbId}",
+					"description": "Schema and id check",
+					"request": {
+						"url": "{baseurl}/maps/{mapDbId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps/mapDbId",
+								"IsEqual:/result/mapDbId:mapDbId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/maps/{mapDbId}/positions",
+					"description": "Schema and id check",
+					"request": {
+						"url": "{baseurl}/maps/{mapDbId}/positions",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps/mapDbId/positions",
+								"GetValue:/result/data/0/linkageGroup:linkageGroupId"
+							]
+						}
+					]
+				},
+				{
+					"name": "/maps/{mapDbId}/positions/{linkageGroupId}",
+					"description": "Schema and id check",
+					"request": {
+						"url": "{baseurl}/maps/{mapDbId}/positions/{linkageGroupId}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/maps/mapDbId/positions/linkageGroupId"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

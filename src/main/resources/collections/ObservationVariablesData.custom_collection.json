@@ -1,0 +1,119 @@
+{
+	"info": {
+		"name": "BrAPI Observation Variables Data-Structure Test",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Observation Variables",
+			"description": "Observation Variables resource",
+			"item": [
+				{
+					"name": "/variables/datatypes",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/variables/datatypes",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables/datatypes"
+							]
+						}
+					]
+				},
+				{
+					"name": "/variables",
+					"description": "Check schema and store two variables",
+					"request": {
+						"url": "{baseurl}/variables",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables",
+								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId2",
+								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId3"
+							]
+						}
+					]
+				},
+				{
+					"name": "/variables/{observationVariableDbId}",
+					"description": "Check schema and id",
+					"request": {
+						"url": "{baseurl}/variables/{observationVariableDbId2}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables/observationVariableDbId",
+								"IsEqual:/result/observationVariableDbId:observationVariableDbId2"
+							]
+						}
+					]
+				},
+				{
+					"name": "/variables/{observationVariableDbId} with second id",
+					"description": "Check schema and second id",
+					"request": {
+						"url": "{baseurl}/variables/{observationVariableDbId3}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/variables/observationVariableDbId",
+								"IsEqual:/result/observationVariableDbId:observationVariableDbId3"
+							]
+						}
+					]
+				},
+				{
+					"name": "/ontologies",
+					"description": "Check schema",
+					"request": {
+						"url": "{baseurl}/ontologies",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/ontologies"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

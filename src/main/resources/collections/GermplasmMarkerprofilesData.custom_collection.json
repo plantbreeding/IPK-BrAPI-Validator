@@ -6,12 +6,35 @@
 	},
 	"item": [
 		{
-			"name": "default",
-			"description": "",
-			"item" : [
+			"name": "Markerprofiles",
+			"description": "Markerprofiles resource",
+			"item": [
+				{
+					"name": "/markerprofiles",
+					"description": "Tests markerprofile with no germplasmDbId",
+					"request": {
+						"url": "{baseurl}/markerprofiles",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles",
+								"GetValue:/result/data/0/markerprofileDbId:markerprofileDbId",
+								"GetValue:/result/data/1/markerprofileDbId:markerprofileDbId1"
+
+							]
+						}
+					]
+				},
 				{
 					"name": "/germplasm-search",
-					"description": "",
+					"description": "Tests schema and stores germplasmDbId",
 					"request": {
 						"url": "{baseurl}/germplasm-search",
 						"method": "GET"
@@ -31,71 +54,8 @@
 					]
 				},
 				{
-					"name": "/germplasm-search",
-					"description": "",
-					"request": {
-						"url": "{baseurl}/germplasm-search",
-						"method": "POST"
-					},
-					"event": [
-						{
-							"listen": "test",
-							"type": "text/plain",
-							"exec": [
-								"StatusCode:200:breakiffalse",
-								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm-search"
-							]
-						}
-					]
-				},
-				{
-					"name": "/germplasm/{germplasmDbId}",
-					"description": "",
-					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}",
-						"method": "GET"
-					},
-					"event": [
-						{
-							"listen": "test",
-							"type": "text/plain",
-							"exec": [
-								"StatusCode:200:breakiffalse",
-								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId",
-								"IsEqual:/result/germplasmDbId:germplasmDbId"
-							]
-						}
-					]
-				},
-				{
-					"name": "/germplasm/{germplasmDbId}/markerprofiles",
-					"description": "",
-					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}/markerprofiles",
-						"method": "GET"
-					},
-					"event": [
-						{
-							"listen": "test",
-							"type": "text/plain",
-							"exec": [
-								"StatusCode:200:breakiffalse",
-								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId/markerprofiles",
-								"IsEqual:/result/germplasmDbId:germplasmDbId",
-								"GetValue:/result/markerprofileDbIds/0:markerprofileDbId"
-							]
-						}
-					]
-				},
-				{
 					"name": "/markerprofiles?germplasmDbId={germplasmDbId}",
-					"description": "",
+					"description": "Tests markerprofile with germplasmDbId",
 					"request": {
 						"url": "{baseurl}/markerprofiles?germplasmDbId={germplasmDbId}",
 						"method": "GET"
@@ -116,7 +76,7 @@
 				},
 				{
 					"name": "/markerprofiles/{markerprofileDbId}",
-					"description": "",
+					"description": "Test schema and same id",
 					"request": {
 						"url": "{baseurl}/markerprofiles/{markerprofileDbId}",
 						"method": "GET"
@@ -130,15 +90,35 @@
 								"ContentType:application/json",
 								"Schema:/metadata",
 								"Schema:/markerprofiles/markerprofileDbId",
-								"IsEqual:/result/germplasmDbId:germplasmDbId",
 								"IsEqual:/result/markerprofileDbId:markerprofileDbId"
 							]
 						}
 					]
 				},
 				{
+					"name": "/markerprofiles/{markerprofileDbId} with second id",
+					"description": "Test schema and same id for second stored id",
+					"request": {
+						"url": "{baseurl}/markerprofiles/{markerprofileDbId1}",
+						"method": "GET"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/markerprofiles/markerprofileDbId",
+								"IsEqual:/result/markerprofileDbId:markerprofileDbId1"
+							]
+						}
+					]
+				},
+				{
 					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
-					"description": "",
+					"description": "Test schema",
 					"request": {
 						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 						"method": "GET"
@@ -158,7 +138,7 @@
 				},
 				{
 					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
-					"description": "",
+					"description": "Test schema for POST",
 					"request": {
 						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 						"method": "POST"
