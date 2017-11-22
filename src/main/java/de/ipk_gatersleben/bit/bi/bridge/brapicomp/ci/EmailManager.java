@@ -61,14 +61,7 @@ public class EmailManager {
             Map<String, String> variables = getReportTemplateVariables(testReport);
             TemplateHTML email = new TemplateHTML("/templates/email.html", variables);
             body = email.generateBody();
-
-            Map<String, String> attVariables = new HashMap<>();
-            ObjectMapper mapper = new ObjectMapper();
-            attVariables.put("report", mapper.writeValueAsString(testReport));
-            TemplateHTML attachmentHTML = new TemplateHTML("/templates/report.html", attVariables);
-
-            Attachment attachment = new Attachment("report.html", attachmentHTML.generateBody());
-            EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail(), attachment);
+            EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail());
             return true;
         } catch (IOException | URISyntaxException e) {
             LOGGER.warning("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
@@ -90,6 +83,7 @@ public class EmailManager {
                 - tsr.getTestCollections().get(0).getFails()));
         map.put("total", Integer.toString(tsr.getTestCollections().get(0).getTotal()));
         map.put("failList", tsr.getTestCollections().get(0).getFailListAsHTML());
+        map.put("reportId", tsr.getId());
         return map;
     }
 }

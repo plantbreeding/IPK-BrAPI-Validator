@@ -5,7 +5,7 @@
   <title>BrAPI Validator Report</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
+<p>
 <p>This is your BrAVa ${frequency} report.</p>
 
 <p>As you requested, we tested your server located at:</p>
@@ -22,7 +22,8 @@ ${failList}
 
 <p>---</p>
 
-<p>You'll find the full report as an attachment to this email.</p>
+<p>Check the full report here:</p>
+<a href="${baseDomain}/api/testReport/${reportId}">${baseDomain}/api/testReport/${reportId}</a>
 
 <p>If you have any questions or feedback feel free to contact us at ${contactEmail}.</p>
 

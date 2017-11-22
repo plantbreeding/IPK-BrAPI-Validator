@@ -2,11 +2,13 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 
 import java.util.Date;
 import java.util.UUID;
 
+@DatabaseTable(tableName = "testreports")
 public class TestReport {
 
     public static final String ENDPOINTID_FIELD_NAME = "ENDPOINTID";
@@ -23,11 +25,16 @@ public class TestReport {
     @DatabaseField(canBeNull = false, columnName = ENDPOINTID_FIELD_NAME, foreign = true)
     private Endpoint endpointId;
 
-    @DatabaseField(canBeNull = false, columnName = REPORTJSON_FIELD_NAME)
+    @DatabaseField(canBeNull = false, columnName = REPORTJSON_FIELD_NAME, dataType = DataType.LONG_STRING)
     private String reportJson;
 
     @DatabaseField(canBeNull = false, columnName = DATE_FIELD_NAME)
     private Date date;
+
+    public TestReport () { ;
+        // Set date to current.
+        setDate(new Date());
+    }
 
     public TestReport (Endpoint endpoint, String reportJson) {
         setEndpointId(endpoint);

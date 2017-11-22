@@ -20,11 +20,6 @@ public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig(@Context ServletContext servletContext) throws SQLException, IOException {
         LOGGER.log(Level.FINE, "Server initialized.");
-
-        packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.AdminResource");
-        packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.SimpleTests");
-        packages("de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.Users");
-
     }
 
 

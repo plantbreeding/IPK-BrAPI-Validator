@@ -48,7 +48,7 @@
 
     $(function() {
 
-        var data = ${report};
+        var data = JSON.parse(${report});
 
         function testStats(test) {
             var failed = false;

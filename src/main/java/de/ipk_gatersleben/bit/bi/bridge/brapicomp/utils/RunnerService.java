@@ -90,7 +90,8 @@ public class RunnerService {
             TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
             ObjectMapper mapper = new ObjectMapper();
             try {
-                TestReportService.saveReport(endpoint, mapper.writeValueAsString(testSuiteReport));
+                String reportId = TestReportService.saveReport(endpoint, mapper.writeValueAsString(testSuiteReport));
+                testSuiteReport.setId(reportId);
             } catch (JsonProcessingException e) {
                 LOGGER.warning("Unable to save report:" + e.getMessage());
             }

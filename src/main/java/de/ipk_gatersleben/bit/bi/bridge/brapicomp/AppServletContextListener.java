@@ -70,7 +70,7 @@ public class AppServletContextListener implements ServletContextListener {
     private static void buildDaos() {
         try {
             DataSourceManager.addDao(Endpoint.class);
-            DataSourceManager.createTable(TestReport.class);
+            DataSourceManager.addDao(TestReport.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
