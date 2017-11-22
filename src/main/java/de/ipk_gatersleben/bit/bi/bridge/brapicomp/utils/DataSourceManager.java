@@ -54,6 +54,9 @@ public class DataSourceManager {
     public static void createTable(Class tableClass) throws SQLException {
         TableUtils.createTableIfNotExists(source, tableClass);
     }
+    public static void deleteTable(Class tableClass) throws SQLException {
+        TableUtils.dropTable(source, tableClass, true);
+    }
 
     public static void setConnectionSource(ConnectionSource s) {
         source = s;

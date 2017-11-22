@@ -38,7 +38,7 @@ public class TestReportResource {
     private static final Logger LOGGER = Logger.getLogger(TestReportResource.class.getName());
 
     @GET
-    @Path("/testReport/{reportId}")
+    @Path("/testreport/{reportId}")
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
     public Response getReport(@PathParam("reportId") String reportId) {
@@ -70,7 +70,7 @@ public class TestReportResource {
     }
 
     @GET
-    @Path("/testReport/{reportId}/json")
+    @Path("/testreport/{reportId}/json")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getReportJson(@PathParam("reportId") String reportId) {
@@ -83,7 +83,6 @@ public class TestReportResource {
             }
 
             return Response.ok().entity(tr.getReportJson()).build();
-
 
         } catch (SQLException e) {
             //Thrown by TestReportService.getReport(reportId)
