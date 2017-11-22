@@ -6,16 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources.ContinuousIntegration;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestCollectionRunner;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 /**
  * Sends transactional emails.
@@ -61,17 +55,16 @@ public class EmailManager {
      *
      * @return True if no errors occurred.
      */
-    public boolean runAndSend(TestCollection testCollection) {
-        TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
+    public boolean sendReport(TestSuiteReport testReport) {
         String body;
         try {
-            Map<String, String> variables = getReportTemplateVariables(testSuiteReport);
+            Map<String, String> variables = getReportTemplateVariables(testReport);
             TemplateHTML email = new TemplateHTML("/templates/email.html", variables);
             body = email.generateBody();
 
             Map<String, String> attVariables = new HashMap<>();
             ObjectMapper mapper = new ObjectMapper();
-            attVariables.put("report", mapper.writeValueAsString(testSuiteReport));
+            attVariables.put("report", mapper.writeValueAsString(testReport));
             TemplateHTML attachmentHTML = new TemplateHTML("/templates/report.html", attVariables);
 
             Attachment attachment = new Attachment("report.html", attachmentHTML.generateBody());

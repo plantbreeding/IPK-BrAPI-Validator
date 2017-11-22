@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import org.apache.commons.lang3.text.StrSubstitutor;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
@@ -83,7 +86,15 @@ public class RunnerService {
         int count = 0;
         boolean sent;
         for (int i = 0; i < l.size(); i++) {
-            sent = new EmailManager(l.get(i)).runAndSend(testCollection);
+            Endpoint endpoint = l.get(i);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                TestReportService.saveReport(endpoint, mapper.writeValueAsString(testSuiteReport));
+            } catch (JsonProcessingException e) {
+                LOGGER.warning("Unable to save report:" + e.getMessage());
+            }
+             sent = new EmailManager(endpoint).sendReport(testSuiteReport);
             if (sent) {
                 count += 1;
             }

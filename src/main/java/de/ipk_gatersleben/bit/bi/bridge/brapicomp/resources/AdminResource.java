@@ -32,12 +32,13 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 /**
  * Currently groups the Administrator related queries.
  * Mostly running tests on endpoints stored in the database.
+ * Error codes: X0XX
  */
 @Path("/admin")
 @RequestScoped
-public class Admin {
+public class AdminResource {
 
-    private static final Logger LOGGER = Logger.getLogger(Admin.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AdminResource.class.getName());
 
     /**
      * Run the default test on all endpoints
@@ -56,13 +57,13 @@ public class Admin {
             String[] auth = ResourceService.getAuth(headers);
             //Check auth header
             if (auth == null || auth.length != 2) {
-                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021);
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
 
             //Check if api key is correct.
             if (!auth[1].equals(Config.get("adminkey"))) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010);
+                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4001);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
 
@@ -80,7 +81,7 @@ public class Admin {
             return Response.status(Status.ACCEPTED).entity(success).build();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010);
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5001);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
@@ -102,7 +103,7 @@ public class Admin {
             String[] auth = ResourceService.getAuth(headers);
             //Check auth header
             if (auth == null || auth.length != 2) {
-                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4021);
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
 
@@ -110,7 +111,7 @@ public class Admin {
             //Check if api key is correct.
             //Disabled
             if (true || auth[0] != Config.get("admin") || auth[1] != Config.get("key")) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4010);
+                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4003);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
 
@@ -124,7 +125,7 @@ public class Admin {
             return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteList)).build();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5010);
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5004);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }

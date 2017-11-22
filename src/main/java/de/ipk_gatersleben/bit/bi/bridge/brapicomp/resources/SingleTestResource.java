@@ -34,13 +34,14 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 /**
- * Request a single test or testcollection against an endpoint
+ * Request a single test or testcollection against an endpoint.
+ * Error code: X2XX
  */
 @Path("/test")
 @RequestScoped
-public class SingleTest {
+public class SingleTestResource {
 
-    private static final Logger LOGGER = Logger.getLogger(SingleTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SingleTestResource.class.getName());
 
     /**
      * Run the default test for one endpoint
@@ -59,7 +60,7 @@ public class SingleTest {
         try {
 
             if (url.equals("")) {
-                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4030);
+                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4200);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
 
@@ -111,15 +112,15 @@ public class SingleTest {
                 json = mapper.writeValueAsString(testSuiteReport);
             }
 
-            return Response.status(Status.ACCEPTED).entity(json).build();
+            return Response.ok().entity(json).build();
         } catch (IOException e) {
             //Thrown by .getResourceAsStream(""). Most probably because of missing file or wrong config structure.
             e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5030);
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5200);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4031);
+            String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4201);
             return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
         }
     }
@@ -140,7 +141,7 @@ public class SingleTest {
         try {
 
             if (url.equals("")) {
-                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4030);
+                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
 
@@ -157,11 +158,11 @@ public class SingleTest {
             Endpoint endp = new Endpoint(url);
             TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endp, tc);
 
-            return Response.status(Status.ACCEPTED).entity(mapper.writeValueAsString(testSuiteReport)).build();
+            return Response.ok().entity(mapper.writeValueAsString(testSuiteReport)).build();
         } catch (IOException e) {
             //Thrown by .getResourceAsStream(""). Most probably because of missing file or wrong config structure.
             e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5030);
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5201);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
