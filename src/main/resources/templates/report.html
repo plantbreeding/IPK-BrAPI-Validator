@@ -193,10 +193,6 @@
                 var totalTests = 0;
                 var totalFailures = 0;
 
-                var cached = '';
-                if (tir.cached) {
-                    cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
-                }
 
                 var success;
                 if (tir.failed){
@@ -205,7 +201,7 @@
                     success = '<i class="fa fa-check-circle text-success" aria-hidden="true"></i>';
                 }
 
-                tirDiv.append($("<h4 class='mt-4'/>").html(success + ' ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>' + cached));
+                tirDiv.append($("<h4 class='mt-4'/>").html(success + ' ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>'));
                 for (var i = 0; i < tir.test.length; i++) {
                     tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
                     tir.test[i].passed ? 0 : totalFailures++;
@@ -265,7 +261,6 @@
                 testStats(data);
                 report.addTestItemResult(data);
             }
-            $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
         }
         main();
     });
