@@ -87,13 +87,29 @@ public class EmailManager {
         map.put("total", Integer.toString(tsr.getTestCollections().get(0).getTotal()));
         map.put("failList", tsr.getTestCollections().get(0).getFailListAsHTML());
         map.put("reportId", tsr.getId());
-        for (int i = 0; i < prevReports.size(); i++) {
-        	map.put("reportId-" + (i + 1), prevReports.get(i).getReportId().toString());
-        	map.put("reportId-" + (i + 1) + "-date", prevReports.get(i).getDate().toString());
-        }
+        map.put("prevReports", getPrevReportsHTML());
         return map;
     }
 
+    /**
+     * Generate the HTML for the PrevReports section in the email.
+     * @return
+     */
+    private String getPrevReportsHTML() {
+    	String prevReportsHTML = "";
+    	if (prevReports.size() > 0) {
+    		prevReportsHTML += "<p>Older reports:</p>\n";
+    		prevReportsHTML += "<ul>\n";
+    		for (int i = 0; i < prevReports.size(); i++) {
+    			String url = Config.get("baseDomain") + "/api/testreport/" + prevReports.get(i).getReportId().toString();
+    			prevReportsHTML += "<li><a href=\"" + url + "\">" + url + "</a> - " 
+    			+ prevReports.get(i).getDate().toString() + "</li>\n";
+    		}
+    		prevReportsHTML += "</ul>\n";
+    	}
+    	return prevReportsHTML;
+    }
+    
 	public List<TestReport> getPrevReports() {
 		return prevReports;
 	}
