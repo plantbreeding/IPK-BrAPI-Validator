@@ -18,15 +18,4 @@ public class JsonMessageManager {
                 + "\", \"code\":" + code + "}";
         return e;
     }
-
-    /**
-     * Generate "data" json structure
-     *
-     * @param data Data to be included
-     * @return Json string
-     */
-    public static String jsonData(String data) {
-        String e = "{\"data\":" + data + "}";
-        return e;
-    }
 }

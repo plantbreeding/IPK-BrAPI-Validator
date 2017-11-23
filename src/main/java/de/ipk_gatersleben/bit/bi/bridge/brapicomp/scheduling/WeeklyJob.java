@@ -28,7 +28,6 @@ public class WeeklyJob implements org.quartz.Job {
 			tc = mapper.readValue(inJson, TestCollection.class);
 			RunnerService.TestAllEndpointsWithFreq(tc, "weekly");
 		} catch (IOException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     }

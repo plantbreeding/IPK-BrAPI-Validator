@@ -30,26 +30,7 @@ public class EndpointService {
     }
 
     /**
-     * Get a list of all endpoints that belong to an email.
-     *
-     * @param email Email to search endpoints for
-     * @param url   Url to search endpoints for
-     * @return List of endpoints that belong to that email
-     * @throws SQLException SQL Error.
-     */
-    public static Endpoint getEndpointWithEmailAndUrl(String email, String url) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        Endpoint e = endpointDao.queryBuilder().where()
-                .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
-                .eq(Endpoint.URL_FIELD_NAME, url).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
-                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
-                .queryForFirst();
-        return e;
-    }
-
-    /**
-     * Get a list of all endpoints that belong to an email.
+     * Get a list of all endpoints that belong to an email with specific URL and Freq
      *
      * @param email Email to search endpoints for
      * @param url   Url to search endpoints
@@ -77,16 +58,11 @@ public class EndpointService {
      */
     public static Boolean deleteEndpointWithId(String endpointId) throws SQLException {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
-        if (e == null) {
+        int e = endpointDao.deleteById(UUID.fromString(endpointId));
+        if (e == 0) {
             // Not found.
-            return null;
-        }
-        if (e.isDeleted()) {
             return false;
         }
-        e.setDeleted(true);
-        endpointDao.update(e);
         return true;
     }
 
@@ -110,6 +86,13 @@ public class EndpointService {
         }
     }
 
+    /**
+     * Get all active endpoints with a certain frequency.
+     * 
+     * @param freq
+     * @return List of endpoints
+     * @throws SQLException
+     */
     public static List<Endpoint> getAllEndpointsWithFreq(String freq) throws SQLException {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         List<Endpoint> l = endpointDao.queryBuilder().where()
@@ -119,16 +102,7 @@ public class EndpointService {
                 .query();
         return l;
     }
-
-    public static List<Endpoint> getAllEndpoints() throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        List<Endpoint> l = endpointDao.queryBuilder().where()
-                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
-                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
-                .query();
-        return l;
-    }
-
+    
     public static Boolean confirmEndpointWithId(String endpointId) throws SQLException {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));

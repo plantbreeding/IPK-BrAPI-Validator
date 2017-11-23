@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.text.StrSubstitutor;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
-import org.apache.commons.lang3.text.StrSubstitutor;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
@@ -57,20 +58,6 @@ public class RunnerService {
 
         return testSuiteList;
 
-    }
-
-    /**
-     * Tests all endpoints belonging to an email.
-     *
-     * @param email          Email
-     * @param testCollection Config instance.
-     * @return List of TestSuiteReport containing the test results.
-     * @throws SQLException SQL connection
-     */
-    public static List<TestSuiteReport> testAllEmailEndpoints(String email, TestCollection testCollection) throws SQLException {
-        List<Endpoint> l = EndpointService.getEndpointsWithEmail(email);
-        LOGGER.info("Endpoints found: " + l.size());
-        return testEndpoints(l, testCollection);
     }
 
     /**

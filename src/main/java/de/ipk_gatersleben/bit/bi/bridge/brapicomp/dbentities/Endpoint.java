@@ -21,8 +21,6 @@ public class Endpoint {
 
     public static final String FREQUENCY_FIELD_NAME = "FREQUENCY";
 
-    public static final String DELETED_FIELD_NAME = "DELETED";
-
     public static final String CONFIRMED_FIELD_NAME = "CONFIRMED";
     
     public static final String STOREPREV_FIELD_NAME = "STOREPREV";
@@ -33,32 +31,17 @@ public class Endpoint {
     @DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
     private String url;
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     @DatabaseField(canBeNull = false, columnName = EMAIL_FIELD_NAME)
     private String email;
 
     @DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)
     private String frequency;
 
-    @DatabaseField(canBeNull = false, columnName = DELETED_FIELD_NAME)
-    private boolean deleted = false;
-
     @DatabaseField(canBeNull = false, columnName = CONFIRMED_FIELD_NAME)
     private boolean confirmed = false;
 
     @DatabaseField(canBeNull = false, columnName = STOREPREV_FIELD_NAME)
     private int storeprev = 3;
-
-    public int getStoreprev() {
-		return storeprev;
-	}
-
-	public void setStoreprev(int storeprev) {
-		this.storeprev = storeprev;
-	}
 
 	public Endpoint() {
     }
@@ -80,6 +63,10 @@ public class Endpoint {
         return id;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
     /**
      * @return endpoint's url
      */
@@ -116,13 +103,6 @@ public class Endpoint {
         return frequency;
     }
 
-    /**
-     * @param d Set deleted.
-     */
-    public void setDeleted(boolean d) {
-        this.deleted = d;
-    }
-
     public void setConfirmed(boolean b) {
         this.confirmed = b;
     }
@@ -131,8 +111,12 @@ public class Endpoint {
         return confirmed;
     }
 
-    public boolean isDeleted() {
-        return this.deleted;
-    }
+    public int getStoreprev() {
+		return storeprev;
+	}
 
+	public void setStoreprev(int storeprev) {
+		this.storeprev = storeprev;
+	}
+    
 }

@@ -44,7 +44,7 @@ public class SingleTestResource {
     private static final Logger LOGGER = Logger.getLogger(SingleTestResource.class.getName());
 
     /**
-     * Run the default test for one endpoint
+     * Run a structure test for one endpoint
      *
      * @param url     Url of the BrAPI server. Example: https://test.brapi.org/brapi/v1/
      * @param name    Name of the test to run. Must match the name of the test in respources/test.json
@@ -67,8 +67,10 @@ public class SingleTestResource {
             ObjectMapper mapper = new ObjectMapper();
             String json;
 
-            //All non-parametric tests.
+            
             if (name.equals("all")) {
+            	// All non-parametric tests.
+            	
                 String collectionResource = "/collections/SimpleStructureTest.custom_collection.json";
 
                 InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
@@ -78,22 +80,25 @@ public class SingleTestResource {
                 TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endp, tc);
                 json = mapper.writeValueAsString(testSuiteReport);
 
-                //Single test
+                
             } else {
-
+            	// Single test
+            	
                 Test test = new Test(name);
 
                 VariableStorage storage = new VariableStorage();
 
                 MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-                int keys = 0;
+                int params = 0;
+                
+                // Store and clean parameters.
                 for (String key : queryParams.keySet()) {
                     if (!(key.equals("name") || key.equals("url"))) {
                         key = key.replaceAll("[^A-Za-z0-9_]", ""); //Clean string
                         String value = queryParams.getFirst(key);
                         value = value.replaceAll("[^A-Za-z0-9_]", "");
                         storage.setVariable(key, "\"" + value + "\"");
-                        keys++;
+                        params++;
                     }
 
                 }
@@ -101,7 +106,7 @@ public class SingleTestResource {
 
                 Item simple;
 
-                if (keys > 0) {
+                if (params > 0) {
                     test.setEndpoint(RunnerService.replaceVariablesUrl(test.getEndpoint(), storage));
                     simple = new Item("GET", url, test);
                     testSuiteReport = RunnerService.singleTestEndpoint(simple, storage);
@@ -126,7 +131,7 @@ public class SingleTestResource {
     }
 
     /**
-     * Run the default test for one endpoint
+     * Run a data test for one endpoint
      *
      * @param url  Url of the BrAPI server. Example: https://test.brapi.org/brapi/v1/
      * @param name Name of the test to run. Must match the name of the test in respources/test.json

@@ -3,27 +3,30 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
@@ -87,6 +90,8 @@ public class AdminResource {
     @DELETE
     @Path("/tables")
     public Response delTables() {
+    	// It is necessary to delete or update the database tables after the schema changes
+    	// i.e. when a new parameter/column is added
         try {
             DataSourceManager.deleteTable(TestReport.class);
             DataSourceManager.deleteTable(Endpoint.class);
@@ -94,7 +99,5 @@ public class AdminResource {
             return Response.serverError().entity(e.getMessage()).build();
         }
         return Response.ok().build();
-
-        //DataSourceManager.deleteTable();
     }
 }

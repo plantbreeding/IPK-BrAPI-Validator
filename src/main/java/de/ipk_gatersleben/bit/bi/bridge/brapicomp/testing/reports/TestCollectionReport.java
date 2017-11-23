@@ -1,9 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Report object that contains the tests results and various messages, organized by folders.

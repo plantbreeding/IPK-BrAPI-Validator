@@ -29,7 +29,6 @@ public class MonthlyJob implements org.quartz.Job {
 			tc = mapper.readValue(inJson, TestCollection.class);
 			RunnerService.TestAllEndpointsWithFreq(tc, "monthly");
 		} catch (IOException | SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     }

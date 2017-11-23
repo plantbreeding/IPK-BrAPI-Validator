@@ -3,13 +3,11 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.UUID;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 
 
 /**

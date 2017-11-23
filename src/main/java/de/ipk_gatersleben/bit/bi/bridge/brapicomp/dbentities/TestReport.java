@@ -1,12 +1,11 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
+import java.util.Date;
+import java.util.UUID;
+
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
-
-import java.util.Date;
-import java.util.UUID;
 
 @DatabaseTable(tableName = "testreports")
 public class TestReport {

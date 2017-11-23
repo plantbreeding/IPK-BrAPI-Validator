@@ -7,7 +7,12 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -54,6 +59,7 @@ public class ContinuousIntegrationResource {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 
         try {
+        	// Check if the record exists in the database already.
             Endpoint e = EndpointService.getEndpointWithEmailAndUrlAndFreq(endp.getEmail(), endp.getUrl(), endp.getFrequency());
             if (e != null && e.isConfirmed()) {
                 String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4100);
@@ -129,13 +135,11 @@ public class ContinuousIntegrationResource {
         try {
             TemplateHTML result;
             Boolean unsubscribed = EndpointService.deleteEndpointWithId(endpointId);
-            if (unsubscribed == null) {
+            if (!unsubscribed) {
                 String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4102);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
-            } else if (unsubscribed) {
-                result = new TemplateHTML("/templates/unsubscribe.html");
             } else {
-                result = new TemplateHTML("/templates/already-unsubscribed.html");
+                result = new TemplateHTML("/templates/unsubscribe.html");
             }
 
             return Response.ok().entity(result.generateBody()).build();
