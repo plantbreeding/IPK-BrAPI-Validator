@@ -90,8 +90,13 @@ public class RunnerService {
             Endpoint endpoint = l.get(i);
             TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
             
+            final int N = 3;
             // Get last N reports
-            List<TestReport> prevReports = TestReportService.getLastReports(endpoint, 3); //3 default for now
+            List<TestReport> prevReports = TestReportService.getLastReports(endpoint, N); //3 default for now
+            if (prevReports.size() >= N) {
+            	TestReportService.deleteOlderThan(prevReports.get(prevReports.size()-1)); //Delete older than last N.
+            }
+            
             
             ObjectMapper mapper = new ObjectMapper();
             try {

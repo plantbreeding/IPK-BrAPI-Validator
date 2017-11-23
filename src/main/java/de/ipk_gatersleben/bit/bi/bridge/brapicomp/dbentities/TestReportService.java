@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
@@ -54,8 +55,22 @@ public class TestReportService {
 	public static List<TestReport> getLastReports(Endpoint endpoint, long last) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
 		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
-		qb.where().eq(TestReport.ENDPOINTID_FIELD_NAME, endpoint);
+		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, endpoint);
 		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit(last); //Descending
 		return qb.query();
 	}
+	
+	/**
+	 * Delete reports older than a specific one
+	 * @param endpoint Reports older than this one will get deleted from the database.
+	 * @throws SQLException 
+	 */
+	public static void deleteOlderThan(TestReport testReport) throws SQLException {
+		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
+		DeleteBuilder<TestReport, UUID> qb = testReportDao.deleteBuilder();
+		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, testReport.getEndpoint())
+			.and().lt(TestReport.DATE_FIELD_NAME, testReport.getDate());
+		qb.delete();
+	}
+	
 }
