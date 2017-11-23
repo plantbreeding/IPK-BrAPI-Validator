@@ -90,6 +90,7 @@ public class RunnerService {
             Endpoint endpoint = l.get(i);
             TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
             
+            // Get last N reports
             List<TestReport> prevReports = TestReportService.getLastReports(endpoint, 3); //3 default for now
             
             ObjectMapper mapper = new ObjectMapper();

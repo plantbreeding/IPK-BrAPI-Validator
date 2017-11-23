@@ -25,6 +25,13 @@ ${failList}
 <p>Check the full report here:</p>
 <a href="${baseDomain}/api/testreport/${reportId}">${baseDomain}/api/testreport/${reportId}</a>
 
+<p>Older reports:</p>
+<ul>
+<li><a href="${baseDomain}/api/testreport/${reportId-1}">${baseDomain}/api/testreport/${reportId-1}</a> - ${reportId-1-date}</li>
+<li><a href="${baseDomain}/api/testreport/${reportId-2}">${baseDomain}/api/testreport/${reportId-2}</a> - ${reportId-2-date}</li>
+<li><a href="${baseDomain}/api/testreport/${reportId-3}">${baseDomain}/api/testreport/${reportId-3}</a> - ${reportId-3-date}</li>
+</ul>
+
 <p>If you have any questions or feedback feel free to contact us at ${contactEmail}.</p>
 
 <p>Thanks for using BrAVa!</p>

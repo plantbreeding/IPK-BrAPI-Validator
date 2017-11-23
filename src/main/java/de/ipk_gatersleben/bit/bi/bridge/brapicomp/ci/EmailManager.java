@@ -58,10 +58,10 @@ public class EmailManager {
      *
      * @return True if no errors occurred.
      */
-    public boolean sendReport(TestSuiteReport testReport) {
+    public boolean sendReport(TestSuiteReport testSuiteReport) {
         String body;
         try {
-            Map<String, String> variables = getReportTemplateVariables(testReport);
+            Map<String, String> variables = getReportTemplateVariables(testSuiteReport);
             TemplateHTML email = new TemplateHTML("/templates/email.html", variables);
             body = email.generateBody();
             EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail());
@@ -87,6 +87,10 @@ public class EmailManager {
         map.put("total", Integer.toString(tsr.getTestCollections().get(0).getTotal()));
         map.put("failList", tsr.getTestCollections().get(0).getFailListAsHTML());
         map.put("reportId", tsr.getId());
+        for (int i = 0; i < prevReports.size(); i++) {
+        	map.put("reportId-" + (i + 1), prevReports.get(i).getReportId().toString());
+        	map.put("reportId-" + (i + 1) + "-date", prevReports.get(i).getDate().toString());
+        }
         return map;
     }
 

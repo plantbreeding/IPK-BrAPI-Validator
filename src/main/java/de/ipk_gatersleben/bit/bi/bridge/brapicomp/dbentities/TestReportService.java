@@ -45,7 +45,7 @@ public class TestReportService {
     }
 
 	/**
-	 * Get the last n reports for a given endpoint in ascending order (oldest first)
+	 * Get the last n reports for a given endpoint in descending order (newest first)
 	 * @param endpoint
 	 * @param last Number of reports to get.
 	 * @return latest endpoints
@@ -54,8 +54,8 @@ public class TestReportService {
 	public static List<TestReport> getLastReports(Endpoint endpoint, long last) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
 		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
-		qb.where().eq(TestReport.ENDPOINTID_FIELD_NAME, endpoint.getId().toString());
-		qb.orderBy(TestReport.DATE_FIELD_NAME, true).limit(last); //Ascending
+		qb.where().eq(TestReport.ENDPOINTID_FIELD_NAME, endpoint);
+		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit(last); //Descending
 		return qb.query();
 	}
 }

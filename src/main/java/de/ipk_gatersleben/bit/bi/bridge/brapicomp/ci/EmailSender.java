@@ -27,6 +27,10 @@ class EmailSender {
         final Properties properties = new Properties();
 
         properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
+        
+        if (Config.get("mailSmtpPort") != null) {
+        	properties.put("mail.smtp.port", Config.get("mailSmtpPort"));
+        }
 
         if (Config.get("mailSmtpLogin") == null
                 || Config.get("mailSmtpLogin").isEmpty()) {
@@ -63,7 +67,7 @@ class EmailSender {
             session = javax.mail.Session.getInstance(properties, authenticator);
 
             try {
-                addressFrom = new InternetAddress(Config.get("mailSmtpHost"),
+                addressFrom = new InternetAddress(Config.get("fromEmailAddress"),
                         Config.get("fromPersonalName"));
             } catch (final UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -93,6 +97,7 @@ class EmailSender {
 
             mail.setContent(multipart);
             Transport.send(mail);
+            //System.out.println(message);
 
         } catch (final MessagingException e) {
             e.printStackTrace();
