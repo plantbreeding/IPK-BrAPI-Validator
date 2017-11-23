@@ -3,12 +3,14 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 
 /**
@@ -18,6 +20,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteRepor
 public class EmailManager {
     private static final Logger LOGGER = Logger.getLogger(EmailManager.class.getName());
     private Endpoint endpoint;
+    private List<TestReport> prevReports;
 
     public EmailManager(Endpoint endpoint) {
         this.endpoint = endpoint;
@@ -86,4 +89,12 @@ public class EmailManager {
         map.put("reportId", tsr.getId());
         return map;
     }
+
+	public List<TestReport> getPrevReports() {
+		return prevReports;
+	}
+
+	public void setPrevReports(List<TestReport> prevReports) {
+		this.prevReports = prevReports;
+	}
 }

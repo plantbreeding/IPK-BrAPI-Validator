@@ -13,6 +13,7 @@ import org.apache.commons.lang3.text.StrSubstitutor;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
@@ -88,6 +89,9 @@ public class RunnerService {
         for (int i = 0; i < l.size(); i++) {
             Endpoint endpoint = l.get(i);
             TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endpoint, testCollection);
+            
+            List<TestReport> prevReports = TestReportService.getLastReports(endpoint, 3); //3 default for now
+            
             ObjectMapper mapper = new ObjectMapper();
             try {
                 String reportId = TestReportService.saveReport(endpoint, mapper.writeValueAsString(testSuiteReport));
@@ -95,7 +99,9 @@ public class RunnerService {
             } catch (JsonProcessingException e) {
                 LOGGER.warning("Unable to save report:" + e.getMessage());
             }
-             sent = new EmailManager(endpoint).sendReport(testSuiteReport);
+            EmailManager manager = new EmailManager(endpoint);
+            manager.setPrevReports(prevReports);
+            sent = manager.sendReport(testSuiteReport);
             if (sent) {
                 count += 1;
             }
