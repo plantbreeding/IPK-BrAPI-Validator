@@ -3,16 +3,33 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+
+import org.quartz.CronScheduleBuilder;
+import org.quartz.DateBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
+
+import static org.quartz.JobBuilder.*;
+import static org.quartz.TriggerBuilder.*;
+import static org.quartz.SimpleScheduleBuilder.*;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.MonthlyJob;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.SchedulerManager;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.WeeklyJob;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import io.restassured.RestAssured;
 
@@ -26,7 +43,9 @@ public class AppServletContextListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent arg0) {
         try {
             DataSourceManager.closeConnectionSource();
-        } catch (IOException e) {
+            SchedulerManager.getScheduler().shutdown();
+
+        } catch (IOException | SchedulerException e) {
             e.printStackTrace();
         }
     }
@@ -37,6 +56,7 @@ public class AppServletContextListener implements ServletContextListener {
         createDatabaseConnection(e.getServletContext());
         createTables();
         buildDaos();
+        setupScheduler();
         if (Config.get("proxy") != null) {
             RestAssured.proxy(Config.get("proxy"), Integer.parseInt(Config.get("proxyport")));
         }
@@ -74,6 +94,45 @@ public class AppServletContextListener implements ServletContextListener {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    private static void setupScheduler() {
+    	
+        StdSchedulerFactory factory = new StdSchedulerFactory();
+        try {
+			Scheduler quartzScheduler = factory.getScheduler("QuartzSchedulerInstance");
+			
+	    	JobDetail weeklyJob = newJob(WeeklyJob.class)
+	    		      .withIdentity("weeklyJob", "group1")
+	    		      .build();
+	    
+	    	JobDetail monthlyJob = newJob(MonthlyJob.class)
+	  		      .withIdentity("monthlyJob", "group1")
+	  		      .build();
+	    	
+	    	Trigger weeklyTrigger = newTrigger()
+	    		    .withIdentity("weekly", "group1")
+	    		    .startNow()
+	    		    .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
+	    		    .build();
+	    	Trigger monthlyTrigger = newTrigger()
+	    		    .withIdentity("monthly", "group1")
+	    		    .startNow()
+	    		    .withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
+	    		    .build();
+	    	quartzScheduler.scheduleJob(weeklyJob, weeklyTrigger);
+	    	quartzScheduler.scheduleJob(monthlyJob, monthlyTrigger);
+	    	
+	    	quartzScheduler.start();
+	    	
+	    	SchedulerManager.setScheduler(quartzScheduler);
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+
+    	
     }
 
 }
