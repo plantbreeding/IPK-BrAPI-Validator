@@ -575,7 +575,7 @@ $(function() {
                 var tcDiv = $("<div />");
                 tcDiv.append($("<h2/>").html(tc.name
                     + ' <small>(' + (tc.totalTests - tc.totalFails) + '/' + tc.totalTests + ')</small>'));
-                tcDiv.append("<p>for: <a target='_blank' href='" + tc.url + "'>" + tc.url + "</a>")
+                tcDiv.append("<p>for: <a target='_blank' href='" + tc.url + "'>" + tc.url + "</a></p>")
                 for (var l = 0; l < tc.folders.length; l++) {
                     tcDiv.append(createFolder(l, tc.folders[l]));
                 }
