@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 
@@ -23,8 +24,7 @@ public class EndpointService {
     public static List<Endpoint> getEndpointsWithEmail(String email) throws SQLException {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         List<Endpoint> l = endpointDao.queryBuilder().where()
-                .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false)
+                .eq(Endpoint.EMAIL_FIELD_NAME, email)
                 .query();
         return l;
     }
@@ -44,7 +44,6 @@ public class EndpointService {
                 .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
                 .eq(Endpoint.URL_FIELD_NAME, url).and()
                 .eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
                 .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
                 .queryForFirst();
         return e;
@@ -75,15 +74,13 @@ public class EndpointService {
      */
     public static void deleteAllEmailEndpoints(String email) throws SQLException {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        List<Endpoint> e = endpointDao.queryBuilder().where()
-                .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
-                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
-                .query();
-        for (int i = 0; i < e.size(); i++) {
-            e.get(i).setDeleted(true);
-            endpointDao.update(e.get(i));
-        }
+        DeleteBuilder<Endpoint, UUID> db = endpointDao.deleteBuilder();
+        db.where()
+	        .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
+	        .eq(Endpoint.CONFIRMED_FIELD_NAME, true);
+        db.delete();
+                
+
     }
 
     /**
@@ -97,7 +94,6 @@ public class EndpointService {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
         List<Endpoint> l = endpointDao.queryBuilder().where()
                 .eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
-                .eq(Endpoint.DELETED_FIELD_NAME, false).and()
                 .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
                 .query();
         return l;

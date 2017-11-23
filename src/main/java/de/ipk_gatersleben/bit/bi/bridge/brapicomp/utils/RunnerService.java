@@ -1,7 +1,6 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -43,21 +42,6 @@ public class RunnerService {
         }
         TestSuiteRunner t = new TestSuiteRunner(id, ep.getUrl(), testCollection);
         return t.runTests();
-    }
-
-    /**
-     * Test multiple endpoints
-     *
-     * @param eps            Endpoint list
-     * @param testCollection Test to be run
-     * @return List of reports
-     */
-    private static List<TestSuiteReport> testEndpoints(List<Endpoint> eps, TestCollection testCollection) {
-        List<TestSuiteReport> testSuiteList = new ArrayList<>();
-        eps.forEach(endpoint -> testSuiteList.add(testEndpoint(endpoint, testCollection)));
-
-        return testSuiteList;
-
     }
 
     /**
