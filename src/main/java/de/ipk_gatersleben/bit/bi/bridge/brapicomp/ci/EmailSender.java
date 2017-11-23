@@ -18,7 +18,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 class EmailSender {
     private static final Logger LOGGER = Logger.getLogger(EmailSender.class.getName());
 
-    static void sendEmail(final String message, final String subject, final String emailAddress, Attachment attachment) {
+    static void sendEmail(final String message, final String subject, final String emailAddress) {
 
         javax.mail.Session session;
 
@@ -91,9 +91,6 @@ class EmailSender {
 
             multipart.addBodyPart(content);
 
-            if (attachment != null) {
-                multipart.addBodyPart(attachment.getMailPart());
-            }
 
             mail.setContent(multipart);
             Transport.send(mail);
@@ -103,12 +100,6 @@ class EmailSender {
             e.printStackTrace();
 
             LOGGER.severe(emailAddress + " : " + e.getMessage());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
-    }
-
-    static void sendEmail(final String message, final String subject, final String emailAddress) {
-        sendEmail(message, subject, emailAddress, null);
     }
 }

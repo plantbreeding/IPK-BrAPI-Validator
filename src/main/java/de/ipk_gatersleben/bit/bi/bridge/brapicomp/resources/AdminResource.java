@@ -84,19 +84,17 @@ public class AdminResource {
         }
     }
 
-    /*@DELETE
+    @DELETE
     @Path("/tables")
     public Response delTables() {
         try {
             DataSourceManager.deleteTable(TestReport.class);
             DataSourceManager.deleteTable(Endpoint.class);
-            DataSourceManager.createTable(TestReport.class);
-            DataSourceManager.createTable(Endpoint.class);
         } catch (SQLException e) {
             return Response.serverError().entity(e.getMessage()).build();
         }
         return Response.ok().build();
 
         //DataSourceManager.deleteTable();
-    }*/
+    }
 }
