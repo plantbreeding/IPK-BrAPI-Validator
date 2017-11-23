@@ -7,7 +7,8 @@ import java.util.List;
  * Contains multiple TestCollectionReports and the base url to be used (endpoint url) in those collections.
  */
 public class TestSuiteReport {
-    private List<TestCollectionReport> testCollections = new ArrayList<TestCollectionReport>();
+
+	private List<TestCollectionReport> testCollections = new ArrayList<TestCollectionReport>();
     private String id;
     private String baseUrl;
 

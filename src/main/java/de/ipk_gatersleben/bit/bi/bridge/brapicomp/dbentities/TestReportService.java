@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 
@@ -22,12 +24,12 @@ public class TestReportService {
      * @param reportJson String with serialized report
      * @return List of endpoints that belong to that email
      * @throws SQLException SQL Error.
+     * @throws JsonProcessingException 
      */
-    public static String saveReport(Endpoint endpoint, String reportJson) throws SQLException {
-        TestReport tr = new TestReport(endpoint, reportJson);
+    public static String saveReport(TestReport testReport) throws SQLException {
         Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
-        testReportDao.create(tr);
-        return tr.getReportId().toString();
+        testReportDao.create(testReport);
+        return testReport.getReportId().toString();
     }
 
     /**
