@@ -24,6 +24,8 @@ public class Endpoint {
     public static final String DELETED_FIELD_NAME = "DELETED";
 
     public static final String CONFIRMED_FIELD_NAME = "CONFIRMED";
+    
+    public static final String STOREPREV_FIELD_NAME = "STOREPREV";
 
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
     private UUID id;
@@ -47,8 +49,18 @@ public class Endpoint {
     @DatabaseField(canBeNull = false, columnName = CONFIRMED_FIELD_NAME)
     private boolean confirmed = false;
 
+    @DatabaseField(canBeNull = false, columnName = STOREPREV_FIELD_NAME)
+    private int storeprev = 3;
 
-    public Endpoint() {
+    public int getStoreprev() {
+		return storeprev;
+	}
+
+	public void setStoreprev(int storeprev) {
+		this.storeprev = storeprev;
+	}
+
+	public Endpoint() {
     }
 
     public Endpoint(String url) {

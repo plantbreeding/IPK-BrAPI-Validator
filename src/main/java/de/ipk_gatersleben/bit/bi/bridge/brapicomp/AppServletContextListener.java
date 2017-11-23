@@ -116,7 +116,7 @@ public class AppServletContextListener implements ServletContextListener {
 	    		    .withIdentity("weekly", "group1")
 	    		    .startNow()
 	    		    //.withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(15, 20)) // for testing
-	    		    .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
+	    		    .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.THURSDAY, 15, 43)) // fire every Monday at 08:00
 	    		    .build();
 	    	Trigger monthlyTrigger = newTrigger()
 	    		    .withIdentity("monthly", "group1")
