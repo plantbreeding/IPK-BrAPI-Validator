@@ -16,6 +16,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.ee.servlet.QuartzInitializerListener;
 import org.quartz.impl.StdSchedulerFactory;
 
 import static org.quartz.JobBuilder.*;
@@ -56,7 +57,7 @@ public class AppServletContextListener implements ServletContextListener {
         createDatabaseConnection(e.getServletContext());
         createTables();
         buildDaos();
-        setupScheduler();
+        setupScheduler(e.getServletContext());
         if (Config.get("proxy") != null) {
             RestAssured.proxy(Config.get("proxy"), Integer.parseInt(Config.get("proxyport")));
         }
@@ -96,9 +97,10 @@ public class AppServletContextListener implements ServletContextListener {
         }
     }
     
-    private static void setupScheduler() {
-    	
-        StdSchedulerFactory factory = new StdSchedulerFactory();
+    private static void setupScheduler(ServletContext ctx) {
+    	String key = "org.quartz.impl.StdSchedulerFactory.KEY";
+    	StdSchedulerFactory factory = (StdSchedulerFactory) ctx
+    		       .getAttribute(key);
         try {
 			Scheduler quartzScheduler = factory.getScheduler("QuartzSchedulerInstance");
 			
@@ -113,6 +115,7 @@ public class AppServletContextListener implements ServletContextListener {
 	    	Trigger weeklyTrigger = newTrigger()
 	    		    .withIdentity("weekly", "group1")
 	    		    .startNow()
+	    		    //.withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(15, 20)) // for testing
 	    		    .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
 	    		    .build();
 	    	Trigger monthlyTrigger = newTrigger()
