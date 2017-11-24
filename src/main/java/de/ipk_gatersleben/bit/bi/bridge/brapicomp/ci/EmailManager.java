@@ -65,7 +65,16 @@ public class EmailManager {
             Map<String, String> variables = getReportTemplateVariables(testSuiteReport);
             TemplateHTML email = new TemplateHTML("/templates/email.html", variables);
             body = email.generateBody();
-            EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail());
+            
+            // Subject variables.
+            String url = endpoint.getUrl();
+            String passed = Integer.toString(testSuiteReport.getTestCollections().get(0).getTotal()
+                    - testSuiteReport.getTestCollections().get(0).getFails());
+            String total = Integer.toString(testSuiteReport.getTestCollections().get(0).getTotal());
+            
+            
+            String subject = "[BrAVa - Report for scheduled BrAPI test] Passed tests: " + passed + "/" + total + " for " + url;
+            EmailSender.sendEmail(body, subject, endpoint.getEmail());
             return true;
         } catch (IOException | URISyntaxException e) {
             LOGGER.info("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
