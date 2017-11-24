@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,10 +21,13 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 
 /**
@@ -54,7 +58,14 @@ public class TestReportResource {
             ObjectMapper mapper = new ObjectMapper();
             attVariables.put("report", mapper.writeValueAsString(tr.getReportJson()));
             attVariables.put("timestamp", tr.getDate().toString());
-            attVariables.put("email", tr.getEndpoint().getEmail());
+            
+            
+            Endpoint endp = tr.getEndpoint();
+            Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+            
+            endpointDao.refresh(endp);
+            
+            attVariables.put("email", endp.getEmail());
             TemplateHTML attachmentHTML = new TemplateHTML("/templates/report.html", attVariables);
             return Response.ok().entity(attachmentHTML.generateBody()).build();
 
