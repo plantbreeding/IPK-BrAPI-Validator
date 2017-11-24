@@ -140,7 +140,7 @@
       <div class="modal-content">
         <form id="modalForm">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Get a periodic report.</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Set up a periodic report.</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -160,8 +160,14 @@
                 Email
               </label>
               <input type="email" name="email" id="emailModal" class="form-control font-14" aria-describedby="emailHelp" placeholder="dev@brapiserver.com" required>
-              <small id="emailHelp">You can unsubscribe at any time.</small>
+              <small id="emailHelp">You can stop the test schedule using the unsubscribe link in the test report e-mails</small>
               <div class="invalid-feedback">Please provide a valid email.</div>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" name="frequency" value="daily" class="form-check-input">
+                Daily report
+              </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
