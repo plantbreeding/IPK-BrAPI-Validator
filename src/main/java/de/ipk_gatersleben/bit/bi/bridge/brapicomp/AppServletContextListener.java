@@ -112,15 +112,15 @@ public class AppServletContextListener implements ServletContextListener {
 	    	Trigger weeklyTrigger = newTrigger()
 	    		    .withIdentity("weekly", "group1")
 	    		    .startNow()
-	    		    .withSchedule(simpleSchedule().withIntervalInMinutes(4).repeatForever())
-	    		    //.withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(15, 20)) // for testing
-	    		    //.withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
+	    		    //.withSchedule(simpleSchedule().withIntervalInMinutes(4).repeatForever()) // debug
+	    		    //.withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(15, 20)) // debug
+	    		    .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
 	    		    .build();
 	    	Trigger monthlyTrigger = newTrigger()
 	    		    .withIdentity("monthly", "group1")
 	    		    .startNow()
-	    		    .withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever())
-	    		    //.withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
+	    		    //.withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever()) // debug
+	    		    .withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
 	    		    .build();
 	    	quartzScheduler.scheduleJob(weeklyJob, weeklyTrigger);
 	    	quartzScheduler.scheduleJob(monthlyJob, monthlyTrigger);
