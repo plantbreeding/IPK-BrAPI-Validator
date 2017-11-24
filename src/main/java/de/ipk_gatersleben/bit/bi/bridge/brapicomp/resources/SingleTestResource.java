@@ -56,7 +56,7 @@ public class SingleTestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response singleSchemaTest(@QueryParam("url") String url, @QueryParam("name") String name, @Context UriInfo uriInfo) {
 
-        LOGGER.debug("New POST /structure call.");
+        LOGGER.debug("New GET /structure call.");
         try {
 
             if (url.equals("")) {
