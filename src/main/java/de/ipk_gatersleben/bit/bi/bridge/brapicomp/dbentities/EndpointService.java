@@ -113,4 +113,16 @@ public class EndpointService {
         endpointDao.update(e);
         return true;
     }
+
+	public static Boolean changeEndpointFreqWithId(String endpointId, String frequency) throws SQLException {
+        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+        Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
+        if (e == null) {
+            // Not found.
+            return null;
+        }
+        e.setFrequency(frequency);
+        endpointDao.update(e);
+        return true;
+	}
 }

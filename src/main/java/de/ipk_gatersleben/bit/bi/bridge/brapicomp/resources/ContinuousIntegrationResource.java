@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -83,6 +84,41 @@ public class ContinuousIntegrationResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
+    
+    /**
+     * Change an endpoint frequency
+     *
+     * @param endp Json containing the endpoint's url.
+     * @return Json message.
+     */
+    @GET //This is called by a link in an email, so we only have GET
+    @Path("/endpoints/{endpointId}/frequency")
+    @Produces(MediaType.TEXT_HTML)
+    public Response changeFrequency(@Context HttpHeaders headers,
+                                   @PathParam("endpointId") String endpointId, @QueryParam("frequency") String frequency) {
+
+        LOGGER.debug("New GET /ci/endpoints/{endpointId}/frequency call. Id: " + endpointId);
+        
+        try {
+        	TemplateHTML result;
+        	// Check if the record exists in the database already.
+            Boolean changed = EndpointService.changeEndpointFreqWithId(endpointId, frequency);
+            if (changed == null) {
+            	String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4101);
+                return Response.status(Status.NOT_FOUND).entity(e2).build();
+            } else if (changed) {
+            	result = new TemplateHTML("/templates/freq-updated.html");  
+            	return Response.ok().entity(result.generateBody()).build();
+            } else {
+            	String e2 = JsonMessageManager.jsonMessage(400, "Invalid frequency", 4102);
+                return Response.status(Status.BAD_REQUEST).entity(e2).build();
+            }
+        } catch (IOException | SQLException | URISyntaxException e) {
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5101);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
 
     /**
      * Confirm an email address. We assume if they have the Id then they got the email.
@@ -101,7 +137,7 @@ public class ContinuousIntegrationResource {
             TemplateHTML result;
             Boolean confirmed = EndpointService.confirmEndpointWithId(endpointId);
             if (confirmed == null) {
-                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4101);
+                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4103);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
             } else if (confirmed) {
                 result = new TemplateHTML("/templates/confirmation.html");
@@ -112,7 +148,7 @@ public class ContinuousIntegrationResource {
             return Response.ok().entity(result.generateBody()).build();
         } catch (SQLException | IOException | URISyntaxException e) {
             e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5101);
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5102);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
@@ -136,7 +172,7 @@ public class ContinuousIntegrationResource {
             TemplateHTML result;
             Boolean unsubscribed = EndpointService.deleteEndpointWithId(endpointId);
             if (!unsubscribed) {
-                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4102);
+                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4104);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
             } else {
                 result = new TemplateHTML("/templates/unsubscribe.html");
@@ -145,7 +181,7 @@ public class ContinuousIntegrationResource {
             return Response.ok().entity(result.generateBody()).build();
         } catch (SQLException | IOException | URISyntaxException e) {
             e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5102);
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5103);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
