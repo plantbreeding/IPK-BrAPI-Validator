@@ -5,8 +5,6 @@ import static de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService.f
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,6 +17,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +41,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 @RequestScoped
 public class SingleTestResource {
 
-    private static final Logger LOGGER = Logger.getLogger(SingleTestResource.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(SingleTestResource.class.getName());
 
     /**
      * Run a structure test for one endpoint
@@ -56,7 +56,7 @@ public class SingleTestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response singleSchemaTest(@QueryParam("url") String url, @QueryParam("name") String name, @Context UriInfo uriInfo) {
 
-        LOGGER.log(Level.FINER, "New POST /structure call.");
+        LOGGER.debug("New POST /structure call.");
         try {
 
             if (url.equals("")) {
@@ -142,14 +142,13 @@ public class SingleTestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response dataTest(@QueryParam("url") String url, @QueryParam("name") String name) {
 
-        LOGGER.log(Level.FINER, "New POST /data call.");
+        LOGGER.debug("New GET /data call.");
         try {
 
             if (url.equals("")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-
 
             ObjectMapper mapper = new ObjectMapper();
 

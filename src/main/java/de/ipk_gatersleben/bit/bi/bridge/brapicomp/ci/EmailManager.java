@@ -5,7 +5,9 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
@@ -17,7 +19,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteRepor
  * Runs a test on an endpoint and sends an email to the owner.
  */
 public class EmailManager {
-    private static final Logger LOGGER = Logger.getLogger(EmailManager.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(EmailManager.class.getName());
     private Endpoint endpoint;
     private List<TestReport> prevReports;
 
@@ -34,7 +36,7 @@ public class EmailManager {
             EmailSender.sendEmail(body, "BrAVA: Confirm your email", endpoint.getEmail());
             return true;
         } catch (IOException | URISyntaxException e) {
-            LOGGER.warning("Problem sending confirmation for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
+            LOGGER.info("Problem sending confirmation for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
         }
         return false;
     }
@@ -66,7 +68,7 @@ public class EmailManager {
             EmailSender.sendEmail(body, "BrAPI Validator report", endpoint.getEmail());
             return true;
         } catch (IOException | URISyntaxException e) {
-            LOGGER.warning("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
+            LOGGER.info("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
         }
         return false;
     }

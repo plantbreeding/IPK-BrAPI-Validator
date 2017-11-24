@@ -2,7 +2,9 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Variables can also be used to compare against results from the query
  */
 public class VariableStorage {
-    private static final Logger LOGGER = Logger.getLogger(VariableStorage.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(VariableStorage.class.getName());
     private HashMap<String, JsonNode> variables;
     private HashMap<String, String> variablesAsString;
 
@@ -31,7 +33,7 @@ public class VariableStorage {
         try {
             setVariable("baseurl", "\"" + baseUrl + "\"");
         } catch (IOException e) {
-            LOGGER.warning("Unable to read {baseurl}: " + baseUrl + ". Make sure it is a String");
+            LOGGER.debug("Unable to read {baseurl}: " + baseUrl + ". Make sure it is a String");
             e.printStackTrace();
         }
     }

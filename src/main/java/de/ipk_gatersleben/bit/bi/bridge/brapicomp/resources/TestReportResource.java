@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,6 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +34,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 @RequestScoped
 public class TestReportResource {
 
-    private static final Logger LOGGER = Logger.getLogger(TestReportResource.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(TestReportResource.class.getName());
 
     @GET
     @Path("/testreport/{reportId}")
@@ -41,6 +42,7 @@ public class TestReportResource {
     @Produces(MediaType.TEXT_HTML)
     public Response getReport(@PathParam("reportId") String reportId) {
 
+    	LOGGER.debug("New GET /testreport call. Id: " + reportId);
         try {
             TestReport tr = TestReportService.getReport(reportId);
             if (tr == null) {
@@ -57,12 +59,12 @@ public class TestReportResource {
 
         } catch (SQLException e) {
             //Thrown by TestReportService.getReport(reportId)
-            LOGGER.warning("SQLException while calling GET /reportId with id: " + reportId + ". " + e.getMessage());
+            LOGGER.warn("SQLException while calling GET /reportId with id: " + reportId + ". " + e.getMessage());
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5300);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         } catch (IOException | URISyntaxException e) {
             //Thrown by new TemplateHTML("/templates/report.html", attVariables)
-            LOGGER.warning("Exception while generating report: " + reportId + ". " + e.getMessage());
+            LOGGER.warn("Exception while generating report: " + reportId + ". " + e.getMessage());
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5301);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }

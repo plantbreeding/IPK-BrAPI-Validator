@@ -5,10 +5,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import javax.ws.rs.core.HttpHeaders;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.internal.util.Base64;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Helper functions for the resource classes.
  */
 public class ResourceService {
-    private static final Logger LOGGER = Logger.getLogger(ResourceService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ResourceService.class.getName());
 
     /**
      * Finds a test collection file given a test collection name using the info stored in tests.json
@@ -43,10 +44,10 @@ public class ResourceService {
                 }
             }
         } catch (JsonProcessingException e) {
-            LOGGER.warning("Test has invalid JSON");
+            LOGGER.warn("Test has invalid JSON");
             e.printStackTrace();
         } catch (IOException e) {
-            LOGGER.warning("IOException accessing file");
+            LOGGER.warn("IOException accessing file");
 
             e.printStackTrace();
         }

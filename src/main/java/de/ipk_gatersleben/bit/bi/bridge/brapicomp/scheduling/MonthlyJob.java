@@ -3,8 +3,9 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -14,13 +15,13 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 public class MonthlyJob implements org.quartz.Job {
-	private static final Logger LOGGER = Logger.getLogger(MonthlyJob.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(MonthlyJob.class.getName());
 	
     public MonthlyJob() {
     }
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
-    	LOGGER.fine("Monthly is executing.");
+    	LOGGER.info("Monthly is executing.");
         ObjectMapper mapper = new ObjectMapper();
 
         InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");

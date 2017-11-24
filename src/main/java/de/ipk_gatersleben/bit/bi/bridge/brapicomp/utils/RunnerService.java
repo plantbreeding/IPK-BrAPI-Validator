@@ -2,23 +2,19 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.*;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.*;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestItemRunner;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestSuiteRunner;
 
@@ -26,7 +22,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestSuiteRunner
  * Various tester and helper functions for the Runner classes.
  */
 public class RunnerService {
-    private static final Logger LOGGER = Logger.getLogger(RunnerService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(RunnerService.class.getName());
 
     /**
      * Test a single endpoint and return report
@@ -75,7 +71,7 @@ public class RunnerService {
                 String reportId = TestReportService.saveReport(report);
                 testSuiteReport.setId(reportId);
             } catch (JsonProcessingException e) {
-                LOGGER.warning("Unable to save report:" + e.getMessage());
+                LOGGER.warn("Unable to save report:" + e.getMessage());
             }
             EmailManager manager = new EmailManager(endpoint);
             manager.setPrevReports(prevReports);

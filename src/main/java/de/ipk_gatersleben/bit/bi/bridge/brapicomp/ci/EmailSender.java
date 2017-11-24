@@ -2,7 +2,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -15,10 +14,13 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 
 class EmailSender {
-    private static final Logger LOGGER = Logger.getLogger(EmailSender.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(EmailSender.class.getName());
 
     static void sendEmail(final String message, final String subject, final String emailAddress) {
 
@@ -45,7 +47,7 @@ class EmailSender {
             } catch (final UnsupportedEncodingException e) {
                 e.printStackTrace();
 
-                LOGGER.severe(emailAddress + " : " + e.getMessage());
+                LOGGER.warn(emailAddress + " : " + e.getMessage());
             }
 
         } else {
@@ -73,7 +75,7 @@ class EmailSender {
                         Config.get("fromPersonalName"));
             } catch (final UnsupportedEncodingException e) {
                 e.printStackTrace();
-                LOGGER.severe(emailAddress + " : " + e.getMessage());
+                LOGGER.warn(emailAddress + " : " + e.getMessage());
             }
 
         }
@@ -101,7 +103,7 @@ class EmailSender {
         } catch (final MessagingException e) {
             e.printStackTrace();
 
-            LOGGER.severe(emailAddress + " : " + e.getMessage());
+            LOGGER.warn(emailAddress + " : " + e.getMessage());
         }
     }
 }

@@ -4,7 +4,9 @@ import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,7 +27,7 @@ import io.restassured.response.ValidatableResponse;
  * Run tests for an item element.
  */
 public class TestItemRunner {
-    private static final Logger LOGGER = Logger.getLogger(TestItemRunner.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(TestItemRunner.class.getName());
     private String url;
     private ValidatableResponse vr;
     private Item item;
@@ -108,7 +110,7 @@ public class TestItemRunner {
 
                 if (ter != null && !ter.isPassed() && breakIfFalse) {
                     String msg = "Test failed. Won't continue testing this resource.";
-                    LOGGER.info(msg);
+                    LOGGER.debug(msg);
                     ter.addMessage(msg);
                     tir.addTest(ter);
                     break;
@@ -130,7 +132,7 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport saveVariable(String path, String variableName) {
-        LOGGER.info("Store variable: " + variableName + " | " + path);
+        LOGGER.debug("Store variable: " + variableName + " | " + path);
         String json = this.vr.extract().asString();
         ObjectMapper mapper = new ObjectMapper();
         TestExecReport ter = new TestExecReport("Save variable at: " + path + " | Key: " + variableName, false);
@@ -155,7 +157,7 @@ public class TestItemRunner {
      * @return TestItemResult
      */
     private TestExecReport isEqual(String path, String variableName) {
-        LOGGER.info("Test equality: " + variableName + " | " + path);
+        LOGGER.debug("Test equality: " + variableName + " | " + path);
         String json = this.vr.extract().asString();
         TestExecReport ter = new TestExecReport("Value in path: \"" + path + "\" equals variable: " + variableName, false);
         ObjectMapper mapper = new ObjectMapper();
@@ -188,11 +190,11 @@ public class TestItemRunner {
      * @return server response
      */
     private ValidatableResponse connect() {
-        LOGGER.info("New Request. URL: " + this.url);
+        LOGGER.debug("New Request. URL: " + this.url);
         ValidatableResponse vr = getResponseIfCached(60);
         if (vr != null) {
             this.cached = true;
-            LOGGER.info("Using cached URL: " + this.url);
+            LOGGER.debug("Using cached URL: " + this.url);
             return vr;
         }
 
@@ -201,14 +203,14 @@ public class TestItemRunner {
                     .request(this.method, this.url)
                     .then();
         } catch (AssertionError e) {
-            LOGGER.warning("Connection error");
-            LOGGER.warning("== cause ==");
-            LOGGER.warning(e.getMessage());
+            LOGGER.debug("Connection error");
+            LOGGER.debug("== cause ==");
+            LOGGER.debug(e.getMessage());
             return null;
         } catch (IllegalArgumentException e) {
-            LOGGER.warning("Connection error. Missing arguments");
-            LOGGER.warning("== cause ==");
-            LOGGER.warning(e.getMessage());
+            LOGGER.debug("Connection error. Missing arguments");
+            LOGGER.debug("== cause ==");
+            LOGGER.debug(e.getMessage());
             return null;
         }
         saveResponseToCache(vr);
@@ -248,19 +250,19 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport statusCode(int i) {
-        LOGGER.info("Testing Status Code");
+        LOGGER.debug("Testing Status Code");
         TestExecReport tr = new TestExecReport("Status code is " + i, false);
         int statusCode = vr.extract().response().getStatusCode();
         try {
             vr.statusCode(i);
         } catch (AssertionError e1) {
-            LOGGER.warning("Wrong Status code");
-            LOGGER.warning("== cause ==");
-            LOGGER.warning(e1.getMessage());
+            LOGGER.debug("Wrong Status code");
+            LOGGER.debug("== cause ==");
+            LOGGER.debug(e1.getMessage());
             tr.addMessage("Response Status code: " + statusCode);
             return tr;
         }
-        LOGGER.info("Status Code Test Passed");
+        LOGGER.debug("Status Code Test Passed");
         tr.setPassed(true);
         tr.addMessage("Response Status code: " + statusCode);
         return tr;
@@ -273,19 +275,19 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport contentType(String ct) {
-        LOGGER.info("Testing ContentType");
+        LOGGER.debug("Testing ContentType");
         TestExecReport tr = new TestExecReport("ContentType is " + ct, false);
         String responseCT = vr.extract().response().header("Content-Type");
         try {
             vr.contentType(ct);
         } catch (AssertionError e1) {
-            LOGGER.warning("Wrong content type");
-            LOGGER.warning("== cause ==");
-            LOGGER.warning(e1.getMessage());
+            LOGGER.debug("Wrong content type");
+            LOGGER.debug("== cause ==");
+            LOGGER.debug(e1.getMessage());
             tr.addMessage("Response Content Type: " + responseCT);
             return tr;
         }
-        LOGGER.info("ContentType Test Passed");
+        LOGGER.debug("ContentType Test Passed");
         tr.setPassed(true);
         tr.addMessage("Response Content Type: " + responseCT);
         return tr;
@@ -298,7 +300,7 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport schemaMatch(String p) {
-        LOGGER.info("Testing Schema");
+        LOGGER.debug("Testing Schema");
         TestExecReport tr = new TestExecReport("Json matches schema: " + p, false);
         tr.setSchema(p);
         String jsonString = vr.extract().response().asString();
@@ -307,12 +309,12 @@ public class TestItemRunner {
 
             ProcessingReport r = schemaValidator.validate(p, jsonString);
             if (r.isSuccess()) {
-                LOGGER.info("Schema Test Passed");
+                LOGGER.debug("Schema Test Passed");
                 tr.addMessage("Response structure matches schema.");
                 tr.setPassed(true);
 
             } else {
-                LOGGER.info("Schema Test Failed");
+                LOGGER.debug("Schema Test Failed");
                 tr.addMessage("Response structure doesn't match schema.");
                 r.forEach(message -> tr.addError(message.asJson()));
             }
@@ -320,16 +322,17 @@ public class TestItemRunner {
             return tr;
 
         } catch (JsonParseException e1) {
-            LOGGER.warning("Invalid response");
-            LOGGER.warning("== cause ==");
-            LOGGER.warning(e1.getMessage());
+
+            LOGGER.debug("Invalid response");
+            LOGGER.debug("== cause ==");
+            LOGGER.debug(e1.getMessage());
             tr.addMessage("Server response is not valid JSON.");
             return tr;
         } catch (AssertionError | IOException | ProcessingException e1) {
-            LOGGER.warning("Doesn't match schema");
-            LOGGER.warning("== cause ==");
+            LOGGER.debug("Doesn't match schema");
+            LOGGER.debug("== cause ==");
             e1.printStackTrace();
-            LOGGER.warning(e1.getMessage());
+            LOGGER.debug(e1.getMessage());
             tr.addMessage(e1.getMessage());
             return tr;
         }

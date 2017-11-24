@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.j256.ormlite.dao.Dao;
@@ -38,7 +38,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 @RequestScoped
 public class ContinuousIntegrationResource {
 
-    private static final Logger LOGGER = Logger.getLogger(ContinuousIntegrationResource.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ContinuousIntegrationResource.class.getName());
 
 
     /**
@@ -54,7 +54,7 @@ public class ContinuousIntegrationResource {
     public Response createEndpoint(@Context HttpHeaders headers,
                                    Endpoint endp) {
 
-        LOGGER.log(Level.FINER, "New POST /ci/endpoints call.");
+        LOGGER.debug("New POST /ci/endpoints call.");
 
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 
@@ -95,7 +95,7 @@ public class ContinuousIntegrationResource {
     @Produces(MediaType.TEXT_HTML)
     public Response confirm(@QueryParam("key") String endpointId) {
 
-        LOGGER.log(Level.FINER, "New GET /ci/confirm call. EndpointId: " + endpointId);
+        LOGGER.debug("New GET /ci/confirm call. EndpointId: " + endpointId);
 
         try {
             TemplateHTML result;
@@ -130,7 +130,7 @@ public class ContinuousIntegrationResource {
     public Response deleteEndpoint(@QueryParam("key") String endpointId,
                                    @Context HttpHeaders headers) {
 
-        LOGGER.log(Level.FINER, "New DELETE /ci/unsubscribe call. EndpointId: " + endpointId);
+        LOGGER.debug("New DELETE /ci/unsubscribe call. EndpointId: " + endpointId);
 
         try {
             TemplateHTML result;

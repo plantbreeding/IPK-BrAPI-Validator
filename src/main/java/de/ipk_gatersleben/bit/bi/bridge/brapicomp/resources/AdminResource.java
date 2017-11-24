@@ -3,8 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,6 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +40,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 @RequestScoped
 public class AdminResource {
 
-    private static final Logger LOGGER = Logger.getLogger(AdminResource.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(AdminResource.class.getName());
 
     /**
      * Run the default test on all endpoints
@@ -53,7 +53,7 @@ public class AdminResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response generalTest(@Context HttpHeaders headers, @QueryParam("frequency") String frequency) {
 
-        LOGGER.log(Level.FINER, "New POST /testall call.");
+        LOGGER.debug("New POST /testall call.");
         try {
 
             String[] auth = ResourceService.getAuth(headers);

@@ -2,6 +2,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
+import static org.quartz.SimpleScheduleBuilder.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -111,13 +112,15 @@ public class AppServletContextListener implements ServletContextListener {
 	    	Trigger weeklyTrigger = newTrigger()
 	    		    .withIdentity("weekly", "group1")
 	    		    .startNow()
+	    		    .withSchedule(simpleSchedule().withIntervalInMinutes(4).repeatForever())
 	    		    //.withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(15, 20)) // for testing
-	    		    .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
+	    		    //.withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
 	    		    .build();
 	    	Trigger monthlyTrigger = newTrigger()
 	    		    .withIdentity("monthly", "group1")
 	    		    .startNow()
-	    		    .withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
+	    		    .withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever())
+	    		    //.withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
 	    		    .build();
 	    	quartzScheduler.scheduleJob(weeklyJob, weeklyTrigger);
 	    	quartzScheduler.scheduleJob(monthlyJob, monthlyTrigger);
