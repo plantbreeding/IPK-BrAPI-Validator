@@ -51,7 +51,8 @@ public class TestReportResource {
             }
 
             Map<String, String> attVariables = new HashMap<>();
-            attVariables.put("report", tr.getReportJson());
+            ObjectMapper mapper = new ObjectMapper();
+            attVariables.put("report", mapper.writeValueAsString(tr.getReportJson()));
             attVariables.put("timestamp", tr.getDate().toString());
             attVariables.put("email", tr.getEndpoint().getEmail());
             TemplateHTML attachmentHTML = new TemplateHTML("/templates/report.html", attVariables);

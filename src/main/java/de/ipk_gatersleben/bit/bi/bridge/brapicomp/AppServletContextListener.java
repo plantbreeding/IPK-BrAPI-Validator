@@ -108,20 +108,20 @@ public class AppServletContextListener implements ServletContextListener {
 			JobDetail monthlyJob = newJob(MonthlyJob.class).withIdentity("monthlyJob", "group1").build();
 
 			Trigger dailyTrigger = newTrigger().withIdentity("daily", "group1").startNow()
-					// .withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever()) // debug
-					.withSchedule(dailyAtHourAndMinute(8, 0)) // fire every day at 08:00
+					.withSchedule(simpleSchedule().withIntervalInMinutes(3).repeatForever()) // debug
+					//.withSchedule(dailyAtHourAndMinute(8, 0)) // fire every day at 08:00
 					.build();
 
 			Trigger weeklyTrigger = newTrigger().withIdentity("weekly", "group1").startNow()
-					// .withSchedule(simpleSchedule().withIntervalInMinutes(4).repeatForever()) //
+					.withSchedule(simpleSchedule().withIntervalInMinutes(4).repeatForever()) //
 					// .withSchedule(dailyAtHourAndMinute(15, 20)) // debug
-					.withSchedule(weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
+					//.withSchedule(weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 8, 0)) // fire every Monday at 08:00
 					.build();
 
 			Trigger monthlyTrigger = newTrigger().withIdentity("monthly", "group1").startNow()
-					// .withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever()) //
+					.withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever()) //
 					// debug
-					.withSchedule(monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
+					//.withSchedule(monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
 					.build();
 			
 			quartzScheduler.scheduleJob(dailyJob, dailyTrigger);

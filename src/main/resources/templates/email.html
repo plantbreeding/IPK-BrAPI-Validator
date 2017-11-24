@@ -26,6 +26,14 @@ ${failList}
 <p><a href="${baseDomain}/api/testreport/${reportId}">${baseDomain}/api/testreport/${reportId}</a></p>
 
 ${prevReports}
+
+<p>Change the test frequency by clicking on the corresponding link</p>
+<p>
+	<a href="${baseDomain}/api/ci/endpoints/${endpointId}/frequency?frequency=monthly">Monthly</a>
+	 - <a href="${baseDomain}/api/ci/endpoints/${endpointId}/frequency?frequency=weekly">Weekly</a>
+	 - <a href="${baseDomain}/api/ci/endpoints/${endpointId}/frequency?frequency=daily">Daily</a>
+</p>
+
 <p>If you have any questions or feedback feel free to contact us at ${contactEmail}.</p>
 
 <p>Thanks for using BrAVa!</p>
