@@ -92,7 +92,7 @@ public class Endpoint {
      * @param f Endpoint's testing frequency.
      */
     public void setFrequency(String f) throws IllegalArgumentException {
-        if (f.equals("weekly") || f.equals("monthly")) {
+        if (f.equals("weekly") || f.equals("monthly") || f.equals("daily")) {
             this.frequency = f;
         } else {
             throw new IllegalArgumentException();
@@ -116,7 +116,10 @@ public class Endpoint {
 	}
 
 	public void setStoreprev(int storeprev) {
-		this.storeprev = storeprev;
-	}
-    
+        if (storeprev == 3) { // Only three is valid for now
+            this.storeprev = storeprev;
+        } else {
+            throw new IllegalArgumentException();
+        }
+	}    
 }

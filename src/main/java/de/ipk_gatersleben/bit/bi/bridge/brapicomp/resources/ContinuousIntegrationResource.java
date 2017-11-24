@@ -55,7 +55,7 @@ public class ContinuousIntegrationResource {
                                    Endpoint endp) {
 
         LOGGER.debug("New POST /ci/endpoints call.");
-
+        
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 
         try {
