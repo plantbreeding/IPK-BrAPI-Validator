@@ -14,15 +14,15 @@
 		},
 		{
 			"name":"/germplasm/{germplasmDbId}/pedigree",
-			"pathToSchema":"/germplasm/pedigree"
+			"pathToSchema":"/germplasm/germplasmDbId/pedigree"
 		},
 		{
 			"name":"/germplasm/{germplasmDbId}/markerprofiles",
-			"pathToSchema":"/germplasm/markerprofiles"
+			"pathToSchema":"/germplasm/germplasmDbId/markerprofiles"
 		},
 		{
 			"name":"/germplasm/{germplasmDbId}/attributes",
-			"pathToSchema":"/germplasm/attributes"
+			"pathToSchema":"/germplasm/germplasmDbId/attributes"
 		},
 		{
 			"name":"/attributes",
