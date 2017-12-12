@@ -121,5 +121,13 @@ public class Endpoint {
         } else {
             throw new IllegalArgumentException();
         }
-	}    
+	}
+
+	@Override
+	public String toString() {
+		return "Endpoint [id=" + id + ", url=" + url + ", email=" + email + ", frequency=" + frequency + ", confirmed="
+				+ confirmed + ", storeprev=" + storeprev + "]";
+	}
+	
+	
 }

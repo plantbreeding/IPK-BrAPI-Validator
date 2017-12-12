@@ -125,4 +125,10 @@ public class EndpointService {
         endpointDao.update(e);
         return true;
 	}
+
+	public static List<Endpoint> getAllEndpoints() throws SQLException {
+        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+        List<Endpoint> l = endpointDao.queryForAll();
+        return l;
+	}
 }
