@@ -170,4 +170,46 @@ public class SingleTestResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
+    
+    /**
+     * Run a call test
+     *
+     * @param url  Url of the BrAPI server. Example: https://test.brapi.org/brapi/v1/
+     * @return Response with json report
+     */
+    @GET
+    @Path("/call")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response callTest(@QueryParam("url") String url) {
+
+        LOGGER.debug("New GET /call call.");
+        try {
+
+            if (url.equals("")) {
+                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
+                return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
+            }
+
+            String collectionResource;
+            
+            ObjectMapper mapper = new ObjectMapper();
+
+            collectionResource = "/collections/CompleteBrapiTest.custom_collection.json";
+
+            InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
+            TestCollection tc = mapper.readValue(inJson, TestCollection.class);
+            
+            Endpoint endp = new Endpoint(url);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(endp, tc);
+            
+            
+            
+            return Response.ok().entity(mapper.writeValueAsString(testSuiteReport)).build();
+        } catch (IOException e) {
+            //Thrown by .getResourceAsStream(""). Most probably because of missing file or wrong config structure.
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5201);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
 }

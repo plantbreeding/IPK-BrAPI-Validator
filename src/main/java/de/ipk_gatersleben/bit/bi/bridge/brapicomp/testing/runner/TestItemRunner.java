@@ -3,6 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -78,7 +79,7 @@ public class TestItemRunner {
             String exec = execList.get(i);
             String[] execSplit = exec.split(":");
             TestExecReport ter = new TestExecReport("Invalid exec command", false);
-            if (execSplit.length >= 2) {
+            if (execSplit.length >= 1) {
                 boolean breakIfFalse = false;
                 if (execSplit.length > 2 && execSplit[execSplit.length - 1].equals("breakiffalse")) {
                     breakIfFalse = true;
@@ -105,6 +106,9 @@ public class TestItemRunner {
                             ter.addMessage("Missing parameters");
                         }
                         ter = isEqual(execSplit[1], execSplit[2]);
+                        break;
+                    case "SaveCalls":
+                        ter = saveCalls();
                         break;
                 }
 
@@ -336,5 +340,36 @@ public class TestItemRunner {
             tr.addMessage(e1.getMessage());
             return tr;
         }
+    }
+    
+    /**
+     * Save all /call resources
+     *
+     * @param ct Content type string to test.
+     * @return TestItemReport
+     */
+    private TestExecReport saveCalls() {
+        LOGGER.debug("Saving Calls");
+        TestExecReport tr = new TestExecReport("Saving /calls", false);
+        String json = this.vr.extract().asString();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+        	JsonNode root = mapper.readTree(json);
+            JsonNode data = root.at("/result/data");
+            if (data.isArray()) {
+                this.variables.setVariable("callResult", data);
+            }
+        } catch (AssertionError | IOException e1) {
+        	e1.printStackTrace();
+            LOGGER.debug("Wrong content type");
+            LOGGER.debug("== cause ==");
+            LOGGER.debug(e1.getMessage());
+            tr.addMessage("Response Content Type: ");
+            return tr;
+        }
+        LOGGER.debug("ContentType Test Passed");
+        tr.setPassed(true);
+        tr.addMessage("Response Content Type: ");
+        return tr;
     }
 }

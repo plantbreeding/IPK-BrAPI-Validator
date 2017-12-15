@@ -16,7 +16,8 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.*;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestItemRunner;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.TestSuiteRunner;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.CallTestSuiteRunner;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.CustomTestSuiteRunner;
 
 /**
  * Various tester and helper functions for the Runner classes.
@@ -36,7 +37,23 @@ public class RunnerService {
         if (ep.getId() != null) {
             id = ep.getId().toString();
         }
-        TestSuiteRunner t = new TestSuiteRunner(id, ep.getUrl(), testCollection);
+        CustomTestSuiteRunner t = new CustomTestSuiteRunner(id, ep.getUrl(), testCollection);
+        return t.runTests();
+    }
+    
+    /**
+     * Test a single endpoint with call and return report
+     *
+     * @param ep             Endpoint to be tested
+     * @param tc 
+     * @return Report
+     */
+	public static TestSuiteReport testEndpointWithCall(Endpoint ep, TestCollection tc) {
+        String id = "";
+        if (ep.getId() != null) {
+            id = ep.getId().toString();
+        }
+        CallTestSuiteRunner t = new CallTestSuiteRunner(id, ep.getUrl(), tc);
         return t.runTests();
     }
 
@@ -130,5 +147,6 @@ public class RunnerService {
         TestItemRunner tir = new TestItemRunner(simple, storage);
         return tir.runTests();
     }
+
 
 }

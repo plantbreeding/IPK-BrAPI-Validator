@@ -13,6 +13,8 @@ public class TestCollectionReport {
     private String name;
     private List<String> failList = new ArrayList<>();
 
+    private VariableStorage variables;
+
     private int total;
     private int fails;
 
@@ -100,4 +102,18 @@ public class TestCollectionReport {
         setTotal(totalTests);
         setFails(totalFails);
     }
+
+	/**
+	 * @return the variables
+	 */
+	public VariableStorage getVariables() {
+		return variables;
+	}
+
+	/**
+	 * @param variables the variables to set
+	 */
+	public void setVariables(VariableStorage variables) {
+		this.variables = variables;
+	}
 }

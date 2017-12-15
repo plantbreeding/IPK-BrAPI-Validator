@@ -14,6 +14,7 @@ public class Item {
     private String description;
     private Request request;
     private List<Event> event;
+	private List<String> requires;
 
     public Item() {
     }
@@ -74,5 +75,11 @@ public class Item {
         setEvent(ev);
     }
 
+	public List<String> getRequires() {
+		return requires;
+	}
 
+    public void setRequires(List<String> requires) {
+		this.requires = requires;
+	}
 }
