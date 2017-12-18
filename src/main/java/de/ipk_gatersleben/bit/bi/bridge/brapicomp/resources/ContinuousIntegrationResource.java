@@ -71,6 +71,7 @@ public class ContinuousIntegrationResource {
                 String e2 = JsonMessageManager.jsonMessage(200, "We'll resend you a confirmation email.", 2100);
                 return Response.status(Status.ACCEPTED).entity(e2).build();
             } else {
+            	endp.setPublic(false);
                 endpointDao.create(endp);
 
                 EmailManager em = new EmailManager(endp);

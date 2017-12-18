@@ -24,6 +24,8 @@ public class Endpoint {
     public static final String CONFIRMED_FIELD_NAME = "CONFIRMED";
     
     public static final String STOREPREV_FIELD_NAME = "STOREPREV";
+    
+    public static final String ISPUBLIC_FIELD_NAME = "ISPUBLIC";
 
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
     private UUID id;
@@ -42,6 +44,9 @@ public class Endpoint {
 
     @DatabaseField(canBeNull = false, columnName = STOREPREV_FIELD_NAME)
     private int storeprev = 3;
+    
+    @DatabaseField(canBeNull = false, columnName = ISPUBLIC_FIELD_NAME)
+    private boolean isPublic = false;
 
 	public Endpoint() {
     }
@@ -123,10 +128,18 @@ public class Endpoint {
         }
 	}
 
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
 	@Override
 	public String toString() {
 		return "Endpoint [id=" + id + ", url=" + url + ", email=" + email + ", frequency=" + frequency + ", confirmed="
-				+ confirmed + ", storeprev=" + storeprev + "]";
+				+ confirmed + ", storeprev=" + storeprev + ", isPublic=" + isPublic + "]";
 	}
 	
 	

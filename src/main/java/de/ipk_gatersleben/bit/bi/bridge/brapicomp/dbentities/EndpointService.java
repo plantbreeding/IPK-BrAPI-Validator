@@ -131,4 +131,14 @@ public class EndpointService {
         List<Endpoint> l = endpointDao.queryForAll();
         return l;
 	}
+	
+	public static Endpoint getPublicEndpoint(String id) throws SQLException {
+        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+        return endpointDao.queryBuilder().where()
+        		.eq(Endpoint.ID_FIELD_NAME, UUID.fromString(id))
+        		.and()
+        		.eq(Endpoint.ISPUBLIC_FIELD_NAME, true)
+        		.queryForFirst();
+	}
+	
 }
