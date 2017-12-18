@@ -25,6 +25,119 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-9 offset-md-31">
+        <div class="card bg-light">
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <th scope="col">
+                  Name
+                </th>
+                <th scope="col">
+                  Url
+                </th>
+                <th scope="col">
+                  Description
+                </th>
+                <th scope="col">
+                  Status
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    BrAPI Test Server
+                  </td>
+                  <td>
+                    https://test.brapi.org
+                  </td>
+                  <td>
+                    BrAPI test server
+                  </td>
+                  <td>
+                    20/33
+                    <button class="btn btn-sm" style="display: inline-block;float: right;"><i class="fa fa-caret-right" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    BrAPI Test Server
+                  </td>
+                  <td>
+                    https://test.brapi.org
+                  </td>
+                  <td>
+                    BrAPI test server
+                  </td>
+                  <td>
+                    20/33
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Test.brapi
+                  </td>
+                  <td>
+                    https://test.brapi.org
+                  </td>
+                  <td>
+                    BrAPI test server
+                  </td>
+                  <td>
+                    20/33
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Test.brapi
+                  </td>
+                  <td>
+                    https://test.brapi.org
+                  </td>
+                  <td>
+                    BrAPI test server
+                  </td>
+                  <td>
+                    20/33
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <h4 class="card-title">BrAPI Test Server</h4>
+                <button type="button" class="close close-up" id=".closeHelp" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-success">
+              <div class="d-flex justify-content-between"><strong>/calls</strong> 1/1</div>
+            </li>
+            <li class="list-group-item text-success">
+              <div class="d-flex justify-content-between"><strong>/germplasm-search</strong> 3/3</div>
+            </li>
+            <li class="list-group-item text-danger">
+              <div class="d-flex justify-content-between"><strong>/traits</strong> 0/1</div>
+            </li>
+            <li class="list-group-item text-warning">
+              <div class="d-flex justify-content-between"><strong>/studies-search</strong> 5/7</div>
+            </li>
+
+          </ul>
+          <div class="card-footer">
+            <button class="btn btn-block">Run full test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row"></div>
       <div class="col-md-6 offset-md-3" id="formCol">
         <div class="card bg-light">
           <div class="card-body">
@@ -105,7 +218,7 @@
       <div class="col-md-6 font-14" id="helpCol" style="display:none">
         <div class="card bg-light">
           <div class="card-body">
-            <button type="button" class="close" id="closeHelp" aria-label="Close">
+            <button type="button" class="close close-up" id="closeHelp" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
             <p class="card-text">BrAVa calls one or more resources in the tested server and tests the response. </p>
