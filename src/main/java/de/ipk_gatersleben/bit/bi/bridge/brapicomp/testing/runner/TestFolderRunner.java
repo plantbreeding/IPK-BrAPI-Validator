@@ -50,6 +50,7 @@ public class TestFolderRunner {
             TestItemRunner tir = new TestItemRunner(item, storage);
             TestItemReport tiReport = tir.runTests();
             tcr.addTestReport(tiReport);
+            doneTests.add(item.getName());
         });
 
         return tcr;
@@ -71,7 +72,6 @@ public class TestFolderRunner {
         tcr.setDescription(this.folder.getDescription());        
         
         List<String> inCalls = new ArrayList<String>();
-        System.out.println(storage.getVariables().toString());
         JsonNode calls = storage.getVariable("callResult");
         if (calls != null && calls.isArray()) {
         	ObjectMapper mapper = new ObjectMapper();
@@ -79,6 +79,10 @@ public class TestFolderRunner {
         		inCalls.add("/" + mapper.convertValue(call.get("call"), String.class));
         	}
         }
+        
+        List<String> folderDoneTests = new ArrayList<String>();
+        List<String> folderSkippedTests = new ArrayList<String>();
+        
         System.out.println(inCalls);
         
         List<Item> itemList = this.folder.getItem();
@@ -90,12 +94,16 @@ public class TestFolderRunner {
                 TestItemReport tiReport = tir.runTests();
                 tcr.addTestReport(tiReport);
                 doneTests.add(item.getName());
+                folderDoneTests.add(item.getName());
         	} else {
+        		folderSkippedTests.add(item.getName());
         		System.out.println("Skipping " + item.getName());
         	}
         	
         });
         
+        tcr.setDoneTests(folderDoneTests);
+        tcr.setSkippedTests(folderSkippedTests);
         return tcr;
 	}
 }

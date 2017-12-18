@@ -13,6 +13,8 @@ public class TestFolderReport {
     private String description;
     private int total;
     private int fails;
+    private List<String> doneTests = new ArrayList<String>();
+    private List<String> skippedTests = new ArrayList<String>();
 
     public TestFolderReport(String url) {
         this.url = url;
@@ -65,4 +67,20 @@ public class TestFolderReport {
     public int getFails() {
         return fails;
     }
+
+	public List<String> getDoneTests() {
+		return doneTests;
+	}
+
+	public void setDoneTests(List<String> doneTests) {
+		this.doneTests = doneTests;
+	}
+
+	public List<String> getSkippedTests() {
+		return skippedTests;
+	}
+
+	public void setSkippedTests(List<String> skippedTests) {
+		this.skippedTests = skippedTests;
+	}
 }

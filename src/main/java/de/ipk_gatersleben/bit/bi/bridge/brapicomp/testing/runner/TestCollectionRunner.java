@@ -60,6 +60,7 @@ public class TestCollectionRunner {
         List<Folder> folderList = testCollection.getItem();
         
         List<String> doneTests = new ArrayList<String>();
+        List<String> skippedTests = new ArrayList<String>();
         for (int i = 0; i < folderList.size(); i++) {
 
             TestFolderRunner tfr = new TestFolderRunner(baseUrl, folderList.get(i), storage);
@@ -69,6 +70,8 @@ public class TestCollectionRunner {
             } else {
             	tfReport = tfr.runTestsFromCall(doneTests);
             }
+
+            skippedTests.addAll(tfReport.getSkippedTests());
             
            
             tcr.addFolder(tfReport);

@@ -1161,7 +1161,7 @@
 					]
 				},
 				{
-					"name": "/locations/locationDbId",
+					"name": "/locations/{locationDbId}",
 					"description": "Check schema and id",
 					"requires":["/locations"],
 					"request": {
