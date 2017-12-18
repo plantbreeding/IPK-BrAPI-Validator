@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,8 +24,10 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
@@ -147,4 +150,41 @@ public class AdminResource {
         }
         return Response.ok().entity(l.toString()).build();
     }*/
+    
+    /**
+     * Register new public endpoint
+     *
+     * @param endp Json containing the endpoint's url.
+     * @return Json message.
+     */
+    @POST
+    @Path("/endpoints")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createEndpoint(@Context HttpHeaders headers,
+                                   Endpoint endp) {
+
+        LOGGER.debug("New POST /admin/endpoints call.");
+        
+        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+
+        try {
+        	// Check if the record exists in the database already.
+            Endpoint e = EndpointService.getEndpointWithEmailAndUrlAndFreq(endp.getEmail(), endp.getUrl(), endp.getFrequency());
+            if (e != null && e.isConfirmed()) {
+                String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4002);
+                return Response.status(Status.BAD_REQUEST).entity(e2).build();
+            } else {
+            	endp.setEmail(null);
+            	endp.setPublic(true);
+                endpointDao.create(endp);
+
+                return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
 }

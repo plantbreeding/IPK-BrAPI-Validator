@@ -62,8 +62,11 @@ public class ContinuousIntegrationResource {
         try {
         	// Check if the record exists in the database already.
             Endpoint e = EndpointService.getEndpointWithEmailAndUrlAndFreq(endp.getEmail(), endp.getUrl(), endp.getFrequency());
-            if (e != null && e.isConfirmed()) {
-                String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4100);
+            if (endp.getEmail() == null) {
+            	String e2 = JsonMessageManager.jsonMessage(400, "Invalid email", 4100);
+                return Response.status(Status.BAD_REQUEST).entity(e2).build();
+            } else if (e != null && e.isConfirmed()) {
+                String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4101);
                 return Response.status(Status.BAD_REQUEST).entity(e2).build();
             } else if (e != null && !e.isConfirmed()) {
                 EmailManager em = new EmailManager(endp);
@@ -105,13 +108,13 @@ public class ContinuousIntegrationResource {
         	// Check if the record exists in the database already.
             Boolean changed = EndpointService.changeEndpointFreqWithId(endpointId, frequency);
             if (changed == null) {
-            	String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4101);
+            	String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4102);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
             } else if (changed) {
             	result = new TemplateHTML("/templates/freq-updated.html");  
             	return Response.ok().entity(result.generateBody()).build();
             } else {
-            	String e2 = JsonMessageManager.jsonMessage(400, "Invalid frequency", 4102);
+            	String e2 = JsonMessageManager.jsonMessage(400, "Invalid frequency", 4103);
                 return Response.status(Status.BAD_REQUEST).entity(e2).build();
             }
         } catch (IOException | SQLException | URISyntaxException e) {
@@ -138,7 +141,7 @@ public class ContinuousIntegrationResource {
             TemplateHTML result;
             Boolean confirmed = EndpointService.confirmEndpointWithId(endpointId);
             if (confirmed == null) {
-                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4103);
+                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4104);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
             } else if (confirmed) {
                 result = new TemplateHTML("/templates/confirmation.html");
@@ -173,7 +176,7 @@ public class ContinuousIntegrationResource {
             TemplateHTML result;
             Boolean unsubscribed = EndpointService.deleteEndpointWithId(endpointId);
             if (!unsubscribed) {
-                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4104);
+                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4105);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
             } else {
                 result = new TemplateHTML("/templates/unsubscribe.html");

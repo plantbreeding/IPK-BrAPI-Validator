@@ -50,11 +50,11 @@ public class TestReportService {
 	 * @return latest endpoints
 	 * @throws SQLException 
 	 */
-	public static List<TestReport> getLastReports(Endpoint endpoint, long last) throws SQLException {
+	public static List<TestReport> getLastReports(Endpoint endpoint, int last) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
 		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
 		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, endpoint);
-		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit(last); //Descending
+		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit((long) last); //Descending
 		return qb.query();
 	}
 	
@@ -70,5 +70,5 @@ public class TestReportService {
 			.and().lt(TestReport.DATE_FIELD_NAME, testReport.getDate());
 		qb.delete();
 	}
-	
 }
+

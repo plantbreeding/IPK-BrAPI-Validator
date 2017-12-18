@@ -33,7 +33,7 @@ public class Endpoint {
     @DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
     private String url;
 
-    @DatabaseField(canBeNull = false, columnName = EMAIL_FIELD_NAME)
+    @DatabaseField(columnName = EMAIL_FIELD_NAME)  //Null controlled in resource
     private String email;
 
     @DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)

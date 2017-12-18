@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
@@ -50,7 +52,7 @@ public class TestReportResource {
         try {
             TestReport tr = TestReportService.getReport(reportId);
             if (tr == null) {
-                //String e2 = JsonMessageManager.jsonMessage(404, "testReport not found", 4300);
+                String e2 = JsonMessageManager.jsonMessage(404, "testReport not found", 4300);
                 return Response.status(Status.NOT_FOUND).build(); //Test this
             }
 
@@ -78,6 +80,34 @@ public class TestReportResource {
             //Thrown by new TemplateHTML("/templates/report.html", attVariables)
             LOGGER.warn("Exception while generating report: " + reportId + ". " + e.getMessage());
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5301);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
+    
+    @GET
+    @Path("/lastreport/{endpointId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLastReport(@PathParam("endpointId") String endpointId) {
+
+    	LOGGER.debug("New GET /lastreport call. Id: " + endpointId);
+        try {
+        	Endpoint e = EndpointService.getPublicEndpoint(endpointId);
+        	if (e == null) {
+                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4301);
+                return Response.status(Status.NOT_FOUND).build();
+            }
+            List<TestReport> trl = TestReportService.getLastReports(e, 1);
+            if (trl.size() == 0 || trl.get(0) == null) {
+                String e2 = JsonMessageManager.jsonMessage(404, "testReport not found", 4302);
+                return Response.status(Status.NOT_FOUND).build();
+            }
+
+            return Response.ok().entity(trl.get(0)).build();
+
+        } catch (SQLException e) {
+            //Thrown by TestReportService.getReport(reportId)
+            LOGGER.warn("SQLException while calling GET /endpointId with id: " + endpointId + ". " + e.getMessage());
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5302);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
