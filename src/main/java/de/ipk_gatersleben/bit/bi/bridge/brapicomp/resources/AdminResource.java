@@ -31,7 +31,9 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService;
@@ -178,10 +180,14 @@ public class AdminResource {
             	endp.setEmail(null);
             	endp.setPublic(true);
                 endpointDao.create(endp);
-
+                InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
+                TestCollection tc;
+                ObjectMapper mapper = new ObjectMapper();
+         		tc = mapper.readValue(inJson, TestCollection.class);
+                RunnerService.TestEndpointWithCallAndSaveReport(endp, tc);
                 return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();

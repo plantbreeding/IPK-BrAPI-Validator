@@ -148,5 +148,32 @@ public class RunnerService {
         return tir.runTests();
     }
 
+	public static void TestAllPublicEndpoints(TestCollection tc) throws SQLException {
+		List<Endpoint> l = EndpointService.getAllPublicEndpoints();
+		LOGGER.info("Endpoints found: " + l.size());
+		for (int i = 0; i < l.size(); i++) {
+			Endpoint endpoint = l.get(i);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(endpoint, tc);
+            
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+            	TestReport report = new TestReport(endpoint, mapper.writeValueAsString(testSuiteReport));
+                String reportId = TestReportService.saveReport(report);
+                testSuiteReport.setId(reportId);
+            } catch (JsonProcessingException e) {
+                LOGGER.warn("Unable to save report:" + e.getMessage());
+            }
+		}
+		
+	}
+
+	public static void TestEndpointWithCallAndSaveReport(Endpoint endp, TestCollection tc) throws JsonProcessingException, SQLException {
+		ObjectMapper mapper = new ObjectMapper();
+		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(endp, tc);
+        TestReport report = new TestReport(endp, mapper.writeValueAsString(testSuiteReport));
+        String reportId = TestReportService.saveReport(report);
+        testSuiteReport.setId(reportId);
+		
+	}
 
 }
