@@ -1,6 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,6 +70,23 @@ public class TestReportService {
 		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, testReport.getEndpoint())
 			.and().lt(TestReport.DATE_FIELD_NAME, testReport.getDate());
 		qb.delete();
+	}
+
+	public static List<TestReport> getAllPublicEndpointLastReport() throws SQLException {
+		List<Endpoint> l = EndpointService.getAllPublicEndpoints();
+		List<TestReport> lastReports = new ArrayList<TestReport>();
+		l.forEach(endpoint -> {
+			try {
+				List<TestReport> tr = getLastReports(endpoint, 1);
+				if (tr.size() > 0 && tr.get(0) != null) {
+					lastReports.add(tr.get(0));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		return lastReports;
 	}
 }
 
