@@ -53,10 +53,19 @@ public class TestReportService {
 	 */
 	public static List<TestReport> getLastReports(Endpoint endpoint, int last) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
+		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
 		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, endpoint);
 		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit((long) last); //Descending
-		return qb.query();
+		List<TestReport> trl = qb.query();
+		trl.forEach(tr -> {
+			try {
+				endpointDao.refresh(tr.getEndpoint());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		});
+		return trl;
 	}
 	
 	/**
@@ -79,10 +88,10 @@ public class TestReportService {
 			try {
 				List<TestReport> tr = getLastReports(endpoint, 1);
 				if (tr.size() > 0 && tr.get(0) != null) {
+					TestReport lastReport = tr.get(0);
 					lastReports.add(tr.get(0));
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});

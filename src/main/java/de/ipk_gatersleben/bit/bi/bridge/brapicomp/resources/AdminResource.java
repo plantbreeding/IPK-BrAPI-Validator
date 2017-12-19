@@ -171,22 +171,17 @@ public class AdminResource {
         Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
 
         try {
-        	// Check if the record exists in the database already.
-            Endpoint e = EndpointService.getEndpointWithEmailAndUrlAndFreq(endp.getEmail(), endp.getUrl(), endp.getFrequency());
-            if (e != null && e.isConfirmed()) {
-                String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4002);
-                return Response.status(Status.BAD_REQUEST).entity(e2).build();
-            } else {
-            	endp.setEmail(null);
-            	endp.setPublic(true);
-                endpointDao.create(endp);
-                InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
-                TestCollection tc;
-                ObjectMapper mapper = new ObjectMapper();
-         		tc = mapper.readValue(inJson, TestCollection.class);
-                RunnerService.TestEndpointWithCallAndSaveReport(endp, tc);
-                return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
-            }
+
+        	endp.setEmail(null);
+        	endp.setPublic(true);
+            endpointDao.create(endp);
+            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
+            TestCollection tc;
+            ObjectMapper mapper = new ObjectMapper();
+     		tc = mapper.readValue(inJson, TestCollection.class);
+            RunnerService.TestEndpointWithCallAndSaveReport(endp, tc);
+            return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
+        
         } catch (SQLException | IOException e) {
             e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
