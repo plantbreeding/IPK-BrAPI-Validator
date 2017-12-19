@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * Endpoint - table model
@@ -45,6 +46,7 @@ public class Endpoint {
     @DatabaseField(canBeNull = false, columnName = STOREPREV_FIELD_NAME)
     private int storeprev = 3;
     
+    @JsonIgnore
     @DatabaseField(canBeNull = false, columnName = ISPUBLIC_FIELD_NAME)
     private boolean isPublic = false;
 
@@ -111,11 +113,13 @@ public class Endpoint {
     public void setConfirmed(boolean b) {
         this.confirmed = b;
     }
-
+    
+    @JsonIgnore
     public boolean isConfirmed() {
         return confirmed;
     }
-
+    
+    @JsonIgnore
     public int getStoreprev() {
 		return storeprev;
 	}
@@ -127,7 +131,8 @@ public class Endpoint {
             throw new IllegalArgumentException();
         }
 	}
-
+	
+	@JsonIgnore
 	public boolean isPublic() {
 		return isPublic;
 	}

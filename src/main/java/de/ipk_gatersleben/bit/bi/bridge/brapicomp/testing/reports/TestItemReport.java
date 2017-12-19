@@ -13,6 +13,7 @@ public class TestItemReport {
     private String endpoint;
     private String method;
     private boolean cached;
+    private boolean allPassed;
 
     public TestItemReport(String name, String endpoint, String method) {
         setName(name);
@@ -73,5 +74,19 @@ public class TestItemReport {
     public boolean isCached() {
         return cached;
     }
+
+	/**
+	 * @return the allPassed
+	 */
+	public boolean isAllPassed() {
+		return allPassed;
+	}
+
+	/**
+	 * @param allPassed the allPassed to set
+	 */
+	public void setAllPassed(boolean allPassed) {
+		this.allPassed = allPassed;
+	}
 
 }

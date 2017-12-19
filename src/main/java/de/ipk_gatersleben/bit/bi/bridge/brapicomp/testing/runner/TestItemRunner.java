@@ -65,7 +65,11 @@ public class TestItemRunner {
      * @return Report
      */
     public TestItemReport runTests() {
+    	
+    	boolean allPassed = true;
+    	
         this.vr = connect();
+        
         //TODO: Only first event in Item.event is executed.
         List<String> execList = this.item.getEvent().get(0).getExec();
         TestItemReport tir = new TestItemReport(this.item.getName(), this.url, this.method);
@@ -121,9 +125,13 @@ public class TestItemRunner {
                 }
                 if (ter != null) {
                     tir.addTest(ter);
+                    if (!ter.isPassed()) {
+                    	allPassed = false;
+                    }
                 }
             }
         }
+        tir.setAllPassed(allPassed);
         tir.setCached(this.cached);
         return tir;
     }

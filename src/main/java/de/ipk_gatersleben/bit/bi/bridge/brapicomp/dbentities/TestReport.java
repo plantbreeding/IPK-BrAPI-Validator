@@ -1,8 +1,18 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -69,4 +79,57 @@ public class TestReport {
     public void setDate(Date date) {
         this.date = date;
     }
+    
+    public TreeMap<String, FolderShortReport> getShortReport() throws JsonProcessingException, IOException {
+    	TreeMap<String, FolderShortReport> shortReport = new TreeMap<String, FolderShortReport>();
+    	ObjectMapper mapper = new ObjectMapper();
+    	JsonNode report = mapper.readTree(this.reportJson);
+    	JsonNode folders = report.get("testCollections").get(0).get("folders");
+    	if (folders.isArray()) {
+    		int size = folders.size();
+    		for (int i = 0; i < size; i++) {
+    			JsonNode folder = folders.get(i);
+    			int folderSize = folder.get("tests").size();
+    			
+    			
+    			TreeMap<String, Boolean> folderDoneTests = new TreeMap<String, Boolean>(); 
+    			List<String> folderSkippedTests = new ArrayList<String>();
+    			for (int k = 0; k < folder.get("skippedTests").size(); k++ ) {
+    				folderSkippedTests.add(folder.get("skippedTests").get(k).asText());
+    			}
+    			
+    			for (int j = 0; j < folderSize; j++) {
+    				JsonNode test = folder.get("tests").get(j);
+    				String testName = test.get("name").asText();
+    				boolean passed = test.get("allPassed").asBoolean();
+    				folderDoneTests.put(testName, passed);	
+    			}
+    			FolderShortReport fsr = new FolderShortReport(folderSkippedTests, folderDoneTests);
+    			shortReport.put(folder.get("name").asText(), fsr);
+    		}
+    	}
+    	return shortReport;
+    }
+    
+    class FolderShortReport {
+    	List<String> skippedTests;
+    	TreeMap<String, Boolean> folderDoneTests;
+    	
+    	
+    	public FolderShortReport(List<String> skippedTests, TreeMap<String, Boolean> folderDoneTests) {
+			super();
+			this.skippedTests = skippedTests;
+			this.folderDoneTests = folderDoneTests;
+		}
+		public List<String> getSkippedTests() {
+			return skippedTests;
+		}
+
+		public TreeMap<String, Boolean> getFolderDoneTests() {
+			return folderDoneTests;
+		}
+
+		
+    }
+    
 }
