@@ -630,8 +630,39 @@ $(function() {
 
     });
 
+    function populateServerTable() {
+        $.ajax({
+            url: 'api/public/endpoints', // Continue here
+            type: 'GET',
+            success: function(res) {
+                var endpoints = res.map(function(d) {
+                    return {
+                        name: d.endpoint.name || d.endpoint.url,
+                        url: d.endpoint.url,
+                        desc: 'todo',
+                        status: 'todo'
+                    }
+                });
+                endpoints.forEach(function(endp) {
+                    var tr = $("<tr/>");
+                    ['name', 'url', 'desc', 'status'].map(function(p) {
+                        if (p === 'url') {
+                            tr.append("<td><a target='_blank' href='" + endp[p] + "'>Url</a></td>")
+                        } else {
+                            tr.append("<td>" + endp[p] + "</td>")
+                        }
+                    })
+                    $("#endpoint_table_body").append(tr);
+                })
+
+            }
+        });
+    }
+
     // Initializes variables, forms, listeners...
     function main () {
+
+        populateServerTable();
 
         // Add all tests to dropdown
         $("#testresource").append("<optgroup label=\"all\">"
