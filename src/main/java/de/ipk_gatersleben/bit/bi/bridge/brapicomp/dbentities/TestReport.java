@@ -99,10 +99,16 @@ public class TestReport {
     			
     			TreeMap<String, Boolean> folderDoneTests = new TreeMap<String, Boolean>(); 
     			List<String> folderSkippedTests = new ArrayList<String>();
+    			List<String> folderMissingReqsTests = new ArrayList<String>();
     			
     			//Get skipped tests
     			for (int k = 0; k < folder.get("skippedTests").size(); k++ ) {
     				folderSkippedTests.add(folder.get("skippedTests").get(k).asText());
+    			}
+    			
+    			//Get missing requirements tests
+    			for (int k = 0; k < folder.get("missingReqsTests").size(); k++ ) {
+    				folderMissingReqsTests.add(folder.get("missingReqsTests").get(k).asText());
     			}
     			
     			//Get done tests
@@ -112,7 +118,7 @@ public class TestReport {
     				boolean passed = test.get("allPassed").asBoolean();
     				folderDoneTests.put(testName, passed);	
     			}
-    			FolderShortReport fsr = new FolderShortReport(folderSkippedTests, folderDoneTests);
+    			FolderShortReport fsr = new FolderShortReport(folderSkippedTests, folderDoneTests, folderMissingReqsTests);
     			shortReport.put(folder.get("name").asText(), fsr);
     		}
     	}
@@ -122,12 +128,16 @@ public class TestReport {
     class FolderShortReport {
     	List<String> skippedTests;
     	TreeMap<String, Boolean> folderDoneTests;
+		List<String> missingReqsTests;
     	
     	
-    	public FolderShortReport(List<String> skippedTests, TreeMap<String, Boolean> folderDoneTests) {
+    	public FolderShortReport(List<String> skippedTests, 
+    			TreeMap<String, Boolean> folderDoneTests,
+    			List<String> missingReqsTests) {
 			super();
 			this.skippedTests = skippedTests;
 			this.folderDoneTests = folderDoneTests;
+			this.missingReqsTests = missingReqsTests;
 		}
 		public List<String> getSkippedTests() {
 			return skippedTests;
@@ -135,6 +145,9 @@ public class TestReport {
 
 		public TreeMap<String, Boolean> getFolderDoneTests() {
 			return folderDoneTests;
+		}
+		public List<String> getMissingReqsTests() {
+			return missingReqsTests;
 		}
 
 		

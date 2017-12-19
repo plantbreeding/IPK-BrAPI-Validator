@@ -15,6 +15,7 @@ public class TestFolderReport {
     private int fails;
     private List<String> doneTests = new ArrayList<String>();
     private List<String> skippedTests = new ArrayList<String>();
+    private List<String> missingReqsTests = new ArrayList<String>();
 
     public TestFolderReport(String url) {
         this.url = url;
@@ -82,5 +83,13 @@ public class TestFolderReport {
 
 	public void setSkippedTests(List<String> skippedTests) {
 		this.skippedTests = skippedTests;
+	}
+
+	public List<String> getMissingReqsTests() {
+		return missingReqsTests;
+	}
+
+	public void setMissingReqsTests(List<String> missingReqsTests) {
+		this.missingReqsTests = missingReqsTests;
 	}
 }

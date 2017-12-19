@@ -82,19 +82,30 @@ public class TestFolderRunner {
         
         List<String> folderDoneTests = new ArrayList<String>();
         List<String> folderSkippedTests = new ArrayList<String>();
+        List<String> folderMissingReqsTests = new ArrayList<String>();
         
         System.out.println(inCalls);
         
         List<Item> itemList = this.folder.getItem();
         itemList.forEach(item -> {
         	
-        	if (doneTests.containsAll(item.getRequires()) && inCalls.contains(item.getName())) {
-        		System.out.println("Testing " + item.getName());
-        		TestItemRunner tir = new TestItemRunner(item, storage);
-                TestItemReport tiReport = tir.runTests();
-                tcr.addTestReport(tiReport);
-                doneTests.add(item.getName());
-                folderDoneTests.add(item.getName());
+        	if (inCalls.contains(item.getName())) {
+        		//Calls contains the call. Next test is check if the required tests have been done.
+        		
+        		
+        		
+        		if (doneTests.containsAll(item.getRequires())) {
+        			System.out.println("Testing " + item.getName());
+        			TestItemRunner tir = new TestItemRunner(item, storage);
+            		TestItemReport tiReport = tir.runTests();
+                    tcr.addTestReport(tiReport);
+                    doneTests.add(item.getName());
+                    folderDoneTests.add(item.getName());
+        		} else {
+        			System.out.println("Missinreq " + item.getName());
+        			folderMissingReqsTests.add(item.getName());
+        		}
+        		
         	} else {
         		folderSkippedTests.add(item.getName());
         		System.out.println("Skipping " + item.getName());
@@ -104,6 +115,7 @@ public class TestFolderRunner {
         
         tcr.setDoneTests(folderDoneTests);
         tcr.setSkippedTests(folderSkippedTests);
+        tcr.setMissingReqsTests(folderMissingReqsTests);
         return tcr;
 	}
 }

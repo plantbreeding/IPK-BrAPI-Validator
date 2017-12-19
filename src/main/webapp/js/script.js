@@ -2,7 +2,8 @@
 
 // constants
 var statusBtn1 = '<button class="btn btn-sm statusbtn" data-id="';
-var statusBtn2 = '" style="display: inline-block;float: right;"><i class="fa fa-caret-right" aria-hidden="true"></i></button>';
+var statusBtn2 = '" data-name="';
+var statusBtn3 = '" style="display: inline-block;float: right;"><i class="fa fa-caret-right" aria-hidden="true"></i></button>';
 
 var doneTest1Template = ['<li class="list-group-item report_list_item text-',
     '"><div class="d-flex justify-content-between"><strong>'];
@@ -667,26 +668,28 @@ $(function() {
                     tr.append("<td>" + endp.name + "</td>");
                     tr.append("<td><a target='_blank' href='" + endp.url + "'>Url</a></td>");
                     tr.append("<td>" + endp.desc + "</td>")
-                    tr.append("<td>" + endp.status + statusBtn1 + endp.id + statusBtn2 + "</td>");
+                    tr.append("<td>" + endp.status + statusBtn1 + endp.id + statusBtn2 + endp.name + statusBtn3 + "</td>");
                     $("#endpoint_table_body").append(tr);
                 });
                 $(".statusbtn").click(function() {
-                    showShortReport($(this).data('id'));
+                    showShortReport($(this).data('id'), $(this).data('name') );
                 })
             }
         });
     }
 
-    function showShortReport(id) {
+    function showShortReport(id, name) {
         var data = endpointShortReports[id];
-        $("#srTitle").text(id);
+        $("#srTitle").text(name);
         var folders = Object.keys(data);
         var doneTestDOM = $("#srList");
         doneTestDOM.text(''); //Empty list;
         for (var i = 0; i < folders.length; i++) {
             var folder = data[folders[i]];
+            doneTestDOM.append(doneTest1['warning'] + folders[i] + doneTest2 + doneTest3);
             var doneTests = Object.keys(folder.folderDoneTests);
-            console.log(folder.skippedTests)
+            console.log('skipped ' + folder.skippedTests)
+            console.log('missingreq ' + folder.missingReqsTests)
             for (var j = 0; j < doneTests.length; j++) {
                 var test = doneTests[j];
                 var success = folder.folderDoneTests[test] ? 'success' : 'danger';
