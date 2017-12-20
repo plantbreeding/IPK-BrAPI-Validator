@@ -96,6 +96,9 @@ body {
   margin-top: -12px;
 }
 
-.report_list_item {
+.list-group-item {
   padding: 0.25rem 1.25rem;
+}
+.collapsing {
+    transition: height 0.15s;
 }

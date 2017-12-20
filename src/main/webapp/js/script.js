@@ -1,19 +1,11 @@
 "use strict";
 
-// constants
+
 var statusBtn1 = '<button class="btn btn-sm statusbtn" data-id="';
 var statusBtn2 = '" data-name="';
 var statusBtn3 = '" style="display: inline-block;float: right;"><i class="fa fa-caret-right" aria-hidden="true"></i></button>';
 
-var doneTest1Template = ['<li class="list-group-item report_list_item text-',
-    '"><div class="d-flex justify-content-between"><strong>'];
-var doneTest1 = {
-        'danger': doneTest1Template.join('danger'),
-        'warning': doneTest1Template.join('warning'),
-        'success': doneTest1Template.join('success')
-    }
-var doneTest2 = '</strong> ';
-var doneTest3 = '</div></li>';
+
 // All simple tests
 var allTests = [
     {
@@ -686,15 +678,42 @@ $(function() {
         doneTestDOM.text(''); //Empty list;
         for (var i = 0; i < folders.length; i++) {
             var folder = data[folders[i]];
-            doneTestDOM.append(doneTest1['warning'] + folders[i] + doneTest2 + doneTest3);
+            //Add category header
+            var header = $("<div>", {
+                id: "reportCat_" + i,
+                class: "accordion-toggle collapsed list-group-item",
+                "aria-expanded": "false",
+                "data-toggle": "collapse",
+                "data-target": "#reportTest_" + i,
+                "aria-controls" : "#reportTest_" + i,
+                role: "tab"
+            });
+            header.html(folders[i]);
+
+            var catWrapper = $("<div>", {
+                class: "collapse",
+                id : "reportTest_" + i,
+                role: "tabpanel",
+                "aria-labelledby" : "#reportCat_" + i
+            });
+
+            var catBody = $("<div>", {
+                class: "list-group-item"
+            })
+
+
             var doneTests = Object.keys(folder.folderDoneTests);
             console.log('skipped ' + folder.skippedTests)
             console.log('missingreq ' + folder.missingReqsTests)
             for (var j = 0; j < doneTests.length; j++) {
                 var test = doneTests[j];
                 var success = folder.folderDoneTests[test] ? 'success' : 'danger';
-                doneTestDOM.append(doneTest1[success] + test + doneTest2 + success + doneTest3);
+                var li = $('<div class="d-flex justify-content-between text-' + success + '"><strong>' + test + '</strong> ' + success + '</div>');
+                catBody.append(li);
             }
+            catWrapper.append(catBody);
+            doneTestDOM.append(header);
+            doneTestDOM.append(catWrapper);
         }
     }
 
