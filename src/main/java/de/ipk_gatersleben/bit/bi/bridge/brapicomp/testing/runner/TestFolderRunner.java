@@ -89,7 +89,7 @@ public class TestFolderRunner {
         List<Item> itemList = this.folder.getItem();
         itemList.forEach(item -> {
         	
-        	if (inCalls.contains(item.getName())) {
+        	if (inCalls.contains(item.getEndpoint())) {
         		//Calls contains the call. Next test is check if the required tests have been done.
         		
         		

@@ -11,6 +11,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.Test;
  */
 public class Item {
     private String name;
+    private String endpoint;
     private String description;
     private Request request;
     private List<Event> event;
@@ -81,5 +82,16 @@ public class Item {
 
     public void setRequires(List<String> requires) {
 		this.requires = requires;
+	}
+
+	public String getEndpoint() {
+		return endpoint;
+	}
+
+	/**
+	 * @param endpoint the endpoint to set
+	 */
+	public void setEndpoint(String endpoint) {
+		this.endpoint = endpoint;
 	}
 }
