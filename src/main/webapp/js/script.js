@@ -708,7 +708,8 @@ $(function() {
             for (var j = 0; j < doneTests.length; j++) {
                 var test = doneTests[j];
                 var success = folder.folderDoneTests[test] ? 'success' : 'danger';
-                var li = $('<div class="d-flex justify-content-between text-' + success + '"><strong>' + test + '</strong> ' + success + '</div>');
+                var icon = folder.folderDoneTests[test] ? '<i class="fa fa-check-circle text-success" aria-hidden="true"></i>' : '<i class="fa fa-times-circle text-danger" aria-hidden="true"></i>';
+                var li = $('<div class=" text-' +success + '">' + icon + ' ' + test + '</div>');
                 catBody.append(li);
             }
             catWrapper.append(catBody);
