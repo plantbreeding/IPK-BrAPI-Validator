@@ -3,6 +3,8 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,13 +48,16 @@ public class TestFolderRunner {
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());
         List<Item> itemList = this.folder.getItem();
+        TreeMap<String, String> folderTests = new TreeMap<String, String>();
         itemList.forEach(item -> {
             TestItemRunner tir = new TestItemRunner(item, storage);
             TestItemReport tiReport = tir.runTests();
             tcr.addTestReport(tiReport);
             doneTests.add(item.getName());
+            String passed = tiReport.isAllPassed() ? "passed" : "failed";
+            folderTests.put(item.getName(), passed);
         });
-
+        tcr.setTestsShort(folderTests);
         return tcr;
     }
     
@@ -80,11 +85,7 @@ public class TestFolderRunner {
         	}
         }
         
-        List<String> folderDoneTests = new ArrayList<String>();
-        List<String> folderSkippedTests = new ArrayList<String>();
-        List<String> folderMissingReqsTests = new ArrayList<String>();
-        
-        System.out.println(inCalls);
+        TreeMap<String, String> folderTests = new TreeMap<String, String>();
         
         List<Item> itemList = this.folder.getItem();
         itemList.forEach(item -> {
@@ -95,27 +96,23 @@ public class TestFolderRunner {
         		
         		
         		if (doneTests.containsAll(item.getRequires())) {
-        			System.out.println("Testing " + item.getName());
         			TestItemRunner tir = new TestItemRunner(item, storage);
             		TestItemReport tiReport = tir.runTests();
                     tcr.addTestReport(tiReport);
                     doneTests.add(item.getName());
-                    folderDoneTests.add(item.getName());
+                    String passed = tiReport.isAllPassed() ? "passed" : "failed";
+                    folderTests.put(item.getName(), passed);
         		} else {
-        			System.out.println("Missinreq " + item.getName());
-        			folderMissingReqsTests.add(item.getName());
+        			folderTests.put(item.getName(), "missingReqs");
         		}
         		
         	} else {
-        		folderSkippedTests.add(item.getName());
-        		System.out.println("Skipping " + item.getName());
+        		folderTests.put(item.getName(), "skipped");
         	}
         	
         });
         
-        tcr.setDoneTests(folderDoneTests);
-        tcr.setSkippedTests(folderSkippedTests);
-        tcr.setMissingReqsTests(folderMissingReqsTests);
+        tcr.setTestsShort(folderTests);
         return tcr;
 	}
 }
