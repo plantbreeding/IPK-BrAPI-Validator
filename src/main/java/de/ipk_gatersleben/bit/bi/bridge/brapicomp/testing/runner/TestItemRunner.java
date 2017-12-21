@@ -78,6 +78,7 @@ public class TestItemRunner {
             TestExecReport ter1 = new TestExecReport("Can't connect to tested server or missing parameters. Test cancelled.", false);
             ter1.addMessage("Can't connect to tested server or missing parameters. Test cancelled.");
             tir.addTest(ter1);
+            tir.setAllPassed(false);
             return tir;
         }
         for (int i = 0; i < execList.size(); i++) {
@@ -122,6 +123,7 @@ public class TestItemRunner {
                     LOGGER.debug(msg);
                     ter.addMessage(msg);
                     tir.addTest(ter);
+                    tir.setAllPassed(false);
                     break;
                 }
                 if (ter != null) {

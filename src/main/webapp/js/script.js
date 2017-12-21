@@ -652,7 +652,7 @@ $(function() {
                         name: d.endpoint.name,
                         url: d.endpoint.url,
                         desc: d.endpoint.description,
-                        status: 'todo'
+                        status: '' //todo
                     }
                 });
                 endpoints.forEach(function(endp) {
@@ -666,6 +666,9 @@ $(function() {
                 $(".statusbtn").click(function() {
                     showShortReport($(this).data('id'), $(this).data('name') );
                 })
+                if (res.length > 0) {
+                    showShortReport(res[0].endpoint.id, res[0].endpoint.name);
+                }                
             }
         });
     }
@@ -748,7 +751,7 @@ $(function() {
                 cat.addClass('collapse skipped_test');
                 catWrapper.attr('class', 'collapse');
                 header.attr('aria-expanded', 'false');
-                header.addClass('collapsed')
+                header.addClass('collapsed');
             }
             cat.append(header);
             cat.append(catWrapper);
