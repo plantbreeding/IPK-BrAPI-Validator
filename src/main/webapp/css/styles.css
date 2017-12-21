@@ -102,3 +102,11 @@ body {
 .collapsing {
     transition: height 0.15s;
 }
+
+.list-group-item.skipped_test.collapse {
+  display: none;
+}
+
+.list-group-item.skipped_test.collapse.show {
+  display: block;
+}

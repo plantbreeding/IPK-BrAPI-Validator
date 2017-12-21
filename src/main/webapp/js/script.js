@@ -681,7 +681,7 @@ $(function() {
             //Add category header
             var header = $("<div>", {
                 id: "reportCat_" + i,
-                class: "accordion-toggle collapsed list-group-item",
+                class: "accordion-toggle collapsed",
                 "aria-expanded": "false",
                 "data-toggle": "collapse",
                 "data-target": "#reportTest_" + i,
@@ -696,10 +696,6 @@ $(function() {
                 role: "tabpanel",
                 "aria-labelledby" : "#reportCat_" + i
             });
-
-            var catBody = $("<div>", {
-                class: "list-group-item"
-            })
 
             var allSkipped = true;
             var doneTests = Object.keys(folder);
@@ -733,14 +729,15 @@ $(function() {
 
                 var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="true"></i>';
                 var li = $('<div class=" text-' + color + skipped + '">' + icon + ' ' + test + '</div>');
-                catBody.append(li);
+                catWrapper.append(li);
              
             }
-            var cat = $("<div>");
+            var cat = $("<div>", {
+                class: "list-group-item"
+            });
             if (allSkipped) {
                 cat.addClass('collapse skipped_test');
             }
-            catWrapper.append(catBody);
             cat.append(header);
             cat.append(catWrapper);
             doneTestDOM.append(cat);
