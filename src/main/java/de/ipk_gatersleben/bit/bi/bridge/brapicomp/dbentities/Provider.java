@@ -1,5 +1,6 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,17 +29,17 @@ public class Provider {
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
     private UUID id;
     
-    @DatabaseField(generatedId = true, columnName = NAME_FIELD_NAME)
+    @DatabaseField(columnName = NAME_FIELD_NAME)
     private String name;
     
-    @DatabaseField(generatedId = true, columnName = DESCRIPTION_FIELD_NAME)
+    @DatabaseField(columnName = DESCRIPTION_FIELD_NAME)
     private String description;
     
-    @DatabaseField(generatedId = true, columnName = LOGO_FIELD_NAME)
+    @DatabaseField(columnName = LOGO_FIELD_NAME)
     private String logo;
     
     @ForeignCollectionField(columnName = RESOURCES_FIELD_NAME, eager = true)
-    private List<Resource> resources;
+    private Collection<Resource> resources;
     
 
 }

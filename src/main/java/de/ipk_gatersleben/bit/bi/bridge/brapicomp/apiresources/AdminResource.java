@@ -157,25 +157,25 @@ public class AdminResource {
     /**
      * Register new public endpoint
      *
-     * @param endp Json containing the endpoint's url.
+     * @param res Json containing the endpoint's url.
      * @return Json message.
      */
     @POST
-    @Path("/endpoints")
+    @Path("/resources")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createEndpoint(@Context HttpHeaders headers,
-                                   Resource endp) {
+                                   Resource res) {
 
-        LOGGER.debug("New POST /admin/endpoints call.");
+        LOGGER.debug("New POST /admin/resources call.");
         
         Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 
         try {
 
-        	endp.setEmail(null);
-        	endp.setPublic(true);
-            endpointDao.create(endp);
+        	res.setEmail(null);
+        	res.setPublic(true);
+            endpointDao.create(res);
             return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
         
         } catch (SQLException e) {
