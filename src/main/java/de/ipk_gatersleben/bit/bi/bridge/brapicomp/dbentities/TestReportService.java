@@ -46,16 +46,16 @@ public class TestReportService {
 
 	/**
 	 * Get the last n reports for a given endpoint in descending order (newest first)
-	 * @param endpoint
+	 * @param resource
 	 * @param last Number of reports to get.
 	 * @return latest endpoints
 	 * @throws SQLException 
 	 */
-	public static List<TestReport> getLastReports(Endpoint endpoint, int last) throws SQLException {
+	public static List<TestReport> getLastReports(Resource resource, int last) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
-		Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+		Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
-		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, endpoint);
+		qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
 		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit((long) last); //Descending
 		List<TestReport> trl = qb.query();
 		trl.forEach(tr -> {
@@ -70,19 +70,19 @@ public class TestReportService {
 	
 	/**
 	 * Delete reports older than a specific one
-	 * @param endpoint Reports older than this one will get deleted from the database.
+	 * @param testReport Reports older than this one will get deleted from the database.
 	 * @throws SQLException 
 	 */
 	public static void deleteOlderThan(TestReport testReport) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
 		DeleteBuilder<TestReport, UUID> qb = testReportDao.deleteBuilder();
-		qb.where().eq(TestReport.ENDPOINT_FIELD_NAME, testReport.getEndpoint())
+		qb.where().eq(TestReport.RESOURCE_FIELD_NAME, testReport.getEndpoint())
 			.and().lt(TestReport.DATE_FIELD_NAME, testReport.getDate());
 		qb.delete();
 	}
 
 	public static List<TestReport> getAllPublicEndpointLastReport() throws SQLException {
-		List<Endpoint> l = EndpointService.getAllPublicEndpoints();
+		List<Resource> l = ResourceService.getAllPublicEndpoints();
 		List<TestReport> lastReports = new ArrayList<TestReport>();
 		l.forEach(endpoint -> {
 			try {

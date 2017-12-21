@@ -1,4 +1,4 @@
-package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
+package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,15 +29,15 @@ import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 /**
@@ -67,7 +67,7 @@ public class AdminResource {
         LOGGER.debug("New POST /testall call.");
         try {
 
-            String[] auth = ResourceService.getAuth(headers);
+            String[] auth = ApiResourceService.getAuth(headers);
             //Check auth header
             if (auth == null || auth.length != 2) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
@@ -105,7 +105,7 @@ public class AdminResource {
     	// i.e. when a new parameter/column is added
         try {
         	
-        	String[] auth = ResourceService.getAuth(headers);
+        	String[] auth = ApiResourceService.getAuth(headers);
             //Check auth header
             if (auth == null || auth.length != 2) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
@@ -119,7 +119,7 @@ public class AdminResource {
             }
             
             DataSourceManager.deleteTable(TestReport.class);
-            DataSourceManager.deleteTable(Endpoint.class);
+            DataSourceManager.deleteTable(Resource.class);
         } catch (SQLException e) {
             return Response.serverError().entity(e.getMessage()).build();
         }
@@ -130,10 +130,10 @@ public class AdminResource {
     public Response getUsers(@Context HttpHeaders headers) {
     	// It is necessary to delete or update the database tables after the schema changes
     	// i.e. when a new parameter/column is added
-    	List<Endpoint> l;
+    	List<Resource> l;
         try {
         	
-        	String[] auth = ResourceService.getAuth(headers);
+        	String[] auth = ApiResourceService.getAuth(headers);
             //Check auth header
             if (auth == null || auth.length != 2) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
@@ -146,7 +146,7 @@ public class AdminResource {
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
         	
-            l = EndpointService.getAllEndpoints();
+            l = ResourceService.getAllEndpoints();
             
         } catch (SQLException e) {
             return Response.serverError().entity(e.getMessage()).build();
@@ -165,11 +165,11 @@ public class AdminResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createEndpoint(@Context HttpHeaders headers,
-                                   Endpoint endp) {
+                                   Resource endp) {
 
         LOGGER.debug("New POST /admin/endpoints call.");
         
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 
         try {
 
@@ -187,7 +187,7 @@ public class AdminResource {
     //Commented out for security. Also private API key is required
     
     /**
-     * Run the default test on all public endpoints
+     * Run the default test on all public resources
      *
      * @return Response with json report
      */
@@ -200,7 +200,7 @@ public class AdminResource {
         LOGGER.debug("New POST /testallpublic call.");
         try {
 
-            String[] auth = ResourceService.getAuth(headers);
+            String[] auth = ApiResourceService.getAuth(headers);
             //Check auth header
             if (auth == null || auth.length != 2) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
@@ -218,11 +218,11 @@ public class AdminResource {
             InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 
-            List<Endpoint> publicEndpoints = EndpointService.getAllPublicEndpoints();
+            List<Resource> publicResources = ResourceService.getAllPublicEndpoints();
             
-            publicEndpoints.forEach(endpoint -> {
+            publicResources.forEach(resource -> {
             	try {
-					RunnerService.TestEndpointWithCallAndSaveReport(endpoint, tc);
+					RunnerService.TestEndpointWithCallAndSaveReport(resource, tc);
 				} catch (SQLException | JsonProcessingException e) {
 					e.printStackTrace();
 				} 

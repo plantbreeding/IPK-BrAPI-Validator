@@ -7,12 +7,12 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Endpoint - table model
+ * Resource - table model
  * An endpoint instance contains the information related to one endpoint (url, and user it belongs to)
  * It represents the "endpoints" table.
  */
-@DatabaseTable(tableName = "endpoints")
-public class Endpoint {
+@DatabaseTable(tableName = "resources")
+public class Resource {
 
     public static final String EMAIL_FIELD_NAME = "EMAIL";
 
@@ -60,14 +60,14 @@ public class Endpoint {
     @DatabaseField(columnName = DESCRIPTION_FIELD_NAME)
     private String description = ""; //Only used for public endpoints
 
-	public Endpoint() {
+	public Resource() {
     }
 
-    public Endpoint(String url) {
+    public Resource(String url) {
         this.url = url;
     }
 
-    public Endpoint(String u, String e, String f) throws IllegalArgumentException {
+    public Resource(String u, String e, String f) throws IllegalArgumentException {
         this.setUrl(u);
         this.setEmail(e);
         this.setFrequency(f);
@@ -92,21 +92,21 @@ public class Endpoint {
     }
 
     /**
-     * @param e Endpoint's owner email.
+     * @param e Resource's owner email.
      */
     public void setEmail(String e) {
         this.email = e;
     }
 
     /**
-     * @return e Endpoint's email
+     * @return e Resource's email
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * @param f Endpoint's testing frequency.
+     * @param f Resource's testing frequency.
      */
     public void setFrequency(String f) throws IllegalArgumentException {
         if (f.equals("weekly") || f.equals("monthly") || f.equals("daily")) {
@@ -153,7 +153,7 @@ public class Endpoint {
 
 	@Override
 	public String toString() {
-		return "Endpoint [id=" + id + ", url=" + url + ", email=" + email + ", frequency=" + frequency + ", confirmed="
+		return "Resource [id=" + id + ", url=" + url + ", email=" + email + ", frequency=" + frequency + ", confirmed="
 				+ confirmed + ", storeprev=" + storeprev + ", isPublic=" + isPublic + "]";
 	}
 

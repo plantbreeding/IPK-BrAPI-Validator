@@ -10,21 +10,21 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 
 /**
  * Sends transactional emails.
- * Runs a test on an endpoint and sends an email to the owner.
+ * Runs a test on an resource and sends an email to the owner.
  */
 public class EmailManager {
     private static final Logger LOGGER = LogManager.getLogger(EmailManager.class.getName());
-    private Endpoint endpoint;
+    private Resource resource;
     private List<TestReport> prevReports;
 
-    public EmailManager(Endpoint endpoint) {
-        this.endpoint = endpoint;
+    public EmailManager(Resource resource) {
+        this.resource = resource;
     }
 
     public boolean sendConfirmation() {
@@ -33,10 +33,10 @@ public class EmailManager {
             Map<String, String> variables = getConfirmationTemplateVariables();
             TemplateHTML email = new TemplateHTML("/templates/email-confirmation.html", variables);
             body = email.generateBody();
-            EmailSender.sendEmail(body, "BrAVA: Confirm your email", endpoint.getEmail());
+            EmailSender.sendEmail(body, "BrAVA: Confirm your email", resource.getEmail());
             return true;
         } catch (IOException | URISyntaxException e) {
-            LOGGER.info("Problem sending confirmation for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
+            LOGGER.info("Problem sending confirmation for resource: " + this.resource.getId().toString() + ". Error: " + e.getMessage());
         }
         return false;
     }
@@ -44,11 +44,11 @@ public class EmailManager {
 
     private Map<String, String> getConfirmationTemplateVariables() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("frequency", endpoint.getFrequency());
-        map.put("url", endpoint.getUrl());
+        map.put("frequency", resource.getFrequency());
+        map.put("url", resource.getUrl());
         map.put("contactEmail", Config.get("contactEmail"));
         map.put("senderName", Config.get("senderName"));
-        map.put("endpointId", endpoint.getId().toString());
+        map.put("endpointId", resource.getId().toString());
         map.put("baseDomain", Config.get("baseDomain"));
         return map;
     }
@@ -67,17 +67,17 @@ public class EmailManager {
             body = email.generateBody();
             
             // Subject variables.
-            String url = endpoint.getUrl();
+            String url = resource.getUrl();
             String passed = Integer.toString(testSuiteReport.getTestCollections().get(0).getTotal()
                     - testSuiteReport.getTestCollections().get(0).getFails());
             String total = Integer.toString(testSuiteReport.getTestCollections().get(0).getTotal());
             
             
             String subject = "[BrAVa - Report for scheduled BrAPI test] Passed tests: " + passed + "/" + total + " for " + url;
-            EmailSender.sendEmail(body, subject, endpoint.getEmail());
+            EmailSender.sendEmail(body, subject, resource.getEmail());
             return true;
         } catch (IOException | URISyntaxException e) {
-            LOGGER.info("Problem sending report for endpoint: " + this.endpoint.getId().toString() + ". Error: " + e.getMessage());
+            LOGGER.info("Problem sending report for resource: " + this.resource.getId().toString() + ". Error: " + e.getMessage());
         }
         return false;
     }
@@ -85,12 +85,12 @@ public class EmailManager {
     private Map<String, String> getReportTemplateVariables(TestSuiteReport tsr) {
         tsr.getTestCollections().get(0).addStats();
         Map<String, String> map = new HashMap<>();
-        map.put("frequency", endpoint.getFrequency());
-        map.put("url", endpoint.getUrl());
+        map.put("frequency", resource.getFrequency());
+        map.put("url", resource.getUrl());
         map.put("contactEmail", Config.get("contactEmail"));
         map.put("senderName", Config.get("senderName"));
         map.put("baseDomain", Config.get("baseDomain"));
-        map.put("endpointId", endpoint.getId().toString());
+        map.put("endpointId", resource.getId().toString());
         map.put("testName", tsr.getTestCollections().get(0).getName());
         map.put("passed", Integer.toString(tsr.getTestCollections().get(0).getTotal()
                 - tsr.getTestCollections().get(0).getFails()));

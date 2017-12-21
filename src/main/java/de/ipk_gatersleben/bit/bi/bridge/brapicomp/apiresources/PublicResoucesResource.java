@@ -1,4 +1,4 @@
-package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
+package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
@@ -29,9 +29,9 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 @Path("/public")
 @RequestScoped
-public class PublicEndpointsResource {
+public class PublicResoucesResource {
 	
-	private static final Logger LOGGER = LogManager.getLogger(PublicEndpointsResource.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(PublicResoucesResource.class.getName());
 	
 	
     /**
@@ -40,11 +40,11 @@ public class PublicEndpointsResource {
      * @return JSON with endpoint data
      */
     @GET
-    @Path("/endpoints")
+    @Path("/resources")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeFrequency(@Context HttpHeaders headers) {
 
-        LOGGER.debug("New GET /public/endpoints");
+        LOGGER.debug("New GET /public/resources");
         
         try {
         	

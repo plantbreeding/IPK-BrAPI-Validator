@@ -1,4 +1,4 @@
-package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
+package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -26,8 +26,8 @@ import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 
@@ -43,41 +43,41 @@ public class ContinuousIntegrationResource {
 
 
     /**
-     * Register new endpoint
+     * Register new resource
      *
-     * @param endp Json containing the endpoint's url.
+     * @param endp Json containing the resource's url.
      * @return Json message.
      */
     @POST
-    @Path("/endpoints")
+    @Path("/resources")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createEndpoint(@Context HttpHeaders headers,
-                                   Endpoint endp) {
+                                   Resource res) {
 
-        LOGGER.debug("New POST /ci/endpoints call.");
+        LOGGER.debug("New POST /ci/resources call.");
         
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 
         try {
         	// Check if the record exists in the database already.
-            Endpoint e = EndpointService.getEndpointWithEmailAndUrlAndFreq(endp.getEmail(), endp.getUrl(), endp.getFrequency());
-            if (endp.getEmail() == null) {
+            Resource e = ResourceService.getEndpointWithEmailAndUrlAndFreq(res.getEmail(), res.getUrl(), res.getFrequency());
+            if (res.getEmail() == null) {
             	String e2 = JsonMessageManager.jsonMessage(400, "Invalid email", 4100);
                 return Response.status(Status.BAD_REQUEST).entity(e2).build();
             } else if (e != null && e.isConfirmed()) {
                 String e2 = JsonMessageManager.jsonMessage(400, "Url already in use", 4101);
                 return Response.status(Status.BAD_REQUEST).entity(e2).build();
             } else if (e != null && !e.isConfirmed()) {
-                EmailManager em = new EmailManager(endp);
+                EmailManager em = new EmailManager(res);
                 em.sendConfirmation();
                 String e2 = JsonMessageManager.jsonMessage(200, "We'll resend you a confirmation email.", 2100);
                 return Response.status(Status.ACCEPTED).entity(e2).build();
             } else {
-            	endp.setPublic(false);
-                endpointDao.create(endp);
+            	res.setPublic(false);
+                endpointDao.create(res);
 
-                EmailManager em = new EmailManager(endp);
+                EmailManager em = new EmailManager(res);
                 em.sendConfirmation();
 
                 return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "We'll send you a confirmation email.", 2101)).build();
@@ -90,23 +90,23 @@ public class ContinuousIntegrationResource {
     }
     
     /**
-     * Change an endpoint frequency
+     * Change an resource frequency
      *
-     * @param endp Json containing the endpoint's url.
+     * @param res Json containing the res' url.
      * @return Json message.
      */
     @GET //This is called by a link in an email, so we only have GET
-    @Path("/endpoints/{endpointId}/frequency")
+    @Path("/resources/{resourceId}/frequency")
     @Produces(MediaType.TEXT_HTML)
     public Response changeFrequency(@Context HttpHeaders headers,
-                                   @PathParam("endpointId") String endpointId, @QueryParam("frequency") String frequency) {
+                                   @PathParam("resId") String resId, @QueryParam("frequency") String frequency) {
 
-        LOGGER.debug("New GET /ci/endpoints/{endpointId}/frequency call. Id: " + endpointId);
+        LOGGER.debug("New GET /ci/resources/{resourceId}/frequency call. Id: " + resId);
         
         try {
         	TemplateHTML result;
         	// Check if the record exists in the database already.
-            Boolean changed = EndpointService.changeEndpointFreqWithId(endpointId, frequency);
+            Boolean changed = ResourceService.changeEndpointFreqWithId(resId, frequency);
             if (changed == null) {
             	String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4102);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
@@ -127,19 +127,19 @@ public class ContinuousIntegrationResource {
     /**
      * Confirm an email address. We assume if they have the Id then they got the email.
      *
-     * @param endpointId Endpoint id
+     * @param resId Resource id
      * @return json message
      */
     @GET
     @Path("/confirmation")
     @Produces(MediaType.TEXT_HTML)
-    public Response confirm(@QueryParam("key") String endpointId) {
+    public Response confirm(@QueryParam("key") String resId) {
 
-        LOGGER.debug("New GET /ci/confirm call. EndpointId: " + endpointId);
+        LOGGER.debug("New GET /ci/confirm call. EndpointId: " + resId);
 
         try {
             TemplateHTML result;
-            Boolean confirmed = EndpointService.confirmEndpointWithId(endpointId);
+            Boolean confirmed = ResourceService.confirmEndpointWithId(resId);
             if (confirmed == null) {
                 String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4104);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();
@@ -160,21 +160,21 @@ public class ContinuousIntegrationResource {
     /**
      * Delete an endpoint. We assume if they have the Id then they can delete it (for now).
      *
-     * @param endpointId Endpoint id
+     * @param resId Resource id
      * @return json message
      */
     @GET
     @Path("/unsubscribe")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response deleteEndpoint(@QueryParam("key") String endpointId,
+    public Response deleteEndpoint(@QueryParam("key") String resId,
                                    @Context HttpHeaders headers) {
 
-        LOGGER.debug("New DELETE /ci/unsubscribe call. EndpointId: " + endpointId);
+        LOGGER.debug("New DELETE /ci/unsubscribe call. EndpointId: " + resId);
 
         try {
             TemplateHTML result;
-            Boolean unsubscribed = EndpointService.deleteEndpointWithId(endpointId);
+            Boolean unsubscribed = ResourceService.deleteEndpointWithId(resId);
             if (!unsubscribed) {
                 String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4105);
                 return Response.status(Status.NOT_FOUND).entity(e2).build();

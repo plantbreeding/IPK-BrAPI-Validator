@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Helper functions for the resource classes.
  */
-public class ResourceService {
-    private static final Logger LOGGER = LogManager.getLogger(ResourceService.class.getName());
+public class ApiResourceService {
+    private static final Logger LOGGER = LogManager.getLogger(ApiResourceService.class.getName());
 
     /**
      * Finds a test collection file given a test collection name using the info stored in tests.json
@@ -33,7 +33,7 @@ public class ResourceService {
     public static String findTestCollection(String name) throws IllegalArgumentException {
 
         ObjectMapper mapper = new ObjectMapper();
-        InputStream is = ResourceService.class.getResourceAsStream("/tests.json");
+        InputStream is = ApiResourceService.class.getResourceAsStream("/tests.json");
         try {
             JsonNode testData = mapper.readTree(is);
             JsonNode testList = testData.get("dataTests");

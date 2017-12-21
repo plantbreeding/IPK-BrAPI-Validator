@@ -1,6 +1,6 @@
-package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
+package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
-import static de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ResourceService.findTestCollection;
+import static de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService.findTestCollection;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.Test;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
@@ -76,8 +76,8 @@ public class SingleTestResource {
                 InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
                 TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 
-                Endpoint endp = new Endpoint(url);
-                TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endp, tc);
+                Resource res = new Resource(url);
+                TestSuiteReport testSuiteReport = RunnerService.testEndpoint(res, tc);
                 json = mapper.writeValueAsString(testSuiteReport);
 
                 
@@ -131,7 +131,7 @@ public class SingleTestResource {
     }
 
     /**
-     * Run a data test for one endpoint
+     * Run a data test for one resource
      *
      * @param url  Url of the BrAPI server. Example: https://test.brapi.org/brapi/v1/
      * @param name Name of the test to run. Must match the name of the test in respources/test.json
@@ -159,8 +159,8 @@ public class SingleTestResource {
             InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 
-            Endpoint endp = new Endpoint(url);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpoint(endp, tc);
+            Resource res = new Resource(url);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpoint(res, tc);
 
             return Response.ok().entity(mapper.writeValueAsString(testSuiteReport)).build();
         } catch (IOException e) {
@@ -199,8 +199,8 @@ public class SingleTestResource {
             InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
             
-            Endpoint endp = new Endpoint(url);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(endp, tc);
+            Resource res = new Resource(url);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc);
             
             
             

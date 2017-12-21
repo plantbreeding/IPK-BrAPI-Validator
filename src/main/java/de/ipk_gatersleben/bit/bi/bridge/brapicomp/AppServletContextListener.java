@@ -24,7 +24,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.DailyJob;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.MonthlyJob;
@@ -79,7 +79,7 @@ public class AppServletContextListener implements ServletContextListener {
 
 	private static void createTables() {
 		try {
-			DataSourceManager.createTable(Endpoint.class);
+			DataSourceManager.createTable(Resource.class);
 			DataSourceManager.createTable(TestReport.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class AppServletContextListener implements ServletContextListener {
 
 	private static void buildDaos() {
 		try {
-			DataSourceManager.addDao(Endpoint.class);
+			DataSourceManager.addDao(Resource.class);
 			DataSourceManager.addDao(TestReport.class);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -19,7 +19,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "testreports")
 public class TestReport {
 
-    public static final String ENDPOINT_FIELD_NAME = "ENDPOINTID";
+    public static final String RESOURCE_FIELD_NAME = "RESOURCEID";
 
     public static final String REPORTID_FIELD_NAME = "REPORTID";
 
@@ -30,8 +30,8 @@ public class TestReport {
     @DatabaseField(generatedId = true, columnName = REPORTID_FIELD_NAME)
     private UUID reportId;
 
-    @DatabaseField(canBeNull = false, columnName = ENDPOINT_FIELD_NAME, foreign = true)
-    private Endpoint endpoint;
+    @DatabaseField(canBeNull = false, columnName = RESOURCE_FIELD_NAME, foreign = true)
+    private Resource resource;
 
     @DatabaseField(canBeNull = false, columnName = REPORTJSON_FIELD_NAME, dataType = DataType.LONG_STRING)
     private String reportJson;
@@ -44,19 +44,19 @@ public class TestReport {
         setDate(new Date());
     }
 
-    public TestReport (Endpoint endpoint, String reportJson) {
-        setEndpoint(endpoint);
+    public TestReport (Resource resource, String reportJson) {
+        setEndpoint(resource);
         setReportJson(reportJson);
         // Set date to current.
         setDate(new Date());
     }
 
-    public Endpoint getEndpoint() {
-        return endpoint;
+    public Resource getEndpoint() {
+        return resource;
     }
 
-    public void setEndpoint(Endpoint endpoint) {
-        this.endpoint = endpoint;
+    public void setEndpoint(Resource resource) {
+        this.resource = resource;
     }
     @JsonIgnore
     public String getReportJson() {

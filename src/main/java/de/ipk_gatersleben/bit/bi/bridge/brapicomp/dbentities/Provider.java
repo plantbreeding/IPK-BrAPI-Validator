@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Provider - table model
- * An provider instance contains the information related to one endpoint provider
+ * An provider instance contains the information related to one resource provider
  * It represents the "providers" table.
  */
 @DatabaseTable(tableName = "providers")
@@ -19,7 +19,7 @@ public class Provider {
 	
 	public static final String LOGO_FIELD_NAME = "LOGO";
 	
-	public static final String RESOURCE_FIELD_NAME = "RESOURCE";
+	public static final String RESOURCE_FIELD_NAME = "RESOURCEID";
 
 	public static final String ID_FIELD_NAME = "ID";
 
@@ -36,7 +36,7 @@ public class Provider {
     private String logo;
     
     @DatabaseField(generatedId = true, columnName = RESOURCE_FIELD_NAME)
-    private Endpoint endpoint;
+    private Resource resource;
     
 
 }

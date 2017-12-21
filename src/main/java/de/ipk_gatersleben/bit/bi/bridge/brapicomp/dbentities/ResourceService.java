@@ -12,7 +12,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 /**
  * Service class with static methods to interact with the database. Get/delete endpoints and so on.
  */
-public class EndpointService {
+public class ResourceService {
 
     /**
      * Get a list of all endpoints that belong to an email.
@@ -21,12 +21,12 @@ public class EndpointService {
      * @return List of endpoints that belong to that email
      * @throws SQLException SQL Error.
      */
-    public static List<Endpoint> getEndpointsWithEmail(String email) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        List<Endpoint> l = endpointDao.queryBuilder().where()
-                .eq(Endpoint.EMAIL_FIELD_NAME, email)
+    public static List<Resource> getEndpointsWithEmail(String email) throws SQLException {
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        List<Resource> l = endpointDao.queryBuilder().where()
+                .eq(Resource.EMAIL_FIELD_NAME, email)
                 .and()
-                .eq(Endpoint.ISPUBLIC_FIELD_NAME, false)
+                .eq(Resource.ISPUBLIC_FIELD_NAME, false)
                 .query();
         return l;
     }
@@ -40,15 +40,15 @@ public class EndpointService {
      * @return List of endpoints that belong to that email
      * @throws SQLException SQL Error.
      */
-    public static Endpoint getEndpointWithEmailAndUrlAndFreq(String email, String url, String freq) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        Endpoint e = endpointDao.queryBuilder().where()
-                .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
-                .eq(Endpoint.URL_FIELD_NAME, url).and()
-                .eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
-                .eq(Endpoint.CONFIRMED_FIELD_NAME, true)
+    public static Resource getEndpointWithEmailAndUrlAndFreq(String email, String url, String freq) throws SQLException {
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        Resource e = endpointDao.queryBuilder().where()
+                .eq(Resource.EMAIL_FIELD_NAME, email).and()
+                .eq(Resource.URL_FIELD_NAME, url).and()
+                .eq(Resource.FREQUENCY_FIELD_NAME, freq).and()
+                .eq(Resource.CONFIRMED_FIELD_NAME, true)
                 .and()
-                .eq(Endpoint.ISPUBLIC_FIELD_NAME, false)
+                .eq(Resource.ISPUBLIC_FIELD_NAME, false)
                 .queryForFirst();
         return e;
     }
@@ -60,8 +60,8 @@ public class EndpointService {
      * @throws SQLException SQL Error.
      */
     public static Boolean deleteEndpointWithId(String endpointId) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        Resource e = endpointDao.queryForId(UUID.fromString(endpointId));
         if (e.isPublic()) {
         	return false;
         }
@@ -81,12 +81,12 @@ public class EndpointService {
      * @throws SQLException SQL Error.
      */
     public static void deleteAllEmailEndpoints(String email) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        DeleteBuilder<Endpoint, UUID> db = endpointDao.deleteBuilder();
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        DeleteBuilder<Resource, UUID> db = endpointDao.deleteBuilder();
         db.where()
-	        .eq(Endpoint.EMAIL_FIELD_NAME, email).and()
-	        .eq(Endpoint.CONFIRMED_FIELD_NAME, true).and()
-	        .eq(Endpoint.ISPUBLIC_FIELD_NAME, false);
+	        .eq(Resource.EMAIL_FIELD_NAME, email).and()
+	        .eq(Resource.CONFIRMED_FIELD_NAME, true).and()
+	        .eq(Resource.ISPUBLIC_FIELD_NAME, false);
         db.delete();
                 
 
@@ -99,19 +99,19 @@ public class EndpointService {
      * @return List of endpoints
      * @throws SQLException
      */
-    public static List<Endpoint> getAllEndpointsWithFreq(String freq) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        List<Endpoint> l = endpointDao.queryBuilder().where()
-                .eq(Endpoint.FREQUENCY_FIELD_NAME, freq).and()
-                .eq(Endpoint.CONFIRMED_FIELD_NAME, true).and()
-    	        .eq(Endpoint.ISPUBLIC_FIELD_NAME, false)
+    public static List<Resource> getAllEndpointsWithFreq(String freq) throws SQLException {
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        List<Resource> l = endpointDao.queryBuilder().where()
+                .eq(Resource.FREQUENCY_FIELD_NAME, freq).and()
+                .eq(Resource.CONFIRMED_FIELD_NAME, true).and()
+    	        .eq(Resource.ISPUBLIC_FIELD_NAME, false)
                 .query();
         return l;
     }
     
     public static Boolean confirmEndpointWithId(String endpointId) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        Endpoint e = endpointDao.queryForId(UUID.fromString(endpointId));
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        Resource e = endpointDao.queryForId(UUID.fromString(endpointId));
         if (e == null) {
             // Not found.
             return null;
@@ -125,11 +125,11 @@ public class EndpointService {
     }
 
 	public static Boolean changeEndpointFreqWithId(String endpointId, String frequency) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        Endpoint e = endpointDao.queryBuilder().where()
-        		.eq(Endpoint.ID_FIELD_NAME, UUID.fromString(endpointId))
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        Resource e = endpointDao.queryBuilder().where()
+        		.eq(Resource.ID_FIELD_NAME, UUID.fromString(endpointId))
         		.and()
-        		.eq(Endpoint.ISPUBLIC_FIELD_NAME, false).queryForFirst();
+        		.eq(Resource.ISPUBLIC_FIELD_NAME, false).queryForFirst();
         if (e == null) {
             // Not found.
             return null;
@@ -139,25 +139,25 @@ public class EndpointService {
         return true;
 	}
 
-	public static List<Endpoint> getAllEndpoints() throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
-        List<Endpoint> l = endpointDao.queryForAll();
+	public static List<Resource> getAllEndpoints() throws SQLException {
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        List<Resource> l = endpointDao.queryForAll();
         return l;
 	}
 	
-	public static Endpoint getPublicEndpoint(String id) throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+	public static Resource getPublicEndpoint(String id) throws SQLException {
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
         return endpointDao.queryBuilder().where()
-        		.eq(Endpoint.ID_FIELD_NAME, UUID.fromString(id))
+        		.eq(Resource.ID_FIELD_NAME, UUID.fromString(id))
         		.and()
-        		.eq(Endpoint.ISPUBLIC_FIELD_NAME, true)
+        		.eq(Resource.ISPUBLIC_FIELD_NAME, true)
         		.queryForFirst();
 	}
 
-	public static List<Endpoint> getAllPublicEndpoints() throws SQLException {
-        Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+	public static List<Resource> getAllPublicEndpoints() throws SQLException {
+        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
         return endpointDao.queryBuilder().where()
-        		.eq(Endpoint.ISPUBLIC_FIELD_NAME, true)
+        		.eq(Resource.ISPUBLIC_FIELD_NAME, true)
         		.query();
 	}
 	

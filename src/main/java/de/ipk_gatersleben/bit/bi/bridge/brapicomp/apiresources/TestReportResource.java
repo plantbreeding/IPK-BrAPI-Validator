@@ -1,4 +1,4 @@
-package de.ipk_gatersleben.bit.bi.bridge.brapicomp.resources;
+package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Endpoint;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.EndpointService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
@@ -62,8 +62,8 @@ public class TestReportResource {
             attVariables.put("timestamp", tr.getDate().toString());
             
             
-            Endpoint endp = tr.getEndpoint();
-            Dao<Endpoint, UUID> endpointDao = DataSourceManager.getDao(Endpoint.class);
+            Resource endp = tr.getEndpoint();
+            Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
             
             endpointDao.refresh(endp);
             
@@ -85,15 +85,15 @@ public class TestReportResource {
     }
     
     @GET
-    @Path("/lastreport/{endpointId}")
+    @Path("/lastreport/{resourceId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getLastReport(@PathParam("endpointId") String endpointId) {
+    public Response getLastReport(@PathParam("resourceId") String resourceId) {
 
-    	LOGGER.debug("New GET /lastreport call. Id: " + endpointId);
+    	LOGGER.debug("New GET /lastreport call. Id: " + resourceId);
         try {
-        	Endpoint e = EndpointService.getPublicEndpoint(endpointId);
+        	Resource e = ResourceService.getPublicEndpoint(resourceId);
         	if (e == null) {
-                String e2 = JsonMessageManager.jsonMessage(404, "endpoint not found", 4301);
+                String e2 = JsonMessageManager.jsonMessage(404, "resource not found", 4301);
                 return Response.status(Status.NOT_FOUND).build();
             }
             List<TestReport> trl = TestReportService.getLastReports(e, 1);
@@ -106,7 +106,7 @@ public class TestReportResource {
 
         } catch (SQLException e) {
             //Thrown by TestReportService.getReport(reportId)
-            LOGGER.warn("SQLException while calling GET /endpointId with id: " + endpointId + ". " + e.getMessage());
+            LOGGER.warn("SQLException while calling GET /lastreport/{resourceId} with id: " + resourceId + ". " + e.getMessage());
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5302);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
