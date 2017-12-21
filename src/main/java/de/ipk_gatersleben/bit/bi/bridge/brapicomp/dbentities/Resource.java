@@ -31,6 +31,8 @@ public class Resource {
     public static final String NAME_FIELD_NAME = "NAME";
     
     public static final String DESCRIPTION_FIELD_NAME = "DESCRIPTION";
+    
+    public static final String PROVIDER_FIELD_NAME = "PROVIDER";
 
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
     private UUID id;
@@ -59,6 +61,10 @@ public class Resource {
 
     @DatabaseField(columnName = DESCRIPTION_FIELD_NAME)
     private String description = ""; //Only used for public endpoints
+    
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = PROVIDER_FIELD_NAME)
+    private Provider provider;
+
 
 	public Resource() {
     }
@@ -173,5 +179,12 @@ public class Resource {
 		this.description = description;
 	}
 	
-	
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+
 }

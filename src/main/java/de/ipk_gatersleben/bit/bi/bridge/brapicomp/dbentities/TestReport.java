@@ -30,7 +30,7 @@ public class TestReport {
     @DatabaseField(generatedId = true, columnName = REPORTID_FIELD_NAME)
     private UUID reportId;
 
-    @DatabaseField(canBeNull = false, columnName = RESOURCE_FIELD_NAME, foreign = true)
+    @DatabaseField(canBeNull = false, columnName = RESOURCE_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
     private Resource resource;
 
     @DatabaseField(canBeNull = false, columnName = REPORTJSON_FIELD_NAME, dataType = DataType.LONG_STRING)
