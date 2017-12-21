@@ -27,6 +27,10 @@ public class Endpoint {
     public static final String STOREPREV_FIELD_NAME = "STOREPREV";
     
     public static final String ISPUBLIC_FIELD_NAME = "ISPUBLIC";
+    
+    public static final String NAME_FIELD_NAME = "NAME";
+    
+    public static final String DESCRIPTION_FIELD_NAME = "DESCRIPTION";
 
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
     private UUID id;
@@ -49,6 +53,12 @@ public class Endpoint {
     @JsonIgnore
     @DatabaseField(canBeNull = false, columnName = ISPUBLIC_FIELD_NAME)
     private boolean isPublic = false;
+    
+    @DatabaseField(columnName = NAME_FIELD_NAME)
+    private String name = ""; //Only used for public endpoints
+
+    @DatabaseField(columnName = DESCRIPTION_FIELD_NAME)
+    private String description = ""; //Only used for public endpoints
 
 	public Endpoint() {
     }
@@ -145,6 +155,22 @@ public class Endpoint {
 	public String toString() {
 		return "Endpoint [id=" + id + ", url=" + url + ", email=" + email + ", frequency=" + frequency + ", confirmed="
 				+ confirmed + ", storeprev=" + storeprev + ", isPublic=" + isPublic + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

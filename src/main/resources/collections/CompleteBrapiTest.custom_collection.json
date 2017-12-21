@@ -360,7 +360,7 @@
 					"name": "/markerprofiles/{markerprofileDbId}",
 					"endpoint": "/markerprofiles/{markerprofileDbId}",
 					"description": "Test schema and same id",
-					"requires":["/markersprofiles"],
+					"requires":["/markerprofiles"],
 					"request": {
 						"url": "{baseurl}/markerprofiles/{markerprofileDbId}",
 						"method": "GET"
@@ -383,7 +383,7 @@
 					"name": "/markerprofiles/{markerprofileDbId} with second id",
 					"endpoint": "/markerprofiles/{markerprofileDbId}",
 					"description": "Test schema and same id for second stored id",
-					"requires":["/markersprofiles"],
+					"requires":["/markerprofiles"],
 					"request": {
 						"url": "{baseurl}/markerprofiles/{markerprofileDbId1}",
 						"method": "GET"
@@ -406,7 +406,7 @@
 					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 					"endpoint": "/allelematrix-search",
 					"description": "Test schema",
-					"requires":["/markersprofiles"],
+					"requires":["/markerprofiles"],
 					"request": {
 						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 						"method": "GET"
@@ -428,7 +428,7 @@
 					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 					"endpoint": "/allelematrix-search",
 					"description": "Test schema for POST",
-					"requires":["/markersprofiles"],
+					"requires":["/markerprofiles"],
 					"request": {
 						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 						"method": "POST"

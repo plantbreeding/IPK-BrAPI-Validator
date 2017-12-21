@@ -23,6 +23,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
 
@@ -175,16 +176,61 @@ public class AdminResource {
         	endp.setEmail(null);
         	endp.setPublic(true);
             endpointDao.create(endp);
-            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
-            TestCollection tc;
-            ObjectMapper mapper = new ObjectMapper();
-     		tc = mapper.readValue(inJson, TestCollection.class);
-            RunnerService.TestEndpointWithCallAndSaveReport(endp, tc);
             return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
         
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
+    //Commented out for security. Also private API key is required
+    
+    /**
+     * Run the default test on all public endpoints
+     *
+     * @return Response with json report
+     */
+    @GET
+    @Path("/testallpublic")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response generalTest(@Context HttpHeaders headers) {
+
+        LOGGER.debug("New POST /testallpublic call.");
+        try {
+
+            String[] auth = ResourceService.getAuth(headers);
+            //Check auth header
+            if (auth == null || auth.length != 2) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+
+            //Check if api key is correct.
+            if (!auth[1].equals(Config.get("adminkey"))) {
+                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4003);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+            
+            ObjectMapper mapper = new ObjectMapper();
+
+            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
+            TestCollection tc = mapper.readValue(inJson, TestCollection.class);
+
+            List<Endpoint> publicEndpoints = EndpointService.getAllPublicEndpoints();
+            
+            publicEndpoints.forEach(endpoint -> {
+            	try {
+					RunnerService.TestEndpointWithCallAndSaveReport(endpoint, tc);
+				} catch (SQLException | JsonProcessingException e) {
+					e.printStackTrace();
+				} 
+            });
+            return Response.ok().build();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5003);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
