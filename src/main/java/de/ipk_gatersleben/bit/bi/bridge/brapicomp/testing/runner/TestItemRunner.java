@@ -123,7 +123,7 @@ public class TestItemRunner {
                     LOGGER.debug(msg);
                     ter.addMessage(msg);
                     tir.addTest(ter);
-                    tir.setAllPassed(false);
+                    allPassed = false;
                     break;
                 }
                 if (ter != null) {

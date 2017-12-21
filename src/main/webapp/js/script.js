@@ -228,7 +228,7 @@ $(function() {
     //List of parameters for the current test.
     var paramList = [];
     //For the endpoint table.
-    var endpointShortReports = {};
+    var resourcesData = {};
 
     var updateFullUrl = function() {
         // Updates the tested URL section of the form with one or multiple URLs
@@ -646,7 +646,7 @@ $(function() {
             type: 'GET',
             success: function(res) {
                 var endpoints = res.map(function(d) {
-                    endpointShortReports[d.endpoint.id] = d.shortReport;
+                    resourcesData[d.endpoint.id] = d;
                     return {
                         id : d.endpoint.id,
                         name: d.endpoint.name,
@@ -673,14 +673,14 @@ $(function() {
         });
     }
 
-    function showShortReport(id, name) {
-        var data = endpointShortReports[id];
-        $("#srTitle").text(name);
-        var folders = Object.keys(data);
+    function showShortReport(id) {
+        var data = resourcesData[id];
+        $("#srTitle").text(data.endpoint.name);
+        var folders = Object.keys(data.shortReport);
         var doneTestDOM = $("#srList");
         doneTestDOM.text(''); //Empty list;
         for (var i = 0; i < folders.length; i++) {
-            var folder = data[folders[i]];
+            var folder = data.shortReport[folders[i]];
 
             var catWrapper = $("<div>", {
                 class: "collapse show",
@@ -756,6 +756,8 @@ $(function() {
             cat.append(header);
             cat.append(catWrapper);
             doneTestDOM.append(cat);
+            //$("#runTestButton").click() HERE
+
         }
     }
 
