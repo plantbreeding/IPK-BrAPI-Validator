@@ -701,7 +701,7 @@ $(function() {
                 class: "list-group-item"
             })
 
-
+            var allSkipped = true;
             var doneTests = Object.keys(folder);
             for (var j = 0; j < doneTests.length; j++) {
                 var test = doneTests[j];
@@ -710,14 +710,17 @@ $(function() {
                 var skipped = '';
                 switch (folder[test]) {
                     case 'passed':
+                        allSkipped = false;
                         color = 'success';
                         iconName = 'check-circle';
                         break;
                     case 'failed':
+                        allSkipped = false;
                         color = 'danger';
                         iconName = 'times-circle';
                         break;
                     case 'missingReqs':
+                        allSkipped = false;
                         color = 'info';
                         iconName = 'exclamation-circle';
                         break;
@@ -733,9 +736,14 @@ $(function() {
                 catBody.append(li);
              
             }
+            var cat = $("<div>");
+            if (allSkipped) {
+                cat.addClass('collapse skipped_test');
+            }
             catWrapper.append(catBody);
-            doneTestDOM.append(header);
-            doneTestDOM.append(catWrapper);
+            cat.append(header);
+            cat.append(catWrapper);
+            doneTestDOM.append(cat);
         }
     }
 
