@@ -47,7 +47,7 @@ body {
   background-color: #f5f5f5;
 }
 
-.container .text-muted {
+#footerText {
   margin: 20px 0;
   display:inline-block;
 }

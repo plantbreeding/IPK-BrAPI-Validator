@@ -649,7 +649,7 @@ $(function() {
                     endpointShortReports[d.endpoint.id] = d.shortReport;
                     return {
                         id : d.endpoint.id,
-                        name: d.endpoint.name || d.endpoint.url,
+                        name: d.endpoint.name,
                         url: d.endpoint.url,
                         desc: 'todo',
                         status: 'todo'
@@ -702,15 +702,34 @@ $(function() {
             })
 
 
-            var doneTests = Object.keys(folder.folderDoneTests);
-            console.log('skipped ' + folder.skippedTests)
-            console.log('missingreq ' + folder.missingReqsTests)
+            var doneTests = Object.keys(folder);
             for (var j = 0; j < doneTests.length; j++) {
                 var test = doneTests[j];
-                var success = folder.folderDoneTests[test] ? 'success' : 'danger';
-                var icon = folder.folderDoneTests[test] ? '<i class="fa fa-check-circle text-success" aria-hidden="true"></i>' : '<i class="fa fa-times-circle text-danger" aria-hidden="true"></i>';
-                var li = $('<div class=" text-' +success + '">' + icon + ' ' + test + '</div>');
+                var color;
+                var iconName;
+                switch (folder[test]) {
+                    case 'passed':
+                        color = 'success';
+                        iconName = 'check-circle';
+                        break;
+                    case 'failed':
+                        color = 'danger';
+                        iconName = 'times-circle';
+                        break;
+                    case 'missingReqs':
+                        color = 'info';
+                        iconName = 'exclamation-circle';
+                        break;
+                    case 'skipped':
+                        color = 'muted';
+                        iconName = 'minus-circle';
+                        break;
+                }
+
+                var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="true"></i>';
+                var li = $('<div class=" text-' + color + '">' + icon + ' ' + test + '</div>');
                 catBody.append(li);
+             
             }
             catWrapper.append(catBody);
             doneTestDOM.append(header);
