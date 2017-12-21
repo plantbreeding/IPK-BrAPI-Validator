@@ -642,7 +642,7 @@ $(function() {
 
     function populateServerTable() {
         $.ajax({
-            url: 'api/public/endpoints', // Continue here
+            url: 'api/public/resources', // Continue here
             type: 'GET',
             success: function(res) {
                 var endpoints = res.map(function(d) {
