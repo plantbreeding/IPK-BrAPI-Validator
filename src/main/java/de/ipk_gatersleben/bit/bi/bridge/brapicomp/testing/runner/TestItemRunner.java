@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.SSLHandshakeException;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -224,6 +226,13 @@ public class TestItemRunner {
             LOGGER.debug("== cause ==");
             LOGGER.debug(e.getMessage());
             return null;
+        } catch (Exception e) {
+        	if (e.getClass().equals(SSLHandshakeException.class)) {
+        		LOGGER.debug("Connection error");
+                LOGGER.debug("== cause ==");
+                LOGGER.debug(e.getMessage());
+                return null;
+        	}
         }
         saveResponseToCache(vr);
         return vr;
