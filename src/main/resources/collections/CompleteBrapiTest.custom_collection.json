@@ -581,8 +581,8 @@
 			]
 		},
 		{
-			"name": "Study",
-			"description": "Study resource",
+			"name": "Studies",
+			"description": "Studies resources",
 			"item": [
 				{
 					"name": "/seasons",

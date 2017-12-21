@@ -14,7 +14,7 @@
 	display: none;
 }
 
-.card-header.accordion-toggle:after {
+.caret.accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family: FontAwesome;  /* essential for enabling fontAwesome */
     content: "\f0d7";    /* adjust as needed, taken from bootstrap.css */
@@ -23,7 +23,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.card-header.collapsed.accordion-toggle:after {
+.caret.collapsed.accordion-toggle:after {
     /* symbol for "collapsed" panels */
     content: "\f0da";    /* adjust as needed, taken from bootstrap.css */
 }
@@ -109,4 +109,8 @@ body {
 
 .list-group-item.skipped_test.collapse.show {
   display: block;
+}
+
+.card {
+  margin-bottom: 20px;
 }

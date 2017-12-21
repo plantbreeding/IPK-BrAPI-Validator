@@ -483,7 +483,7 @@ $(function() {
                     "class": "card mb-2 bg-" + success
                 });
                 var testResultHeader = $("<div />", {
-                    "class": "card-header collapsed accordion-toggle text-white",
+                    "class": "card-header collapsed caret accordion-toggle text-white",
                     "role": "tab",
                     "id": "heading_" + l + "-" + k + "-" + i,
                     "data-toggle": "collapse",
@@ -678,25 +678,17 @@ $(function() {
         doneTestDOM.text(''); //Empty list;
         for (var i = 0; i < folders.length; i++) {
             var folder = data[folders[i]];
-            //Add category header
-            var header = $("<div>", {
-                id: "reportCat_" + i,
-                class: "accordion-toggle collapsed",
-                "aria-expanded": "false",
-                "data-toggle": "collapse",
-                "data-target": "#reportTest_" + i,
-                "aria-controls" : "#reportTest_" + i,
-                role: "tab"
-            });
-            header.html(folders[i]);
 
             var catWrapper = $("<div>", {
-                class: "collapse",
+                class: "collapse show",
                 id : "reportTest_" + i,
                 role: "tabpanel",
+                "data-parent" : "#reportCat_" + i,
                 "aria-labelledby" : "#reportCat_" + i
             });
 
+            var totalTests = 0;
+            var passedTests = 0;
             var allSkipped = true;
             var doneTests = Object.keys(folder);
             for (var j = 0; j < doneTests.length; j++) {
@@ -709,16 +701,20 @@ $(function() {
                         allSkipped = false;
                         color = 'success';
                         iconName = 'check-circle';
+                        passedTests += 1;
+                        totalTests += 1;
                         break;
                     case 'failed':
                         allSkipped = false;
                         color = 'danger';
                         iconName = 'times-circle';
+                        totalTests += 1;
                         break;
                     case 'missingReqs':
                         allSkipped = false;
                         color = 'info';
                         iconName = 'exclamation-circle';
+                        totalTests += 1;
                         break;
                     case 'skipped':
                         skipped = ' collapse skipped_test'
@@ -727,16 +723,32 @@ $(function() {
                         break;
                 }
 
-                var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="true"></i>';
+                var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="false"></i>';
                 var li = $('<div class=" text-' + color + skipped + '">' + icon + ' ' + test + '</div>');
                 catWrapper.append(li);
              
             }
+
+            var header = $("<div>", {
+                id: "reportCat_" + i,
+                class: "caret accordion-toggle",
+                "aria-expanded": "true",
+                "data-toggle": "collapse",
+                "data-target": "#reportTest_" + i,
+                "aria-controls" : "#reportTest_" + i,
+                role: "tab"
+            });
+            header.html('<strong>'
+                 + folders[i] + '</strong> (' 
+                 + passedTests + "/" + totalTests + ')');
             var cat = $("<div>", {
                 class: "list-group-item"
             });
             if (allSkipped) {
                 cat.addClass('collapse skipped_test');
+                catWrapper.attr('class', 'collapse');
+                header.attr('aria-expanded', 'false');
+                header.addClass('collapsed')
             }
             cat.append(header);
             cat.append(catWrapper);
