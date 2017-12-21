@@ -651,7 +651,7 @@ $(function() {
                         id : d.endpoint.id,
                         name: d.endpoint.name,
                         url: d.endpoint.url,
-                        desc: 'todo',
+                        desc: d.endpoint.description,
                         status: 'todo'
                     }
                 });
@@ -707,6 +707,7 @@ $(function() {
                 var test = doneTests[j];
                 var color;
                 var iconName;
+                var skipped = '';
                 switch (folder[test]) {
                     case 'passed':
                         color = 'success';
@@ -721,13 +722,14 @@ $(function() {
                         iconName = 'exclamation-circle';
                         break;
                     case 'skipped':
+                        skipped = ' collapse skipped_test'
                         color = 'muted';
                         iconName = 'minus-circle';
                         break;
                 }
 
                 var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="true"></i>';
-                var li = $('<div class=" text-' + color + '">' + icon + ' ' + test + '</div>');
+                var li = $('<div class=" text-' + color + skipped + '">' + icon + ' ' + test + '</div>');
                 catBody.append(li);
              
             }
