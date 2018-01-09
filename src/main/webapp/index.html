@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>BrAVa - Breeding API Validator</title>
+  <title>BRAVA - Breeding API Validator</title>
   <meta name="description" content="Breeding API Validator">
   <meta name="author" content="IPK Gatersleben">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -12,151 +12,255 @@
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="jumbotron py-4">
-          <h1 class="text-center display-3">
-            <a href="./" class="link-unstyled">BrAVa</a>
-          </h1>
-          <p class="text-center lead"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) validator</p>
-          <p class="text-center">BrAVa is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a> (v1.0).</p>
+  <div class="wrapper">
+    <div id="page-wrapper" class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col-xl-10">
+          <div class="jumbotron py-4 clearfix">
+            <h1 class="text-center display-3">
+              <a href="./" class="link-unstyled">BRAVA</a>
+            </h1>
+            <p class="text-center lead"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) Validator</p>
+            <p class="text-center">BRAVA is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a> (v1.0).</p>
+            <button class="btn btn-sm btn-link float-right" data-toggle="modal" data-target="#helpModal">How does it work?</button>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-xl-10">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="resources-tab" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="true">BrAPI Resources</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="testyourown-tab" data-toggle="tab" href="#testyourown" role="tab" aria-controls="testyourown" aria-selected="false">Test your own</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row justify-content-md-center mt-4">
+        <div class="col-xl-10">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="resources" role="tabpanel" aria-labelledby="resources-tab">
+              <div class="row justify-content-md-center">
+                <div class="col-lg-7">
+                  <div class="card bg-light">
+                    <div class="card-header card-default">
+                      <span class="card-title"><i class="fa fa-table"></i> BrAPI Resources</span>
+                    </div>
+                    <table class="table table-hover mb-0">
+                      <thead>
+                        <th scope="col">
+                          Name
+                        </th>
+                        <th scope="col">
+                          Url
+                        </th>
+                        <th scope="col">
+                          Description
+                        </th>
+                        <th scope="col">
+                          Status
+                        </th>
+                      </thead>
+                      <tbody id="endpoint_table_body">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="card bg-light">
+                    <div class="card-header card-default">
+                      Test result summary: <span class="card-title" id="srTitle"></span>
+                    </div>
+                    <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test" aria-expanded="false" aria-controls="skipped_test">
+                      <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
+                    </a>
+                    <div class="list-group" id="srList">
+                    </div>
+                    <div class="card-footer">
+                      <button class="btn btn-block">Run full test</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="testyourown" role="tabpanel" aria-labelledby="testyourown-tab">
+                <div class="row">
+                  <div class="col-xl-7" id="formCol">
+                    <div class="card bg-light">
+                      <div class="card-header card-default">
+                        <span class="card-title"><i class="fa fa-edit"></i> Test a BrAPI server</span>
+                      </div>
+                      <div class="card-body">
+                        <form id="testForm">
+                          <div class="form-group mb-5">
+                            <label for="serverurl">
+                              Server URL
+                            </label>
+                            <select type="url" name="url" id="serverurl" class="form-control font-14" aria-describedby="serverHelp" placeholder="Example: https://test.brapi.org/brapi/v1/" required>
+                            </select>
+                            <div class="invalid-feedback">Please provide a valid URL.</div>
+                            <small id="serverHelp">Enter your own server or test the public servers available in the official BrAPI repository.</small>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="test" value="structure" class="form-check-input" checked>
+                              Structure test: Check structure with <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">JSON schemas</a>
+                            </label>
+                          </div>
+                          <div class="form-check mb-5">
+                            <label class="form-check-label">
+                              <input type="radio" name="test" value="data" class="form-check-input">
+                              Data integrity: Valid structure and data integrity
+                            </label>
+                          </div>
+                          <div class="form-group" id="resourceDiv">
+                            <label for="testresource">Resource</label>
+                            <select name="name" id="testresource" class="form-control">
+                              <option class="del" value="#">/calls</option>
+                            </select>
+                          </div>
+                          <div class="form-group" id="dataTestDiv" style="display: none">
+                            <label for="dataTest">Data test</label>
+                            <select name="name" id="dataTest" class="form-control">
+                              <option value="Complete">Complete (Test everything)</option>
+                              <option value="GermplasmData">Germplasm</option>
+                              <option value="GermplasmMarkerprofilesData">Germplasm/markerprofile</option>
+                              <option value="MarkersData">Markers</option>
+                              <option value="TrialsData">Trials</option>
+                              <option value="TraitsData">Traits</option>
+                              <option value="StudyData">Studies</option>
+                              <option value="ObservationVariablesData">Observation Variables</option>
+                              <option value="GenomeMapsData">Genome Maps</option>
+                              <option value="LocationsData">Locations</option>
+
+                            </select>
+                          </div>
+                          <div id="paramListDiv" class="form-group">
+                          </div>
+                          <hr>
+                          <div class="form-group" id="testDescriptionDiv" style="display:none">
+                            <label for="testDescription">Description</label>
+                            <span id="testDescription" class="font-14"></span>
+                          </div>
+                          <div class="form-group">
+                            <label for="fullurl">Tested URL<span id="multiURL"></span></label>
+                            <br>
+                            <div id="fullUrl" class="font-14">
+                              <a target="_blank" href="/calls">/calls</a>
+                            </div>
+                          </div>
+                          <div id="statusBar" class="alert alert-danger hidden" role="alert">...</div>
+                          <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Test it now!</button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#scheduleModal">
+                              Schedule a periodic automated test
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-5">
+                    <div class="card bg-light">
+                      <div class="card-header card-default">
+                        Test result: <span class="card-title" id="srTitle"></span>
+                      </div>
+                      <div class="card-body">
+                        <div id="resultDiv" class="hidden"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-7">
-        <div class="card bg-light">
-          <div class="card-body">
-            <table class="table table-hover">
-              <thead>
-                <th scope="col">
-                  Name
-                </th>
-                <th scope="col">
-                  Url
-                </th>
-                <th scope="col">
-                  Description
-                </th>
-                <th scope="col">
-                  Status
-                </th>
-              </thead>
-              <tbody id="endpoint_table_body">
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted" id="footerText">&copy; 2017 | IPK-Gatersleben. This site is licensed under the MIT License. </p>
+        <a href="http://www.ipk-gatersleben.de"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/ipklogo.png" class="footer-logo"></a>
+        <a href="https://www.leibniz-gemeinschaft.de/en/home/"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/sign01.png" class="footer-logo"></a>
       </div>
-      <div class="col-md-5">
-        <div class="card">
-          <div class="card-header">
-              <div class="d-flex justify-content-between">
-                <h4 class="card-title" id="srTitle">BrAPI Test Server</h4>
-                <button type="button" class="close close-up" id=".closeHelp" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div>
-                <button type="button" class="btn btn-sm" data-toggle="collapse" data-target=".skipped_test" aria-expanded="false" aria-controls="skipped_test">
-                  <span aria-hidden="true">Toggle untested</span>
-                </button>
-              </div>
-          </div>
-          <div class="list-group" id="srList">
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-block">Run full test</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row"></div>
-      <div class="col-md-6 offset-md-3" id="formCol">
-        <div class="card bg-light">
-          <div class="card-body">
-            <form id="testForm">
-              <div class="d-flex justify-content-between">
-                <h2 class="card-title">Test a BrAPI server</h2>
-                <button type="button" id="helpLink" class="btn btn-link">Help</button>
-              </div>
-              <div class="form-group mb-5">
-                <label for="serverurl">
+    </footer>
+    <!-- Modal -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form id="modalForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Set up a periodic report.</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Register your endpoint here and we'll test it periodically.</p>
+              <p>You'll get an email where you can see at a glance how your BrAPI server development is going.</p>
+              <div class="form-group">
+                <label for="serverUrlModal">
                   Server URL
                 </label>
-                <select type="url" name="url" id="serverurl" class="form-control font-14" aria-describedby="serverHelp" placeholder="Example: https://test.brapi.org/brapi/v1/" required>
-                </select>
+                <input type="url" name="url" id="serverUrlModal" class="form-control font-14" placeholder="https://www.brapiserver.com/brapi/v1/" required>
                 <div class="invalid-feedback">Please provide a valid URL.</div>
-                <small id="serverHelp">Enter your own server or test the public servers available in the official BrAPI repository.</small>
+              </div>
+              <div class="form-group">
+                <label for="emailModal">
+                  Email
+                </label>
+                <input type="email" name="email" id="emailModal" class="form-control font-14" aria-describedby="emailHelp" placeholder="dev@brapiserver.com" required>
+                <small id="emailHelp">You can stop the test schedule using the unsubscribe link in the test report e-mails</small>
+                <div class="invalid-feedback">Please provide a valid email.</div>
               </div>
               <div class="form-check">
                 <label class="form-check-label">
-                  <input type="radio" name="test" value="structure" class="form-check-input" checked>
-                  Structure test: Check structure with <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">JSON schemas</a>
+                  <input type="radio" name="frequency" value="daily" class="form-check-input">
+                  Daily report
                 </label>
               </div>
-              <div class="form-check mb-5">
+              <div class="form-check">
                 <label class="form-check-label">
-                  <input type="radio" name="test" value="data" class="form-check-input">
-                  Data integrity: Valid structure and data integrity
+                  <input type="radio" name="frequency" value="weekly" class="form-check-input" checked>
+                  Weekly report
                 </label>
               </div>
-              <div class="form-group" id="resourceDiv">
-                <label for="testresource">Resource</label>
-                <select name="name" id="testresource" class="form-control">
-                  <option class="del" value="#">/calls</option>
-                </select>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="radio" name="frequency" value="monthly" class="form-check-input">
+                  Monthly report
+                </label>
               </div>
-              <div class="form-group" id="dataTestDiv" style="display: none">
-                <label for="dataTest">Data test</label>
-                <select name="name" id="dataTest" class="form-control">
-                  <option value="Complete">Complete (Test everything)</option>
-                  <option value="GermplasmData">Germplasm</option>
-                  <option value="GermplasmMarkerprofilesData">Germplasm/markerprofile</option>
-                  <option value="MarkersData">Markers</option>
-                  <option value="TrialsData">Trials</option>
-                  <option value="TraitsData">Traits</option>
-                  <option value="StudyData">Studies</option>
-                  <option value="ObservationVariablesData">Observation Variables</option>
-                  <option value="GenomeMapsData">Genome Maps</option>
-                  <option value="LocationsData">Locations</option>
-
-                </select>
+              <div class="alert alert-success" role="alert" id="modalSuccess" style="display:none">
+                <i class="fa fa-check" aria-hidden="true"></i> Got it! <span class="modalMessage"></span>
               </div>
-              <div id="paramListDiv" class="form-group">
+              <div class="alert alert-danger" role="alert" id="modalFailure" style="display:none">
+                <i class="fa fa-frown-o" aria-hidden="true"></i> Oops! There was something wrong. <span id="modalMessage"></span>
               </div>
-              <hr>
-              <div class="form-group" id="testDescriptionDiv" style="display:none">
-                <label for="testDescription">Description</label>
-                <span id="testDescription" class="font-14"></span>
-              </div>
-              <div class="form-group">
-                <label for="fullurl">Tested URL<span id="multiURL"></span></label>
-                <br>
-                <div id="fullUrl" class="font-14">
-                  <a target="_blank" href="/calls">/calls</a>
-                </div>
-              </div>
-              <div id="statusBar" class="alert alert-danger hidden" role="alert">...</div>
-              <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">Test it now!</button>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                  Schedule a periodic automated test
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" id="modalSubmit">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="col-md-6 font-14" id="helpCol" style="display:none">
-        <div class="card bg-light">
-          <div class="card-body">
-            <button type="button" class="close close-up" id="closeHelp" aria-label="Close">
+    </div>
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">How it works</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <p class="card-text">BrAVa calls one or more resources in the tested server and tests the response. </p>
+          </div>
+          <div class="modal-body">
+            <p class="card-text">BRAVA calls one or more resources in the tested server and tests the response.</p>
             <p class="card-text">There are two types of tests available: <strong>structure</strong> tests and <strong>data integrity</strong> tests.</p>
             <p class="card-text"><strong>Structure tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> specific for that resource. It checks the structure, parameter name and parameter types.</p>
             <p class="card-text">For example, the <code>/germplasm-search</code> test requires the response data object to contain a <var>germplasmDbId</var> attribute with a string value, among others.</p>
@@ -169,80 +273,6 @@
         </div>
       </div>
     </div>
-    <div class="row mt-4">
-      <div class="col-md-8 offset-md-2 hidden" id="resultDiv">
-      </div>
-    </div>
-  </div>
-  <footer class="footer">
-    <div class="container">
-      <p class="text-muted" id="footerText">&copy; 2017 | IPK-Gatersleben. This site is licensed under the MIT License. </p>
-      <a href="http://www.ipk-gatersleben.de"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/ipklogo.png" class="footer-logo"></a>
-      <a href="https://www.leibniz-gemeinschaft.de/en/home/"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/sign01.png" class="footer-logo"></a>
-
-    </div>
-  </footer>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <form id="modalForm">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Set up a periodic report.</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Register your endpoint here and we'll test it periodically.</p>
-            <p>You'll get an email where you can see at a glance how your BrAPI server development is going.</p>
-            <div class="form-group">
-              <label for="serverUrlModal">
-                Server URL
-              </label>
-              <input type="url" name="url" id="serverUrlModal" class="form-control font-14" placeholder="https://www.brapiserver.com/brapi/v1/" required>
-              <div class="invalid-feedback">Please provide a valid URL.</div>
-            </div>
-            <div class="form-group">
-              <label for="emailModal">
-                Email
-              </label>
-              <input type="email" name="email" id="emailModal" class="form-control font-14" aria-describedby="emailHelp" placeholder="dev@brapiserver.com" required>
-              <small id="emailHelp">You can stop the test schedule using the unsubscribe link in the test report e-mails</small>
-              <div class="invalid-feedback">Please provide a valid email.</div>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" name="frequency" value="daily" class="form-check-input">
-                Daily report
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" name="frequency" value="weekly" class="form-check-input" checked>
-                Weekly report
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" name="frequency" value="monthly" class="form-check-input">
-                Monthly report
-              </label>
-            </div>
-            <div class="alert alert-success" role="alert" id="modalSuccess" style="display:none">
-              <i class="fa fa-check" aria-hidden="true"></i> Got it! <span class="modalMessage"></span>
-            </div>
-            <div class="alert alert-danger" role="alert" id="modalFailure" style="display:none">
-              <i class="fa fa-frown-o" aria-hidden="true"></i> Oops! There was something wrong. <span id="modalMessage"></span>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="modalSubmit">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
   </div>
   <!-- Github ribbon -->
   <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
@@ -251,6 +281,7 @@
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="js/sb-admin-2.min.js"></script>
   <script src="js/spin.min.js"></script>
   <script src="js/selectize.min.js"></script>
   <script src="js/script.js"></script>
