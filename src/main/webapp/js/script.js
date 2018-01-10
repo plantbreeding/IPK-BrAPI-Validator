@@ -464,6 +464,8 @@ $(function() {
 
     function showShortReport(id) {
         var data = resourcesData[id];
+        var d = new Date(data.date);
+        $("#time_tab_0").html('<small><em>' + d.toLocaleString() + '</em></small>');
         $("#srTitle").text(data.endpoint.name);
         var shortReport = createShortReport(data.shortReport, 0);
         var doneTestDOM = $("#srList");
