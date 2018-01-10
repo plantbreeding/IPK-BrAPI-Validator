@@ -230,8 +230,8 @@ $(function() {
             }
         });
     }
-    function createTestItemResult(l, k, tir) {
-        function createTestResult(l, k, i, tr) {
+    function createTestItemResult(m, l, k, tir) {
+        function createTestResult(m, l, k, i, tr) {
             function createError(i, e) {
 
                 var errorDiv = $("<pre class=\"border border-secondary rounded p-1\"/>");
@@ -267,16 +267,16 @@ $(function() {
             var success = tr.passed ? "success" : "danger";
             var icon = tr.passed ? "check" : "times";
             var testResultDiv = $("<div />", {
-                id: "testResult_" + l + "-" + k + "-" + i
+                id: "testResult_" + m + "-" + l + "-" + k + "-" + i
             });
             var testResultHeader = $("<div />", {
                 "class": "collapsed caret accordion-toggle text-"+success,
                 "role": "tab",
-                "id": "heading_" + l + "-" + k + "-" + i,
+                "id": "heading_" + m + "-" + l + "-" + k + "-" + i,
                 "data-toggle": "collapse",
-                "data-target": "#collapse_" + l + "-" + k + "-" + i,
+                "data-target": "#collapse_" + m + "-" + l + "-" + k + "-" + i,
                 "aria-expanded": false,
-                "aria-controls": "collapse_" + l + "-" + k + "-" + i
+                "aria-controls": "collapse_" + m + "-" + l + "-" + k + "-" + i
             });
 
             //var headerHTML = "<h4 class=\"accordion-toggle\">";
@@ -289,8 +289,8 @@ $(function() {
             testResultDiv.append(testResultHeader);
 
             var cardBodyDiv = $("<div />", {class: "card-body bg-light"});
-            var collapseDiv = $("<div id=\"collapse_" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
-                " role=\"tabpanel\" aria-labelledby=\"heading_" + l + "-" + k + "-" + i + "\"></div>");
+            var collapseDiv = $("<div id=\"collapse_" + m + "-" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
+                " role=\"tabpanel\" aria-labelledby=\"heading_" + m + "-" + l + "-" + k + "-" + i + "\"></div>");
 
             if (tr.message.length > 0) {
                 var resultHTML = "<p class=\"card-text\">";
@@ -317,10 +317,15 @@ $(function() {
             return testResultDiv
 
         }
-
-        var tirDiv = $("<div />");
+        var collapseTarget = 'testItemReport_' + m + "_" + l + '_' + k;
+        var tirDiv = $("<div />", {
+            id: collapseTarget,
+            class: 'collapse',
+            role: 'tabpanel',
+            'aria-labelledby': 'testItem_' + m + "_" + l + '_' + k
+        });
         var tirAccDiv = $("<div />", {
-            "id": "reportAccordion_" + l + "_" + k,
+            "id": "reportAccordion_" + m + "_" + l + "_" + k,
             "role": "tablist",
             "class": "small"
         });
@@ -333,7 +338,7 @@ $(function() {
         }
 
         for (var i = 0; i < tir.test.length; i++) {
-            tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
+            tirAccDiv.append(createTestResult(m, l, k, i, tir.test[i]));
             tir.test[i].passed ? 0 : totalFailures++;
             totalTests += 1;
         }
@@ -342,7 +347,7 @@ $(function() {
         return tirDiv;
     }
 
-    function createShortReport(shortReport) {
+    function createShortReport(shortReport, tabIndex) {
         var folders = Object.keys(shortReport);
         var shortReportDOM = $("<div>");
         for (var i = 0; i < folders.length; i++) {
@@ -350,10 +355,10 @@ $(function() {
 
             var catWrapper = $("<div>", {
                 class: "collapse show",
-                id : "reportTest_" + i,
+                id : "reportTest_" + tabIndex + "_" + i,
                 role: "tabpanel",
-                "data-parent" : "#reportCat_" + i,
-                "aria-labelledby" : "#reportCat_" + i
+                "data-parent" : "#reportCat_" + tabIndex + "_" + i,
+                "aria-labelledby" : "#reportCat_" + tabIndex + "_" + i
             });
 
             var totalTests = 0;
@@ -370,7 +375,7 @@ $(function() {
                 var report = '';
                 if (typeof(folder[test]) !== 'string') {
                     status = folder[test].testStatus.join(', ');
-                    report = createTestItemResult(i, j, folder[test]);
+                    report = createTestItemResult(tabIndex, i, j, folder[test]);
                 } else {
                     status = folder[test];
                 }
@@ -402,23 +407,32 @@ $(function() {
                         totalTests += 1;
                         break;
                 }
-
+                var collapseTarget = 'testItemReport_' + tabIndex + "_" + i + '_' + j;
                 var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="false"></i>';
-                var li = $('<div class=" text-' + color + skipped + '">' + icon + ' ' + test + ' ' + reason + '</div>');
-                if (report !== undefined) {
-                    li.append(report);
-                }
+                var li = $('<div>', {
+                    class: 'caret accordion-toggle collapsed text_' + color,
+                    role: 'tab',
+                    id: 'testItem_' + tabIndex + "_" + i + '_' + j,
+                    'data-toggle': 'collapse',
+                    'data-target': '#' + collapseTarget,
+                    'aria-expanded': false,
+                    'aria-controls': '#' + collapseTarget
+                });
+                li.html(icon + ' ' + test + ' ' + reason);
                 catWrapper.append(li);
+                if (report !== undefined) {
+                    catWrapper.append(report);
+                }
              
             }
 
             var header = $("<div>", {
-                id: "reportCat_" + i,
+                id: "reportCat_" + tabIndex + "_" +i,
                 class: "caret accordion-toggle",
                 "aria-expanded": "true",
                 "data-toggle": "collapse",
-                "data-target": "#reportTest_" + i,
-                "aria-controls" : "#reportTest_" + i,
+                "data-target": "#reportTest_" + tabIndex + "_" + i,
+                "aria-controls" : "#reportTest_" + tabIndex + "_" + i,
                 role: "tab"
             });
             header.html('<strong>'
@@ -443,7 +457,7 @@ $(function() {
     function showShortReport(id) {
         var data = resourcesData[id];
         $("#srTitle").text(data.endpoint.name);
-        var shortReport = createShortReport(data.shortReport);
+        var shortReport = createShortReport(data.shortReport, 0);
         var doneTestDOM = $("#srList");
         doneTestDOM.text(''); //Empty list;
         doneTestDOM.append(shortReport);   
@@ -452,7 +466,7 @@ $(function() {
     function showCustomShortReport(shortReport) {
 
         //$("#srTitle").text(data.endpoint.name);
-        var shortReport = createShortReport(shortReport);
+        var shortReport = createShortReport(shortReport, 1);
         var doneTestDOM = $("#csrList");
         doneTestDOM.text(''); //Empty list;
         doneTestDOM.append(shortReport); 
