@@ -48,21 +48,20 @@ public class TestFolderRunner {
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());
         List<Item> itemList = this.folder.getItem();
-        TreeMap<String, String> folderTests = new TreeMap<String, String>();
+        TreeMap<String, Object> folderTests = new TreeMap<String, Object>();
         itemList.forEach(item -> {
             TestItemRunner tir = new TestItemRunner(item, storage);
             TestItemReport tiReport = tir.runTests();
             tcr.addTestReport(tiReport);
             doneTests.add(item.getName());
             List<String> errors = tiReport.getTestStatus();
-            System.out.println(errors);
             String passed;
             if (errors.isEmpty()) {
             	passed = "";
             } else {
             	passed = String.join(", ", tiReport.getTestStatus());
             }
-            folderTests.put(item.getName(), passed);
+            folderTests.put(item.getName(), tiReport);
         });
         tcr.setTestsShort(folderTests);
         return tcr;
@@ -92,7 +91,7 @@ public class TestFolderRunner {
         	}
         }
         
-        TreeMap<String, String> folderTests = new TreeMap<String, String>();
+        TreeMap<String, Object> folderTests = new TreeMap<String, Object>();
         
         List<Item> itemList = this.folder.getItem();
         itemList.forEach(item -> {
@@ -114,7 +113,7 @@ public class TestFolderRunner {
                     } else {
                     	passed = String.join(", ", tiReport.getTestStatus());
                     }
-                    folderTests.put(item.getName(), passed);
+                    folderTests.put(item.getName(), tiReport);
         		} else {
         			folderTests.put(item.getName(), "missingReqs");
         		}

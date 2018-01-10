@@ -14,14 +14,14 @@ public class TestFolderReport {
     private String description;
     private int total;
     private int fails;
-    private TreeMap<String, String> testsShort = new TreeMap<String, String>();
+    private TreeMap<String, Object> testsShort = new TreeMap<String, Object>();
  
 
-    public TreeMap<String, String> getTestsShort() {
+    public TreeMap<String, Object> getTestsShort() {
 		return testsShort;
 	}
 
-	public void setTestsShort(TreeMap<String, String> testsShort) {
+	public void setTestsShort(TreeMap<String, Object> testsShort) {
 		this.testsShort = testsShort;
 	}
 

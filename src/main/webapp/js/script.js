@@ -117,7 +117,6 @@ $(function() {
         //Add spinner
         var spinner = new Spinner().spin(form);
         var testType = $("input[name=test]:checked").val();
-        report.clear();
 
         $.ajax({
             url: "api/test/call",
@@ -162,176 +161,6 @@ $(function() {
         }
     }
 
-    // Generates the report div.
-    var report = function () {
-
-        var reportDiv = $("#resultDiv");
-
-        function clear() {
-            reportDiv.html("");
-        }
-
-        function createTestItemResult(l, k, tir) {
-            function createTestResult(l, k, i, tr) {
-                function createError(i, e) {
-
-                    var errorDiv = $("<pre class=\"border border-secondary rounded p-1\"/>");
-                    if (e.level === "fatal") {
-                        errorDiv.append("Error in schema that prevents further testing.");
-                        errorDiv.append("Message: " + e.message);
-                        return errorDiv;
-                    }
-                    errorDiv.append("Error: " + e.domain + " - " + e.keyword + "\n");
-                    if (e.instance) {
-                        errorDiv.append("In element: " + e.instance.pointer + "\n");
-                    }
-                    if (e.expected) {
-                        errorDiv.append("Expected: " + e.expected.join(", ") + "\n");
-                    }
-                    if (e.minItems) {
-                        errorDiv.append("Minimum items: " + e.minItems + "\n");
-                    }
-                    if (e.unwanted) {
-                        errorDiv.append("Invalid items: " + e.unwanted.join(", ") + "\n");
-                    }
-                    if (e.found) {
-                        errorDiv.append("Found: " + e.found + "\n");
-                    }
-                    if (e.missing) {
-                        errorDiv.append("Missing: " + e.missing.join(", ") + "\n");
-                    }
-                    errorDiv.append("Message: " + e.message + "\n");
-
-                    return errorDiv;
-                }
-
-                var success = tr.passed ? "success" : "danger";
-                var icon = tr.passed ? "check" : "times";
-                var testResultDiv = $("<div />", {
-                    id: "testResult_" + l + "-" + k + "-" + i,
-                    "class": "card mb-2 bg-" + success
-                });
-                var testResultHeader = $("<div />", {
-                    "class": "card-header collapsed caret accordion-toggle text-white",
-                    "role": "tab",
-                    "id": "heading_" + l + "-" + k + "-" + i,
-                    "data-toggle": "collapse",
-                    "data-target": "#collapse_" + l + "-" + k + "-" + i,
-                    "aria-expanded": false,
-                    "aria-controls": "collapse_" + l + "-" + k + "-" + i
-                });
-
-                //var headerHTML = "<h4 class=\"accordion-toggle\">";
-                var headerHTML = "";
-                headerHTML += "<i class=\"fa fa-" + icon + "\" aria-hidden=\"true\"></i>" +
-                    "</span> Test: " + tr.name;
-
-                headerHTML += "";
-                testResultHeader.html(headerHTML);
-                testResultDiv.append(testResultHeader);
-
-                var cardBodyDiv = $("<div />", {class: "card-body bg-light"});
-                var collapseDiv = $("<div id=\"collapse_" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
-                    " role=\"tabpanel\" aria-labelledby=\"heading_" + l + "-" + k + "-" + i + "\"></div>");
-
-                if (tr.message.length > 0) {
-                    var resultHTML = "<p class=\"card-text\">";
-                    for (var m = 0; m < tr.message.length; m++) {
-                        resultHTML += tr.message[m] + "\n";
-                    }
-                    resultHTML += "</p>";
-                    cardBodyDiv.append(resultHTML);
-                }
-
-                if (tr.schema) {
-                    cardBodyDiv.append("<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>")
-                }
-
-                if (tr.error.length > 0) {
-                    cardBodyDiv.append("<p class=\"card-text\"><strong>Validation Errors:</strong></p>");
-                    for (var j = 0; j < tr.error.length; j++) {
-                        cardBodyDiv.append(createError(i, tr.error[j]));
-                    }
-                }
-                collapseDiv.append(cardBodyDiv);
-                testResultDiv.append(collapseDiv);
-
-                return testResultDiv
-
-            }
-
-            var tirDiv = $("<div />");
-            var tirAccDiv = $("<div />", {
-                "id": "reportAccordion_" + l + "_" + k,
-                "role": "tablist"
-            });
-            var totalTests = 0;
-            var totalFailures = 0;
-
-            var cached = '';
-            if (tir.cached) {
-                cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
-            }
-
-            var success;
-            if (tir.failed){
-                success = '<i class="fa fa-times-circle text-danger" aria-hidden="true"></i>';
-            } else {
-                success = '<i class="fa fa-check-circle text-success" aria-hidden="true"></i>';
-            }
-
-            tirDiv.append($("<h4 class='mt-4'/>").html(success + ' ' + tir.method + ' <a href="' + tir.endpoint + '">' + tir.name + '</a>' + cached));
-            for (var i = 0; i < tir.test.length; i++) {
-                tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
-                tir.test[i].passed ? 0 : totalFailures++;
-                totalTests += 1;
-            }
-
-            tirDiv.append(tirAccDiv);
-            return tirDiv;
-        }
-
-        function addTestItemResult(tir) {
-            reportDiv.append(createTestItemResult(0, 0, tir));
-        }
-
-
-        function addTestCollectionList(tcl) {
-            function createTestCollection(tc) {
-                function createFolder(l, f) {
-                    var folderDiv = $("<div />");
-                    var success = "text-danger";
-                    if (f.folderFails === 0) {success = "text-success"}
-                    folderDiv.append("<h3 class='mt-4 mb-3'>Test group: "
-                        + f.name + ' <strong class="' + success + '"><small>('
-                        + (f.folderTests - f.folderFails) + '/' + f.folderTests +")</small></strong></h3>");
-                    for (var i = 0; i < f.tests.length; i++) {
-                        folderDiv.append(createTestItemResult(l, i, f.tests[i]));
-                    }
-                    return folderDiv;
-                }
-
-                var tcDiv = $("<div />");
-                tcDiv.append($("<h2/>").html(tc.name
-                    + ' <small>(' + (tc.totalTests - tc.totalFails) + '/' + tc.totalTests + ')</small>'));
-                tcDiv.append("<p>for: <a target='_blank' href='" + tc.url + "'>" + tc.url + "</a></p>")
-                for (var l = 0; l < tc.folders.length; l++) {
-                    tcDiv.append(createFolder(l, tc.folders[l]));
-                }
-                return tcDiv;
-            }
-
-            for (var i = 0; i < tcl.length; i++) {
-                reportDiv.append(createTestCollection(tcl[i]));
-            }
-        }
-
-        return {
-            clear: clear,
-            addTestItemResult: addTestItemResult,
-            addTestCollectionList: addTestCollectionList
-        }
-    }();
 
 
     // Modal form
@@ -401,6 +230,117 @@ $(function() {
             }
         });
     }
+    function createTestItemResult(l, k, tir) {
+        function createTestResult(l, k, i, tr) {
+            function createError(i, e) {
+
+                var errorDiv = $("<pre class=\"border border-secondary rounded p-1\"/>");
+                if (e.level === "fatal") {
+                    errorDiv.append("Error in schema that prevents further testing.");
+                    errorDiv.append("Message: " + e.message);
+                    return errorDiv;
+                }
+                errorDiv.append("Error: " + e.domain + " - " + e.keyword + "\n");
+                if (e.instance) {
+                    errorDiv.append("In element: " + e.instance.pointer + "\n");
+                }
+                if (e.expected) {
+                    errorDiv.append("Expected: " + e.expected.join(", ") + "\n");
+                }
+                if (e.minItems) {
+                    errorDiv.append("Minimum items: " + e.minItems + "\n");
+                }
+                if (e.unwanted) {
+                    errorDiv.append("Invalid items: " + e.unwanted.join(", ") + "\n");
+                }
+                if (e.found) {
+                    errorDiv.append("Found: " + e.found + "\n");
+                }
+                if (e.missing) {
+                    errorDiv.append("Missing: " + e.missing.join(", ") + "\n");
+                }
+                errorDiv.append("Message: " + e.message + "\n");
+
+                return errorDiv;
+            }
+
+            var success = tr.passed ? "success" : "danger";
+            var icon = tr.passed ? "check" : "times";
+            var testResultDiv = $("<div />", {
+                id: "testResult_" + l + "-" + k + "-" + i
+            });
+            var testResultHeader = $("<div />", {
+                "class": "collapsed caret accordion-toggle text-"+success,
+                "role": "tab",
+                "id": "heading_" + l + "-" + k + "-" + i,
+                "data-toggle": "collapse",
+                "data-target": "#collapse_" + l + "-" + k + "-" + i,
+                "aria-expanded": false,
+                "aria-controls": "collapse_" + l + "-" + k + "-" + i
+            });
+
+            //var headerHTML = "<h4 class=\"accordion-toggle\">";
+            var headerHTML = "";
+            headerHTML += "<i class=\"fa fa-" + icon + "\" aria-hidden=\"true\"></i>" +
+                "</span> Test: " + tr.name;
+
+            headerHTML += "";
+            testResultHeader.html(headerHTML);
+            testResultDiv.append(testResultHeader);
+
+            var cardBodyDiv = $("<div />", {class: "card-body bg-light"});
+            var collapseDiv = $("<div id=\"collapse_" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
+                " role=\"tabpanel\" aria-labelledby=\"heading_" + l + "-" + k + "-" + i + "\"></div>");
+
+            if (tr.message.length > 0) {
+                var resultHTML = "<p class=\"card-text\">";
+                for (var m = 0; m < tr.message.length; m++) {
+                    resultHTML += tr.message[m] + "\n";
+                }
+                resultHTML += "</p>";
+                cardBodyDiv.append(resultHTML);
+            }
+
+            if (tr.schema) {
+                cardBodyDiv.append("<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>")
+            }
+
+            if (tr.error.length > 0) {
+                cardBodyDiv.append("<p class=\"card-text\"><strong>Validation Errors:</strong></p>");
+                for (var j = 0; j < tr.error.length; j++) {
+                    cardBodyDiv.append(createError(i, tr.error[j]));
+                }
+            }
+            collapseDiv.append(cardBodyDiv);
+            testResultDiv.append(collapseDiv);
+
+            return testResultDiv
+
+        }
+
+        var tirDiv = $("<div />");
+        var tirAccDiv = $("<div />", {
+            "id": "reportAccordion_" + l + "_" + k,
+            "role": "tablist",
+            "class": "small"
+        });
+        var totalTests = 0;
+        var totalFailures = 0;
+
+        var cached = '';
+        if (tir.cached) {
+            cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
+        }
+
+        for (var i = 0; i < tir.test.length; i++) {
+            tirAccDiv.append(createTestResult(l, k, i, tir.test[i]));
+            tir.test[i].passed ? 0 : totalFailures++;
+            totalTests += 1;
+        }
+
+        tirDiv.append(tirAccDiv);
+        return tirDiv;
+    }
 
     function createShortReport(shortReport) {
         var folders = Object.keys(shortReport);
@@ -427,8 +367,10 @@ $(function() {
                 var skipped = '';
                 var reason = '';
                 var status;
+                var report = '';
                 if (typeof(folder[test]) !== 'string') {
                     status = folder[test].testStatus.join(', ');
+                    report = createTestItemResult(i, j, folder[test]);
                 } else {
                     status = folder[test];
                 }
@@ -463,6 +405,9 @@ $(function() {
 
                 var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="false"></i>';
                 var li = $('<div class=" text-' + color + skipped + '">' + icon + ' ' + test + ' ' + reason + '</div>');
+                if (report !== undefined) {
+                    li.append(report);
+                }
                 catWrapper.append(li);
              
             }
