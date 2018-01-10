@@ -130,8 +130,8 @@ $(function() {
                 });
 
                 statusBar.hide();
-
-
+                var d = new Date(data.date);
+                $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
                 showCustomShortReport(data.shortReport);
 
                 $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
