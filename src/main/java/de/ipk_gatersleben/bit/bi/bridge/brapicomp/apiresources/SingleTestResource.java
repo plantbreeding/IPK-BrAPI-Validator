@@ -24,6 +24,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.Test;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
@@ -201,10 +202,10 @@ public class SingleTestResource {
             
             Resource res = new Resource(url);
             TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc);
+            TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
             
             
-            
-            return Response.ok().entity(mapper.writeValueAsString(testSuiteReport)).build();
+            return Response.ok().entity(report.getShortReport()).build();
         } catch (IOException e) {
             //Thrown by .getResourceAsStream(""). Most probably because of missing file or wrong config structure.
             e.printStackTrace();

@@ -13,7 +13,7 @@ public class TestItemReport {
     private String endpoint;
     private String method;
     private boolean cached;
-    private boolean allPassed;
+    private List<String> testStatus = new ArrayList<String>();
 
     public TestItemReport(String name, String endpoint, String method) {
         setName(name);
@@ -76,17 +76,21 @@ public class TestItemReport {
     }
 
 	/**
-	 * @return the allPassed
+	 * @return the testStatus
 	 */
-	public boolean isAllPassed() {
-		return allPassed;
+	public List<String> getTestStatus() {
+		return testStatus;
 	}
 
 	/**
-	 * @param allPassed the allPassed to set
+	 * @param testStatus the testStatus to set
 	 */
-	public void setAllPassed(boolean allPassed) {
-		this.allPassed = allPassed;
+	public void setTestStatus(List<String> testStatus) {
+		this.testStatus = testStatus;
+	}
+	
+	public void addTestStatus(String testStatus) {
+		this.testStatus.add(testStatus);
 	}
 
 }

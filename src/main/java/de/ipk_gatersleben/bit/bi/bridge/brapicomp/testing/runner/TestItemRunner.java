@@ -3,6 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -67,8 +68,6 @@ public class TestItemRunner {
      */
     public TestItemReport runTests() {
     	
-    	boolean allPassed = true;
-    	
         this.vr = connect();
         
         //TODO: Only first event in Item.event is executed.
@@ -76,9 +75,10 @@ public class TestItemRunner {
         TestItemReport tir = new TestItemReport(this.item.getName(), this.url, this.method);
         if (this.vr == null) {
             TestExecReport ter1 = new TestExecReport("Can't connect to tested server or missing parameters. Test cancelled.", false);
+            ter1.setType("can't connect");
             ter1.addMessage("Can't connect to tested server or missing parameters. Test cancelled.");
             tir.addTest(ter1);
-            tir.setAllPassed(false);
+            tir.addTestStatus(ter1.getType());
             return tir;
         }
         for (int i = 0; i < execList.size(); i++) {
@@ -123,18 +123,17 @@ public class TestItemRunner {
                     LOGGER.debug(msg);
                     ter.addMessage(msg);
                     tir.addTest(ter);
-                    allPassed = false;
+                    tir.addTestStatus(ter.getType());
                     break;
                 }
                 if (ter != null) {
                     tir.addTest(ter);
                     if (!ter.isPassed()) {
-                    	allPassed = false;
+                    	tir.addTestStatus(ter.getType());
                     }
                 }
             }
         }
-        tir.setAllPassed(allPassed);
         tir.setCached(this.cached);
         return tir;
     }
@@ -151,6 +150,7 @@ public class TestItemRunner {
         String json = this.vr.extract().asString();
         ObjectMapper mapper = new ObjectMapper();
         TestExecReport ter = new TestExecReport("Save variable at: " + path + " | Key: " + variableName, false);
+        ter.setType("error storing variable");
         try {
             JsonNode root = mapper.readTree(json);
             JsonNode value = root.at(path);
@@ -175,6 +175,7 @@ public class TestItemRunner {
         LOGGER.debug("Test equality: " + variableName + " | " + path);
         String json = this.vr.extract().asString();
         TestExecReport ter = new TestExecReport("Value in path: \"" + path + "\" equals variable: " + variableName, false);
+        ter.setType("data inconsistency");
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode root = mapper.readTree(json);
@@ -274,6 +275,7 @@ public class TestItemRunner {
     private TestExecReport statusCode(int i) {
         LOGGER.debug("Testing Status Code");
         TestExecReport tr = new TestExecReport("Status code is " + i, false);
+        tr.setType("wrong status code");
         int statusCode = vr.extract().response().getStatusCode();
         try {
             vr.statusCode(i);
@@ -299,6 +301,7 @@ public class TestItemRunner {
     private TestExecReport contentType(String ct) {
         LOGGER.debug("Testing ContentType");
         TestExecReport tr = new TestExecReport("ContentType is " + ct, false);
+        tr.setType("wrong ContentType");
         String responseCT = vr.extract().response().header("Content-Type");
         try {
             vr.contentType(ct);
@@ -324,6 +327,7 @@ public class TestItemRunner {
     private TestExecReport schemaMatch(String p) {
         LOGGER.debug("Testing Schema");
         TestExecReport tr = new TestExecReport("Json matches schema: " + p, false);
+        tr.setType("wrong schema");
         tr.setSchema(p);
         String jsonString = vr.extract().response().asString();
         try {
@@ -369,6 +373,7 @@ public class TestItemRunner {
     private TestExecReport saveCalls() {
         LOGGER.debug("Saving Calls");
         TestExecReport tr = new TestExecReport("Saving /calls", false);
+        tr.setType("error parsing /calls");
         String json = this.vr.extract().asString();
         ObjectMapper mapper = new ObjectMapper();
         try {

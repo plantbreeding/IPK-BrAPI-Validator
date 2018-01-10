@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class TestExecReport {
     private String name;
+    private String type;
     private boolean passed;
     private List<String> message = new ArrayList<String>();
     private List<JsonNode> error = new ArrayList<JsonNode>();
@@ -69,5 +70,19 @@ public class TestExecReport {
     public void setSchema(String schema) {
         this.schema = schema;
     }
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

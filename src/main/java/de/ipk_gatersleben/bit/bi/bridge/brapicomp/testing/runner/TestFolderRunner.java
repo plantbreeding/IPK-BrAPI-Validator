@@ -54,7 +54,14 @@ public class TestFolderRunner {
             TestItemReport tiReport = tir.runTests();
             tcr.addTestReport(tiReport);
             doneTests.add(item.getName());
-            String passed = tiReport.isAllPassed() ? "passed" : "failed";
+            List<String> errors = tiReport.getTestStatus();
+            System.out.println(errors);
+            String passed;
+            if (errors.isEmpty()) {
+            	passed = "";
+            } else {
+            	passed = String.join(", ", tiReport.getTestStatus());
+            }
             folderTests.put(item.getName(), passed);
         });
         tcr.setTestsShort(folderTests);
@@ -100,7 +107,13 @@ public class TestFolderRunner {
             		TestItemReport tiReport = tir.runTests();
                     tcr.addTestReport(tiReport);
                     doneTests.add(item.getName());
-                    String passed = tiReport.isAllPassed() ? "passed" : "failed";
+                    List<String> errors = tiReport.getTestStatus();
+                    String passed;
+                    if (errors.isEmpty()) {
+                    	passed = "";
+                    } else {
+                    	passed = String.join(", ", tiReport.getTestStatus());
+                    }
                     folderTests.put(item.getName(), passed);
         		} else {
         			folderTests.put(item.getName(), "missingReqs");
