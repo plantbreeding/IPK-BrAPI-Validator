@@ -372,7 +372,7 @@ $(function() {
                 var skipped = '';
                 var reason = '';
                 var status;
-                var report = '';
+                var report = undefined;
                 if (typeof(folder[test]) !== 'string') {
                     status = folder[test].testStatus.join(', ');
                     report = createTestItemResult(tabIndex, i, j, folder[test]);
@@ -409,15 +409,23 @@ $(function() {
                 }
                 var collapseTarget = 'testItemReport_' + tabIndex + "_" + i + '_' + j;
                 var icon = '<i class="fa fa-' + iconName + ' text-' + color + '" aria-hidden="false"></i>';
-                var li = $('<div>', {
-                    class: 'caret accordion-toggle collapsed text_' + color,
-                    role: 'tab',
-                    id: 'testItem_' + tabIndex + "_" + i + '_' + j,
-                    'data-toggle': 'collapse',
-                    'data-target': '#' + collapseTarget,
-                    'aria-expanded': false,
-                    'aria-controls': '#' + collapseTarget
-                });
+                var li;
+                if (report === undefined) {
+                    li = $('<div>', {
+                        class: skipped,
+                        id: 'testItem_' + tabIndex + "_" + i + '_' + j
+                    });
+                } else {
+                    li = $('<div>', {
+                        class: 'caret accordion-toggle collapsed' + skipped,
+                        role: 'tab',
+                        id: 'testItem_' + tabIndex + "_" + i + '_' + j,
+                        'data-toggle': 'collapse',
+                        'data-target': '#' + collapseTarget,
+                        'aria-expanded': false,
+                        'aria-controls': '#' + collapseTarget
+                    });
+                }
                 li.html(icon + ' ' + test + ' ' + reason);
                 catWrapper.append(li);
                 if (report !== undefined) {
