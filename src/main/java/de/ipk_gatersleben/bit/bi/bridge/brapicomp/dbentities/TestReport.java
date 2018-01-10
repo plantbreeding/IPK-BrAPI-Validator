@@ -58,7 +58,7 @@ public class TestReport {
     public void setEndpoint(Resource resource) {
         this.resource = resource;
     }
-    @JsonIgnore
+    
     public String getReportJson() {
         return reportJson;
     }
@@ -79,10 +79,10 @@ public class TestReport {
         this.date = date;
     }
     
-    public TreeMap<String, TreeMap<String, String>> getShortReport() throws JsonProcessingException, IOException {
+    public TreeMap<String, TreeMap<String, Object>> getShortReport() throws JsonProcessingException, IOException {
     	
     	
-    	TreeMap<String, TreeMap<String, String>> shortReport = new TreeMap<String, TreeMap<String, String>>();
+    	TreeMap<String, TreeMap<String, Object>> shortReport = new TreeMap<String, TreeMap<String, Object>>();
     	ObjectMapper mapper = new ObjectMapper();
     	
     	//Get folders
@@ -97,9 +97,9 @@ public class TestReport {
     			
     			JsonNode folder = folders.get(i);
     			
-    			TypeReference<TreeMap<String, String>> typeRef = new TypeReference<TreeMap<String, String>>() {};
+    			TypeReference<TreeMap<String, Object>> typeRef = new TypeReference<TreeMap<String, Object>>() {};
     			
-    			TreeMap<String, String> folderTests = mapper.convertValue(folder.get("testsShort"), typeRef);
+    			TreeMap<String, Object> folderTests = mapper.convertValue(folder.get("testsShort"), typeRef);
     			shortReport.put(folder.get("name").asText(), folderTests);
     		}
     	}

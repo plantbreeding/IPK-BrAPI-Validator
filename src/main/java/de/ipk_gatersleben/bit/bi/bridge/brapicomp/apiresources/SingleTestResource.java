@@ -205,7 +205,7 @@ public class SingleTestResource {
             TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
             
             
-            return Response.ok().entity(report.getShortReport()).build();
+            return Response.ok().entity(report).build();
         } catch (IOException e) {
             //Thrown by .getResourceAsStream(""). Most probably because of missing file or wrong config structure.
             e.printStackTrace();

@@ -133,7 +133,7 @@ $(function() {
                 statusBar.hide();
 
 
-                showCustomShortReport(data);
+                showCustomShortReport(data.shortReport);
 
                 $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
             },
@@ -426,7 +426,13 @@ $(function() {
                 var iconName;
                 var skipped = '';
                 var reason = '';
-                switch (folder[test]) {
+                var status;
+                if (typeof(folder[test]) !== 'string') {
+                    status = folder[test].testStatus.join(', ');
+                } else {
+                    status = folder[test];
+                }
+                switch (status) {
                     case '':
                         allSkipped = false;
                         color = 'success';
@@ -447,7 +453,7 @@ $(function() {
                         iconName = 'minus-circle';
                         break;
                     default:
-                        reason = ' <small>(' + folder[test] + ')</small>';
+                        reason = ' <small>(' + status + ')</small>';
                         allSkipped = false;
                         color = 'danger';
                         iconName = 'times-circle';
