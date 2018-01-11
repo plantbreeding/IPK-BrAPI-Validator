@@ -60,6 +60,7 @@ public class TestReport {
         this.resource = resource;
     }
     
+    @JsonIgnore
     public String getReportJson() {
         return reportJson;
     }
