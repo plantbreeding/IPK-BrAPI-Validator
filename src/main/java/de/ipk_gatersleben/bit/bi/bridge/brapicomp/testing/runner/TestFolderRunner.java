@@ -1,18 +1,14 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Event;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Folder;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Request;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestFolderReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
@@ -54,13 +50,6 @@ public class TestFolderRunner {
             TestItemReport tiReport = tir.runTests();
             tcr.addTestReport(tiReport);
             doneTests.add(item.getName());
-            List<String> errors = tiReport.getTestStatus();
-            String passed;
-            if (errors.isEmpty()) {
-            	passed = "";
-            } else {
-            	passed = String.join(", ", tiReport.getTestStatus());
-            }
             folderTests.put(item.getName(), tiReport);
         });
         tcr.setTestsShort(folderTests);
@@ -106,13 +95,6 @@ public class TestFolderRunner {
             		TestItemReport tiReport = tir.runTests();
                     tcr.addTestReport(tiReport);
                     doneTests.add(item.getName());
-                    List<String> errors = tiReport.getTestStatus();
-                    String passed;
-                    if (errors.isEmpty()) {
-                    	passed = "";
-                    } else {
-                    	passed = String.join(", ", tiReport.getTestStatus());
-                    }
                     folderTests.put(item.getName(), tiReport);
         		} else {
         			folderTests.put(item.getName(), "missingReqs");

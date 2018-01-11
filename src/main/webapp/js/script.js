@@ -371,12 +371,18 @@ $(function() {
                 var status;
                 var report = undefined;
                 var cached = '';
+                var time = '';
                 if (typeof(folder[test]) !== 'string') {
                     status = folder[test].testStatus.join(', ');
                     report = createTestItemResult(tabIndex, i, j, folder[test]);
                     if (folder[test].cached) {
                         cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
                     }
+                    var callExpl = '';
+                    if (test === '/calls') {
+                        callExpl = '(<a href="#" data-toggle="tooltip" data-placement="top" title="The first call has an artificially high response time due to software overhead.">?</a>)';
+                    }
+                    time = '<div class="inline-block pr-1"><small>' +folder[test].responseTime + 'ms' + callExpl + '</small></div>';
                 } else {
                     status = folder[test];
                 }
@@ -418,7 +424,7 @@ $(function() {
                     });
                 } else {
                     li = $('<div>', {
-                        class: 'caret accordion-toggle collapsed' + skipped,
+                        class: 'caret accordion-toggle d-flex collapsed' + skipped,
                         role: 'tab',
                         id: 'testItem_' + tabIndex + "_" + i + '_' + j,
                         'data-toggle': 'collapse',
@@ -427,7 +433,7 @@ $(function() {
                         'aria-controls': '#' + collapseTarget
                     });
                 }
-                li.html(icon + ' ' + test + ' ' + cached + ' ' + reason);
+                li.html('<div class="inline-block mr-auto">' +icon + ' ' + test + ' ' + cached + ' ' + reason + '</div>' + time);
                 catWrapper.append(li);
                 if (report !== undefined) {
                     catWrapper.append(report);

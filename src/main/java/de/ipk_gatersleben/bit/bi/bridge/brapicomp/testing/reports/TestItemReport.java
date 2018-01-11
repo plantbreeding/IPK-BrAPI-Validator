@@ -14,6 +14,7 @@ public class TestItemReport {
     private String method;
     private boolean cached;
     private List<String> testStatus = new ArrayList<String>();
+    private long responseTime;
 
     public TestItemReport(String name, String endpoint, String method) {
         setName(name);
@@ -91,6 +92,20 @@ public class TestItemReport {
 	
 	public void addTestStatus(String testStatus) {
 		this.testStatus.add(testStatus);
+	}
+
+	/**
+	 * @return the responseTime
+	 */
+	public long getResponseTime() {
+		return responseTime;
+	}
+
+	/**
+	 * @param responseTime the responseTime to set
+	 */
+	public void setResponseTime(long responseTime) {
+		this.responseTime = responseTime;
 	}
 
 }

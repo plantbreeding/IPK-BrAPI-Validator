@@ -134,6 +134,7 @@ public class TestItemRunner {
                 }
             }
         }
+        tir.setResponseTime(this.vr.extract().time());
         tir.setCached(this.cached);
         return tir;
     }
