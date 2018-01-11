@@ -17,6 +17,18 @@ $(function() {
     //For the endpoint table.
     var resourcesData = {};
 
+    function median(values) {
+
+        values.sort( function(a,b) {return a - b;} );
+
+        var half = Math.floor(values.length/2);
+
+        if(values.length % 2)
+            return values[half];
+        else
+            return (values[half-1] + values[half]) / 2.0;
+    }
+
     var updateFullUrl = function() {
         // Updates the tested URL section of the form with one or multiple URLs
 
@@ -133,8 +145,6 @@ $(function() {
                 var d = new Date(data.date);
                 $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
                 showCustomShortReport(data.shortReport);
-
-                $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
             },
             error: function(a) {
                 spinner.stop();
@@ -310,12 +320,12 @@ $(function() {
             cardBodyDiv.innerHTML += "<p class=\"card-text\"><strong>Validation Errors:</strong></p>";
             var errorHTML = ''
             for (var j = 0; j < tr.error.length; j++) {
-                errorHTML += createError(i, tr.error[j]);
+                errorHTML += createError(i, tr.error[j]).outerHTML;
             }
             cardBodyDiv.innerHTML += errorHTML;
         }
         collapseDiv[0].innerHTML = cardBodyDiv.outerHTML;
-        testResultDiv.innerHTML = collapseDiv[0].outerHTML;
+        testResultDiv.innerHTML += collapseDiv[0].outerHTML;
 
         return testResultDiv
 
@@ -339,7 +349,7 @@ $(function() {
         
         var testHTML = ''
         for (var i = 0; i < tir.test.length; i++) {
-            testHTML += createTestResult(m, l, k, i, tir.test[i]);
+            testHTML += createTestResult(m, l, k, i, tir.test[i]).outerHTML;
             tir.test[i].passed ? 0 : totalFailures++;
             totalTests += 1;
         }
@@ -352,6 +362,7 @@ $(function() {
     function createShortReport(shortReport, tabIndex) {
         var folders = Object.keys(shortReport);
         var shortReportDOM = document.createElement("div");
+        var timeArray = []; //It excludes the /calls result as it is not reliable.
         for (var i = 0; i < folders.length; i++) {
             var folder = shortReport[folders[i]];
 
@@ -380,13 +391,16 @@ $(function() {
                     status = folder[test].testStatus.join(', ');
                     report = createTestItemResult(tabIndex, i, j, folder[test]);
                     if (folder[test].cached) {
-                        cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
+                        cached = ' <small>(<u href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</u>)</small>';
                     }
                     var callExpl = '';
                     if (test === '/calls') {
-                        callExpl = '(<a href="#" data-toggle="tooltip" data-placement="top" title="The first call has an artificially high response time due to software overhead.">?</a>)';
+                        callExpl = '(<u data-toggle="tooltip" data-placement="top" title="The first call can have artificially high response time due to software overhead and it is excluded from the median.">?</u>)';
+                    } else {
+                        timeArray.push(folder[test].responseTime);
                     }
                     time = '<div class="inline-block pr-1"><small>' +folder[test].responseTime + 'ms' + callExpl + '</small></div>';
+                    
                 } else {
                     status = folder[test];
                 }
@@ -471,6 +485,11 @@ $(function() {
             cat.innerHTML += catWrapper.outerHTML;
             shortReportDOM.innerHTML += cat.outerHTML;
         }
+        var timeText = '-';
+        if (timeArray.length > 0) {
+            timeText = median(timeArray);
+        }
+        $("#srTime_" + tabIndex).text(timeText);
         return shortReportDOM;
     }
 
@@ -481,7 +500,8 @@ $(function() {
         $("#srTitle").text(data.endpoint.name);
         var shortReport = createShortReport(data.shortReport, 0);
         var doneTestDOM = document.getElementById('srList');
-        doneTestDOM.innerHTML = shortReport.outerHTML;   
+        doneTestDOM.innerHTML = shortReport.outerHTML;
+        $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
     }
 
     function showCustomShortReport(shortReport) {
@@ -490,7 +510,8 @@ $(function() {
         var shortReport = createShortReport(shortReport, 1);
         var doneTestDOM = $("#csrList");
         doneTestDOM.text(''); //Empty list;
-        doneTestDOM.append(shortReport); 
+        doneTestDOM.append(shortReport);
+        $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
     }
 
     // Initializes variables, forms, listeners...

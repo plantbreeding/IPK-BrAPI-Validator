@@ -75,9 +75,16 @@
                       <div>Test result for: <span class="card-title" id="srTitle"></span></div>
                       <div><span id="time_tab_0"></span></div>
                     </div>
-                    <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test" aria-expanded="false" aria-controls="skipped_test">
-                      <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
-                    </a>
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test" aria-expanded="false" aria-controls="skipped_test">
+                          <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
+                        </a>
+                      </div>
+                      <div class="pr-3">
+                        <small>Median response time: <span id="srTime_0"></span>ms</small>
+                      </div>
+                    </div>
                     <div class="list-group" id="srList">
                     </div>
                     <div class="card-footer">
@@ -130,9 +137,17 @@
                         <div>Test result:</div>
                         <div><span id="time_tab_1"></span></div>
                       </div>
-                      <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test" aria-expanded="false" aria-controls="skipped_test">
-                        <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
-                      </a>
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test" aria-expanded="false" aria-controls="skipped_test">
+                            <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
+                          </a>
+                        </div>
+                        <div class="pr-3">
+                          <small>Median response time: <span id="srTime_1"></span>ms</small>
+                        </div>
+                      </div>
+                     
                       <div class="list-group" id="csrList"></div>
                     </div>
                   </div>
