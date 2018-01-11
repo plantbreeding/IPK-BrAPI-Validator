@@ -332,10 +332,7 @@ $(function() {
         var totalTests = 0;
         var totalFailures = 0;
 
-        var cached = '';
-        if (tir.cached) {
-            cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
-        }
+        
 
         for (var i = 0; i < tir.test.length; i++) {
             tirAccDiv.append(createTestResult(m, l, k, i, tir.test[i]));
@@ -373,9 +370,13 @@ $(function() {
                 var reason = '';
                 var status;
                 var report = undefined;
+                var cached = '';
                 if (typeof(folder[test]) !== 'string') {
                     status = folder[test].testStatus.join(', ');
                     report = createTestItemResult(tabIndex, i, j, folder[test]);
+                    if (folder[test].cached) {
+                        cached = ' <small>(<a href="#" data-toggle="tooltip" data-placement="top" title="We save the queries for a minute to avoid spamming the remote server">cached</a>)</small>';
+                    }
                 } else {
                     status = folder[test];
                 }
@@ -426,7 +427,7 @@ $(function() {
                         'aria-controls': '#' + collapseTarget
                     });
                 }
-                li.html(icon + ' ' + test + ' ' + reason);
+                li.html(icon + ' ' + test + ' ' + cached + ' ' + reason);
                 catWrapper.append(li);
                 if (report !== undefined) {
                     catWrapper.append(report);
