@@ -144,7 +144,7 @@ $(function() {
                 statusBar.hide();
                 var d = new Date(data.date);
                 $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
-                showCustomShortReport(data.shortReport);
+                showCustomShortReport(data.shortReport, 0);
             },
             error: function(a) {
                 spinner.stop();
@@ -493,22 +493,41 @@ $(function() {
         return shortReportDOM;
     }
 
+    function showReportIfInParams() {
+        var url = new URL(window.location.href)
+        var params = new URLSearchParams(url.search.slice(1));
+        if (!params.has("report")) {
+            return
+        }
+        $('#myTab a[href="#report"]').tab('show');
+        var id = params.get("report");
+        $.ajax({
+            url: 'api/testreport/'+id,
+            contenttype: 'application/json',
+            success: function(data) {
+                var d = new Date(data.date);
+                $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
+                showCustomShortReport(data.shortReport, 2);
+            }
+        })
+    }
+
     function showShortReport(id) {
         var data = resourcesData[id];
         var d = new Date(data.date);
         $("#time_tab_0").html('<small><em>' + d.toLocaleString() + '</em></small>');
         $("#srTitle").text(data.endpoint.name);
         var shortReport = createShortReport(data.shortReport, 0);
-        var doneTestDOM = document.getElementById('srList');
+        var doneTestDOM = document.getElementById('srList_0');
         doneTestDOM.innerHTML = shortReport.outerHTML;
         $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
     }
 
-    function showCustomShortReport(shortReport) {
+    function showCustomShortReport(shortReport, tab) {
 
         //$("#srTitle").text(data.endpoint.name);
-        var shortReport = createShortReport(shortReport, 1);
-        var doneTestDOM = $("#csrList");
+        var shortReport = createShortReport(shortReport, tab);
+        var doneTestDOM = $("#srList_" + tab);
         doneTestDOM.text(''); //Empty list;
         doneTestDOM.append(shortReport);
         $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
@@ -571,6 +590,8 @@ $(function() {
             scrollDuration: 20
         });
         updateVisibleElements();
+
+        showReportIfInParams();
     }
     main();
 });

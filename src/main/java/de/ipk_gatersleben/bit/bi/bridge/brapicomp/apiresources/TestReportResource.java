@@ -44,8 +44,7 @@ public class TestReportResource {
 
     @GET
     @Path("/testreport/{reportId}")
-    @Consumes(MediaType.TEXT_HTML)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getReport(@PathParam("reportId") String reportId) {
 
     	LOGGER.debug("New GET /testreport call. Id: " + reportId);
@@ -53,33 +52,14 @@ public class TestReportResource {
             TestReport tr = TestReportService.getReport(reportId);
             if (tr == null) {
                 String e2 = JsonMessageManager.jsonMessage(404, "testReport not found", 4300);
-                return Response.status(Status.NOT_FOUND).build(); //Test this
+                return Response.status(Status.NOT_FOUND).build();
             }
-
-            Map<String, String> attVariables = new HashMap<>();
-            ObjectMapper mapper = new ObjectMapper();
-            attVariables.put("report", mapper.writeValueAsString(tr.getReportJson()));
-            attVariables.put("timestamp", tr.getDate().toString());
-            
-            
-            Resource endp = tr.getEndpoint();
-            Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
-            
-            endpointDao.refresh(endp);
-            
-            attVariables.put("email", endp.getEmail());
-            TemplateHTML attachmentHTML = new TemplateHTML("/templates/report.html", attVariables);
-            return Response.ok().entity(attachmentHTML.generateBody()).build();
+            return Response.ok().entity(tr).build();
 
         } catch (SQLException e) {
             //Thrown by TestReportService.getReport(reportId)
             LOGGER.warn("SQLException while calling GET /reportId with id: " + reportId + ". " + e.getMessage());
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5300);
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
-        } catch (IOException | URISyntaxException e) {
-            //Thrown by new TemplateHTML("/templates/report.html", attVariables)
-            LOGGER.warn("Exception while generating report: " + reportId + ". " + e.getMessage());
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5301);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
