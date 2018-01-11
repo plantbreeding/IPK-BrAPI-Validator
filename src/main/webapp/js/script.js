@@ -221,7 +221,6 @@ $(function() {
                     tr.append("<td>" + endp.status + statusBtn1 + endp.id + statusBtn2 + endp.name + statusBtn3 + "</td>");
                     $("#endpoint_table_body").append(tr);
                 });
-                console.log('bound')
                 $(".statusbtn").click(function() {
                     showShortReport($(this).data('id'), $(this).data('name') );
                 })
@@ -231,134 +230,137 @@ $(function() {
             }
         });
     }
-    function createTestItemResult(m, l, k, tir) {
-        function createTestResult(m, l, k, i, tr) {
-            function createError(i, e) {
-                var errorDiv = document.createElement("div");
-                errorDiv.className = 'border border-secondary rounded p-1';
-                
-                if (e.level === "fatal") {
-                    errorDiv.innerHTML += "Error in schema that prevents further testing.";
-                    errorDiv.innerHTML += "Message: " + e.message;
-                    return errorDiv;
-                }
-                errorDiv.innerHTML += "Error: " + e.domain + " - " + e.keyword + "\n";
-                if (e.instance) {
-                    errorDiv.innerHTML += "In element: " + e.instance.pointer + "\n";
-                }
-                if (e.expected) {
-                    errorDiv.innerHTML += "Expected: " + e.expected.join(", ") + "\n";
-                }
-                if (e.minItems) {
-                    errorDiv.innerHTML += "Minimum items: " + e.minItems + "\n";
-                }
-                if (e.unwanted) {
-                    errorDiv.innerHTML += "Invalid items: " + e.unwanted.join(", ") + "\n";
-                }
-                if (e.found) {
-                    errorDiv.innerHTML += "Found: " + e.found + "\n";
-                }
-                if (e.missing) {
-                    errorDiv.innerHTML += "Missing: " + e.missing.join(", ") + "\n";
-                }
-                errorDiv.innerHTML += "Message: " + e.message + "\n";
-
-                return errorDiv;
-            }
-
-            var success = tr.passed ? "success" : "danger";
-            var icon = tr.passed ? "check" : "times";
-            var testResultDiv = $("<div />", {
-                id: "testResult_" + m + "-" + l + "-" + k + "-" + i
-            });
-            var testResultHeader = $("<div />", {
-                "class": "collapsed caret accordion-toggle text-"+success,
-                "role": "tab",
-                "id": "heading_" + m + "-" + l + "-" + k + "-" + i,
-                "data-toggle": "collapse",
-                "data-target": "#collapse_" + m + "-" + l + "-" + k + "-" + i,
-                "aria-expanded": false,
-                "aria-controls": "collapse_" + m + "-" + l + "-" + k + "-" + i
-            });
-
-            //var headerHTML = "<h4 class=\"accordion-toggle\">";
-            var headerHTML = "";
-            headerHTML += "<i class=\"fa fa-" + icon + "\" aria-hidden=\"true\"></i>" +
-                "</span> Test: " + tr.name;
-
-            headerHTML += "";
-            testResultHeader.html(headerHTML);
-            testResultDiv.append(testResultHeader);
-
-            var cardBodyDiv = $("<div />", {class: "card-body bg-light"});
-            var collapseDiv = $("<div id=\"collapse_" + m + "-" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
-                " role=\"tabpanel\" aria-labelledby=\"heading_" + m + "-" + l + "-" + k + "-" + i + "\"></div>");
-
-            if (tr.message.length > 0) {
-                var resultHTML = "<p class=\"card-text\">";
-                for (var m = 0; m < tr.message.length; m++) {
-                    resultHTML += tr.message[m] + "\n";
-                }
-                resultHTML += "</p>";
-                cardBodyDiv.append(resultHTML);
-            }
-
-            if (tr.schema) {
-                cardBodyDiv.append("<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>")
-            }
-
-            if (tr.error.length > 0) {
-                cardBodyDiv.append("<p class=\"card-text\"><strong>Validation Errors:</strong></p>");
-                for (var j = 0; j < tr.error.length; j++) {
-                    cardBodyDiv.append(createError(i, tr.error[j]));
-                }
-            }
-            collapseDiv.append(cardBodyDiv);
-            testResultDiv.append(collapseDiv);
-
-            return testResultDiv
-
+    function createError(i, e) {
+        var errorDiv = document.createElement("div");
+        errorDiv.className = 'border border-secondary rounded p-1';
+        var innerHTML = '';
+        if (e.level === "fatal") {
+            innerHTML += "Error in schema that prevents further testing.";
+            innerHTML += "Message: " + e.message;
+            return errorDiv;
         }
-        var collapseTarget = 'testItemReport_' + m + "_" + l + '_' + k;
-        var tirDiv = $("<div />", {
-            id: collapseTarget,
-            class: 'collapse',
-            role: 'tabpanel',
-            'aria-labelledby': 'testItem_' + m + "_" + l + '_' + k
+        innerHTML += "Error: " + e.domain + " - " + e.keyword + "\n";
+        if (e.instance) {
+            innerHTML += "In element: " + e.instance.pointer + "\n";
+        }
+        if (e.expected) {
+            innerHTML += "Expected: " + e.expected.join(", ") + "\n";
+        }
+        if (e.minItems) {
+            innerHTML += "Minimum items: " + e.minItems + "\n";
+        }
+        if (e.unwanted) {
+            innerHTML += "Invalid items: " + e.unwanted.join(", ") + "\n";
+        }
+        if (e.found) {
+            innerHTML += "Found: " + e.found + "\n";
+        }
+        if (e.missing) {
+            innerHTML += "Missing: " + e.missing.join(", ") + "\n";
+        }
+        innerHTML += "Message: " + e.message + "\n";
+        errorDiv.innerHTML = innerHTML;
+
+        return errorDiv;
+    }
+
+    function createTestResult(m, l, k, i, tr) {
+        
+
+        var success = tr.passed ? "success" : "danger";
+        var icon = tr.passed ? "check" : "times";
+        var testResultDiv = document.createElement('div');
+        testResultDiv.id = "testResult_" + m + "-" + l + "-" + k + "-" + i;
+
+        var testResultHeader = $("<div />", {
+            "class": "collapsed caret accordion-toggle text-"+success,
+            "role": "tab",
+            "id": "heading_" + m + "-" + l + "-" + k + "-" + i,
+            "data-toggle": "collapse",
+            "data-target": "#collapse_" + m + "-" + l + "-" + k + "-" + i,
+            "aria-expanded": false,
+            "aria-controls": "collapse_" + m + "-" + l + "-" + k + "-" + i
         });
-        var tirAccDiv = $("<div />", {
-            "id": "reportAccordion_" + m + "_" + l + "_" + k,
-            "role": "tablist",
-            "class": "small"
-        });
+
+        var headerHTML = "<i class=\"fa fa-" + icon + "\" aria-hidden=\"true\"></i>" +
+            "</span> Test: " + tr.name;
+
+        testResultHeader.html(headerHTML);
+        testResultDiv.innerHTML = testResultHeader[0].outerHTML;
+        var cardBodyDiv = document.createElement('div');
+        cardBodyDiv.className = 'card-body bg-light';
+
+        var collapseDiv = $("<div id=\"collapse_" + m + "-" + l + "-" + k + "-" + i + "\" class=\"collapse\"" +
+            " role=\"tabpanel\" aria-labelledby=\"heading_" + m + "-" + l + "-" + k + "-" + i + "\"></div>");
+
+        if (tr.message.length > 0) {
+            var resultHTML = "<p class=\"card-text\">";
+            for (var m = 0; m < tr.message.length; m++) {
+                resultHTML += tr.message[m] + "\n";
+            }
+            resultHTML += "</p>";
+            cardBodyDiv.innerHTML = resultHTML;
+        }
+
+        if (tr.schema) {
+            cardBodyDiv.innerHTML += "<p class=\"card-text\">Schema: <a target=\"_blank\" href=\"." + tr.schema + "\">" + tr.schema + "</a></p>";
+        }
+
+        if (tr.error.length > 0) {
+            cardBodyDiv.innerHTML += "<p class=\"card-text\"><strong>Validation Errors:</strong></p>";
+            var errorHTML = ''
+            for (var j = 0; j < tr.error.length; j++) {
+                errorHTML += createError(i, tr.error[j]);
+            }
+            cardBodyDiv.innerHTML += errorHTML;
+        }
+        collapseDiv[0].innerHTML = cardBodyDiv.outerHTML;
+        testResultDiv.innerHTML = collapseDiv[0].outerHTML;
+
+        return testResultDiv
+
+    }
+
+    function createTestItemResult(m, l, k, tir) {
+        
+        var tirDiv = document.createElement('div');
+        tirDiv.id = 'testItemReport_' + m + "_" + l + '_' + k;
+        tirDiv.className = 'collapse';
+        tirDiv.setAttribute('role', 'tabpanel');
+        tirDiv.setAttribute('aria-labelledby', 'testItem_' + m + "_" + l + '_' + k);
+
+        var tirAccDiv = document.createElement('div');
+        tirAccDiv.id = "reportAccordion_" + m + "_" + l + "_" + k;
+        tirAccDiv.setAttribute('role', 'tablist');
+        tirAccDiv.className = "small"
         var totalTests = 0;
         var totalFailures = 0;
 
         
-
+        var testHTML = ''
         for (var i = 0; i < tir.test.length; i++) {
-            tirAccDiv.append(createTestResult(m, l, k, i, tir.test[i]));
+            testHTML += createTestResult(m, l, k, i, tir.test[i]);
             tir.test[i].passed ? 0 : totalFailures++;
             totalTests += 1;
         }
+        tirAccDiv.innerHTML += testHTML;
 
-        tirDiv.append(tirAccDiv);
+        tirDiv.innerHTML = tirAccDiv.outerHTML;
         return tirDiv;
     }
 
     function createShortReport(shortReport, tabIndex) {
         var folders = Object.keys(shortReport);
-        var shortReportDOM = $("<div>");
+        var shortReportDOM = document.createElement("div");
         for (var i = 0; i < folders.length; i++) {
             var folder = shortReport[folders[i]];
 
-            var catWrapper = $("<div>", {
-                class: "collapse show",
-                id : "reportTest_" + tabIndex + "_" + i,
-                role: "tabpanel",
-                "data-parent" : "#reportCat_" + tabIndex + "_" + i,
-                "aria-labelledby" : "#reportCat_" + tabIndex + "_" + i
-            });
+            var catWrapper = document.createElement('div');
+            catWrapper.className = "collapse show";
+            catWrapper.id = "reportTest_" + tabIndex + "_" + i;
+            catWrapper.setAttribute('role', 'tabpanel');
+            catWrapper.setAttribute("data-parent", "#reportCat_" + tabIndex + "_" + i);
+            catWrapper.setAttribute("aria-labelledby", "#reportCat_" + tabIndex + "_" + i);
 
             var totalTests = 0;
             var passedTests = 0;
@@ -436,9 +438,9 @@ $(function() {
                     });
                 }
                 li.html('<div class="inline-block mr-auto">' +icon + ' ' + test + ' ' + cached + ' ' + reason + '</div>' + time);
-                catWrapper.append(li);
+                catWrapper.innerHTML += li[0].outerHTML;
                 if (report !== undefined) {
-                    catWrapper.append(report);
+                    catWrapper.innerHTML += report.outerHTML;
                 }
              
             }
@@ -455,18 +457,19 @@ $(function() {
             header.html('<strong>'
                  + folders[i] + '</strong> (' 
                  + passedTests + "/" + totalTests + ')');
-            var cat = $("<div>", {
-                class: "list-group-item"
-            });
+
+            var cat = document.createElement('div');
+            cat.className = "list-group-item";
+
             if (allSkipped) {
-                cat.addClass('collapse skipped_test');
-                catWrapper.attr('class', 'collapse');
+                cat.className += ' collapse skipped_test';
+                catWrapper.setAttribute('class', 'collapse');
                 header.attr('aria-expanded', 'false');
                 header.addClass('collapsed');
             }
-            cat.append(header);
-            cat.append(catWrapper);
-            shortReportDOM.append(cat);
+            cat.innerHTML += header[0].outerHTML;
+            cat.innerHTML += catWrapper.outerHTML;
+            shortReportDOM.innerHTML += cat.outerHTML;
         }
         return shortReportDOM;
     }
@@ -477,9 +480,8 @@ $(function() {
         $("#time_tab_0").html('<small><em>' + d.toLocaleString() + '</em></small>');
         $("#srTitle").text(data.endpoint.name);
         var shortReport = createShortReport(data.shortReport, 0);
-        var doneTestDOM = $("#srList");
-        doneTestDOM.text(''); //Empty list;
-        doneTestDOM.append(shortReport);   
+        var doneTestDOM = document.getElementById('srList');
+        doneTestDOM.innerHTML = shortReport.outerHTML;   
     }
 
     function showCustomShortReport(shortReport) {
