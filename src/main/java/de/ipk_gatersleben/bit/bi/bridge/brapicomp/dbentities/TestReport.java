@@ -3,6 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -79,10 +80,10 @@ public class TestReport {
         this.date = date;
     }
     
-    public TreeMap<String, TreeMap<String, Object>> getShortReport() throws JsonProcessingException, IOException {
+    public LinkedHashMap<String, LinkedHashMap<String, Object>> getShortReport() throws JsonProcessingException, IOException {
     	
     	
-    	TreeMap<String, TreeMap<String, Object>> shortReport = new TreeMap<String, TreeMap<String, Object>>();
+    	LinkedHashMap<String, LinkedHashMap<String, Object>> shortReport = new LinkedHashMap<String, LinkedHashMap<String, Object>>();
     	ObjectMapper mapper = new ObjectMapper();
     	
     	//Get folders
@@ -97,9 +98,9 @@ public class TestReport {
     			
     			JsonNode folder = folders.get(i);
     			
-    			TypeReference<TreeMap<String, Object>> typeRef = new TypeReference<TreeMap<String, Object>>() {};
+    			TypeReference<LinkedHashMap<String, Object>> typeRef = new TypeReference<LinkedHashMap<String, Object>>() {};
     			
-    			TreeMap<String, Object> folderTests = mapper.convertValue(folder.get("testsShort"), typeRef);
+    			LinkedHashMap<String, Object> folderTests = mapper.convertValue(folder.get("testsShort"), typeRef);
     			shortReport.put(folder.get("name").asText(), folderTests);
     		}
     	}

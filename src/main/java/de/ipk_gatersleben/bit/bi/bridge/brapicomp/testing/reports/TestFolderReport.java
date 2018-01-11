@@ -1,6 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -14,14 +15,14 @@ public class TestFolderReport {
     private String description;
     private int total;
     private int fails;
-    private TreeMap<String, Object> testsShort = new TreeMap<String, Object>();
+    private LinkedHashMap<String, Object> testsShort = new LinkedHashMap<String, Object>();
  
 
-    public TreeMap<String, Object> getTestsShort() {
+    public LinkedHashMap<String, Object> getTestsShort() {
 		return testsShort;
 	}
 
-	public void setTestsShort(TreeMap<String, Object> testsShort) {
+	public void setTestsShort(LinkedHashMap<String, Object> testsShort) {
 		this.testsShort = testsShort;
 	}
 

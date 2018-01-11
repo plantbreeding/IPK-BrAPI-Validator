@@ -221,6 +221,7 @@ $(function() {
                     tr.append("<td>" + endp.status + statusBtn1 + endp.id + statusBtn2 + endp.name + statusBtn3 + "</td>");
                     $("#endpoint_table_body").append(tr);
                 });
+                console.log('bound')
                 $(".statusbtn").click(function() {
                     showShortReport($(this).data('id'), $(this).data('name') );
                 })
@@ -233,33 +234,34 @@ $(function() {
     function createTestItemResult(m, l, k, tir) {
         function createTestResult(m, l, k, i, tr) {
             function createError(i, e) {
-
-                var errorDiv = $("<pre class=\"border border-secondary rounded p-1\"/>");
+                var errorDiv = document.createElement("div");
+                errorDiv.className = 'border border-secondary rounded p-1';
+                
                 if (e.level === "fatal") {
-                    errorDiv.append("Error in schema that prevents further testing.");
-                    errorDiv.append("Message: " + e.message);
+                    errorDiv.innerHTML += "Error in schema that prevents further testing.";
+                    errorDiv.innerHTML += "Message: " + e.message;
                     return errorDiv;
                 }
-                errorDiv.append("Error: " + e.domain + " - " + e.keyword + "\n");
+                errorDiv.innerHTML += "Error: " + e.domain + " - " + e.keyword + "\n";
                 if (e.instance) {
-                    errorDiv.append("In element: " + e.instance.pointer + "\n");
+                    errorDiv.innerHTML += "In element: " + e.instance.pointer + "\n";
                 }
                 if (e.expected) {
-                    errorDiv.append("Expected: " + e.expected.join(", ") + "\n");
+                    errorDiv.innerHTML += "Expected: " + e.expected.join(", ") + "\n";
                 }
                 if (e.minItems) {
-                    errorDiv.append("Minimum items: " + e.minItems + "\n");
+                    errorDiv.innerHTML += "Minimum items: " + e.minItems + "\n";
                 }
                 if (e.unwanted) {
-                    errorDiv.append("Invalid items: " + e.unwanted.join(", ") + "\n");
+                    errorDiv.innerHTML += "Invalid items: " + e.unwanted.join(", ") + "\n";
                 }
                 if (e.found) {
-                    errorDiv.append("Found: " + e.found + "\n");
+                    errorDiv.innerHTML += "Found: " + e.found + "\n";
                 }
                 if (e.missing) {
-                    errorDiv.append("Missing: " + e.missing.join(", ") + "\n");
+                    errorDiv.innerHTML += "Missing: " + e.missing.join(", ") + "\n";
                 }
-                errorDiv.append("Message: " + e.message + "\n");
+                errorDiv.innerHTML += "Message: " + e.message + "\n";
 
                 return errorDiv;
             }

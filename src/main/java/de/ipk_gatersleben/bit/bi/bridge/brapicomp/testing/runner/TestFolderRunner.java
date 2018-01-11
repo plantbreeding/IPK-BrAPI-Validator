@@ -1,8 +1,8 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,7 @@ public class TestFolderRunner {
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());
         List<Item> itemList = this.folder.getItem();
-        TreeMap<String, Object> folderTests = new TreeMap<String, Object>();
+        LinkedHashMap<String, Object> folderTests = new LinkedHashMap<String, Object>();
         itemList.forEach(item -> {
             TestItemRunner tir = new TestItemRunner(item, storage);
             TestItemReport tiReport = tir.runTests();
@@ -80,7 +80,7 @@ public class TestFolderRunner {
         	}
         }
         
-        TreeMap<String, Object> folderTests = new TreeMap<String, Object>();
+        LinkedHashMap<String, Object> folderTests = new LinkedHashMap<String, Object>();
         
         List<Item> itemList = this.folder.getItem();
         itemList.forEach(item -> {
