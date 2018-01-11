@@ -241,7 +241,7 @@ $(function() {
         });
     }
     function createError(i, e) {
-        var errorDiv = document.createElement("div");
+        var errorDiv = document.createElement("pre");
         errorDiv.className = 'border border-secondary rounded p-1';
         var innerHTML = '';
         if (e.level === "fatal") {
@@ -317,7 +317,7 @@ $(function() {
         }
 
         if (tr.error.length > 0) {
-            cardBodyDiv.innerHTML += "<p class=\"card-text\"><strong>Validation Errors:</strong></p>";
+            cardBodyDiv.innerHTML += "<p class=\"card-text\"><strong>Validation Errors:</strong> (only showing top 10)</p>";
             var errorHTML = ''
             for (var j = 0; j < tr.error.length; j++) {
                 errorHTML += createError(i, tr.error[j]).outerHTML;

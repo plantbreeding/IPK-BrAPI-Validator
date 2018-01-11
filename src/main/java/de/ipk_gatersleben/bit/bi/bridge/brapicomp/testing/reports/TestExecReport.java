@@ -49,7 +49,7 @@ public class TestExecReport {
 
 
     public List<JsonNode> getError() {
-        return error;
+        return error.subList(0, Math.min(error.size(), 10));
     }
 
 
