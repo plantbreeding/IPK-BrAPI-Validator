@@ -79,43 +79,37 @@ $(function() {
         return url + res;
     }
 
-    function testStats(test) {
-        var failed = false;
-        test.test.forEach(function(execTest) {
-            if (!execTest.passed) {
-                failed = true;
-            }
-        });
-        test.failed = failed;
-    }
 
     function generateStats(data) {
+        var time = [];
         var totalTests = 0;
-        var totalFails = 0;
-        var folderTests = 0;
-        var folderFails = 0;
-        data.testCollections.forEach(function(testCollection) {
-            totalTests = 0;
-            totalFails = 0;
-            testCollection.folders.forEach(function(folder) {
-                folderTests = 0;
-                folderFails = 0;
-                folder.tests.forEach(function(test) {
-                    testStats(test)
-                    folderTests += 1;
-                    if (test.failed) {
-                        folderFails += 1;
+        var passedTests = 0;
+        var folders = Object.keys(data.shortReport);
+        for (var i = 0; i < folders.length; i++) {
+            var folder = data.shortReport[folders[i]];
+            var tests = Object.keys(folder);
+            for (var j = 0; j < tests.length; j++) {
+                var test = folder[tests[j]];
+                if (typeof(test) !== 'string') { //String is skipped
+                    if (tests[j] !== '/calls') {
+                        time.push(test.responseTime)
                     }
-                });
-                folder.folderTests = folderTests;
-                folder.folderFails = folderFails;
-                totalTests += folderTests;
-                totalFails += folderFails;
-            });
-            testCollection.totalTests = totalTests;
-            testCollection.totalFails = totalFails;
-        });
-        return data;
+                    totalTests++;
+                    if (test.testStatus.length === 0) {
+                        passedTests++;
+                    }
+                }
+            }
+        }
+        var respTime = '-';
+        if (time.length > 0) {
+            respTime = median(time);
+        }
+        return {
+            total: totalTests,
+            passed: passedTests,
+            respTime: respTime
+        };
     }
 
 
@@ -181,7 +175,7 @@ $(function() {
         $("#modalFailure").hide();
         $("#modalSuccess").hide();
         $.ajax({
-            url: "api/ci/endpoints",
+            url: "api/ci/resources",
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify({
@@ -210,7 +204,7 @@ $(function() {
 
     function populateServerTable() {
         $.ajax({
-            url: 'api/public/resources', // Continue here
+            url: 'api/public/resources',
             type: 'GET',
             success: function(res) {
                 var endpoints = res.map(function(d) {
@@ -220,15 +214,21 @@ $(function() {
                         name: d.endpoint.name,
                         url: d.endpoint.url,
                         desc: d.endpoint.description,
-                        status: '' //todo
+                        status: generateStats(d)
                     };
                 });
                 endpoints.forEach(function(endp) {
                     var tr = $("<tr/>");
-                    tr.append("<td>" + endp.name + "</td>");
-                    tr.append("<td><a target='_blank' href='" + endp.url + "'>Url</a></td>");
-                    tr.append("<td>" + endp.desc + "</td>")
-                    tr.append("<td>" + endp.status + statusBtn1 + endp.id + statusBtn2 + endp.name + statusBtn3 + "</td>");
+                    tr.append("<td>" + endp.name + ' <a target="_blank" href="' + endp.url + '"><i class="fa fa-external-link" aria-hidden="true"></i></a></td>');
+                    tr.append("<td>" + endp.desc + "</td>");
+                    tr.append("<td><strong>" + endp.status.passed 
+                        + '</strong><small> passed</small>/<strong>' + endp.status.total 
+                        + '</strong><small> total</small> <small>' 
+                        + '<u data-toggle="tooltip" data-placement="top" title="Median response time, excluding /calls.">'
+                        + endp.status.respTime + 'ms</small></u> ' 
+                        + statusBtn1 + endp.id + statusBtn2 
+                        + endp.name + statusBtn3 + "</td>");
+
                     $("#endpoint_table_body").append(tr);
                 });
                 $(".statusbtn").click(function() {
@@ -509,6 +509,9 @@ $(function() {
                 var d = new Date(data.date);
                 $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
                 showCustomShortReport(data.shortReport, 2);
+            },
+            error: function() {
+                $("#srList_2").html('<div class="list-group-item"><strong>This report is not available anymore.</strong></div>');
             }
         })
     }

@@ -52,8 +52,8 @@ public class TestCollectionRunner {
     }
 
 	public TestCollectionReport runTestsFromCall() {
-       //String name = testCollection.getInfo().getName();
-        TestCollectionReport tcr = new TestCollectionReport("TODO", url);
+        String name = testCollection.getInfo().getName();
+        TestCollectionReport tcr = new TestCollectionReport(name, url);
         String baseUrl = url.replaceAll("/$", "");
         VariableStorage storage = new VariableStorage(baseUrl);
         

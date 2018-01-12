@@ -72,7 +72,7 @@ public class RunnerService {
         boolean sent;
         for (int i = 0; i < l.size(); i++) {
             Resource resource = l.get(i);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpoint(resource, testCollection);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, testCollection);
             
             final int N = resource.getStoreprev();
             // Get last N reports

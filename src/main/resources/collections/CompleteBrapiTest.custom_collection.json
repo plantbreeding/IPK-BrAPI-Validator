@@ -1,6 +1,6 @@
 {
 	"info": {
-		"name": "BrAPI test run",
+		"name": "Complete BrAPI test",
 		"description": "Includes all resources, schema and data",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},

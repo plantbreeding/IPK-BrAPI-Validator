@@ -111,7 +111,7 @@ public class EmailManager {
     		prevReportsHTML += "<p>Older reports:</p>\n";
     		prevReportsHTML += "<ul>\n";
     		for (int i = 0; i < prevReports.size(); i++) {
-    			String url = Config.get("baseDomain") + "/api/testreport/" + prevReports.get(i).getReportId().toString();
+    			String url = Config.get("baseDomain") + "?report=" + prevReports.get(i).getReportId().toString();
     			prevReportsHTML += "<li><a href=\"" + url + "\">" + url + "</a> - " 
     			+ prevReports.get(i).getDate().toString() + "</li>\n";
     		}
