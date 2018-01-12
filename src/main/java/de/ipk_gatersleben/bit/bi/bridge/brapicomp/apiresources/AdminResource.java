@@ -172,7 +172,20 @@ public class AdminResource {
         Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 
         try {
+        	
+        	String[] auth = ApiResourceService.getAuth(headers);
+            //Check auth header
+            if (auth == null || auth.length != 2) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
 
+            //Check if api key is correct.
+            if (!auth[1].equals(Config.get("adminkey"))) {
+                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4001);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+        	
         	res.setEmail(null);
         	res.setPublic(true);
             endpointDao.create(res);
@@ -189,15 +202,13 @@ public class AdminResource {
     /**
      * Run the default test on all public resources
      *
-     * @return Response with json report
+     * @return Empty response with status code
      */
     @GET
     @Path("/testallpublic")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response generalTest(@Context HttpHeaders headers) {
 
-        LOGGER.debug("New POST /testallpublic call.");
+        LOGGER.debug("New GET /testallpublic call.");
         try {
 
             String[] auth = ApiResourceService.getAuth(headers);

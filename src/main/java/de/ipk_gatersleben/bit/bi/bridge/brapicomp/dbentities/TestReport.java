@@ -46,7 +46,7 @@ public class TestReport {
     }
 
     public TestReport (Resource resource, String reportJson) {
-        setEndpoint(resource);
+        setResource(resource);
         setReportJson(reportJson);
         // Set date to current.
         setDate(new Date());
@@ -56,7 +56,7 @@ public class TestReport {
         return resource;
     }
 
-    public void setEndpoint(Resource resource) {
+    public void setResource(Resource resource) {
         this.resource = resource;
     }
     

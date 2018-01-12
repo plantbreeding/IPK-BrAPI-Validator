@@ -144,7 +144,7 @@ $(function() {
                 statusBar.hide();
                 var d = new Date(data.date);
                 $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
-                showCustomShortReport(data.shortReport, 0);
+                showCustomShortReport(data.shortReport, 1);
             },
             error: function(a) {
                 spinner.stop();
@@ -499,6 +499,7 @@ $(function() {
         if (!params.has("report")) {
             return
         }
+        $('#tabSavedReport').show();
         $('#myTab a[href="#report"]').tab('show');
         var id = params.get("report");
         $.ajax({

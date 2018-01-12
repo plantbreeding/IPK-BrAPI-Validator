@@ -167,10 +167,10 @@ public class RunnerService {
 		
 	}
 
-	public static void TestEndpointWithCallAndSaveReport(Resource endp, TestCollection tc) throws JsonProcessingException, SQLException {
+	public static void TestEndpointWithCallAndSaveReport(Resource res, TestCollection tc) throws JsonProcessingException, SQLException {
 		ObjectMapper mapper = new ObjectMapper();
-		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(endp, tc);
-        TestReport report = new TestReport(endp, mapper.writeValueAsString(testSuiteReport));
+		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc);
+        TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
         String reportId = TestReportService.saveReport(report);
         testSuiteReport.setId(reportId);
 		
