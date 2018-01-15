@@ -181,7 +181,8 @@ $(function() {
             data: JSON.stringify({
                 url: $("#serverUrlModal").val(),
                 email: $("#emailModal").val(),
-                frequency: $("input[name=frequency]:checked").val()
+                frequency: $("input[name=frequency]:checked").val(),
+                submitToRepo: $("#submitToRepo").prop('checked')
             }),
             success: function(data) {
                 spinner.stop();

@@ -213,21 +213,28 @@
                 <div class="invalid-feedback">Please provide a valid email.</div>
               </div>
               <div class="form-check">
-                <label class="form-check-label">
-                  <input type="radio" name="frequency" value="daily" class="form-check-input">
+                <label for="daily" class="form-check-label">
+                  <input type="radio" name="frequency" id="daily" value="daily" class="form-check-input">
                   Daily report
                 </label>
               </div>
               <div class="form-check">
-                <label class="form-check-label">
-                  <input type="radio" name="frequency" value="weekly" class="form-check-input" checked>
+                <label for="weekly" class="form-check-label">
+                  <input type="radio" name="frequency" id="weekly" value="weekly" class="form-check-input" checked>
                   Weekly report
                 </label>
               </div>
               <div class="form-check">
-                <label class="form-check-label">
-                  <input type="radio" name="frequency" value="monthly" class="form-check-input">
+                <label for="monthly" class="form-check-label">
+                  <input type="radio" name="frequency" id="monthly" value="monthly" class="form-check-input">
                   Monthly report
+                </label>
+              </div>
+              <div class="form-check mt-3">
+                <strong>Add to resource list</strong>
+                <label for="submitToRepo" class="form-check-label mt-1">
+                  <input type="checkbox" name="submitToRepo" id="submitToRepo" class="form-check-input">
+                  Check this if you want to submit your server to be added to the resource list.
                 </label>
               </div>
               <div class="alert alert-success" role="alert" id="modalSuccess" style="display:none">
