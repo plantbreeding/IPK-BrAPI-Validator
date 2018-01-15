@@ -130,11 +130,7 @@ $(function() {
             success: function(data) {
                 spinner.stop();
                 //Blink (or fade in) result div
-                $("#resultDiv").fadeOut(100, function(){
-                    $("#resultDiv").removeClass("hidden");
-                    $("#resultDiv").fadeIn(100);
-                });
-
+                $("#srResults_1").show();
                 statusBar.hide();
                 var d = new Date(data.date);
                 $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
@@ -219,11 +215,13 @@ $(function() {
                 });
                 endpoints.forEach(function(endp) {
                     var tr = $("<tr/>");
+                    // Sort value, passed, and then by total reversed.
+                    var sv = endp.status.passed - (endp.status.total *0.001); 
                     tr.append("<td>" + endp.name + ' <a target="_blank" href="' + endp.url + '"><i class="fa fa-external-link" aria-hidden="true"></i></a></td>');
                     tr.append("<td>" + endp.desc + "</td>");
-                    tr.append("<td><strong>" + endp.status.passed 
-                        + '</strong><small> passed</small>/<strong>' + endp.status.total 
-                        + '</strong><small> total</small> <small>' 
+                    tr.append('<td data-sort-value="'+ sv +'"class="statusCol"><strong>' + endp.status.passed 
+                        + '</strong>/<strong>' + endp.status.total 
+                        + '</strong><small> tests</small> <small>' 
                         + '<u data-toggle="tooltip" data-placement="top" title="Median response time, excluding /calls.">'
                         + endp.status.respTime + 'ms</small></u> ' 
                         + statusBtn1 + endp.id + statusBtn2 
@@ -231,12 +229,13 @@ $(function() {
 
                     $("#endpoint_table_body").append(tr);
                 });
-                $(".statusbtn").click(function() {
-                    showShortReport($(this).data('id'), $(this).data('name') );
-                })
+                
                 if (res.length > 0) {
                     showShortReport(res[0].endpoint.id, res[0].endpoint.name);
-                }                
+                }
+                $('#resTable').footable();
+
+
             }
         });
     }
@@ -420,7 +419,7 @@ $(function() {
                         break;
                     case 'skipped':
                         reason = ' <small>(not in /calls)</small>';
-                        skipped = ' collapse skipped_test'
+                        skipped = ' collapse skipped_test_' + tabIndex;
                         color = 'muted';
                         iconName = 'minus-circle';
                         break;
@@ -541,7 +540,10 @@ $(function() {
     // Initializes variables, forms, listeners...
     function main () {
 
+        showReportIfInParams();
+
         populateServerTable();
+
 
         // Remove initial /calls option as it is replaced by the one on the tests list.
         $(".del").remove();
@@ -595,8 +597,9 @@ $(function() {
             scrollDuration: 20
         });
         updateVisibleElements();
-
-        showReportIfInParams();
+        $("body").on('click', '.statusbtn', function() {
+            showShortReport($(this).data('id'), $(this).data('name') );
+        })
     }
     main();
 });
