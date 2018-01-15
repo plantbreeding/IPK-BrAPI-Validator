@@ -51,109 +51,6 @@ public class AdminResource {
 
     private static final Logger LOGGER = LogManager.getLogger(AdminResource.class.getName());
 
-    //Commented out for security. Also private API key is required
-    /*
-    *//**
-     * Run the default test on all endpoints
-     *
-     * @return Response with json report
-     *//*
-    @POST
-    @Path("/testall")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response generalTest(@Context HttpHeaders headers, @QueryParam("frequency") String frequency) {
-
-        LOGGER.debug("New POST /testall call.");
-        try {
-
-            String[] auth = ApiResourceService.getAuth(headers);
-            //Check auth header
-            if (auth == null || auth.length != 2) {
-                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-
-            //Check if api key is correct.
-            if (!auth[1].equals(Config.get("adminkey"))) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4001);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
-            TestCollection tc = mapper.readValue(inJson, TestCollection.class);
-
-            int count = RunnerService.TestAllEndpointsWithFreq(tc, frequency);
-            boolean success = false;
-            if (count > 0) {
-                success = true;
-            }
-            return Response.status(Status.ACCEPTED).entity(success).build();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5001);
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
-        }
-    }
-
-    @DELETE
-    @Path("/tables")
-    public Response delTables(@Context HttpHeaders headers) {
-    	// It is necessary to delete or update the database tables after the schema changes
-    	// i.e. when a new parameter/column is added
-        try {
-        	
-        	String[] auth = ApiResourceService.getAuth(headers);
-            //Check auth header
-            if (auth == null || auth.length != 2) {
-                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-
-            //Check if api key is correct.
-            if (!auth[1].equals(Config.get("adminkey"))) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4001);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-            
-            DataSourceManager.deleteTable(TestReport.class);
-            DataSourceManager.deleteTable(Resource.class);
-        } catch (SQLException e) {
-            return Response.serverError().entity(e.getMessage()).build();
-        }
-        return Response.ok().build();
-    }
-    @GET
-    @Path("/users")
-    public Response getUsers(@Context HttpHeaders headers) {
-    	// It is necessary to delete or update the database tables after the schema changes
-    	// i.e. when a new parameter/column is added
-    	List<Resource> l;
-        try {
-        	
-        	String[] auth = ApiResourceService.getAuth(headers);
-            //Check auth header
-            if (auth == null || auth.length != 2) {
-                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-
-            //Check if api key is correct.
-            if (!auth[1].equals(Config.get("adminkey"))) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4001);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-        	
-            l = ResourceService.getAllEndpoints();
-            
-        } catch (SQLException e) {
-            return Response.serverError().entity(e.getMessage()).build();
-        }
-        return Response.ok().entity(l.toString()).build();
-    }*/
-    
     /**
      * Register new public endpoint
      *
@@ -208,7 +105,7 @@ public class AdminResource {
     @Path("/testallpublic")
     public Response generalTest(@Context HttpHeaders headers) {
 
-        LOGGER.debug("New GET /testallpublic call.");
+        LOGGER.debug("New GET /admin/testallpublic call.");
         try {
 
             String[] auth = ApiResourceService.getAuth(headers);

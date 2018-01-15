@@ -2,7 +2,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
-import static org.quartz.SimpleScheduleBuilder.*;
 import static org.quartz.CronScheduleBuilder.*;
 
 import java.io.IOException;
@@ -13,7 +12,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.quartz.CronScheduleBuilder;
 import org.quartz.DateBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -24,6 +22,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Provider;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.DailyJob;
@@ -80,6 +79,7 @@ public class AppServletContextListener implements ServletContextListener {
 	private static void createTables() {
 		try {
 			DataSourceManager.createTable(Resource.class);
+			DataSourceManager.createTable(Provider.class);
 			DataSourceManager.createTable(TestReport.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,6 +89,7 @@ public class AppServletContextListener implements ServletContextListener {
 	private static void buildDaos() {
 		try {
 			DataSourceManager.addDao(Resource.class);
+			DataSourceManager.addDao(Provider.class);
 			DataSourceManager.addDao(TestReport.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
