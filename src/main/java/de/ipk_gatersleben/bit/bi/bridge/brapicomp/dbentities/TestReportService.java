@@ -56,8 +56,8 @@ public class TestReportService {
 		Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
 		qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
-		qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit((long) last); //Descending
-		List<TestReport> trl = qb.query();
+		qb.orderBy(TestReport.DATE_FIELD_NAME, false); //Descending
+		List<TestReport> trl = qb.query().subList(0, last); //Artificial limit bc it doesnt work on oracle.
 		trl.forEach(tr -> {
 			try {
 				endpointDao.refresh(tr.getEndpoint());

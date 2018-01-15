@@ -39,7 +39,7 @@ public class TestReport {
 
     @DatabaseField(canBeNull = false, columnName = DATE_FIELD_NAME)
     private Date date;
-
+    
     public TestReport () { ;
         // Set date to current.
         setDate(new Date());

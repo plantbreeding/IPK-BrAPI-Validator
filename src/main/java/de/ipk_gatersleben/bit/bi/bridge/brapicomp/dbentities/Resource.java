@@ -34,6 +34,8 @@ public class Resource {
     
     public static final String DESCRIPTION_FIELD_NAME = "DESCRIPTION";
     
+    public static final String SUBMITTOREPO_FIELD_NAME = "SUBMIT_TO_REPO";
+    
     public static final String PROVIDER_FIELD_NAME = "PROVIDER";
 
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
@@ -42,7 +44,7 @@ public class Resource {
     @DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
     private String url;
     
-    @DatabaseField(canBeNull = false, columnName = CROP_FIELD_NAME)
+    @DatabaseField(columnName = CROP_FIELD_NAME)
     private String crop;
 
     @DatabaseField(columnName = EMAIL_FIELD_NAME)  //Null controlled in resource
@@ -51,15 +53,19 @@ public class Resource {
 	@DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)
     private String frequency;
 
-    @DatabaseField(canBeNull = false, columnName = CONFIRMED_FIELD_NAME)
+    @DatabaseField(format = "integer", canBeNull = false, columnName = CONFIRMED_FIELD_NAME)
     private boolean confirmed = false;
 
     @DatabaseField(canBeNull = false, columnName = STOREPREV_FIELD_NAME)
     private int storeprev = 3;
     
     @JsonIgnore
-    @DatabaseField(canBeNull = false, columnName = ISPUBLIC_FIELD_NAME)
+    @DatabaseField(format = "integer", canBeNull = false, columnName = ISPUBLIC_FIELD_NAME)
     private boolean isPublic = false;
+    
+    @JsonIgnore
+    @DatabaseField(format = "integer", canBeNull = false, columnName = SUBMITTOREPO_FIELD_NAME)
+    private boolean submitToRepo = false;
     
     @DatabaseField(columnName = NAME_FIELD_NAME)
     private String name = ""; //Only used for public endpoints
@@ -198,6 +204,14 @@ public class Resource {
 
 	public void setCrop(String crop) {
 		this.crop = crop;
+	}
+
+	public boolean isSubmitToRepo() {
+		return submitToRepo;
+	}
+
+	public void setSubmitToRepo(boolean submitToRepo) {
+		this.submitToRepo = submitToRepo;
 	}
 
 }

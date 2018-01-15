@@ -1,15 +1,11 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -20,12 +16,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 @Path("/public")
 @RequestScoped
