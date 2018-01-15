@@ -19,3 +19,4 @@ src/main/resources/config.properties
 !/.mvn/wrapper/maven-wrapper.jar
 
 .idea/
+src/main/java/de/ipk_gatersleben/bit/bi/bridge/brapicomp/apiresources/DebugResource.java
