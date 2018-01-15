@@ -65,7 +65,7 @@ public class AppServletContextListener implements ServletContextListener {
 
 	private static void createDatabaseConnection(ServletContext servletContext) {
 		String path = Config.get("dbpath");
-		String databaseUrl = "jdbc:h2:" + path + "brapivalDB";
+		String databaseUrl = path;
 		ConnectionSource connectionSource;
 		try {
 			connectionSource = new JdbcPooledConnectionSource(databaseUrl);
