@@ -19,6 +19,8 @@ public class Resource {
     public static final String URL_FIELD_NAME = "URL";
 
     public static final String ID_FIELD_NAME = "ID";
+    
+    public static final String CROP_FIELD_NAME = "CROP";
 
     public static final String FREQUENCY_FIELD_NAME = "FREQUENCY";
 
@@ -39,11 +41,14 @@ public class Resource {
 
     @DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
     private String url;
+    
+    @DatabaseField(canBeNull = false, columnName = CROP_FIELD_NAME)
+    private String crop;
 
     @DatabaseField(columnName = EMAIL_FIELD_NAME)  //Null controlled in resource
     private String email;
 
-    @DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)
+	@DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)
     private String frequency;
 
     @DatabaseField(canBeNull = false, columnName = CONFIRMED_FIELD_NAME)
@@ -185,6 +190,14 @@ public class Resource {
 
 	public void setProvider(Provider provider) {
 		this.provider = provider;
+	}
+	
+    public String getCrop() {
+		return crop;
+	}
+
+	public void setCrop(String crop) {
+		this.crop = crop;
 	}
 
 }

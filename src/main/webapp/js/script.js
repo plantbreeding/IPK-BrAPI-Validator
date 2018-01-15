@@ -504,10 +504,11 @@ $(function() {
         var id = params.get("report");
         $.ajax({
             url: 'api/testreport/'+id,
-            contenttype: 'application/json',
+            contentType: 'application/json',
             success: function(data) {
                 var d = new Date(data.date);
                 $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
+                $("#srTitle_2").text(data.endpoint.url);
                 showCustomShortReport(data.shortReport, 2);
             },
             error: function() {
