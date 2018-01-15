@@ -79,7 +79,15 @@ public class AppServletContextListener implements ServletContextListener {
 	private static void createTables() {
 		try {
 			DataSourceManager.createTable(Resource.class);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			DataSourceManager.createTable(Provider.class);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
 			DataSourceManager.createTable(TestReport.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
