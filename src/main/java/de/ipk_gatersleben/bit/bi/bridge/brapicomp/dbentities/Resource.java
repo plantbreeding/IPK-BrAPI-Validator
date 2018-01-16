@@ -37,10 +37,15 @@ public class Resource {
     public static final String SUBMITTOREPO_FIELD_NAME = "SUBMIT_TO_REPO";
     
     public static final String PROVIDER_FIELD_NAME = "PROVIDER";
+    
+    public static final String CERTIFICATE_FIELD_NAME = "CERTIFICATE";
+    
+    public static final String LOGO_FIELD_NAME = "LOGO";
 
     @DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
     private UUID id;
 
+    @JsonProperty("base-url")
     @DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
     private String url;
     
@@ -51,7 +56,7 @@ public class Resource {
     private String email;
 
 	@DatabaseField(canBeNull = false, columnName = FREQUENCY_FIELD_NAME)
-    private String frequency;
+    private String frequency = "weekly";
 
     @DatabaseField(format = "integer", canBeNull = false, columnName = CONFIRMED_FIELD_NAME)
     private boolean confirmed = false;
@@ -75,6 +80,12 @@ public class Resource {
     
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = PROVIDER_FIELD_NAME)
     private Provider provider;
+    
+    @DatabaseField(columnName = CERTIFICATE_FIELD_NAME)
+    private String certificate = ""; //Only used for public endpoints
+    
+    @DatabaseField(columnName = LOGO_FIELD_NAME)
+    private String logo = ""; //Only used for public endpoints
 
 
 	public Resource() {
@@ -215,6 +226,22 @@ public class Resource {
 	@JsonProperty
 	public void setSubmitToRepo(boolean submitToRepo) {
 		this.submitToRepo = submitToRepo;
+	}
+
+	public String getCertificate() {
+		return certificate;
+	}
+
+	public void setCertificate(String certificate) {
+		this.certificate = certificate;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 }

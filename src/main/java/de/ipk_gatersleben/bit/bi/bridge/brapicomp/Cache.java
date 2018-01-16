@@ -14,6 +14,8 @@ public class Cache {
 	// The key is the method followed by the url.
 	// The value is the response and the timestamp.
 	private static final Map<String, RestAssuredRequest> requests = new HashMap<String, RestAssuredRequest>();
+	
+	private static final Map<String, String> cache = new HashMap<String, String>();
 
 	public Cache() {}
 	
@@ -23,5 +25,13 @@ public class Cache {
 	
 	public static RestAssuredRequest getRequest(String key) {
 		return requests.get(key);
+	}
+	
+	public static void addToCache(String key, String value) {
+		cache.put(key, value);
+	}
+	
+	public static String getFromCache(String key) {
+		return cache.get(key);
 	}
 }

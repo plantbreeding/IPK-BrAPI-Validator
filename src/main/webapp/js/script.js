@@ -5,11 +5,6 @@ var statusBtn1 = '<button class="btn btn-sm statusbtn" data-id="';
 var statusBtn2 = '" data-name="';
 var statusBtn3 = '" style="display: inline-block;float: right;"><i class="fa fa-caret-right" aria-hidden="true"></i></button>';
 
-
-
-
-//
-
 $(function() {
 
     //List of parameters for the current test.
@@ -175,7 +170,7 @@ $(function() {
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify({
-                url: $("#serverUrlModal").val(),
+                'base-url': $("#serverUrlModal").val(),
                 email: $("#emailModal").val(),
                 crop: $("#cropSpecies").val(),
                 frequency: $("input[name=frequency]:checked").val(),
@@ -219,11 +214,18 @@ $(function() {
             success: function(res) {
                 var endpoints = res.map(function(d) {
                     resourcesData[d.endpoint.id] = d;
+                    var shortUrl = d.endpoint['base-url'];
+                    if (d.endpoint['base-url'] && d.endpoint['base-url'].length > 45) {
+                        shortUrl = d.endpoint['base-url'].slice(0, 45) + '...';
+                    }
                     return {
                         id : d.endpoint.id,
                         name: d.endpoint.name,
-                        url: d.endpoint.url,
-                        desc: d.endpoint.description,
+                        desc: d.endpoint.description || '',
+                        provider: d.endpoint.provider.name || '',
+                        crop: d.endpoint.crop || '',
+                        url: d.endpoint['base-url'],
+                        shortUrl: shortUrl,
                         status: generateStats(d)
                     };
                 });
@@ -231,8 +233,12 @@ $(function() {
                     var tr = $("<tr/>");
                     // Sort value, passed, and then by total reversed.
                     var sv = endp.status.passed - (endp.status.total *0.001); 
-                    tr.append("<td>" + endp.name + ' <a target="_blank" href="' + endp.url + '"><i class="fa fa-external-link" aria-hidden="true"></i></a></td>');
+                    tr.append("<td>" + endp.name + '</td>');
                     tr.append("<td>" + endp.desc + "</td>");
+                    tr.append("<td>" + endp.provider + "</td>");
+                    tr.append("<td>" + endp.crop + "</td>");
+                    tr.append('<td><a target="_blank" href="' + endp.url 
+                        + '">' + endp.shortUrl + '</a>' + '</td>');
                     tr.append('<td data-sort-value="'+ sv +'"class="statusCol"><strong>' + endp.status.passed 
                         + '</strong>/<strong>' + endp.status.total 
                         + '</strong><small> tests</small> <small>' 

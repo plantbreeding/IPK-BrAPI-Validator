@@ -50,16 +50,25 @@
                 <div class="col-lg-7">
                   <div class="card bg-light">
                     <div class="card-header card-default">
-                      <span class="card-title"><i class="fa fa-table"></i> BrAPI Resources</span>
+                      <span class="card-title"><i class="fa fa-table"></i> BrAPI Resources <small>taken from the <a href="https://github.com/plantbreeding/API/blob/master/brapi-resources.json">BrAPI repository</a></small></span>
                     </div>
                     <table id="resTable" class="table table-hover mb-0" data-sorting="true">
                       <thead>
                         <th scope="col" data-sorted="true">
                           Name
                         </th>
-                        <th data-breakpoints="sm" scope="col">
+                        <th data-breakpoints="all" scope="col">
                           Description
                         </th>
+                        <th data-breakpoints="xs sm md" scope="col">
+                          Provider
+                        </th>
+                        <th data-breakpoints="xs" scope="col">
+                          Crop
+                        </th>
+                        <th data-breakpoints="all" scope="col">
+                          Base url
+                        </th>                   
                         <th scope="col">
                           Status
                         </th>

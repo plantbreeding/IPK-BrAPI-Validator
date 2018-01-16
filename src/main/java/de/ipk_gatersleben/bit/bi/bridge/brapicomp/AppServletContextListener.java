@@ -70,6 +70,13 @@ public class AppServletContextListener implements ServletContextListener {
 			connectionSource = new JdbcPooledConnectionSource(databaseUrl);
 			((JdbcPooledConnectionSource) connectionSource).setUsername(Config.get("dbuser"));
 			((JdbcPooledConnectionSource) connectionSource).setPassword(Config.get("dbpass"));
+			if (connectionSource.getDatabaseType().getClass()
+					.equals(com.j256.ormlite.db.OracleDatabaseType.class)) {
+				Cache.addToCache("dbType", "oracle");
+			} else {
+				Cache.addToCache("dbType", "oracle");
+			}
+			;
 			DataSourceManager.setConnectionSource(connectionSource);
 		} catch (SQLException e) {
 			e.printStackTrace();

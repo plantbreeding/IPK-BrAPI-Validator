@@ -52,7 +52,7 @@ public class TestReportResource {
             TestReport tr = TestReportService.getReport(reportId);
             if (tr == null) {
                 String e2 = JsonMessageManager.jsonMessage(404, "testReport not found", 4300);
-                return Response.status(Status.NOT_FOUND).build();
+                return Response.status(Status.NOT_FOUND).entity(e2).build();
             }
             return Response.ok().entity(tr).build();
 
@@ -74,12 +74,12 @@ public class TestReportResource {
         	Resource e = ResourceService.getPublicEndpoint(resourceId);
         	if (e == null) {
                 String e2 = JsonMessageManager.jsonMessage(404, "resource not found", 4301);
-                return Response.status(Status.NOT_FOUND).build();
+                return Response.status(Status.NOT_FOUND).entity(e2).build();
             }
             List<TestReport> trl = TestReportService.getLastReports(e, 1);
             if (trl.size() == 0 || trl.get(0) == null) {
                 String e2 = JsonMessageManager.jsonMessage(404, "testReport not found", 4302);
-                return Response.status(Status.NOT_FOUND).build();
+                return Response.status(Status.NOT_FOUND).entity(e2).build();
             }
 
             return Response.ok().entity(trl.get(0)).build();

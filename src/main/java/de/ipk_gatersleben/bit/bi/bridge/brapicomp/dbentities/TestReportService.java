@@ -10,6 +10,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Cache;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 
 /**
@@ -54,10 +55,23 @@ public class TestReportService {
 	public static List<TestReport> getLastReports(Resource resource, int last) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
 		Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
-		QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
-		qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
-		qb.orderBy(TestReport.DATE_FIELD_NAME, false); //Descending
-		List<TestReport> trl = qb.query().subList(0, last); //Artificial limit bc it doesnt work on oracle.
+		List<TestReport> trl;
+		
+		// Patch because .limit() doesn't work on ormlite with oracle.
+		if (Cache.getFromCache("dbType").equals("oracle")) {
+			QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
+			qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
+			qb.orderBy(TestReport.DATE_FIELD_NAME, false); //Descending
+			
+			trl = qb.query().subList(0, last); //Artificial limit.
+		} else { //Non-oracle dbs
+			QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
+			qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
+			qb.orderBy(TestReport.DATE_FIELD_NAME, false).limit((long) last); //Descending
+			
+			trl = qb.query();
+		}
+		
 		trl.forEach(tr -> {
 			try {
 				endpointDao.refresh(tr.getEndpoint());

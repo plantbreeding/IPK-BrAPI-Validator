@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -32,14 +34,55 @@ public class Provider {
     @DatabaseField(columnName = NAME_FIELD_NAME)
     private String name;
     
-    @DatabaseField(columnName = DESCRIPTION_FIELD_NAME)
+    @DatabaseField(dataType= DataType.LONG_STRING, columnName = DESCRIPTION_FIELD_NAME)
     private String description;
     
     @DatabaseField(columnName = LOGO_FIELD_NAME)
     private String logo;
     
+    @JsonIgnore
     @ForeignCollectionField(columnName = RESOURCES_FIELD_NAME, eager = true)
     private Collection<Resource> resources;
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public Collection<Resource> getResources() {
+		return resources;
+	}
+
+	public void setResources(Collection<Resource> resources) {
+		this.resources = resources;
+	}
     
 
 }

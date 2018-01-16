@@ -29,6 +29,7 @@ import com.j256.ormlite.dao.Dao;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Provider;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
@@ -70,16 +71,9 @@ public class AdminResource {
 
         try {
         	
-        	String[] auth = ApiResourceService.getAuth(headers);
-            //Check auth header
-            if (auth == null || auth.length != 2) {
-                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4000);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-
-            //Check if api key is correct.
-            if (!auth[1].equals(Config.get("adminkey"))) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4001);
+        	//Check auth header
+            if (!auth(headers)) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4001);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
         	
@@ -94,7 +88,41 @@ public class AdminResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
-    //Commented out for security. Also private API key is required
+
+    /**
+     * Register new public endpoint
+     *
+     * @param res Json containing the endpoint's url.
+     * @return Json message.
+     */
+    @POST
+    @Path("/providers")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createProvider(@Context HttpHeaders headers,
+                                   Provider prov) {
+
+        LOGGER.debug("New POST /admin/provider call.");
+        
+        Dao<Provider, UUID> providerDao = DataSourceManager.getDao(Provider.class);
+
+        try {
+        	
+        	//Check auth header
+            if (!auth(headers)) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+
+            providerDao.create(prov);
+            return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Provider added.", 2102)).build();
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
     
     /**
      * Run the default test on all public resources
@@ -108,16 +136,9 @@ public class AdminResource {
         LOGGER.debug("New GET /admin/testallpublic call.");
         try {
 
-            String[] auth = ApiResourceService.getAuth(headers);
             //Check auth header
-            if (auth == null || auth.length != 2) {
+            if (!auth(headers)) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
-                return Response.status(Status.UNAUTHORIZED).entity(e).build();
-            }
-
-            //Check if api key is correct.
-            if (!auth[1].equals(Config.get("adminkey"))) {
-                String e = JsonMessageManager.jsonMessage(403, "missing or wrong apikey", 4003);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
             
@@ -141,5 +162,20 @@ public class AdminResource {
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5003);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
+    }
+    
+    private boolean auth (HttpHeaders headers) {
+    	String[] auth = ApiResourceService.getAuth(headers);
+        //Check auth header
+        if (auth == null || auth.length != 2) {
+            return false;
+        }
+
+        //Check if api key is correct.
+        if (!auth[1].equals(Config.get("adminkey"))) {
+            return false;
+        }
+    	
+    	return true;
     }
 }

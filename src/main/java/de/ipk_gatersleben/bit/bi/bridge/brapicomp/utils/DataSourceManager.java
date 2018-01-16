@@ -9,6 +9,8 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Cache;
+
 
 /**
  * Manages Daos, tables and connections.
@@ -50,7 +52,15 @@ public class DataSourceManager {
     }
 
     public static void createTable(Class tableClass) throws SQLException {
-        TableUtils.createTableIfNotExists(source, tableClass);
+    	try {
+    		TableUtils.createTableIfNotExists(source, tableClass);
+    	} catch (SQLException e) {
+    		if (Cache.getFromCache("dbType").equals("oracle") && e.getSQLState().equals("42000")) {
+				System.err.println("Warning: Tried to create db table but it already exists.");
+			} else {
+				throw e;
+			}
+    	}
     }
     public static void deleteTable(Class tableClass) throws SQLException {
         TableUtils.dropTable(source, tableClass, true);
