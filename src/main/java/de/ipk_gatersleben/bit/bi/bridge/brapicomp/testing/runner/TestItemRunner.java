@@ -388,12 +388,12 @@ public class TestItemRunner {
             LOGGER.debug("Wrong content type");
             LOGGER.debug("== cause ==");
             LOGGER.debug(e1.getMessage());
-            tr.addMessage("Response Content Type: ");
+            tr.addMessage("Error parsing /calls");
             return tr;
         }
-        LOGGER.debug("ContentType Test Passed");
+        LOGGER.debug("Saved /calls");
         tr.setPassed(true);
-        tr.addMessage("Response Content Type: ");
+        tr.addMessage("Saved /calls");
         return tr;
     }
 
