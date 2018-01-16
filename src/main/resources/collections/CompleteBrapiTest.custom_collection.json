@@ -749,7 +749,7 @@
 					"name": "/observationLevels",
 					"endpoint": "/observationLevels",
 					"description": "Check schema",
-					"requires":["/studies-search"],
+					"requires":[],
 					"request": {
 						"url": "{baseurl}/observationLevels",
 						"method": "GET"
