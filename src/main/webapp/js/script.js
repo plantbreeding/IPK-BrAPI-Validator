@@ -177,6 +177,7 @@ $(function() {
             data: JSON.stringify({
                 url: $("#serverUrlModal").val(),
                 email: $("#emailModal").val(),
+                crop: $("#cropSpecies").val(),
                 frequency: $("input[name=frequency]:checked").val(),
                 submitToRepo: $("#submitToRepo").prop('checked')
             }),
@@ -199,7 +200,7 @@ $(function() {
     });
 
     // Show crop form when user selects checkbox to submit to server
-    $("#submitToRepo").change(function() {
+    function updateCropForm() {
         if ($(this).prop("checked")) {
             $("#cropSpeciesForm").show();
             $("#cropSpecies").prop("required");
@@ -207,7 +208,9 @@ $(function() {
             $("#cropSpeciesForm").hide();
             $("#cropSpecies").removeProp("required");
         }
-    })
+    }
+    
+    $("#submitToRepo").change(updateCropForm);
 
     function populateServerTable() {
         $.ajax({
@@ -555,6 +558,7 @@ $(function() {
 
         populateServerTable();
 
+        updateCropForm()
 
         // Remove initial /calls option as it is replaced by the one on the tests list.
         $(".del").remove();
