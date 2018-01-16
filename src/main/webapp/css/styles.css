@@ -47,9 +47,9 @@ body {
   background-color: #f5f5f5;
 }
 
-#footerText {
-  margin: 20px 0;
-  display:inline-block;
+.footer-text {
+  margin: 10px 0;
+  display: inline-block;
 }
 
 .footer-logo {

@@ -229,10 +229,11 @@ $(function() {
                         status: generateStats(d)
                     };
                 });
+                endpoints = endpoints.sort(function(a, b){return a.name > b.name});
                 endpoints.forEach(function(endp) {
                     var tr = $("<tr/>");
                     // Sort value, passed, and then by total reversed.
-                    var sv = endp.status.passed - (endp.status.total *0.001); 
+                    var sv = endp.status.passed - (endp.status.total * 0.001); 
                     tr.append("<td>" + endp.name + '</td>');
                     tr.append("<td>" + endp.desc + "</td>");
                     tr.append("<td>" + endp.provider + "</td>");
@@ -251,7 +252,7 @@ $(function() {
                 });
                 
                 if (res.length > 0) {
-                    showShortReport(res[0].endpoint.id, res[0].endpoint.name);
+                    showShortReport(endpoints[0].id, endpoints[0].name);
                 }
                 $('#resTable').footable();
 
@@ -432,6 +433,7 @@ $(function() {
                         totalTests += 1;
                         break;
                     case 'missingReqs':
+                        reason = ' <small>(missing required resources)</small>';
                         allSkipped = false;
                         color = 'info';
                         iconName = 'exclamation-circle';
@@ -495,7 +497,7 @@ $(function() {
             cat.className = "list-group-item";
 
             if (allSkipped) {
-                cat.className += ' collapse skipped_test';
+                cat.className += ' collapse skipped_test_' + tabIndex;
                 catWrapper.setAttribute('class', 'collapse');
                 header.attr('aria-expanded', 'false');
                 header.addClass('collapsed');
