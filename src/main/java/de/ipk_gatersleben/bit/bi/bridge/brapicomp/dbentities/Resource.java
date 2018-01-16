@@ -205,11 +205,14 @@ public class Resource {
 	public void setCrop(String crop) {
 		this.crop = crop;
 	}
+	
 
+	@JsonIgnore
 	public boolean isSubmitToRepo() {
 		return submitToRepo;
 	}
 
+	@JsonProperty
 	public void setSubmitToRepo(boolean submitToRepo) {
 		this.submitToRepo = submitToRepo;
 	}
