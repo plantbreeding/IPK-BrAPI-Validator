@@ -196,8 +196,18 @@ $(function() {
 
             }
         });
-
     });
+
+    // Show crop form when user selects checkbox to submit to server
+    $("#submitToRepo").change(function() {
+        if ($(this).prop("checked")) {
+            $("#cropSpeciesForm").show();
+            $("#cropSpecies").prop("required");
+        } else {
+            $("#cropSpeciesForm").hide();
+            $("#cropSpecies").removeProp("required");
+        }
+    })
 
     function populateServerTable() {
         $.ajax({
