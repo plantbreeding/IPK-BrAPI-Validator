@@ -8,7 +8,6 @@
   <meta name="author" content="IPK Gatersleben">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/selectize.bootstrap4.css">
   <link rel="stylesheet" href="css/footable.standalone.min.css">
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 </head>
@@ -116,8 +115,7 @@
                           <label for="serverurl">
                             Server URL
                           </label>
-                          <select type="url" name="url" id="serverurl" class="form-control font-14" aria-describedby="serverHelp" placeholder="Example: https://test.brapi.org/brapi/v1/" required>
-                          </select>
+                          <input type="url" name="url" id="serverurl" class="form-control font-14" aria-describedby="serverHelp" placeholder="https://test.brapi.org/brapi/v1/" required>
                           <div class="invalid-feedback">Please provide a valid URL.</div>
                           <small id="serverHelp">Enter your own server or test the public servers available in the official BrAPI repository.</small>
                         </div>
@@ -312,7 +310,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="js/spin.min.js"></script>
-  <script src="js/selectize.min.js"></script>
   <script src="js/footable.min.js"></script>
   <script src="js/script.js"></script>
 </body>

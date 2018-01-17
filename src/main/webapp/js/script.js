@@ -602,38 +602,6 @@ $(function() {
             }
         ];
 
-        // Init server Url selectize
-        var $serverurl = $('#serverurl').selectize({
-            scrollduration: 20,
-            create: true,
-            options: resources,
-            onChange: updateFullUrl,
-            persist: false
-        });
-        // Download endpoints from github repository
-        $.ajax({
-            url: 'https://raw.githubusercontent.com/plantbreeding/API/master/brapi-resources.json',
-            type: 'GET',
-            success: function(res) {
-                var resources = JSON.parse(res)['brapi-providers'].category.reduce(function(l, d){
-                    if (d.resource[0] === undefined) {
-                        l.push({text:d.resource['base-url'],value:d.resource['base-url']});
-                    } else {
-                        for (var i = 0; i < d.resource.length; i++) {
-                            l.push({text:d.resource[i]['base-url'],value:d.resource[i]['base-url']})
-                        }
-                    }
-                    return l;
-                }, []);
-            $serverurl[0].selectize.addOption(resources);
-            }
-        });
-        $('#testresource').selectize({
-            scrollDuration: 20
-        });
-        $('#dataTest').selectize({
-            scrollDuration: 20
-        });
         updateVisibleElements();
         $("body").on('click', '.statusbtn', function() {
             currentResource = $(this).data('id');
