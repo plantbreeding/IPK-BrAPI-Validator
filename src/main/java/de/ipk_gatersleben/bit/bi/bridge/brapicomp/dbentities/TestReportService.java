@@ -2,7 +2,10 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -62,8 +65,10 @@ public class TestReportService {
 			QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
 			qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
 			qb.orderBy(TestReport.DATE_FIELD_NAME, false); //Descending
+			trl = qb.query();
+			last = Math.min(last, trl.size());
+			trl = trl.subList(0, last); //Artificial limit.
 			
-			trl = qb.query().subList(0, last); //Artificial limit.
 		} else { //Non-oracle dbs
 			QueryBuilder<TestReport, UUID> qb = testReportDao.queryBuilder();
 			qb.where().eq(TestReport.RESOURCE_FIELD_NAME, resource);
@@ -110,6 +115,27 @@ public class TestReportService {
 			}
 		});
 		return lastReports;
+	}
+	
+	public static Map<String, List<TestReport>> getAllPublicEndpointLastReports(int last) throws SQLException {
+		List<Resource> l = ResourceService.getAllPublicEndpoints();
+		Collections.sort(l);
+		Map<String, List<TestReport>> lastReports = new LinkedHashMap<String, List<TestReport>>();
+		l.forEach(endpoint -> {
+			try {
+				List<TestReport> tr = getLastReports(endpoint, last);
+				lastReports.put(endpoint.getId().toString(), tr);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		});
+		return lastReports;
+	}
+
+	public static List<Resource> getAllPublicEndpoints() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

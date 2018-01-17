@@ -2,6 +2,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,6 +17,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
@@ -41,7 +44,7 @@ public class PublicResoucesResource {
         
         try {
         	
-        	List<TestReport> trl = TestReportService.getAllPublicEndpointLastReport();
+        	List<Resource> trl = ResourceService.getAllPublicEndpoints();
         	return Response.ok().entity(trl).build();
         	
         } catch (SQLException e) {

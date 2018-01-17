@@ -1,7 +1,6 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

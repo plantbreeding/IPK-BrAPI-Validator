@@ -51,7 +51,8 @@ public class TestReport {
         // Set date to current.
         setDate(new Date());
     }
-
+    
+    @JsonIgnore
     public Resource getEndpoint() {
         return resource;
     }

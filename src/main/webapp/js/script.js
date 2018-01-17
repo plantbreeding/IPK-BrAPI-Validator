@@ -213,20 +213,20 @@ $(function() {
             type: 'GET',
             success: function(res) {
                 var endpoints = res.map(function(d) {
-                    resourcesData[d.endpoint.id] = d;
-                    var shortUrl = d.endpoint['base-url'];
-                    if (d.endpoint['base-url'] && d.endpoint['base-url'].length > 45) {
-                        shortUrl = d.endpoint['base-url'].slice(0, 45) + '...';
+                    resourcesData[d.id] = d;
+                    var shortUrl = d['base-url'];
+                    if (d['base-url'] && d['base-url'].length > 45) {
+                        shortUrl = d['base-url'].slice(0, 45) + '...';
                     }
                     return {
-                        id : d.endpoint.id,
-                        name: d.endpoint.name,
-                        desc: d.endpoint.description || '',
-                        provider: d.endpoint.provider.name || '',
-                        crop: d.endpoint.crop || '',
-                        url: d.endpoint['base-url'],
+                        id : d.id,
+                        name: d.name,
+                        desc: d.description || '',
+                        provider: d.provider.name || '',
+                        crop: d.crop || '',
+                        url: d['base-url'],
                         shortUrl: shortUrl,
-                        status: generateStats(d)
+                        status: generateStats(d.lastTestReports[0])
                     };
                 });
                 endpoints = endpoints.sort(function(a, b){return a.name > b.name});
@@ -252,7 +252,7 @@ $(function() {
                 });
                 
                 if (res.length > 0) {
-                    showShortReport(endpoints[0].id, endpoints[0].name);
+                    showShortReport(endpoints[0].id, 0);
                 }
                 $('#resTable').footable();
 
@@ -537,11 +537,11 @@ $(function() {
         })
     }
 
-    function showShortReport(id) {
-        var data = resourcesData[id];
+    function showShortReport(id, index) {
+        var data = resourcesData[id].lastTestReports[index];
         var d = new Date(data.date);
         $("#time_tab_0").html('<small><em>' + d.toLocaleString() + '</em></small>');
-        $("#srTitle").text(data.endpoint.name);
+        $("#srTitle").text(resourcesData[id].name);
         var shortReport = createShortReport(data.shortReport, 0);
         var doneTestDOM = document.getElementById('srList_0');
         doneTestDOM.innerHTML = shortReport.outerHTML;
