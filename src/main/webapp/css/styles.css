@@ -99,15 +99,28 @@ body {
 .list-group-item {
   padding: 0.25rem 1.25rem;
 }
-.collapsing {
-    transition: height 0.15s;
-}
 
-.list-group-item.skipped_test.collapse {
+.list-group-item.skipped_test_0.collapse {
   display: none;
 }
 
-.list-group-item.skipped_test.collapse.show {
+.list-group-item.skipped_test_0.collapse.show {
+  display: block;
+}
+
+.list-group-item.skipped_test_1.collapse {
+  display: none;
+}
+
+.list-group-item.skipped_test_1.collapse.show {
+  display: block;
+}
+
+.list-group-item.skipped_test_2.collapse {
+  display: none;
+}
+
+.list-group-item.skipped_test_2.collapse.show {
   display: block;
 }
 

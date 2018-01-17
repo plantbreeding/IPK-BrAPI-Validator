@@ -390,7 +390,6 @@ $(function() {
             catWrapper.className = "collapse show";
             catWrapper.id = "reportTest_" + tabIndex + "_" + i;
             catWrapper.setAttribute('role', 'tabpanel');
-            catWrapper.setAttribute("data-parent", "#reportCat_" + tabIndex + "_" + i);
             catWrapper.setAttribute("aria-labelledby", "#reportCat_" + tabIndex + "_" + i);
 
             var totalTests = 0;
@@ -498,9 +497,9 @@ $(function() {
 
             if (allSkipped) {
                 cat.className += ' collapse skipped_test_' + tabIndex;
-                catWrapper.setAttribute('class', 'collapse');
-                header.attr('aria-expanded', 'false');
-                header.addClass('collapsed');
+                //catWrapper.setAttribute('class', 'collapse');
+                //header.attr('aria-expanded', 'false');
+                //header.addClass('collapsed');
             }
             cat.innerHTML += header[0].outerHTML;
             cat.innerHTML += catWrapper.outerHTML;
