@@ -620,7 +620,7 @@ $(function() {
         });
         updateVisibleElements();
         $("body").on('click', '.statusbtn', function() {
-            showShortReport($(this).data('id'), $(this).data('name') );
+            showShortReport($(this).data('id'), 0);
         })
     }
     main();
