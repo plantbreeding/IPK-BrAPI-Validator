@@ -11,6 +11,9 @@ $(function() {
     var paramList = [];
     //For the endpoint table.
     var resourcesData = {};
+    //Current endpoint id
+    var currentResource = '';
+
 
     function median(values) {
 
@@ -252,6 +255,8 @@ $(function() {
                 });
                 
                 if (res.length > 0) {
+                    currentResource = endpoints[0].id;
+                    showTimeDropdown();
                     showShortReport(endpoints[0].id, 0);
                 }
                 $('#resTable').footable();
@@ -347,7 +352,7 @@ $(function() {
         collapseDiv[0].innerHTML = cardBodyDiv.outerHTML;
         testResultDiv.innerHTML += collapseDiv[0].outerHTML;
 
-        return testResultDiv
+        return testResultDiv;
 
     }
 
@@ -513,8 +518,19 @@ $(function() {
         return shortReportDOM;
     }
 
+    function showTimeDropdown() {
+        var data = resourcesData[currentResource].lastTestReports;
+        $("#time_tab_0").html('');
+        var d = new Date(data[0].date);
+        $("#time_tab_0").append('<option value="0">' + d.toLocaleString() + '</option>');
+        d = new Date(data[1].date);
+        $("#time_tab_0").append('<option value="1">' + d.toLocaleString() + '</option>');
+        d = new Date(data[2].date);
+        $("#time_tab_0").append('<option value="2">' + d.toLocaleString() + '</option>');
+    }
+
     function showReportIfInParams() {
-        var url = new URL(window.location.href)
+        var url = new URL(window.location.href);
         var params = new URLSearchParams(url.search.slice(1));
         if (!params.has("report")) {
             return
@@ -540,7 +556,7 @@ $(function() {
     function showShortReport(id, index) {
         var data = resourcesData[id].lastTestReports[index];
         var d = new Date(data.date);
-        $("#time_tab_0").html('<small><em>' + d.toLocaleString() + '</em></small>');
+
         $("#srTitle").text(resourcesData[id].name);
         var shortReport = createShortReport(data.shortReport, 0);
         var doneTestDOM = document.getElementById('srList_0');
@@ -620,8 +636,15 @@ $(function() {
         });
         updateVisibleElements();
         $("body").on('click', '.statusbtn', function() {
+            currentResource = $(this).data('id');
+            showTimeDropdown();
             showShortReport($(this).data('id'), 0);
-        })
+        });
+        $("#time_tab_0").change(function(){
+            var value = $(this).val();
+            showShortReport(currentResource, value);
+        });
+
     }
     main();
 });
