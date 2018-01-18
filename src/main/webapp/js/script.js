@@ -651,6 +651,7 @@ $(function() {
         $("body").on('click', '.statusbtn', function() {
             currentResource = $(this).data('id');
             customReport.name = resourcesData[$(this).data('id')].name;
+            var d = new Date(resourcesData[$(this).data('id')].date);
             customReport.date = d.toLocaleString();
             showTimeDropdown();
             showShortReport($(this).data('id'), 0);
