@@ -57,6 +57,10 @@ public class TestReport {
         return resource;
     }
 
+    public String getResourceUrl() {
+    	return resource.getUrl();
+    }
+    
     public void setResource(Resource resource) {
         this.resource = resource;
     }

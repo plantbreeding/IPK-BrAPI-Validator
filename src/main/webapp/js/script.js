@@ -556,10 +556,10 @@ $(function() {
             contentType: 'application/json',
             success: function(data) {
                 var d = new Date(data.date);
-                linkedReport.name = '';
+                linkedReport.name = data.resourceUrl;
                 linkedReport.date = d.toLocaleString();
                 $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
-                //$("#srTitle_2").text(data.endpoint['base-url']);
+                $("#srTitle_2").text(data.resourceUrl);
                 showCustomShortReport(data.shortReport, 2);
             },
             error: function() {
@@ -592,19 +592,15 @@ $(function() {
     function printPDF(name, timestamp, index) {
         var doc = new jsPDF();
 
-        if (name === '') {
-            doc.text(20, 15, 'Test report.'); 
-       } else {
-            doc.text(20, 15, 'Test report for: ' + name + '.');
-       }
+        var title = doc.splitTextToSize('Test report for: ' + name, 180)
+        doc.text(15, 20, title);
         
-
         doc.setFontType("italic");
-        doc.setFontSize(12);
+        doc.setFontSize(10);
 
+        
+        doc.text(170, 10, timestamp);
         doc.setFontType("normal");
-        doc.text(20, 25, timestamp);
-
         // We'll make our own renderer to skip this editor
         var specialElementHandlers = {
             '#editor': function(element, renderer){
@@ -615,12 +611,12 @@ $(function() {
             }
         };
 
-        doc.fromHTML($('#srList_' + index).get(0), 15, 35, {
+        doc.fromHTML($('#srList_' + index).get(0), 15, 30, {
             'width': 170, 
             'elementHandlers': specialElementHandlers
         });
 
-        doc.save('Test.pdf');
+        doc.save('Test report.pdf');
     }
 
     // Initializes variables, forms, listeners...
