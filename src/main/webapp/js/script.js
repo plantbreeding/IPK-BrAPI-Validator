@@ -14,6 +14,16 @@ $(function() {
     //Current endpoint id
     var currentResource = '';
 
+    var customReport = {
+        name: '',
+        timestamp: ''
+    }
+
+    var linkedReport = {
+        name: '',
+        timestamp: ''
+    }
+
 
     function median(values) {
 
@@ -121,6 +131,7 @@ $(function() {
         //Add spinner
         var spinner = new Spinner().spin(form);
         var testType = $("input[name=test]:checked").val();
+        var name = $('#serverurl').val();
 
         $.ajax({
             url: "api/test/call",
@@ -131,6 +142,8 @@ $(function() {
                 $("#srResults_1").show();
                 statusBar.hide();
                 var d = new Date(data.date);
+                customReport.name = name;
+                customReport.date = d.toLocaleString();
                 $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
                 showCustomShortReport(data.shortReport, 1);
             },
@@ -543,6 +556,8 @@ $(function() {
             contentType: 'application/json',
             success: function(data) {
                 var d = new Date(data.date);
+                linkedReport.name = '';
+                linkedReport.date = d.toLocaleString();
                 $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
                 //$("#srTitle_2").text(data.endpoint['base-url']);
                 showCustomShortReport(data.shortReport, 2);
@@ -577,9 +592,18 @@ $(function() {
     function printPDF(name, timestamp, index) {
         var doc = new jsPDF();
 
-        doc.text(15, 15, 'Test report for: ' + name + '.');
+        if (name === '') {
+            doc.text(20, 15, 'Test report.'); 
+       } else {
+            doc.text(20, 15, 'Test report for: ' + name + '.');
+       }
+        
 
-        doc.text(15, 25, timestamp);
+        doc.setFontType("italic");
+        doc.setFontSize(12);
+
+        doc.setFontType("normal");
+        doc.text(20, 25, timestamp);
 
         // We'll make our own renderer to skip this editor
         var specialElementHandlers = {
@@ -630,6 +654,8 @@ $(function() {
         updateVisibleElements();
         $("body").on('click', '.statusbtn', function() {
             currentResource = $(this).data('id');
+            customReport.name = resourcesData[$(this).data('id')].name;
+            customReport.date = d.toLocaleString();
             showTimeDropdown();
             showShortReport($(this).data('id'), 0);
         });
@@ -638,9 +664,15 @@ $(function() {
             showShortReport(currentResource, value);
         });
 
-        $("#pdfTest").click(function() {
+        $("#pdfTest_0").click(function() {
             var d = new Date(resourcesData[currentResource].lastTestReports[0].date);
             printPDF(resourcesData[currentResource].name, d.toLocaleString(), 0);
+        });
+        $("#pdfTest_1").click(function() {
+            printPDF(customReport.name, customReport.date, 1);
+        });
+        $("#pdfTest_2").click(function() {
+            printPDF(linkedReport.name, linkedReport.date, 2);
         });
 
     }
