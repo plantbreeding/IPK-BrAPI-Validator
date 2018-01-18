@@ -544,7 +544,7 @@ $(function() {
             success: function(data) {
                 var d = new Date(data.date);
                 $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
-                $("#srTitle_2").text(data.endpoint.url);
+                //$("#srTitle_2").text(data.endpoint['base-url']);
                 showCustomShortReport(data.shortReport, 2);
             },
             error: function() {
@@ -572,6 +572,31 @@ $(function() {
         doneTestDOM.text(''); //Empty list;
         doneTestDOM.append(shortReport);
         $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
+    }
+
+    function printPDF(name, timestamp, index) {
+        var doc = new jsPDF();
+
+        doc.text(15, 15, 'Test report for: ' + name + '.');
+
+        doc.text(15, 25, timestamp);
+
+        // We'll make our own renderer to skip this editor
+        var specialElementHandlers = {
+            '#editor': function(element, renderer){
+                return true;
+            },
+            '.controls': function(element, renderer){
+                return true;
+            }
+        };
+
+        doc.fromHTML($('#srList_' + index).get(0), 15, 35, {
+            'width': 170, 
+            'elementHandlers': specialElementHandlers
+        });
+
+        doc.save('Test.pdf');
     }
 
     // Initializes variables, forms, listeners...
@@ -611,6 +636,11 @@ $(function() {
         $("#time_tab_0").change(function(){
             var value = $(this).val();
             showShortReport(currentResource, value);
+        });
+
+        $("#pdfTest").click(function() {
+            var d = new Date(resourcesData[currentResource].lastTestReports[0].date);
+            printPDF(resourcesData[currentResource].name, d.toLocaleString(), 0);
         });
 
     }
