@@ -3,7 +3,9 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -17,10 +19,16 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
+import com.j256.ormlite.dao.Dao;
+
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Provider;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Stat;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 
 @Path("/public")
@@ -38,13 +46,13 @@ public class PublicResoucesResource {
     @GET
     @Path("/resources")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeFrequency(@Context HttpHeaders headers) {
+    public Response changeFrequency(@Context HttpHeaders headers, @Context HttpServletRequest req) {
 
         LOGGER.debug("New GET /public/resources");
         
         try {
-        	
         	List<Resource> trl = ResourceService.getAllPublicEndpoints();
+        	ApiResourceService.saveStat("/public/resources");
         	return Response.ok().entity(trl).build();
         	
         } catch (SQLException e) {
@@ -53,5 +61,8 @@ public class PublicResoucesResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
+
+
+
 	
 }

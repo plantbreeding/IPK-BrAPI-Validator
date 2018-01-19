@@ -24,6 +24,7 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Provider;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Stat;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.DailyJob;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.scheduling.MonthlyJob;
@@ -99,6 +100,11 @@ public class AppServletContextListener implements ServletContextListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			DataSourceManager.createTable(Stat.class);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void buildDaos() {
@@ -106,6 +112,7 @@ public class AppServletContextListener implements ServletContextListener {
 			DataSourceManager.addDao(Resource.class);
 			DataSourceManager.addDao(Provider.class);
 			DataSourceManager.addDao(TestReport.class);
+			DataSourceManager.addDao(Stat.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

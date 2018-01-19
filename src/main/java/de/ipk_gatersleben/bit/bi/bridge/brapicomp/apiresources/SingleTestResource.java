@@ -5,6 +5,7 @@ import static de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceServic
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -31,6 +32,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
@@ -190,7 +192,12 @@ public class SingleTestResource {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-
+            try {
+				ApiResourceService.saveStat("/test/call");
+			} catch (SQLException e) {
+				// Do nothing.
+			}
+            
             String collectionResource;
             
             ObjectMapper mapper = new ObjectMapper();

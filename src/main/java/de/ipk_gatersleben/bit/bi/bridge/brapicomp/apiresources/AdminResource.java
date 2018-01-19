@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -164,7 +165,8 @@ public class AdminResource {
         }
     }
     
-    private boolean auth (HttpHeaders headers) {
+    
+    private boolean auth(HttpHeaders headers) {
     	String[] auth = ApiResourceService.getAuth(headers);
         //Check auth header
         if (auth == null || auth.length != 2) {

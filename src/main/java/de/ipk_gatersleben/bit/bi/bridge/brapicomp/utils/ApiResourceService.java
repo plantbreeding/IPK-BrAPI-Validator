@@ -2,9 +2,11 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import java.util.UUID;
 
 import javax.ws.rs.core.HttpHeaders;
 
@@ -15,6 +17,9 @@ import org.glassfish.jersey.internal.util.Base64;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.j256.ormlite.dao.Dao;
+
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Stat;
 
 /**
  * Helper functions for the resource classes.
@@ -30,6 +35,12 @@ public class ApiResourceService {
      * @return The path to the collection, relative to resources:/collections/.
      * @throws IllegalArgumentException Raised when no test with the input name is found.
      */
+    
+	public static void saveStat(String type) throws SQLException {
+        Dao<Stat, UUID> statDao = DataSourceManager.getDao(Stat.class);
+        statDao.create(new Stat(type));
+	}
+	
     public static String findTestCollection(String name) throws IllegalArgumentException {
 
         ObjectMapper mapper = new ObjectMapper();
