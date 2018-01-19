@@ -2,8 +2,15 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +32,8 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
 
@@ -160,6 +169,97 @@ public class AdminResource {
             return Response.ok().build();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5003);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
+        }
+    }
+    
+    @POST
+    @Path("/updateproviders")
+    public Response updateProviders(@Context HttpHeaders headers) {
+        LOGGER.debug("New GET /admin/testallpublic call.");
+        try {
+
+            //Check auth header
+            if (!auth(headers)) {
+                String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
+                return Response.status(Status.UNAUTHORIZED).entity(e).build();
+            }
+            
+            ObjectMapper mapper = new ObjectMapper();
+            // Required because some resource properties are arrays and some objects.
+            mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            
+            // Download Json
+            URL url = new URL(Config.get("resourceJsonUrl"));
+            
+            URLConnection connection;
+            if (!Config.get("http.proxyHost").equals("")) {
+            	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(Config.get("http.proxyHost"), Integer.parseInt(Config.get("http.proxyPort"))));
+            	connection = url.openConnection(proxy);
+            } else {
+            	connection = url.openConnection();
+            }
+            
+            connection.connect();
+            InputStream is = connection.getInputStream();
+            JsonNode node = mapper.readTree(is).at("/brapi-providers/category");
+            
+            Dao<Provider, UUID> providerDao = DataSourceManager.getDao(Provider.class);
+            Dao<Resource, UUID>  resourceDao = DataSourceManager.getDao(Resource.class);
+            
+            // Iterate through providers.
+            for (int i = 0; i < node.size(); i++) {
+            	Provider providerJson = mapper.treeToValue(node.get(i), Provider.class);
+            	// Check if provider existed (by name)
+            	Provider providerDb = providerDao.queryBuilder().where()            	
+            		.eq(Provider.NAME_FIELD_NAME, providerJson.getName())
+            		.queryForFirst();
+            	
+            	if (providerDb == null) {
+            		//Not found in DB, generate
+            		Iterator<Resource> it = providerJson.getResources().iterator();
+            		while(it.hasNext()) {
+            			Resource res = it.next();
+            			res.setProvider(providerJson);
+            			resourceDao.create(res);
+            		}
+            		providerDao.create(providerJson);
+            	} else {
+            		// Found in DB, update.
+            		providerDb.setDescription(providerJson.getDescription());
+            		providerDb.setLogo(providerJson.getLogo());
+            		Iterator<Resource> it = providerJson.getResources().iterator();
+            		while(it.hasNext()) {
+            			Resource res = it.next();
+            			// Check resources in DB
+            			Resource resDb = resourceDao.queryBuilder().where()
+            					.eq(Resource.URL_FIELD_NAME, res.getUrl()).and()
+            					.eq(Resource.PROVIDER_FIELD_NAME, providerDb.getId())
+            					.queryForFirst();
+            			
+            			if (resDb == null) {
+            				// Not found, create
+            				res.setProvider(providerDb);
+            				res.setPublic(true);
+            				resourceDao.create(res);
+            			} else {
+            				// Found, generate
+            				resDb.setCertificate(res.getCertificate());
+            				resDb.setName(res.getName());
+            				resDb.setLogo(res.getLogo());
+            				resDb.setPublic(true);
+            				resourceDao.update(resDb);
+            			}
+            		}
+            		providerDao.update(providerDb);
+            	}
+            }
+
+            
+            return Response.ok().build();
+        } catch (IOException | SQLException e) {
+        	e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5003);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }

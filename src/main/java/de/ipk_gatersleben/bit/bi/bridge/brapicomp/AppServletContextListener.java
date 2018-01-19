@@ -6,6 +6,7 @@ import static org.quartz.CronScheduleBuilder.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -53,17 +54,20 @@ public class AppServletContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
 		Config.init();
+		
 		createDatabaseConnection(e.getServletContext());
 		createTables();
 		buildDaos();
 		setupScheduler(e.getServletContext());
 		if (Config.get("proxy") != null) {
-			RestAssured.proxy(Config.get("proxy"), Integer.parseInt(Config.get("proxyport")));
+			RestAssured.proxy(Config.get("http.proxyHost"), Integer.parseInt(Config.get("http.proxyPort")));
 		}
 
 	}
 
 	private static void createDatabaseConnection(ServletContext servletContext) {
+		
+		
 		String path = Config.get("dbpath");
 		String databaseUrl = path;
 		ConnectionSource connectionSource;
@@ -75,9 +79,8 @@ public class AppServletContextListener implements ServletContextListener {
 					.equals(com.j256.ormlite.db.OracleDatabaseType.class)) {
 				Cache.addToCache("dbType", "oracle");
 			} else {
-				Cache.addToCache("dbType", "oracle");
+				Cache.addToCache("dbType", "other");
 			}
-			;
 			DataSourceManager.setConnectionSource(connectionSource);
 		} catch (SQLException e) {
 			e.printStackTrace();
