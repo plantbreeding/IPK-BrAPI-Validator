@@ -79,11 +79,12 @@ public class Provider {
 	
 	
 	@JsonProperty("resource")
-	
+	@JsonIgnore
 	public Collection<Resource> getResources() {
 		return resources;
 	}
-
+	
+	@JsonProperty("resource")
 	public void setResources(Collection<Resource> resources) {
 		this.resources = resources;
 	}

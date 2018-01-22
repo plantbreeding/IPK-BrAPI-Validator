@@ -534,12 +534,11 @@ $(function() {
     function showTimeDropdown() {
         var data = resourcesData[currentResource].lastTestReports;
         $("#time_tab_0").html('');
-        var d = new Date(data[0].date);
-        $("#time_tab_0").append('<option value="0">' + d.toLocaleString() + '</option>');
-        d = new Date(data[1].date);
-        $("#time_tab_0").append('<option value="1">' + d.toLocaleString() + '</option>');
-        d = new Date(data[2].date);
-        $("#time_tab_0").append('<option value="2">' + d.toLocaleString() + '</option>');
+        var d;
+        for (var i = 0; i < data.length; i++) {
+            var d = new Date(data[i].date);
+            $("#time_tab_" + i).append('<option value="' + i + '">' + d.toLocaleString() + '</option>');
+        }
     }
 
     function showReportIfInParams() {
