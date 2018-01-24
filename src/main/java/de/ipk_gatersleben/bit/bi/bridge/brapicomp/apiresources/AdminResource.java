@@ -174,10 +174,18 @@ public class AdminResource {
         }
     }
     
+    /**
+     * Update database information using public json document.
+     *
+     * @return Empty response with status code
+     */
     @POST
     @Path("/updateproviders")
     public Response updateProviders(@Context HttpHeaders headers) {
         LOGGER.debug("New GET /admin/testallpublic call.");
+        
+        int resourcesUpdated = 0;
+        
         try {
 
             //Check auth header
@@ -223,6 +231,7 @@ public class AdminResource {
             			Resource res = it.next();
             			res.setProvider(providerJson);
             			resourceDao.create(res);
+            			resourcesUpdated++;
             		}
             		providerDao.create(providerJson);
             	} else {
@@ -243,6 +252,7 @@ public class AdminResource {
             				res.setProvider(providerDb);
             				res.setPublic(true);
             				resourceDao.create(res);
+            				resourcesUpdated++;
             			} else {
             				// Found, generate
             				resDb.setCertificate(res.getCertificate());
@@ -250,14 +260,15 @@ public class AdminResource {
             				resDb.setLogo(res.getLogo());
             				resDb.setPublic(true);
             				resourceDao.update(resDb);
+            				resourcesUpdated++;
             			}
             		}
             		providerDao.update(providerDb);
             	}
             }
 
-            
-            return Response.ok().build();
+            String response = JsonMessageManager.jsonMessage(200, "" + resourcesUpdated + " resources updated.", 2000);
+            return Response.ok().entity(response).build();
         } catch (IOException | SQLException e) {
         	e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5003);

@@ -79,7 +79,7 @@ public class TestReportService {
 		
 		trl.forEach(tr -> {
 			try {
-				endpointDao.refresh(tr.getEndpoint());
+				endpointDao.refresh(tr.getResource());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -95,7 +95,7 @@ public class TestReportService {
 	public static void deleteOlderThan(TestReport testReport) throws SQLException {
 		Dao<TestReport, UUID> testReportDao = DataSourceManager.getDao(TestReport.class);
 		DeleteBuilder<TestReport, UUID> qb = testReportDao.deleteBuilder();
-		qb.where().eq(TestReport.RESOURCE_FIELD_NAME, testReport.getEndpoint())
+		qb.where().eq(TestReport.RESOURCE_FIELD_NAME, testReport.getResource())
 			.and().lt(TestReport.DATE_FIELD_NAME, testReport.getDate());
 		qb.delete();
 	}

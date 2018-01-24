@@ -2,10 +2,12 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
 
 @DatabaseTable(tableName = "testreports")
 public class TestReport {
@@ -53,7 +57,7 @@ public class TestReport {
     }
     
     @JsonIgnore
-    public Resource getEndpoint() {
+    public Resource getResource() {
         return resource;
     }
 
@@ -111,6 +115,55 @@ public class TestReport {
     		}
     	}
     	return shortReport;
+    }
+    
+    
+    public MiniTestReport getMiniReport() throws JsonProcessingException, IOException {
+    	MiniTestReport miniReport = new MiniTestReport();
+    	List<Integer> time = new ArrayList<Integer>();
+    	List<String> totalTests = new ArrayList<String>();
+    	List<String> passedTests = new ArrayList<String>();
+    	List<String> failedTests = new ArrayList<String>();
+    	LinkedHashMap<String, LinkedHashMap<String, Object>> shortReport = this.getShortReport();
+    	for (Map.Entry<String, LinkedHashMap<String, Object>> folder : shortReport.entrySet()) {
+    		for(Map.Entry<String, Object> tests : folder.getValue().entrySet()) {
+    			if (tests.getValue().getClass().equals(LinkedHashMap.class)) {
+    				LinkedHashMap test = (LinkedHashMap) tests.getValue();
+    				if (!tests.getKey().equals("/calls")) {
+    					time.add((int) test.get("responseTime"));
+    				}
+    				totalTests.add(tests.getKey());
+    				if (((List<String>) test.get("testStatus")).isEmpty()) {
+    					passedTests.add(tests.getKey());
+    				} else {
+    					failedTests.add(tests.getKey());
+    				}
+    			}
+    		}
+    	}
+    	double median;
+    	if (time.isEmpty()) {
+    		 median = 0;
+    	} else {
+    		median = calculateMedian(time);
+    	}
+    	miniReport.setTime(median);
+    	miniReport.setPassedTests(passedTests);
+    	miniReport.setTotalTests(totalTests);
+    	miniReport.setFailedTests(failedTests);
+    	return miniReport;
+    }
+
+    
+    private double calculateMedian(List<Integer> l) {
+    	Collections.sort(l);
+    	double median;
+    	if (l.size() % 2 == 0) {
+    		median = (l.get(l.size()/2) + l.get(l.size()/2 - 1))/2;
+    	} else {
+    		median = l.get(l.size()/2);
+    	}
+    	return median;
     }
     
 }
