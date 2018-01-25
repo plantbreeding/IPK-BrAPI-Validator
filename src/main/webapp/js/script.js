@@ -247,7 +247,7 @@ $(function() {
                 });
                 endpoints = endpoints.sort(function(a, b){return a.name > b.name});
                 endpoints.forEach(function(endp) {
-                    var tr = $("<tr/>");
+                    var tr = $("<tr/>", {id: 'row-' + endp.id });
                     // Sort value, passed, and then by total reversed.
                     var sv = endp.status.passed - (endp.status.total * 0.001); 
                     tr.append("<td>" + endp.name + '</td>');
@@ -267,14 +267,14 @@ $(function() {
                     $("#endpoint_table_body").append(tr);
                 });
                 
-                if (res.length > 0) {
-                    currentResource = endpoints[0].id;
-                    showTimeDropdown();
-                    showShortReport(endpoints[0].id, 0);
-                }
-                $('#resTable').footable();
-
-
+                $('#resTable').footable({}, function(e, ft) {
+                    if (res.length > 0) {
+                        currentResource = endpoints[0].id;
+                        showTimeDropdown();
+                        showShortReport(endpoints[0].id, 0);
+                        $("#row-" + currentResource).addClass("table-active");
+                    }
+                });
             }
         });
     }
@@ -634,21 +634,11 @@ $(function() {
         $("#serverurl").on("input", updateFullUrl);
 
 
-        // Server URL list initial values
-        var resources = [
-            {
-                text:'https://test.brapi.org/brapi/v1/', 
-                value:'https://test.brapi.org/brapi/v1/'
-            },
-            {
-                text:'http://dmz-web-137.ipk-gatersleben.de:9080/breedingApi/brapi/v1/', 
-                value:'http://dmz-web-137.ipk-gatersleben.de:9080/breedingApi/brapi/v1/'
-            }
-        ];
-
         updateVisibleElements();
         $("body").on('click', '.statusbtn', function() {
             currentResource = $(this).data('id');
+            $("#resTable > tbody > tr").removeClass("table-active");
+            $("#row-" + currentResource).addClass("table-active");
             customReport.name = resourcesData[$(this).data('id')].name;
             var d = new Date(resourcesData[$(this).data('id')].date);
             customReport.date = d.toLocaleString();
