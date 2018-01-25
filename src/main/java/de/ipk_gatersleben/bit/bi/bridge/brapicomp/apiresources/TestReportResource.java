@@ -119,25 +119,38 @@ public class TestReportResource {
 		String implementedCalls = miniReport.getTotalTests().toString();
 		String successfulCalls = miniReport.getPassedTests().toString();
 		String failedCalls = miniReport.getFailedTests().toString();
-		String testTime = Double.toString(miniReport.getTime());
+		String medianTestTime = Double.toString(miniReport.getTime());
 		String linkFullTest = Config.get("baseDomain") + "/api/testreport/" + tr.getReportId().toString();
 		
 		List<String> header = Arrays.asList("resourceName", "providerName", 
 				"crop", "baseURL", "implementedCalls", "successfulCalls", 
-				"failedCalls", "testTime", "linkFullTest");
+				"failedCalls", "medianTestTime", "linkFullTest");
 		csv += CSVUtils.writeLine(header, '\t');
 		
 		List<String> values = Arrays.asList(resourceName, providerName, 
 				crop, baseURL, implementedCalls, successfulCalls, 
-				failedCalls, testTime, linkFullTest);		
+				failedCalls, medianTestTime, linkFullTest);		
 		csv += CSVUtils.writeLine(values, '\t');
 		
 		return csv;
 	}
 
-	private String generateJSONReport(TestReport tr) throws JsonProcessingException {
+	private String generateJSONReport(TestReport tr) throws IOException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		MiniTestReport miniReport = tr.getMiniReport();
+		
+		json.put("resourceName", tr.getResource().getName());
+		json.put("providerName", tr.getResource().getProvider().getName());
+		json.put("crop", tr.getResource().getCrop());
+		json.put("baseURL", tr.getResourceUrl());
+		json.put("implementedCalls", miniReport.getTotalTests());
+		json.put("successfulCalls", miniReport.getPassedTests());
+		json.put("failedCalls", miniReport.getFailedTests());
+		json.put("medianTestTime", miniReport.getTime());
+		json.put("linkFullTest", Config.get("baseDomain") + "/api/testreport/" + tr.getReportId().toString());
+		
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(tr);
+		return mapper.writeValueAsString(json);
 	}
 
 }
