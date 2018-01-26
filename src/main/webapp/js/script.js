@@ -428,7 +428,7 @@ $(function() {
                         reason = ' <small>(missing required resources)</small>';
                         allSkipped = false;
                         color = 'info';
-                        iconName = 'exclamation-circle';
+                        iconName = 'question-circle';
                         totalTests += 1;
                         break;
                     case 'skipped':
@@ -438,10 +438,25 @@ $(function() {
                         iconName = 'minus-circle';
                         break;
                     default:
-                        reason = ' <small>(' + status + ')</small>';
-                        allSkipped = false;
-                        color = 'danger';
-                        iconName = 'times-circle';
+                        var failed = false;
+                        for (var k = 0; k < folder[test].testStatus.length; k++) {
+                            if (folder[test].testStatus[k] == 'wrong status code' ||
+                                folder[test].testStatus[k] == 'wrong contentType' ||
+                                folder[test].testStatus[k] == "can't connect") {
+                                failed = true;
+                            }
+                        }
+                        if (failed) {
+                            reason = ' <small>(' + status + ')</small>';
+                            allSkipped = false;
+                            color = 'danger';
+                            iconName = 'times-circle';
+                        } else {
+                            reason = ' <small>(' + status + ')</small>';
+                            allSkipped = false;
+                            color = 'warning';
+                            iconName = 'exclamation-triangle';
+                        }
                         totalTests += 1;
                         break;
                 }
