@@ -49,33 +49,8 @@ $(function() {
         $("#multiURL").html("");
     }
 
-    // Update data test description
-    var updateTestDescription = function() {
-        $("#testDescription").html(dataTests[$("#dataTest").val()].description);
-        //Activate the more... link if it is included.
-        $("#descMoreLink").click(function() {$(this).hide()});
-    }
 
-    // Update the form's visible elements
-    function updateVisibleElements () {
-        $("#paramListDiv").html("");
-        paramList.length = 0;
-        $("#dataTest").prop('disabled', true);
-        $("#dataTestDiv").hide();
-        $("#resourceDiv").hide();
-        $("#testDescriptionDiv").hide();
-        $("#testresource").prop('disabled', true);
-        if ($("input[name=test]:checked").val() === 'structure') {
-            $("#resourceDiv").show();
-            $("#testresource").prop('disabled', false);
-        } else if ($("input[name=test]:checked").val() === 'data'){
-            $("#dataTestDiv").show();
-            $("#dataTest").prop('disabled', false);
-            updateTestDescription();
-            $("#testDescriptionDiv").show();
-        }
-        updateFullUrl();
-    }
+
 
     // Calculate the full url given a resource.
     function getFullUrl(res) {
@@ -634,7 +609,7 @@ $(function() {
         $("#serverurl").on("input", updateFullUrl);
 
 
-        updateVisibleElements();
+        updateFullUrl();
         $("body").on('click', '.statusbtn', function() {
             currentResource = $(this).data('id');
             $("#resTable > tbody > tr").removeClass("table-active");
