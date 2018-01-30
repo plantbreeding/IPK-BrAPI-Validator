@@ -66,20 +66,43 @@ $(function() {
     function generateStats(data) {
         var time = [];
         var totalTests = 0;
+        var warningTests = 0;
         var passedTests = 0;
         var folders = Object.keys(data.shortReport);
+        // Iterate through folders
         for (var i = 0; i < folders.length; i++) {
             var folder = data.shortReport[folders[i]];
             var tests = Object.keys(folder);
+            // Iterate through tests
             for (var j = 0; j < tests.length; j++) {
                 var test = folder[tests[j]];
-                if (typeof(test) !== 'string') { //String is skipped
+                if (typeof(test) !== 'string') { //String is skipped, doesn't count for Total.
+                    
+                    // Store time, but not for /calls
                     if (tests[j] !== '/calls') {
                         time.push(test.responseTime)
                     }
+
                     totalTests++;
+                    // If there are no status strings, the test is passed.
                     if (test.testStatus.length === 0) {
                         passedTests++;
+                    
+                    } else {
+                        var failed = false;
+                        // Count as failed only if it fails for the following reasons.
+
+                        for (var k = 0; k < test.testStatus.length; k++) {
+                            if (test.testStatus[k] == 'wrong status code' ||
+                                test.testStatus[k] == 'wrong contentType' ||
+                                test.testStatus[k] == "can't connect") {
+                                failed = true;
+                            }
+                        }
+                        // If not failed but has error messages, count as warning.
+                        if (!failed) {
+                            warningTests++;
+                        }
                     }
                 }
             }
@@ -91,6 +114,7 @@ $(function() {
         return {
             total: totalTests,
             passed: passedTests,
+            warning: warningTests,
             respTime: respTime
         };
     }
@@ -232,6 +256,7 @@ $(function() {
                     tr.append('<td><a target="_blank" href="' + endp.url 
                         + '">' + endp.shortUrl + '</a>' + '</td>');
                     tr.append('<td data-sort-value="'+ sv +'"class="statusCol"><strong>' + endp.status.passed 
+                        + '</strong>/<strong>' + endp.status.warning
                         + '</strong>/<strong>' + endp.status.total 
                         + '</strong><small> tests</small> <small>' 
                         + '<u data-toggle="tooltip" data-placement="top" title="Median response time, excluding /calls.">'
@@ -505,9 +530,6 @@ $(function() {
 
             if (allSkipped) {
                 cat.className += ' collapse skipped_test_' + tabIndex;
-                //catWrapper.setAttribute('class', 'collapse');
-                //header.attr('aria-expanded', 'false');
-                //header.addClass('collapsed');
             }
             cat.innerHTML += header[0].outerHTML;
             cat.innerHTML += catWrapper.outerHTML;
@@ -525,9 +547,10 @@ $(function() {
         var data = resourcesData[currentResource].lastTestReports;
         $("#time_tab_0").html('');
         var d;
+        console.log(data)
         for (var i = 0; i < data.length; i++) {
             var d = new Date(data[i].date);
-            $("#time_tab_" + i).append('<option value="' + i + '">' + d.toLocaleString() + '</option>');
+            $("#time_tab_0").append('<option value="' + i + '">' + d.toLocaleString() + '</option>');
         }
     }
 
@@ -576,36 +599,6 @@ $(function() {
         doneTestDOM.text(''); //Empty list;
         doneTestDOM.append(shortReport);
         $('[data-toggle="tooltip"]').tooltip() //Enable tooltips (for cache notice)
-    }
-
-    function printPDF(name, timestamp, index) {
-        var doc = new jsPDF();
-
-        var title = doc.splitTextToSize('Test report for: ' + name, 180)
-        doc.text(15, 20, title);
-        
-        doc.setFontType("italic");
-        doc.setFontSize(10);
-
-        
-        doc.text(170, 10, timestamp);
-        doc.setFontType("normal");
-        // We'll make our own renderer to skip this editor
-        var specialElementHandlers = {
-            '#editor': function(element, renderer){
-                return true;
-            },
-            '.controls': function(element, renderer){
-                return true;
-            }
-        };
-
-        doc.fromHTML($('#srList_' + index).get(0), 15, 30, {
-            'width': 170, 
-            'elementHandlers': specialElementHandlers
-        });
-
-        doc.save('Test report.pdf');
     }
 
     // Initializes variables, forms, listeners...

@@ -59,7 +59,7 @@ public class AppServletContextListener implements ServletContextListener {
 		createTables();
 		buildDaos();
 		setupScheduler(e.getServletContext());
-		if (Config.get("proxy") != null) {
+		if (Config.get("http.proxyHost") != null) {
 			RestAssured.proxy(Config.get("http.proxyHost"), Integer.parseInt(Config.get("http.proxyPort")));
 		}
 

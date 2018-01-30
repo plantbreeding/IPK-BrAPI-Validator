@@ -120,7 +120,7 @@ public class TestItemRunner {
 
                 if (ter != null && !ter.isPassed() && breakIfFalse) {
                     String msg = "Test failed. Won't continue testing this resource.";
-                    LOGGER.debug(msg);
+                    LOGGER.info(msg);
                     ter.addMessage(msg);
                     tir.addTest(ter);
                     tir.addTestStatus(ter.getType());
@@ -147,7 +147,7 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport saveVariable(String path, String variableName) {
-        LOGGER.debug("Store variable: " + variableName + " | " + path);
+        LOGGER.info("Store variable: " + variableName + " | " + path);
         String json = this.vr.extract().asString();
         ObjectMapper mapper = new ObjectMapper();
         TestExecReport ter = new TestExecReport("Save variable at: " + path + " | Key: " + variableName, false);
@@ -173,7 +173,7 @@ public class TestItemRunner {
      * @return TestItemResult
      */
     private TestExecReport isEqual(String path, String variableName) {
-        LOGGER.debug("Test equality: " + variableName + " | " + path);
+        LOGGER.info("Test equality: " + variableName + " | " + path);
         String json = this.vr.extract().asString();
         TestExecReport ter = new TestExecReport("Value in path: \"" + path + "\" equals variable: " + variableName, false);
         ter.setType("data inconsistency");
@@ -207,11 +207,11 @@ public class TestItemRunner {
      * @return server response
      */
     private ValidatableResponse connect() {
-        LOGGER.debug("New Request. URL: " + this.url);
+        LOGGER.info("New Request. URL: " + this.url);
         ValidatableResponse vr = getResponseIfCached(60);
         if (vr != null) {
             this.cached = true;
-            LOGGER.debug("Using cached URL: " + this.url);
+            LOGGER.info("Using cached URL: " + this.url);
             return vr;
         }
 
@@ -220,20 +220,20 @@ public class TestItemRunner {
                     .request(this.method, this.url)
                     .then();
         } catch (AssertionError e) {
-            LOGGER.debug("Connection error");
-            LOGGER.debug("== cause ==");
-            LOGGER.debug(e.getMessage());
+            LOGGER.info("Connection error");
+            LOGGER.info("== cause ==");
+            LOGGER.info(e.getMessage());
             return null;
         } catch (IllegalArgumentException e) {
-            LOGGER.debug("Connection error. Missing arguments");
-            LOGGER.debug("== cause ==");
-            LOGGER.debug(e.getMessage());
+            LOGGER.info("Connection error. Missing arguments");
+            LOGGER.info("== cause ==");
+            LOGGER.info(e.getMessage());
             return null;
         } catch (Exception e) {
         	if (e.getClass().equals(SSLHandshakeException.class)) {
-        		LOGGER.debug("Connection error");
-                LOGGER.debug("== cause ==");
-                LOGGER.debug(e.getMessage());
+        		LOGGER.info("Connection error");
+                LOGGER.info("== cause ==");
+                LOGGER.info(e.getMessage());
                 return null;
         	}
         }
@@ -274,20 +274,20 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport statusCode(int i) {
-        LOGGER.debug("Testing Status Code");
+        LOGGER.info("Testing Status Code");
         TestExecReport tr = new TestExecReport("Status code is " + i, false);
         tr.setType("wrong status code");
         int statusCode = vr.extract().response().getStatusCode();
         try {
             vr.statusCode(i);
         } catch (AssertionError e1) {
-            LOGGER.debug("Wrong Status code");
-            LOGGER.debug("== cause ==");
-            LOGGER.debug(e1.getMessage());
+            LOGGER.info("Wrong Status code");
+            LOGGER.info("== cause ==");
+            LOGGER.info(e1.getMessage());
             tr.addMessage("Response Status code: " + statusCode);
             return tr;
         }
-        LOGGER.debug("Status Code Test Passed");
+        LOGGER.info("Status Code Test Passed");
         tr.setPassed(true);
         tr.addMessage("Response Status code: " + statusCode);
         return tr;
@@ -300,20 +300,18 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport contentType(String ct) {
-        LOGGER.debug("Testing ContentType");
+        LOGGER.info("Testing ContentType");
         TestExecReport tr = new TestExecReport("ContentType is " + ct, false);
         tr.setType("wrong ContentType");
         String responseCT = vr.extract().response().header("Content-Type");
-        try {
-            vr.contentType(ct);
-        } catch (AssertionError e1) {
-            LOGGER.debug("Wrong content type");
-            LOGGER.debug("== cause ==");
-            LOGGER.debug(e1.getMessage());
+        if (!responseCT.equals(ct)) {
+        	LOGGER.info("Wrong content type");
+            LOGGER.info("== cause ==");
+            LOGGER.info("Response Content-Type ("+responseCT+") different than expected Content-Type("+ct+")");
             tr.addMessage("Response Content Type: " + responseCT);
             return tr;
         }
-        LOGGER.debug("ContentType Test Passed");
+        LOGGER.info("ContentType Test Passed");
         tr.setPassed(true);
         tr.addMessage("Response Content Type: " + responseCT);
         return tr;
@@ -326,7 +324,7 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport schemaMatch(String p) {
-        LOGGER.debug("Testing Schema");
+        LOGGER.info("Testing Schema");
         TestExecReport tr = new TestExecReport("Json matches schema: " + p, false);
         tr.setType("wrong schema");
         tr.setSchema(p);
@@ -336,12 +334,12 @@ public class TestItemRunner {
 
             ProcessingReport r = schemaValidator.validate(p, jsonString);
             if (r.isSuccess()) {
-                LOGGER.debug("Schema Test Passed");
+                LOGGER.info("Schema Test Passed");
                 tr.addMessage("Response structure matches schema.");
                 tr.setPassed(true);
 
             } else {
-                LOGGER.debug("Schema Test Failed");
+                LOGGER.info("Schema Test Failed");
                 tr.addMessage("Response structure doesn't match schema.");
                 r.forEach(message -> tr.addError(message.asJson()));
             }
@@ -350,16 +348,16 @@ public class TestItemRunner {
 
         } catch (JsonParseException e1) {
 
-            LOGGER.debug("Invalid response");
-            LOGGER.debug("== cause ==");
-            LOGGER.debug(e1.getMessage());
+            LOGGER.info("Invalid response");
+            LOGGER.info("== cause ==");
+            LOGGER.info(e1.getMessage());
             tr.addMessage("Server response is not valid JSON.");
             return tr;
         } catch (AssertionError | IOException | ProcessingException e1) {
-            LOGGER.debug("Doesn't match schema");
-            LOGGER.debug("== cause ==");
+            LOGGER.info("Doesn't match schema");
+            LOGGER.info("== cause ==");
             e1.printStackTrace();
-            LOGGER.debug(e1.getMessage());
+            LOGGER.info(e1.getMessage());
             tr.addMessage(e1.getMessage());
             return tr;
         }
@@ -372,7 +370,7 @@ public class TestItemRunner {
      * @return TestItemReport
      */
     private TestExecReport saveCalls() {
-        LOGGER.debug("Saving Calls");
+        LOGGER.info("Saving Calls");
         TestExecReport tr = new TestExecReport("Saving /calls", false);
         tr.setType("error parsing /calls");
         String json = this.vr.extract().asString();
@@ -385,13 +383,13 @@ public class TestItemRunner {
             }
         } catch (AssertionError | IOException e1) {
         	e1.printStackTrace();
-            LOGGER.debug("Wrong content type");
-            LOGGER.debug("== cause ==");
-            LOGGER.debug(e1.getMessage());
+            LOGGER.info("Error parsing calls");
+            LOGGER.info("== cause ==");
+            LOGGER.info(e1.getMessage());
             tr.addMessage("Error parsing /calls");
             return tr;
         }
-        LOGGER.debug("Saved /calls");
+        LOGGER.info("Saved /calls");
         tr.setPassed(true);
         tr.addMessage("Saved /calls");
         return tr;

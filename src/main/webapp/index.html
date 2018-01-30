@@ -53,23 +53,24 @@
                     </div>
                     <table id="resTable" class="table table-hover mb-0" data-sorting="true">
                       <thead>
-                        <th scope="col" data-sorted="true">
+                        <th scope="col" data-sorted="true" class="align-top">
                           Name
                         </th>
-                        <th data-breakpoints="all" scope="col">
+                        <th data-breakpoints="all" scope="col" class="align-top">
                           Description
                         </th>
-                        <th data-breakpoints="xs sm md" scope="col">
+                        <th data-breakpoints="xs sm md" scope="col" class="align-top">
                           Provider
                         </th>
-                        <th data-breakpoints="xs" scope="col">
+                        <th data-breakpoints="xs" scope="col" class="align-top">
                           Crop
                         </th>
-                        <th data-breakpoints="all" scope="col">
+                        <th data-breakpoints="all" scope="col" class="align-top">
                           Base url
                         </th>                   
-                        <th scope="col">
-                          Status
+                        <th scope="col" class="align-top">
+                          Status<br/>
+                          <small class="text-muted">passed/warning/total</small>
                         </th>
                       </thead>
                       <tbody id="endpoint_table_body">
@@ -84,9 +85,6 @@
                       <div class="d-flex">
                         <select id="time_tab_0" class="form-control">
                         </select>
-                        <div class="input-group-append ml-1">
-                          <button class="btn btn-outline-secondary" id="pdfTest_0" title="Download report in PDF"><i class="fa fa-file-o" aria-hidden="true"></i></button>
-                        </div>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -148,7 +146,6 @@
                       <div>
                         <span id="time_tab_1">
                         </span>
-                        <button class="btn btn-outline-secondary" id="pdfTest_1" title="Download report in PDF"><i class="fa fa-file-o" aria-hidden="true"></i></button>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -175,7 +172,6 @@
                       <div>
                         <span id="time_tab_2">
                         </span>
-                        <button class="btn btn-outline-secondary" id="pdfTest_2" title="Download report in PDF"><i class="fa fa-file-o" aria-hidden="true"></i></button>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -316,7 +312,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="js/spin.min.js"></script>
   <script src="js/footable.min.js"></script>
-  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
   <script src="js/script.js"></script>
   <!-- Matomo -->
   <script type="text/javascript">

@@ -7,6 +7,7 @@ public class MiniTestReport {
 	List<String> totalTests;
 	List<String> passedTests;
 	List<String> failedTests;
+	List<String> warningTests;
 	
 	public MiniTestReport() {
 		super();
@@ -37,5 +38,13 @@ public class MiniTestReport {
 	}
 	public void setFailedTests(List<String> failedTests) {
 		this.failedTests = failedTests;
+	}
+
+	public List<String> getWarningTests() {
+		return warningTests;
+	}
+
+	public void setWarningTests(List<String> warningTests) {
+		this.warningTests = warningTests;
 	}
 }

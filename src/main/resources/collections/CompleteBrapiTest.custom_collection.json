@@ -23,7 +23,7 @@
 							"listen": "test",
 							"type": "text/plain",
 							"exec": [
-								"StatusCode:200:breakiffalse",
+								"StatusCode:200",
 								"ContentType:application/json",
 								"Schema:/metadata",
 								"Schema:/calls",
