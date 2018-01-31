@@ -123,6 +123,7 @@ public class TestReport {
     	List<Integer> time = new ArrayList<Integer>();
     	List<String> totalTests = new ArrayList<String>();
     	List<String> passedTests = new ArrayList<String>();
+    	List<String> warningTests = new ArrayList<String>();
     	List<String> failedTests = new ArrayList<String>();
     	LinkedHashMap<String, LinkedHashMap<String, Object>> shortReport = this.getShortReport();
     	for (Map.Entry<String, LinkedHashMap<String, Object>> folder : shortReport.entrySet()) {
@@ -133,10 +134,26 @@ public class TestReport {
     					time.add((int) test.get("responseTime"));
     				}
     				totalTests.add(tests.getKey());
-    				if (((List<String>) test.get("testStatus")).isEmpty()) {
+    				List<String> testStatus = (List<String>) test.get("testStatus");
+    				if (testStatus.isEmpty()) {
     					passedTests.add(tests.getKey());
     				} else {
-    					failedTests.add(tests.getKey());
+    					boolean failed = false;
+    					// Count as failed only if it fails for the following reasons.
+    					for (String reason : testStatus) {
+    						if (reason.equals("wrong status code") ||
+    							reason.equals("wrong contentType") ||
+    							reason.equals("can't connect")) {
+    							failed = true;
+    						}
+    					}
+    					if (failed) {
+    						failedTests.add(tests.getKey());
+    					} else {
+    						warningTests.add(tests.getKey());
+    					}
+    					
+    					
     				}
     			}
     		}
@@ -151,6 +168,7 @@ public class TestReport {
     	miniReport.setPassedTests(passedTests);
     	miniReport.setTotalTests(totalTests);
     	miniReport.setFailedTests(failedTests);
+    	miniReport.setWarningTests(warningTests);
     	return miniReport;
     }
 

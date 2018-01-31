@@ -116,20 +116,24 @@ public class TestReportResource {
 		String providerName = tr.getResource().getProvider().getName();
 		String crop = tr.getResource().getCrop();
 		String baseURL = tr.getResourceUrl();
-		String implementedCalls = miniReport.getTotalTests().toString();
-		String successfulCalls = miniReport.getPassedTests().toString();
+		String warningCalls = miniReport.getWarningTests().toString();
 		String failedCalls = miniReport.getFailedTests().toString();
+		String testedCalls = miniReport.getTotalTests().toString();
+		String warningCallsCount = ""+miniReport.getWarningTests().size();
+		String failedCallsCount = ""+miniReport.getFailedTests().size();
+		String testedCallsCount = ""+miniReport.getTotalTests().size();
 		String medianTestTime = Double.toString(miniReport.getTime());
-		String linkFullTest = Config.get("baseDomain") + "/api/testreport/" + tr.getReportId().toString();
+		String linkFullTest = Config.get("baseDomain") + "?report=" + tr.getReportId().toString();
 		
 		List<String> header = Arrays.asList("resourceName", "providerName", 
-				"crop", "baseURL", "implementedCalls", "successfulCalls", 
-				"failedCalls", "medianTestTime", "linkFullTest");
+				"crop", "baseURL", "warningCalls", 
+				"failedCalls", "testedCalls","warningCallsCount", 
+				"failedCallsCount", "testedCallsCount", "medianTestTimeMS", "linkFullTest");
 		csv += CSVUtils.writeLine(header, '\t');
 		
 		List<String> values = Arrays.asList(resourceName, providerName, 
-				crop, baseURL, implementedCalls, successfulCalls, 
-				failedCalls, medianTestTime, linkFullTest);		
+				crop, baseURL, warningCalls, 
+				failedCalls, testedCalls, warningCallsCount, failedCallsCount, testedCallsCount, medianTestTime, linkFullTest);		
 		csv += CSVUtils.writeLine(values, '\t');
 		
 		return csv;
@@ -140,14 +144,14 @@ public class TestReportResource {
 		MiniTestReport miniReport = tr.getMiniReport();
 		
 		json.put("resourceName", tr.getResource().getName());
-		json.put("providerName", tr.getResource().getProvider().getName());
+		json.put("roviderName", tr.getResource().getProvider().getName());
 		json.put("crop", tr.getResource().getCrop());
 		json.put("baseURL", tr.getResourceUrl());
 		json.put("implementedCalls", miniReport.getTotalTests());
 		json.put("successfulCalls", miniReport.getPassedTests());
 		json.put("failedCalls", miniReport.getFailedTests());
-		json.put("medianTestTime", miniReport.getTime());
-		json.put("linkFullTest", Config.get("baseDomain") + "/api/testreport/" + tr.getReportId().toString());
+		json.put("medianTestTimeMS", miniReport.getTime());
+		json.put("linkFullTest", Config.get("baseDomain") + "?report=" + tr.getReportId().toString());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(json);

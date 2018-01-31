@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <p>
-<p>This is your BrAVa ${frequency} report.</p>
+<p>This is your BRAVA ${frequency} report.</p>
 
 <p>As you requested, we tested your server located at:</p>
 
@@ -25,6 +25,12 @@ ${failList}
 <p>Check the full report here:</p>
 <p><a href="${baseDomain}?report=${reportId}">${baseDomain}?report=${reportId}</a></p>
 
+<p>Or in JSON format:</p>
+<p><a href="${baseDomain}/api/testreport/${reportId}">${baseDomain}/api/testreport/${reportId}</a></p>
+
+<p>Get a CSV summary of the report:</p>
+<p><a href="${baseDomain}/api/shortreport/${reportId}/csv">${baseDomain}/api/shortreport/${reportId}/csv</a></p>
+
 ${prevReports}
 
 <p>Change the test frequency by clicking on the corresponding link</p>
@@ -36,7 +42,7 @@ ${prevReports}
 
 <p>If you have any questions or feedback feel free to contact us at ${contactEmail}.</p>
 
-<p>Thanks for using BrAVa!</p>
+<p>Thanks for using BRAVA!</p>
 
 <p>${senderName}</p>
 
