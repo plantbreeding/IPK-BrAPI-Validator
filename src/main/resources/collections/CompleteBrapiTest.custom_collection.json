@@ -63,6 +63,28 @@
 					]
 				},
 				{
+					"name": "POST /germplasm-search",
+					"endpoint": "/germplasm-search",
+					"description": "Tests schema and stores first and second germplasmDbId",
+					"requires":[],
+					"request": {
+						"url": "{baseurl}/germplasm-search",
+						"method": "POST"
+					},
+					"event": [
+						{
+							"listen": "test",
+							"type": "text/plain",
+							"exec": [
+								"StatusCode:200:breakiffalse",
+								"ContentType:application/json",
+								"Schema:/metadata",
+								"Schema:/germplasm-search"
+							]
+						}
+					]
+				},
+				{
 					"name": "/germplasm/{germplasmDbId}",
 					"endpoint": "/germplasm/{germplasmDbId}",
 					"description": "Tests schema using stored germplasmDbId and checks id",
