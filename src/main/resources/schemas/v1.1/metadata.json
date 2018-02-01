@@ -1,7 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"title": "metadata",
-	"id": "resource:/schemas/metadata.json#",
 	"description": "test for the presence of metadata object",
 	"type": "object",
 	"properties": {
