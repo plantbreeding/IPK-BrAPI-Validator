@@ -547,7 +547,6 @@ $(function() {
         var data = resourcesData[currentResource].lastTestReports;
         $("#time_tab_0").html('');
         var d;
-        console.log(data)
         for (var i = 0; i < data.length; i++) {
             var d = new Date(data[i].date);
             $("#time_tab_0").append('<option value="' + i + '">' + d.toLocaleString() + '</option>');
