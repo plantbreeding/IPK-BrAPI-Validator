@@ -326,7 +326,7 @@ public class TestItemRunner {
     private TestExecReport schemaMatch(String p) {
         LOGGER.info("Testing Schema");
         TestExecReport tr = new TestExecReport("Json matches schema: " + p, false);
-        tr.setType("wrong schema");
+        tr.setType("schema mismatch");
         tr.setSchema(p);
         String jsonString = vr.extract().response().asString();
         try {
