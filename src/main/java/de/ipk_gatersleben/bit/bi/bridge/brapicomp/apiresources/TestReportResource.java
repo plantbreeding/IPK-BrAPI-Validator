@@ -113,7 +113,6 @@ public class TestReportResource {
 		MiniTestReport miniReport = tr.getMiniReport();
 		// Columns
 		String resourceName = tr.getResource().getName();
-		String providerName = tr.getResource().getProvider().getName();
 		String crop = tr.getResource().getCrop();
 		String baseURL = tr.getResourceUrl();
 		String warningCalls = miniReport.getWarningTests().toString();
@@ -125,13 +124,13 @@ public class TestReportResource {
 		String medianTestTime = Double.toString(miniReport.getTime());
 		String linkFullTest = Config.get("baseDomain") + "?report=" + tr.getReportId().toString();
 		
-		List<String> header = Arrays.asList("resourceName", "providerName", 
+		List<String> header = Arrays.asList("resourceName", 
 				"crop", "baseURL", "warningCalls", 
 				"failedCalls", "testedCalls","warningCallsCount", 
 				"failedCallsCount", "testedCallsCount", "medianTestTimeMS", "linkFullTest");
 		csv += CSVUtils.writeLine(header, '\t');
 		
-		List<String> values = Arrays.asList(resourceName, providerName, 
+		List<String> values = Arrays.asList(resourceName,
 				crop, baseURL, warningCalls, 
 				failedCalls, testedCalls, warningCallsCount, failedCallsCount, testedCallsCount, medianTestTime, linkFullTest);		
 		csv += CSVUtils.writeLine(values, '\t');
@@ -144,7 +143,6 @@ public class TestReportResource {
 		MiniTestReport miniReport = tr.getMiniReport();
 		
 		json.put("resourceName", tr.getResource().getName());
-		json.put("roviderName", tr.getResource().getProvider().getName());
 		json.put("crop", tr.getResource().getCrop());
 		json.put("baseURL", tr.getResourceUrl());
 		json.put("implementedCalls", miniReport.getTotalTests());
