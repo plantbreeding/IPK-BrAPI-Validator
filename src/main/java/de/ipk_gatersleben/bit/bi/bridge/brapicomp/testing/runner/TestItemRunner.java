@@ -155,6 +155,9 @@ public class TestItemRunner {
         try {
             JsonNode root = mapper.readTree(json);
             JsonNode value = root.at(path);
+            if (value.asText().equals("")) {
+            	throw new IllegalArgumentException("Value is empty string or was not found.");
+            }
             this.variables.setVariable(variableName, value);
             ter.setPassed(true);
             ter.addMessage("Stored value: " + value);
@@ -275,7 +278,7 @@ public class TestItemRunner {
      */
     private TestExecReport statusCode(int i) {
         LOGGER.info("Testing Status Code");
-        TestExecReport tr = new TestExecReport("Status code is " + i, false);
+        TestExecReport tr = new TestExecReport("Status code should be " + i, false);
         tr.setType("wrong status code");
         int statusCode = vr.extract().response().getStatusCode();
         try {
