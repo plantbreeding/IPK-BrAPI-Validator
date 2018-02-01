@@ -100,7 +100,7 @@
 						"properties": {
 							"donorAccessionNumber": {"type": ["string", "null"]},
 							"donorInstituteCode": {"type": ["string", "null"]},
-							"donorGermplasmPUI": {"type": ["string", "null"]}
+							"germplasmPUI": {"type": ["string", "null"]}
 						},
 						"additionalProperties": false
 					}
