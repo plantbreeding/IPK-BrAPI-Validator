@@ -3,7 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -17,8 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Cache;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.RestAssuredRequest;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestExecReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
@@ -211,12 +208,6 @@ public class TestItemRunner {
      */
     private ValidatableResponse connect() {
         LOGGER.info("New Request. URL: " + this.url);
-        ValidatableResponse vr = getResponseIfCached(60);
-        if (vr != null) {
-            this.cached = true;
-            LOGGER.info("Using cached URL: " + this.url);
-            return vr;
-        }
 
         try {
             vr = given()
@@ -240,34 +231,7 @@ public class TestItemRunner {
                 return null;
         	}
         }
-        saveResponseToCache(vr);
         return vr;
-    }
-
-    private void saveResponseToCache(ValidatableResponse vr) {
-        String key = method + ":" + url;
-        long time = System.currentTimeMillis();
-        Cache.addRequest(key, new RestAssuredRequest(vr, time));
-    }
-
-    /**
-     * Get a cached response if not stale
-     *
-     * @param sec Number of seconds to consider previous response stale.
-     * @return Response if not stale, null if stale.
-     */
-    private ValidatableResponse getResponseIfCached(int sec) {
-        String key = method + ":" + url;
-        RestAssuredRequest req = Cache.getRequest(key);
-        if (req == null) {
-            return null;
-        }
-        long age = System.currentTimeMillis() - req.getTimestamp();
-        long millis = (long) sec * 1000;
-        if (age < millis) {
-            return req.getVr();
-        }
-        return null;
     }
 
     /**
