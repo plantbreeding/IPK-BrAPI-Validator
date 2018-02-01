@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "/studies/studyDbId/observationunits",
+    "title": "/phenotypes-search",
     "type": "object",
     "properties": {
         "result": {
@@ -19,23 +19,20 @@
                             "blockNumber": {
                                 "type": ["string", "null"]
                             },
-                            "entryNumber": {
-                                "type": ["string", "null"]
-                            },
-                            "entryType": {
-                                "type": ["string", "null"]
-                            },
                             "germplasmDbId": {
-                                "type": ["string", "null"]
+                                "type": "string"
                             },
                             "germplasmName": {
                                 "type": ["string", "null"]
                             },
+                            "observationLevel": {
+                                "type": ["string", "null"]
+                            },
+                            "observationLevels": {
+                                "type": ["string", "null"]
+                            },
                             "observationUnitDbId": {
                                 "type": "string"
-                            },
-                            "observationUnitName": {
-                                "type": ["string", "null"]
                             },
                             "observationUnitXref": {
                                 "items": {
@@ -76,12 +73,14 @@
                                         "observationVariableName": {
                                             "type": ["string", "null"]
                                         },
+                                        "season": {
+                                            "type": ["string", "null"]
+                                        },
                                         "value": {
-                                            "type": "string"
+                                            "type": ["string", "null"]
                                         }
                                     },
                                     "required": [
-                                        "value",
                                         "observationVariableDbId",
                                         "observationDbId"
                                     ],
@@ -90,22 +89,56 @@
                                 "minItems": 1,
                                 "type": "array"
                             },
-                            "pedigree": {
-                                "type": ["string", "null"]
-                            },
                             "plantNumber": {
                                 "type": ["string", "null"]
                             },
                             "plotNumber": {
                                 "type": ["string", "null"]
                             },
+                            "programName": {
+                                "type": ["string", "null"]
+                            },
                             "replicate": {
                                 "type": ["string", "null"]
+                            },
+                            "studyDbId": {
+                                "type": "string"
+                            },
+                            "studyLocation": {
+                                "type": ["string", "null"]
+                            },
+                            "studyLocationDbId": {
+                                "type": "string"
+                            },
+                            "studyName": {
+                                "type": ["string", "null"]
+                            },
+                            "treatments": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "factor": {
+                                            "type": "string"
+                                        },
+                                        "modality": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "modality",
+                                        "factor"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": ["array", "null"]
                             }
                         },
                         "required": [
+                            "studyLocationDbId",
                             "observationUnitDbId",
-                            "observations"
+                            "observations",
+                            "studyDbId",
+                            "germplasmDbId"
                         ],
                         "type": "object"
                     },

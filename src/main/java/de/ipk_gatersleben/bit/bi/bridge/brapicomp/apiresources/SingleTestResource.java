@@ -74,7 +74,7 @@ public class SingleTestResource {
             if (name.equals("all")) {
             	// All non-parametric tests.
             	
-                String collectionResource = "/collections/SimpleStructureTest.custom_collection.json";
+                String collectionResource = "/collections/SimpleStructureTest.v1.0.json";
 
                 InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
                 TestCollection tc = mapper.readValue(inJson, TestCollection.class);

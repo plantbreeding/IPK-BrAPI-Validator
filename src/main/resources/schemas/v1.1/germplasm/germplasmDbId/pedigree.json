@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/germplasm/id/pedigree",
+	"type": "object",
+	"properties": {
+		"result": {
+			"type": "object",
+				"properties":{
+					"germplasmDbId": {"type": "string"},
+					"defaultDisplayName": {"type": "string"},
+					"pedigree": {"type": "string"},
+					"parent1DbId": {"type": ["string", "null"]},
+					"parent2DbId": {"type": ["string", "null"]}
+
+				},
+				"required": ["germplasmDbId", "defaultDisplayName", "pedigree"],
+				"additionalProperties": false	
+		}
+	},
+	"required": ["result"]
+
+}

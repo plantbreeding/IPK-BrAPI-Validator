@@ -145,7 +145,7 @@ public class AdminResource {
             
             ObjectMapper mapper = new ObjectMapper();
 
-            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
+            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.v1.0.json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 
             List<Resource> publicResources = ResourceService.getAllPublicEndpoints();

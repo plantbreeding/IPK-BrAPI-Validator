@@ -25,8 +25,8 @@
 							"exec": [
 								"StatusCode:200",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/calls",
+								"Schema:/v1/metadata",
+								"Schema:/v1/calls",
 								"SaveCalls"
 							]
 						}
@@ -54,8 +54,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm-search",
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm-search",
 								"GetValue:/result/data/0/germplasmDbId:germplasmDbId",
 								"GetValue:/result/data/1/germplasmDbId:germplasmDbId1"
 							]
@@ -78,8 +78,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm-search"
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm-search"
 							]
 						}
 					]
@@ -100,8 +100,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm/germplasmDbId",
 								"IsEqual:/result/germplasmDbId:germplasmDbId"
 							]
 						}
@@ -123,8 +123,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm/germplasmDbId",
 								"IsEqual:/result/germplasmDbId:germplasmDbId1"
 							]
 						}
@@ -146,8 +146,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId/pedigree",
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm/germplasmDbId/pedigree",
 								"IsEqual:/result/germplasmDbId:germplasmDbId"
 							]
 						}
@@ -169,8 +169,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId/markerprofiles",
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm/germplasmDbId/markerprofiles",
 								"IsEqual:/result/germplasmDbId:germplasmDbId"
 							]
 						}
@@ -192,8 +192,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/germplasm/germplasmDbId/attributes",
+								"Schema:/v1/metadata",
+								"Schema:/v1/germplasm/germplasmDbId/attributes",
 								"IsEqual:/result/germplasmDbId:germplasmDbId"
 							]
 						}
@@ -221,8 +221,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/attributes"
+								"Schema:/v1/metadata",
+								"Schema:/v1/attributes"
 							]
 						}
 					]
@@ -243,8 +243,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/attributes/categories"
+								"Schema:/v1/metadata",
+								"Schema:/v1/attributes/categories"
 							]
 						}
 					]
@@ -271,8 +271,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markers",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markers",
 								"GetValue:/result/data/0/markerDbId:markerDbId0",
 								"GetValue:/result/data/1/markerDbId:markerDbId1"
 							]
@@ -295,8 +295,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markers/markerDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markers/markerDbId",
 								"IsEqual:/result/markerDbId:markerDbId0"
 							]
 						}
@@ -317,8 +317,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markers/markerDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markers/markerDbId",
 								"IsEqual:/result/markerDbId:markerDbId1"
 							]
 						}
@@ -346,8 +346,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markerprofiles",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markerprofiles",
 								"GetValue:/result/data/0/markerprofileDbId:markerprofileDbId",
 								"GetValue:/result/data/1/markerprofileDbId:markerprofileDbId1"
 
@@ -371,8 +371,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markerprofiles",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markerprofiles",
 								"IsEqual:/result/data/0/germplasmDbId:germplasmDbId"
 							]
 						}
@@ -394,8 +394,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markerprofiles/markerprofileDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markerprofiles/markerprofileDbId",
 								"IsEqual:/result/markerprofileDbId:markerprofileDbId"
 							]
 						}
@@ -417,8 +417,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/markerprofiles/markerprofileDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/markerprofiles/markerprofileDbId",
 								"IsEqual:/result/markerprofileDbId:markerprofileDbId1"
 							]
 						}
@@ -440,8 +440,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/allelematrix-search"
+								"Schema:/v1/metadata",
+								"Schema:/v1/allelematrix-search"
 							]
 						}
 					]
@@ -462,8 +462,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/allelematrix-search"
+								"Schema:/v1/metadata",
+								"Schema:/v1/allelematrix-search"
 							]
 						}
 					]
@@ -490,8 +490,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/programs"
+								"Schema:/v1/metadata",
+								"Schema:/v1/programs"
 							]
 						}
 					]
@@ -518,8 +518,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/crops"
+								"Schema:/v1/metadata",
+								"Schema:/v1/crops"
 							]
 						}
 					]
@@ -546,8 +546,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/trials",
+								"Schema:/v1/metadata",
+								"Schema:/v1/trials",
 								"GetValue:/result/data/0/trialDbId:trialDbId0",
 								"GetValue:/result/data/1/trialDbId:trialDbId1"
 							]
@@ -570,8 +570,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/trials/trialDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/trials/trialDbId",
 								"IsEqual:/result/trialDbId:trialDbId0"
 							]
 						}
@@ -593,8 +593,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/trials/trialDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/trials/trialDbId",
 								"IsEqual:/result/trialDbId:trialDbId1"
 							]
 						}
@@ -622,8 +622,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/seasons"
+								"Schema:/v1/metadata",
+								"Schema:/v1/seasons"
 							]
 						}
 					]
@@ -644,8 +644,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studyTypes"
+								"Schema:/v1/metadata",
+								"Schema:/v1/studyTypes"
 							]
 						}
 					]
@@ -666,8 +666,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies-search",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies-search",
 								"GetValue:/result/data/0/studyDbId:studyDbId",
 								"GetValue:/result/data/1/studyDbId:studyDbId1"
 							]
@@ -690,8 +690,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId",
 								"IsEqual:/result/studyDbId:studyDbId"
 							]
 						}
@@ -713,8 +713,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId",
 								"IsEqual:/result/studyDbId:studyDbId1"
 							]
 						}
@@ -736,8 +736,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId/observationVariables",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId/observationVariables",
 								"IsEqual:/result/data/0/studyDbId:studyDbId",
 								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId"
 							]
@@ -760,8 +760,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId/germplasm",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId/germplasm",
 								"IsEqual:/result/data/0/studyDbId:studyDbId"
 							]
 						}
@@ -783,8 +783,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/observationLevels"
+								"Schema:/v1/metadata",
+								"Schema:/v1/observationLevels"
 							]
 						}
 					]
@@ -805,8 +805,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId/observationunits"
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId/observationunits"
 							]
 						}
 					]
@@ -827,8 +827,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId/table"
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId/table"
 							]
 						}
 					]
@@ -849,8 +849,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId/layout",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId/layout",
 								"IsEqual:/result/data/studyDbId:studyDbId"
 							]
 						}
@@ -872,8 +872,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/studies/studyDbId/observations",
+								"Schema:/v1/metadata",
+								"Schema:/v1/studies/studyDbId/observations",
 								"IsEqual:/result/data/0/studyDbId:studyDbId",
 								"IsEqual:/result/data/0/observationVariableDbId:observationVariableDbId"
 							]
@@ -902,8 +902,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/phenotypes-search"
+								"Schema:/v1/metadata",
+								"Schema:/v1/phenotypes-search"
 							]
 						}
 					]
@@ -930,8 +930,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/traits",
+								"Schema:/v1/metadata",
+								"Schema:/v1/traits",
 								"GetValue:/result/data/0/traitDbId:traitDbId",
 								"GetValue:/result/data/1/traitDbId:traitDbId1"
 							]
@@ -954,8 +954,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/traits/traitDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/traits/traitDbId",
 								"IsEqual:/result/traitDbId:traitDbId"
 							]
 						}
@@ -977,8 +977,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/traits/traitDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/traits/traitDbId",
 								"IsEqual:/result/traitDbId:traitDbId1"
 							]
 						}
@@ -1006,8 +1006,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/variables/datatypes"
+								"Schema:/v1/metadata",
+								"Schema:/v1/variables/datatypes"
 							]
 						}
 					]
@@ -1028,8 +1028,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/variables",
+								"Schema:/v1/metadata",
+								"Schema:/v1/variables",
 								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId2",
 								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId3"
 							]
@@ -1052,8 +1052,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/variables/observationVariableDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/variables/observationVariableDbId",
 								"IsEqual:/result/observationVariableDbId:observationVariableDbId2"
 							]
 						}
@@ -1075,8 +1075,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/variables/observationVariableDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/variables/observationVariableDbId",
 								"IsEqual:/result/observationVariableDbId:observationVariableDbId3"
 							]
 						}
@@ -1098,8 +1098,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/ontologies"
+								"Schema:/v1/metadata",
+								"Schema:/v1/ontologies"
 							]
 						}
 					]
@@ -1126,8 +1126,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/maps",
+								"Schema:/v1/metadata",
+								"Schema:/v1/maps",
 								"GetValue:/result/data/0/mapDbId:mapDbId"
 							]
 						}
@@ -1149,8 +1149,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/maps/mapDbId",
+								"Schema:/v1/metadata",
+								"Schema:/v1/maps/mapDbId",
 								"IsEqual:/result/mapDbId:mapDbId"
 							]
 						}
@@ -1172,8 +1172,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/maps/mapDbId/positions",
+								"Schema:/v1/metadata",
+								"Schema:/v1/maps/mapDbId/positions",
 								"GetValue:/result/data/0/linkageGroup:linkageGroupId"
 							]
 						}
@@ -1195,8 +1195,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/maps/mapDbId/positions/linkageGroupId"
+								"Schema:/v1/metadata",
+								"Schema:/v1/maps/mapDbId/positions/linkageGroupId"
 							]
 						}
 					]
@@ -1223,8 +1223,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/locations",
+								"Schema:/v1/metadata",
+								"Schema:/v1/locations",
 								"GetValue:/result/data/0/locationDbId:locationDbId"
 							]
 						}
@@ -1246,8 +1246,8 @@
 							"exec": [
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
-								"Schema:/metadata",
-								"Schema:/locations",
+								"Schema:/v1/metadata",
+								"Schema:/v1/locations",
 								"IsEqual:/result/locationDbId:locationDbId"
 							]
 						}
