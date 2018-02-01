@@ -3,8 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.RestAssuredRequest;
-
 /**
  * Application cache
  *

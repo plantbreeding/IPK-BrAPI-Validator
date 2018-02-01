@@ -1,20 +1,15 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -25,18 +20,12 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.j256.ormlite.dao.Dao;
-
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.MiniTestReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.CSVUtils;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.DataSourceManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 
 /**

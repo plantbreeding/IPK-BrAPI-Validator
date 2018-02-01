@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,8 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
 
 @DatabaseTable(tableName = "testreports")
 public class TestReport {
@@ -129,7 +126,7 @@ public class TestReport {
     	for (Map.Entry<String, LinkedHashMap<String, Object>> folder : shortReport.entrySet()) {
     		for(Map.Entry<String, Object> tests : folder.getValue().entrySet()) {
     			if (tests.getValue().getClass().equals(LinkedHashMap.class)) {
-    				LinkedHashMap test = (LinkedHashMap) tests.getValue();
+    				LinkedHashMap<String, Object> test = (LinkedHashMap<String, Object>) tests.getValue();
     				if (!tests.getKey().equals("/calls")) {
     					time.add((int) test.get("responseTime"));
     				}

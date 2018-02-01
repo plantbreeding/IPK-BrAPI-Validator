@@ -6,8 +6,6 @@ import static org.quartz.CronScheduleBuilder.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Properties;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

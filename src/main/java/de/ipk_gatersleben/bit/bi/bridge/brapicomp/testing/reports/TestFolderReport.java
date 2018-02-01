@@ -3,7 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * Homologous of config.Folder, groups Test results

@@ -3,10 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Event;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Folder;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Request;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestFolderReport;
@@ -18,7 +15,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorag
 public class TestCollectionRunner {
     private String url;
     private TestCollection testCollection;
-    private VariableStorage variableStorage;
+    //private VariableStorage variableStorage;
 
     /**
      * Constructor

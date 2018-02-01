@@ -3,8 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * Contains information about one config. Item collection of tests (ExecReports). Mostly test results and
  * some information about the request.

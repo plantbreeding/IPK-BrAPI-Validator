@@ -3,7 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 import java.util.Collection;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.j256.ormlite.field.DataType;
