@@ -1,5 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -98,11 +100,11 @@ public class Resource implements Comparable<Resource> {
 	public Resource() {
 	}
 
-	public Resource(String url) {
-		this.url = url;
+	public Resource(String url) throws MalformedURLException {
+		this.setUrl(url);
 	}
 
-	public Resource(String u, String e, String f) throws IllegalArgumentException {
+	public Resource(String u, String e, String f) throws IllegalArgumentException, MalformedURLException {
 		this.setUrl(u);
 		this.setEmail(e);
 		this.setFrequency(f);
@@ -115,8 +117,12 @@ public class Resource implements Comparable<Resource> {
 		return id;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrl(String url) throws MalformedURLException {
+		URL u = new URL(url);
+		if (u.getPort() != 80 && u.getPort() != -1) {
+			throw new IllegalArgumentException();
+		}
+		this.url = u.toString();
 	}
 
 	/**

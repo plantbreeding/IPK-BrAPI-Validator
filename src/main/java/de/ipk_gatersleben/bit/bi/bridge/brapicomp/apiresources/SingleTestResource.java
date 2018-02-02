@@ -78,6 +78,10 @@ public class SingleTestResource {
             
             
             return Response.ok().entity(report).build();
+        } catch (IllegalArgumentException e) {
+        	e.printStackTrace();
+            String e1 = JsonMessageManager.jsonMessage(400, "invalid URL: port must be 80", 5201);
+            return Response.status(Status.BAD_REQUEST).entity(e1).build();
         } catch (IOException e) {
             //Thrown by .getResourceAsStream(""). Most probably because of missing file or wrong config structure.
             e.printStackTrace();
