@@ -142,8 +142,8 @@ $(function() {
                 statusBar.hide();
                 var d = new Date(data.date);
                 customReport.name = name;
-                customReport.date = d.toLocaleString();
-                $("#time_tab_1").html('<small><em>' + d.toLocaleString() + '</em></small>');
+                customReport.date = d.toLocaleDateString();
+                $("#time_tab_1").html('<small><em>' + d.toLocaleDateString() + '</em></small>');
                 showCustomShortReport(data.shortReport, 1);
             },
             error: function(a) {
@@ -549,7 +549,7 @@ $(function() {
         var d;
         for (var i = 0; i < data.length; i++) {
             var d = new Date(data[i].date);
-            $("#time_tab_0").append('<option value="' + i + '">' + d.toLocaleString() + '</option>');
+            $("#time_tab_0").append('<option value="' + i + '">' + d.toLocaleDateString() + '</option>');
         }
     }
 
@@ -568,8 +568,8 @@ $(function() {
             success: function(data) {
                 var d = new Date(data.date);
                 linkedReport.name = data.resourceUrl;
-                linkedReport.date = d.toLocaleString();
-                $("#time_tab_2").html('<small><em>' + d.toLocaleString() + '</em></small>');
+                linkedReport.date = d.toLocaleDateString();
+                $("#time_tab_2").html('<small><em>' + d.toLocaleDateString() + '</em></small>');
                 $("#srTitle_2").text(data.resourceUrl);
                 showCustomShortReport(data.shortReport, 2);
             },
@@ -623,7 +623,7 @@ $(function() {
             $("#row-" + currentResource).addClass("table-active");
             customReport.name = resourcesData[$(this).data('id')].name;
             var d = new Date(resourcesData[$(this).data('id')].date);
-            customReport.date = d.toLocaleString();
+            customReport.date = d.toLocaleDateString();
             showTimeDropdown();
             showShortReport($(this).data('id'), 0);
         });
@@ -634,7 +634,7 @@ $(function() {
 
         $("#pdfTest_0").click(function() {
             var d = new Date(resourcesData[currentResource].lastTestReports[0].date);
-            printPDF(resourcesData[currentResource].name, d.toLocaleString(), 0);
+            printPDF(resourcesData[currentResource].name, d.toLocaleDateString(), 0);
         });
         $("#pdfTest_1").click(function() {
             printPDF(customReport.name, customReport.date, 1);
