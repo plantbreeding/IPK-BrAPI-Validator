@@ -131,3 +131,10 @@ body {
 .statusCol {
   width: 170px;
 }
+
+.nav-right {
+  margin: 0 0 -1px auto;
+}
+.select-nav {
+  padding: .45rem 1rem;
+}

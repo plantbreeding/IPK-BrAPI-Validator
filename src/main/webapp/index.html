@@ -21,7 +21,7 @@
               <a href="./" class="link-unstyled">BRAVA</a>
             </h1>            
             <p class="text-center lead"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) Validator</p>
-            <p class="text-center">BRAVA is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a> (v1.0).</p>
+            <p class="text-center">BRAVA is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a>.</p>
             <button class="btn btn-sm btn-link float-right" data-toggle="modal" data-target="#helpModal">How does it work?</button>
           </div>
         </div>
@@ -29,7 +29,7 @@
       <div class="row justify-content-md-center">
         <div class="col-xl-10">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link active" id="resources-tab" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="true">BrAPI Resources</a>
             </li>
             <li class="nav-item">
@@ -37,6 +37,12 @@
             </li>
             <li id="tabSavedReport" class="nav-item" style="display: none">
               <a class="nav-link" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report" aria-selected="false">Saved report</a>
+            </li>
+            <li id="tabSavedReport" class="nav-item nav-right">
+              <select class="nav-link active select-nav">
+                <option value="1.0">BrAPI v1.0</option>
+                <option value="1.1" selected>BrAPI v1.1</option>
+              </select>
             </li>
           </ul>
         </div>
