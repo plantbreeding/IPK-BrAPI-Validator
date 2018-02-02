@@ -21,7 +21,7 @@
               <a href="./" class="link-unstyled">BRAVA</a>
             </h1>            
             <p class="text-center lead"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) Validator</p>
-            <p class="text-center">BRAVA is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a>.</p>
+            <p class="text-center">BRAVA is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a> (v1.1).</p>
             <button class="btn btn-sm btn-link float-right" data-toggle="modal" data-target="#helpModal">How does it work?</button>
           </div>
         </div>
@@ -37,12 +37,6 @@
             </li>
             <li id="tabSavedReport" class="nav-item" style="display: none">
               <a class="nav-link" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report" aria-selected="false">Saved report</a>
-            </li>
-            <li id="tabSavedReport" class="nav-item nav-right">
-              <select class="nav-link active select-nav">
-                <option value="1.0">BrAPI v1.0</option>
-                <option value="1.1" selected>BrAPI v1.1</option>
-              </select>
             </li>
           </ul>
         </div>
@@ -127,6 +121,15 @@
                           <small id="serverHelp">Enter your own server or test the public servers available in the official BrAPI repository.</small>
                         </div>
                         <div class="form-group">
+                          <label for="brapiversion">
+                            BrAPI Version
+                          </label>
+                          <select id="brapiversion" class="form-control" name="brapiversion">
+                            <option value="1.0">v1.0</option>
+                            <option value="1.1" selected>v1.1</option>
+                          </select>
+                        </div>  
+                        <div class="form-group">
                           <label for="fullurl">Tested URL<span id="multiURL"></span></label>
                           <br>
                           <div id="fullUrl" class="font-14">
@@ -138,7 +141,7 @@
                           <button type="submit" class="btn btn-primary">Test it now! (it may take a few minutes)</button>
                           <!-- Button trigger modal -->
                           <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#scheduleModal">
-                            Schedule a periodic automated test
+                            Schedule a periodic test
                           </button>
                         </div>
                       </form>
