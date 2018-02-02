@@ -149,7 +149,7 @@ $(function() {
             error: function(a) {
                 spinner.stop();
                 if (a.status === 400) {
-                    var message = JSON.parse(a.responseText).metadata.status[0].message;
+                    var message = JSON.parse(a.responseText).message;
                     statusBar.show(message);
                 } else if (a.status === 404) {
                     statusBar.show("Can't connect to the server.");
