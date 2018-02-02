@@ -271,7 +271,7 @@ public class TestItemRunner {
         TestExecReport tr = new TestExecReport("ContentType is " + ct, false);
         tr.setType("wrong ContentType");
         String responseCT = vr.extract().response().header("Content-Type");
-        if (!responseCT.equals(ct)) {
+        if (!responseCT.contains(ct)) {
         	LOGGER.info("Wrong content type");
             LOGGER.info("== cause ==");
             LOGGER.info("Response Content-Type ("+responseCT+") different than expected Content-Type("+ct+")");
