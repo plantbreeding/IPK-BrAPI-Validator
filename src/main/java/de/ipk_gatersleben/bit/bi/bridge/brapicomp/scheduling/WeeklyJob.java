@@ -11,6 +11,7 @@ import org.quartz.JobExecutionException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
@@ -23,7 +24,7 @@ public class WeeklyJob implements org.quartz.Job {
        LOGGER.info("Weekly is executing.");
        ObjectMapper mapper = new ObjectMapper();
 
-       InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.custom_collection.json");
+       InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + Config.get("scheduledVersion") + ".json");
        TestCollection tc;
 		try {
 			tc = mapper.readValue(inJson, TestCollection.class);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,13 +45,16 @@ public class SingleTestResource {
     @GET
     @Path("/call")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response callTest(@QueryParam("url") String url) {
+    public Response callTest(@QueryParam("url") String url, @QueryParam("brapiversion") @DefaultValue("") String version) {
 
         LOGGER.debug("New GET /call call.");
         try {
-
             if (url.equals("")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
+                return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
+            }
+            if (!version.equals("v1.0") && !version.equals("v1.1")) {
+                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
             try {
@@ -63,7 +67,7 @@ public class SingleTestResource {
             
             ObjectMapper mapper = new ObjectMapper();
 
-            collectionResource = "/collections/CompleteBrapiTest.v1.1.json";
+            collectionResource = "/collections/CompleteBrapiTest." + version + ".json";
 
             InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);

@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -132,7 +134,7 @@ public class AdminResource {
      */
     @GET
     @Path("/testallpublic")
-    public Response generalTest(@Context HttpHeaders headers) {
+    public Response generalTest(@Context HttpHeaders headers, @QueryParam("version") @DefaultValue("") String version) {
 
         LOGGER.debug("New GET /admin/testallpublic call.");
         try {
@@ -142,10 +144,14 @@ public class AdminResource {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
+            if (!version.equals("v1.0") && !version.equals("v1.1")) {
+                String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
+                return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
+            }
             
             ObjectMapper mapper = new ObjectMapper();
 
-            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest.v1.0.json");
+            InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + version +".json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
 
             List<Resource> publicResources = ResourceService.getAllPublicEndpoints();
