@@ -85,7 +85,7 @@
 						"type": "object",
 						"properties": {
 							"sourceName" : {"type": ["string", "null"]},
-							"TaxonId": {"type": ["string", "null"]}
+							"taxonId": {"type": ["string", "null"]}
 						},
 						"additionalProperties": false
 					}
