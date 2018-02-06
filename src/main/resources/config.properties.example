@@ -4,8 +4,8 @@ dbuser=
 dbpass=
 dbpath=
 # Only if you have a proxy
-proxy=
-proxyport=
+http.proxyHost=
+http.proxyPort=
 # Admin key used for admin API (call scheduled tests, etc)
 adminkey=
 # SMTP host to send emails with reports
@@ -18,3 +18,6 @@ fromPersonalName=
 senderName=
 contactEmail=
 baseDomain=http://www.example.com/brapivalidator/
+
+resourceJsonUrl=https://raw.githubusercontent.com/plantbreeding/API/master/brapi-resources.json
+testedVersion=v1.1
