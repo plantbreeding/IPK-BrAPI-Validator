@@ -119,7 +119,8 @@ public class Resource implements Comparable<Resource> {
 
 	public void setUrl(String url) throws MalformedURLException {
 		URL u = new URL(url);
-		if (u.getPort() != 80 && u.getPort() != -1) {
+		if ((System.getProperty("advancedMode") != null && System.getProperty("advancedMode").equals("true"))
+			&& u.getPort() != 80 && u.getPort() != -1) {
 			throw new IllegalArgumentException();
 		}
 		this.url = u.toString();

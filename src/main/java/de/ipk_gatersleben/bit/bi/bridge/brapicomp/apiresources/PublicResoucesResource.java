@@ -13,6 +13,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
@@ -34,6 +35,10 @@ public class PublicResoucesResource {
     @Path("/resources")
     @Produces(MediaType.APPLICATION_JSON)
     public Response resources() {
+
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_IMPLEMENTED).build();
+        }
 
         LOGGER.debug("New GET /public/resources");
         

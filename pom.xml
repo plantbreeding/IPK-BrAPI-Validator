@@ -9,7 +9,9 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+		<webappHome>src/main/webapp</webappHome>
 	</properties>
+
 	<build>
 		<finalName>BrAPI-validator</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -32,7 +34,7 @@
 					    <targetPath>schemas</targetPath>
 					  </resource>
 					</webResources>
-					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<warSourceDirectory>${webappHome}</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
@@ -44,7 +46,7 @@
 					<scanIntervalSeconds>1</scanIntervalSeconds>
 					<scanTargetPatterns>
 						<scanTargetPattern>
-							<directory>src/main/webapp</directory>
+							<directory>${webappHome}</directory>
 							<includes>
 								<include>**/*.xml</include>
 								<include>**/*.properties</include>

@@ -24,6 +24,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.j256.ormlite.dao.Dao;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.EmailManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.ci.TemplateHTML;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
@@ -54,6 +55,10 @@ public class ContinuousIntegrationResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createEndpoint(@Context HttpHeaders headers,
                                    Resource res) {
+
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
 
         LOGGER.debug("New POST /ci/resources call.");
         
@@ -101,6 +106,10 @@ public class ContinuousIntegrationResource {
     public Response changeFrequency(@Context HttpHeaders headers,
                                    @PathParam("resId") String resId, @QueryParam("frequency") String frequency) {
 
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
         LOGGER.debug("New GET /ci/resources/{resourceId}/frequency call. Id: " + resId);
         
         try {
@@ -134,6 +143,10 @@ public class ContinuousIntegrationResource {
     @Path("/confirmation")
     @Produces(MediaType.TEXT_HTML)
     public Response confirm(@QueryParam("key") String resId) {
+
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
 
         LOGGER.debug("New GET /ci/confirm call. EndpointId: " + resId);
 
@@ -169,6 +182,10 @@ public class ContinuousIntegrationResource {
     @Produces(MediaType.TEXT_HTML)
     public Response deleteEndpoint(@QueryParam("key") String resId,
                                    @Context HttpHeaders headers) {
+
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
 
         LOGGER.debug("New DELETE /ci/unsubscribe call. EndpointId: " + resId);
 

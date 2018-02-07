@@ -43,6 +43,9 @@ public class TestReportResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getReport(@PathParam("reportId") String reportId) {
 
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_IMPLEMENTED).build();
+        }
     	LOGGER.debug("New GET /testreport call. Id: " + reportId);
         try {
             TestReport tr = TestReportService.getReport(reportId);
@@ -70,6 +73,9 @@ public class TestReportResource {
     @Produces({MediaType.APPLICATION_JSON, "text/csv"})
     public Response resourcesReport(@PathParam("reportId") String reportId, @PathParam("format") String format) {
 
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_IMPLEMENTED).build();
+        }
         LOGGER.debug("New GET /shortreport/" + format + ". Id: " + reportId);
         
         if (!format.equalsIgnoreCase("csv") && !format.equalsIgnoreCase("json")) {

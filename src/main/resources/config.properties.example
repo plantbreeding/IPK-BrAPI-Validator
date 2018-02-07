@@ -1,11 +1,14 @@
 # Edit this with your parameters and change the name to config.properties
+# Only if you have a proxy
+proxy=
+proxyport=
+
+# ONLY REQUIRED FOR ADVANCED MODE
+
 # H2 Username, password and path
 dbuser=
 dbpass=
 dbpath=
-# Only if you have a proxy
-proxy=
-proxyport=
 # Admin key used for admin API (call scheduled tests, etc)
 adminkey=
 # SMTP host to send emails with reports

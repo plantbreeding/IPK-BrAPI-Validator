@@ -57,11 +57,6 @@ public class SingleTestResource {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-            try {
-				ApiResourceService.saveStat("/test/call");
-			} catch (SQLException e) {
-				// Do nothing.
-			}
             
             String collectionResource;
             

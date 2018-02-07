@@ -68,6 +68,10 @@ public class AdminResource {
     public Response createEndpoint(@Context HttpHeaders headers,
                                    Resource res) {
 
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
         LOGGER.debug("New POST /admin/resources call.");
         
         Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
@@ -105,6 +109,10 @@ public class AdminResource {
     public Response createProvider(@Context HttpHeaders headers,
                                    Provider prov) {
 
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
         LOGGER.debug("New POST /admin/provider call.");
         
         Dao<Provider, UUID> providerDao = DataSourceManager.getDao(Provider.class);
@@ -136,7 +144,12 @@ public class AdminResource {
     @Path("/testallpublic")
     public Response generalTest(@Context HttpHeaders headers, @QueryParam("version") @DefaultValue("") String version) {
 
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
         LOGGER.debug("New GET /admin/testallpublic call.");
+        System.out.println("Hello");
         try {
 
             //Check auth header
@@ -146,6 +159,7 @@ public class AdminResource {
             }
             if (!version.equals("v1.0") && !version.equals("v1.1")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
+                System.out.println(jsonError);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
             
@@ -153,9 +167,9 @@ public class AdminResource {
 
             InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + version +".json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
-
+            System.out.println(tc);
             List<Resource> publicResources = ResourceService.getAllPublicEndpoints();
-            
+            System.out.println(publicResources);
             publicResources.forEach(resource -> {
             	try {
 					RunnerService.TestEndpointWithCallAndSaveReport(resource, tc);
@@ -163,6 +177,7 @@ public class AdminResource {
 					e.printStackTrace();
 				} 
             });
+            System.out.println("Done");
             return Response.ok().build();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -179,6 +194,11 @@ public class AdminResource {
     @POST
     @Path("/updateproviders")
     public Response updateProviders(@Context HttpHeaders headers) {
+        
+        if (System.getProperty("advancedMode") == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+        
         LOGGER.debug("New GET /admin/testallpublic call.");
         
         int resourcesUpdated = 0;

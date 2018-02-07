@@ -22,7 +22,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 import io.restassured.response.ValidatableResponse;
-
+import io.restassured.RestAssured;
 /**
  * Run tests for an item element.
  */
@@ -208,9 +208,9 @@ public class TestItemRunner {
      */
     private ValidatableResponse connect() {
         LOGGER.info("New Request. URL: " + this.url);
-
+        RestAssured.useRelaxedHTTPSValidation();
         try {
-            vr = given()
+            vr =    given()
                     .request(this.method, this.url)
                     .then();
         } catch (AssertionError e) {

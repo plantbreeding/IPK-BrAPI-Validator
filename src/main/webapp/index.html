@@ -30,13 +30,7 @@
         <div class="col-xl-10">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item active">
-              <a class="nav-link active" id="resources-tab" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="true">BrAPI Resources</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="testyourown-tab" data-toggle="tab" href="#testyourown" role="tab" aria-controls="testyourown" aria-selected="false">Test your own</a>
-            </li>
-            <li id="tabSavedReport" class="nav-item" style="display: none">
-              <a class="nav-link" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report" aria-selected="false">Saved report</a>
+              <a class="nav-link active" id="testyourown-tab" data-toggle="tab" href="#testyourown" role="tab" aria-controls="testyourown" aria-selected="true">Test your own</a>
             </li>
           </ul>
         </div>
@@ -44,66 +38,7 @@
       <div class="row justify-content-md-center mt-4">
         <div class="col-xl-10">
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane show active" id="resources" role="tabpanel" aria-labelledby="resources-tab">
-              <div class="row justify-content-md-center">
-                <div class="col-lg-7">
-                  <div class="card bg-light">
-                    <div class="card-header card-default">
-                      <span class="card-title"><i class="fa fa-table"></i> BrAPI Resources <small>taken from the <a href="https://github.com/plantbreeding/API/blob/master/brapi-resources.json">BrAPI repository</a></small></span>
-                    </div>
-                    <table id="resTable" class="table table-hover mb-0" data-sorting="true">
-                      <thead>
-                        <th scope="col" data-sorted="true" class="align-top">
-                          Name
-                        </th>
-                        <th data-breakpoints="all" scope="col" class="align-top">
-                          Description
-                        </th>
-                        <th data-breakpoints="xs sm md" scope="col" class="align-top">
-                          Provider
-                        </th>
-                        <th data-breakpoints="xs" scope="col" class="align-top">
-                          Crop
-                        </th>
-                        <th data-breakpoints="all" scope="col" class="align-top">
-                          Base url
-                        </th>                   
-                        <th scope="col" class="align-top">
-                          Status<br/>
-                          <small class="text-muted">passed/warning/total</small>
-                        </th>
-                      </thead>
-                      <tbody id="endpoint_table_body">
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="col-lg-5">
-                  <div class="card bg-light">
-                    <div class="card-header card-default d-flex justify-content-between">
-                      <div><strong><span class="card-title" id="srTitle"></span></strong></div>
-                      <div class="d-flex">
-                        <select id="time_tab_0" class="form-control">
-                        </select>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test_0" aria-expanded="false" aria-controls="skipped_test_0">
-                          <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
-                        </a>
-                      </div>
-                      <div class="pr-3">
-                        <small>Median response time: <span id="srTime_0"></span>ms</small>
-                      </div>
-                    </div>
-                    <div class="list-group" id="srList_0">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="testyourown" role="tabpanel" aria-labelledby="testyourown-tab">
+            <div class="tab-pane active" id="testyourown" role="tabpanel" aria-labelledby="testyourown-tab">
               <div class="row">
                 <div class="col-xl-7" id="formCol">
                   <div class="card bg-light">
@@ -139,10 +74,6 @@
                         <div id="statusBar" class="alert alert-danger hidden" role="alert">...</div>
                         <div class="d-flex justify-content-between">
                           <button type="submit" class="btn btn-primary">Test it now! (it may take a few minutes)</button>
-                          <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#scheduleModal">
-                            Schedule a periodic test
-                          </button>
                         </div>
                       </form>
                     </div>
@@ -172,32 +103,6 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="report" role="tabpanel" aria-labelledby="report-tab">
-              <div class="row justify-content-md-center">
-                <div class="col-xl-7">
-                  <div class="card bg-light">
-                    <div class="card-header card-default d-flex justify-content-between">
-                      <div>Test result: <span class="card-title" id="srTitle_2"></span></div>
-                      <div>
-                        <span id="time_tab_2">
-                        </span>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <a class="btn btn-sm btn-link" data-toggle="collapse" href=".skipped_test_2" aria-expanded="false" aria-controls="skipped_test_2">
-                          <span aria-hidden="true">Toggle tests not present in the resource /calls</span>
-                        </a>
-                      </div>
-                      <div class="pr-3">
-                        <small>Median response time: <span id="srTime_2"></span>ms</small>
-                      </div>
-                    </div>
-                    <div class="list-group" id="srList_2"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -212,82 +117,6 @@
         <a href="https://www.leibniz-gemeinschaft.de/en/home/"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/sign01.png" class="footer-logo"></a>
       </div>
     </footer>
-    <!-- Modal -->
-    <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <form id="modalForm">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Set up a periodic report.</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Register your endpoint here and we'll test it periodically.</p>
-              <p>You'll get an email where you can see at a glance how your BrAPI server development is going.</p>
-              <div class="form-group">
-                <label for="serverUrlModal">
-                  Server URL
-                </label>
-                <input type="url" name="url" id="serverUrlModal" class="form-control font-14" placeholder="https://www.brapiserver.com/brapi/v1/" required>
-                <div class="invalid-feedback">Please provide a valid URL.</div>
-              </div>
-              <div class="form-group">
-                <label for="emailModal">
-                  Email
-                </label>
-                <input type="email" name="email" id="emailModal" class="form-control font-14" aria-describedby="emailHelp" placeholder="dev@brapiserver.com" autocomplete="email" required>
-                <small id="emailHelp">You can stop the test schedule using the unsubscribe link in the test report e-mails</small>
-                <div class="invalid-feedback">Please provide a valid email.</div>
-              </div>
-              <div class="form-check">
-                <label for="daily" class="form-check-label">
-                  <input type="radio" name="frequency" id="daily" value="daily" class="form-check-input">
-                  Daily report
-                </label>
-              </div>
-              <div class="form-check">
-                <label for="weekly" class="form-check-label">
-                  <input type="radio" name="frequency" id="weekly" value="weekly" class="form-check-input" checked>
-                  Weekly report
-                </label>
-              </div>
-              <div class="form-check">
-                <label for="monthly" class="form-check-label">
-                  <input type="radio" name="frequency" id="monthly" value="monthly" class="form-check-input">
-                  Monthly report
-                </label>
-              </div>
-              <div class="form-check mt-3">
-                <strong>Add to resource list</strong>
-                <label for="submitToRepo" class="form-check-label mt-1">
-                  <input type="checkbox" name="submitToRepo" id="submitToRepo" class="form-check-input">
-                  Check this if you want to submit your server to be added to the resource list.
-                </label>
-              </div>
-              <div class="form-group" id="cropSpeciesForm" style="display: none">
-                <label for="cropSpecies">
-                  Crop species
-                </label>
-                <input type="text" name="cropSpecies" id="cropSpecies" class="form-control font-14" placeholder="wheat, barely, multi-crop...">
-                <div class="invalid-feedback">Please provide a valid input.</div>
-              </div>
-              <div class="alert alert-success" role="alert" id="modalSuccess" style="display:none">
-                <i class="fa fa-check" aria-hidden="true"></i> Got it! <span class="modalMessage"></span>
-              </div>
-              <div class="alert alert-danger" role="alert" id="modalFailure" style="display:none">
-                <i class="fa fa-frown-o" aria-hidden="true"></i> Oops! There was something wrong. <span id="modalMessage"></span>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" id="modalSubmit">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
     <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -320,27 +149,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="js/spin.min.js"></script>
-  <script src="js/footable.min.js"></script>
   <script src="js/script.js"></script>
-  <!-- Matomo -->
-  <script type="text/javascript">
-    var _paq = _paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-    _paq.push(["setCookieDomain", "*.webapps.ipk-gatersleben.de"]);
-    _paq.push(["setDomains", ["*.webapps.ipk-gatersleben.de/brapivalidator","*.webapps.ipk-gatersleben.de/brapivalidator"]]);
-    _paq.push(["setDoNotTrack", true]);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="//webstats.ipk-gatersleben.de/";
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', '9']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
-  <noscript><p><img src="//webstats.ipk-gatersleben.de/piwik.php?idsite=9&rec=1" style="border:0;" alt="" /></p></noscript>
-  <!-- End Matomo Code -->
 </body>
 </html>

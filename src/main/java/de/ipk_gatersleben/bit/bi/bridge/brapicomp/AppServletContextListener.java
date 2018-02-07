@@ -40,23 +40,26 @@ public class AppServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		try {
-			DataSourceManager.closeConnectionSource();
-			SchedulerManager.getScheduler().shutdown();
+		if (System.getProperty("advancedMode") != null && System.getProperty("advancedMode").equals("true")) {
+			try {
+				DataSourceManager.closeConnectionSource();
+				SchedulerManager.getScheduler().shutdown();
 
-		} catch (IOException | SchedulerException e) {
-			e.printStackTrace();
+			} catch (IOException | SchedulerException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
 		Config.init();
-		
-		createDatabaseConnection(e.getServletContext());
-		createTables();
-		buildDaos();
-		setupScheduler(e.getServletContext());
+		if (System.getProperty("advancedMode") != null && System.getProperty("advancedMode").equals("true")) {
+			createDatabaseConnection(e.getServletContext());
+			createTables();
+			buildDaos();
+			setupScheduler(e.getServletContext());
+		}
 		if (Config.get("http.proxyHost") != null) {
 			RestAssured.proxy(Config.get("http.proxyHost"), Integer.parseInt(Config.get("http.proxyPort")));
 		}

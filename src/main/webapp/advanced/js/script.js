@@ -603,6 +603,12 @@ $(function() {
     // Initializes variables, forms, listeners...
     function main () {
 
+        showReportIfInParams();
+
+        populateServerTable();
+
+        updateCropForm()
+
         // Remove initial /calls option as it is replaced by the one on the tests list.
         $(".del").remove();
 
@@ -611,6 +617,31 @@ $(function() {
 
 
         updateFullUrl();
+        $("body").on('click', '.statusbtn', function() {
+            currentResource = $(this).data('id');
+            $("#resTable > tbody > tr").removeClass("table-active");
+            $("#row-" + currentResource).addClass("table-active");
+            customReport.name = resourcesData[$(this).data('id')].name;
+            var d = new Date(resourcesData[$(this).data('id')].date);
+            customReport.date = d.toLocaleDateString();
+            showTimeDropdown();
+            showShortReport($(this).data('id'), 0);
+        });
+        $("#time_tab_0").change(function(){
+            var value = $(this).val();
+            showShortReport(currentResource, value);
+        });
+
+        $("#pdfTest_0").click(function() {
+            var d = new Date(resourcesData[currentResource].lastTestReports[0].date);
+            printPDF(resourcesData[currentResource].name, d.toLocaleDateString(), 0);
+        });
+        $("#pdfTest_1").click(function() {
+            printPDF(customReport.name, customReport.date, 1);
+        });
+        $("#pdfTest_2").click(function() {
+            printPDF(linkedReport.name, linkedReport.date, 2);
+        });
 
     }
     main();
