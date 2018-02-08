@@ -21,3 +21,6 @@ fromPersonalName=
 senderName=
 contactEmail=
 baseDomain=http://www.example.com/brapivalidator/
+
+resourceJsonUrl=https://raw.githubusercontent.com/plantbreeding/API/master/brapi-resources.json
+testedVersion=v1.1
