@@ -68,7 +68,7 @@ public class AdminResource {
     public Response createEndpoint(@Context HttpHeaders headers,
                                    Resource res) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -109,7 +109,7 @@ public class AdminResource {
     public Response createProvider(@Context HttpHeaders headers,
                                    Provider prov) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -144,7 +144,7 @@ public class AdminResource {
     @Path("/testallpublic")
     public Response generalTest(@Context HttpHeaders headers, @QueryParam("version") @DefaultValue("") String version) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -195,7 +195,7 @@ public class AdminResource {
     @Path("/updateproviders")
     public Response updateProviders(@Context HttpHeaders headers) {
         
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
         

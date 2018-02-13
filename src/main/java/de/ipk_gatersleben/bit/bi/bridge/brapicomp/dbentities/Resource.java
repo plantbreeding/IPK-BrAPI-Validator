@@ -10,6 +10,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.fasterxml.jackson.annotation.*;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
+
 /**
  * Resource - table model An endpoint instance contains the information related
  * to one endpoint (url, and user it belongs to) It represents the "endpoints"
@@ -119,7 +121,7 @@ public class Resource implements Comparable<Resource> {
 
 	public void setUrl(String url) throws MalformedURLException {
 		URL u = new URL(url);
-		if ((System.getProperty("advancedMode") != null && System.getProperty("advancedMode").equals("true"))
+		if ((Config.get("advancedMode") != null && Config.get("advancedMode").equals("true"))
 			&& u.getPort() != 80 && u.getPort() != -1) {
 			throw new IllegalArgumentException();
 		}

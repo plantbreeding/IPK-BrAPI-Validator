@@ -40,7 +40,7 @@ public class AppServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		if (System.getProperty("advancedMode") != null && System.getProperty("advancedMode").equals("true")) {
+		if (Config.get("advancedMode") != null && Config.get("advancedMode").equals("true")) {
 			try {
 				DataSourceManager.closeConnectionSource();
 				SchedulerManager.getScheduler().shutdown();
@@ -54,7 +54,7 @@ public class AppServletContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
 		Config.init();
-		if (System.getProperty("advancedMode") != null && System.getProperty("advancedMode").equals("true")) {
+		if (Config.get("advancedMode") != null && Config.get("advancedMode").equals("true")) {
 			createDatabaseConnection(e.getServletContext());
 			createTables();
 			buildDaos();

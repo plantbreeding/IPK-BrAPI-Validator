@@ -36,7 +36,7 @@ public class PublicResoucesResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response resources() {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_IMPLEMENTED).build();
         }
 

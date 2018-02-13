@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
-		<webappHome>src/main/webapp</webappHome>
+		<webappHome>src/main/webapp/advanced</webappHome>
 	</properties>
 
 	<build>
@@ -58,7 +58,11 @@
 					</scanTargetPatterns>
 					<webApp>
 						<contextPath>/brapivalidator</contextPath>
+						<descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
 					</webApp>
+					<webAppSourceDirectory>
+						${project.basedir}/${webappHome}
+					</webAppSourceDirectory>
 				</configuration>
 			</plugin>
 			<plugin>

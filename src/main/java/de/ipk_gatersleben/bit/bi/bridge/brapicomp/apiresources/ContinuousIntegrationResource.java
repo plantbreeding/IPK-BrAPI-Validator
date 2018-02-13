@@ -56,7 +56,7 @@ public class ContinuousIntegrationResource {
     public Response createEndpoint(@Context HttpHeaders headers,
                                    Resource res) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -106,7 +106,7 @@ public class ContinuousIntegrationResource {
     public Response changeFrequency(@Context HttpHeaders headers,
                                    @PathParam("resId") String resId, @QueryParam("frequency") String frequency) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -144,7 +144,7 @@ public class ContinuousIntegrationResource {
     @Produces(MediaType.TEXT_HTML)
     public Response confirm(@QueryParam("key") String resId) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 
@@ -183,7 +183,7 @@ public class ContinuousIntegrationResource {
     public Response deleteEndpoint(@QueryParam("key") String resId,
                                    @Context HttpHeaders headers) {
 
-        if (System.getProperty("advancedMode") == null) {
+        if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
 

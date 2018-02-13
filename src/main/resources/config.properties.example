@@ -1,10 +1,10 @@
 # Edit this with your parameters and change the name to config.properties
 # Only if you have a proxy
-proxy=
-proxyport=
+http.proxyHost=
+http.proxyPort=
 
-# ONLY REQUIRED FOR ADVANCED MODE
-
+# FOLLOWING VARIABLES ONLY REQUIRED FOR ADVANCED MODE
+advancedMode=true
 # H2 Username, password and path
 dbuser=
 dbpass=

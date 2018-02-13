@@ -4,9 +4,67 @@ Test suite for BrAPI servers. Test your server at [http://webapps.ipk-gaterslebe
 
 Under development, not carefully tested. If you find any errors or bugs, please report them as an issue!
 
-## Usage
+## Installation
 
-Requires Maven.
+It is a bit of an awkward process right now. We'll migrate to Gradle and make things smoother in the future.
+
+For now, you need to install Maven.
+
+### For simple version (just testing, no database required)
+
+1. Go to pom.xml and search for oracle jdbc driver:
+```
+<dependency>
+	<groupId>com.oracle.jdbc</groupId>
+	<artifactId>ojdbc7</artifactId>
+	<version>12.1.0.1</version>
+</dependency>
+```
+Comment or delete it.
+
+2. Create an empty file named config.properties in src/main/resources.
+
+3. If you are behind a proxy, add this to config.properties:
+```
+http.proxyHost=
+http.proxyPort=
+```
+4. Run it locally for the first time with:
+```
+mvn -U clean package jetty:run
+```
+
+### Advanced version (includes public repository list and scheduled testing)
+
+WARNING: This procedure is highly dependent on your environment and it hasn't been tested thoroughly. Something is likely to go wrong. DON'T PANIC and create an issue.
+
+1. If you use oracle, skip this step. Otherwise, go to pom.xml and search for oracle jdbc driver:
+```
+<dependency>
+	<groupId>com.oracle.jdbc</groupId>
+	<artifactId>ojdbc7</artifactId>
+	<version>12.1.0.1</version>
+</dependency>
+```
+Comment or delete it.
+
+2. In pom.xml search for this line:
+```
+<webappHome>src/main/webapp</webappHome>
+```
+and replace it with:
+```
+<webappHome>src/main/webapp/advanced</webappHome>
+```
+
+3. Go to src/main/resources and rename config.properties.example to config.properties. Fill the fields with your details.
+
+4. Run it locally for the first time with:
+```
+mvn -U clean package jetty:run
+```
+
+## Usage
 
 To run locally use:
 
@@ -33,9 +91,6 @@ The tomcat server location must be defined as maven parameters. For example as a
 
 ```
 Also remember to add the server user and encrypted password to settings.xml.
-
-Configure the local h2 db user and password, as well as any proxy settings in the src/main/resources/config.properties.
-Use config.properties.examples as a guide.
 
 
 ## Docs
