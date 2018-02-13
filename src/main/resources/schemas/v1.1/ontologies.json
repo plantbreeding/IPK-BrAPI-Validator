@@ -16,6 +16,10 @@
                             "copyright": {
                                 "type": "string"
                             },
+                            "description": {
+                                "description": "Deprecated, but not considered invalid in this version",
+                                "type": "string"
+                            },
                             "licence": {
                                 "type": "string"
                             },

@@ -28,6 +28,10 @@
                             "instituteAddress": {
                                 "type": ["string", "null"]
                             },
+                            "instituteAdress": {
+                                "description": "Deprecated, but not considered invalid in this version",
+                                "type": ["string", "null"]
+                            },
                             "instituteName": {
                                 "type": ["string", "null"]
                             },

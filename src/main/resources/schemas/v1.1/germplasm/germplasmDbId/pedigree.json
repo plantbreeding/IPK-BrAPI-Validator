@@ -10,8 +10,15 @@
 					"defaultDisplayName": {"type": "string"},
 					"pedigree": {"type": "string"},
 					"parent1DbId": {"type": ["string", "null"]},
-					"parent2DbId": {"type": ["string", "null"]}
-
+					"parent2DbId": {"type": ["string", "null"]},
+					"parent1Id": {
+						"description": "Deprecated, but not considered invalid in this version",
+						"type": ["string", "null"]
+					},
+					"parent2Id": {
+						"description": "Deprecated, but not considered invalid in this version",
+						"type": ["string", "null"]
+					}
 				},
 				"required": ["germplasmDbId", "defaultDisplayName", "pedigree"],
 				"additionalProperties": false	

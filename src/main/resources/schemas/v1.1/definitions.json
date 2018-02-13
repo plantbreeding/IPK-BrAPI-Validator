@@ -343,6 +343,10 @@
                 "status": {
                     "type": ["string", "null"]
                 },
+                "submissionTimestamp": {
+                    "description": "Deprecated, but not considered invalid in this version",
+                    "type": ["string", "null"]
+                },
                 "synonyms": {
                     "items": {
                         "type": "string"
