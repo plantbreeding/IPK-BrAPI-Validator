@@ -85,7 +85,6 @@ public class TestReportResource {
         
         try {
         	TestReport tr = TestReportService.getReport(reportId);
-        	ApiResourceService.saveStat("/public/resourcesreport");
         	
         	String output;
         	if (format.equalsIgnoreCase("csv")) {

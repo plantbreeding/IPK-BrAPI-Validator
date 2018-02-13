@@ -44,7 +44,6 @@ public class PublicResoucesResource {
         
         try {
         	List<Resource> trl = ResourceService.getAllPublicEndpoints();
-        	ApiResourceService.saveStat("/public/resources");
         	return Response.ok().entity(trl).build();
         	
         } catch (SQLException e) {
