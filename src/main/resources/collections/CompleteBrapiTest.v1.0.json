@@ -893,7 +893,7 @@
 					"requires":[],
 					"request": {
 						"url": "{baseurl}/phenotypes-search",
-						"method": "GET"
+						"method": "POST"
 					},
 					"event": [
 						{
