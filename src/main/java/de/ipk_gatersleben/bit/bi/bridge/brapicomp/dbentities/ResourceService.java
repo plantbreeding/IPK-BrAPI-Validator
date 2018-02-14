@@ -42,6 +42,7 @@ public class ResourceService {
      */
     public static Resource getEndpointWithEmailAndUrlAndFreq(String email, String url, String freq) throws SQLException {
     	Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+    	System.out.println(email);
         Resource e = endpointDao.queryBuilder().where()
                 .eq(Resource.EMAIL_FIELD_NAME, email).and()
                 .eq(Resource.URL_FIELD_NAME, url).and()

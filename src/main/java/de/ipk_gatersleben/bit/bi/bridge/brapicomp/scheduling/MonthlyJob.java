@@ -25,7 +25,7 @@ public class MonthlyJob implements org.quartz.Job {
     	LOGGER.info("Monthly is executing.");
         ObjectMapper mapper = new ObjectMapper();
 
-        InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + Config.get("scheduledVersion") + ".json");
+        InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + Config.get("testedVersion") + ".json");
         TestCollection tc;
 		try {
 			tc = mapper.readValue(inJson, TestCollection.class);

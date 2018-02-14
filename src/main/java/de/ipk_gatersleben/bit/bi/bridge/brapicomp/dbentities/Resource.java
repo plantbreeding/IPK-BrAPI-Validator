@@ -58,7 +58,6 @@ public class Resource implements Comparable<Resource> {
 	@DatabaseField(columnName = CROP_FIELD_NAME)
 	private String crop;
 
-	@JsonIgnore
 	@DatabaseField(columnName = EMAIL_FIELD_NAME) // Null controlled in resource
 	private String email;
 
