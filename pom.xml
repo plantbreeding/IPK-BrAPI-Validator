@@ -34,7 +34,7 @@
 					    <targetPath>schemas</targetPath>
 					  </resource>
 					</webResources>
-					<warSourceDirectory>${webappHome}/advanced</warSourceDirectory>
+					<warSourceDirectory>${webappHome}</warSourceDirectory>
 					<failOnMissingWebXml>true</failOnMissingWebXml>
 				</configuration>
 			</plugin>

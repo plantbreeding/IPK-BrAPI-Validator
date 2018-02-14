@@ -1,8 +1,12 @@
-# IPK BrAPI Validator
+# BRAVA: IPK BrAPI Validator
 
 Test suite for BrAPI servers. Test your server at [http://webapps.ipk-gatersleben.de/brapivalidator/](http://webapps.ipk-gatersleben.de/brapivalidator/).
 
 Under development, not carefully tested. If you find any errors or bugs, please report them as an issue!
+
+BRAVA currently has two execution modes, simple and advanced mode. Simple mode contains the basic functionality: you can test any BrAPI server and get every endpoint defined in /calls tested. 
+
+The advanced mode requires a database (it can be an H2 database) to store test results and resource information. It includes a public repository list and the possibility to register resources to be tested periodically.
 
 ## Installation
 
@@ -50,11 +54,11 @@ Comment or delete it.
 
 2. In pom.xml search for this line:
 ```
-<webappHome>src/main/webapp</webappHome>
+<warSourceDirectory>${webappHome}</warSourceDirectory>
 ```
 and replace it with:
 ```
-<webappHome>src/main/webapp/advanced</webappHome>
+<warSourceDirectory>${webappHome}/advanced</warSourceDirectory>
 ```
 
 3. Go to src/main/resources and rename config.properties.example to config.properties. Fill the fields with your details.
@@ -132,9 +136,4 @@ The complex tests (Test Collections) are stored in the collections/ folder. They
 
 ## Adding tests
 
-* Add TestCollection file to /collections/
-* Add test info to tests.json
-* Add test to front end form.
-
-## To-do
-* Consider variables from configuration file or decide to ignore them at all.
+* Edit test collection found in /collections/
