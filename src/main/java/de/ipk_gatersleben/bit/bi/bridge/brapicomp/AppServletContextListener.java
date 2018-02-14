@@ -116,11 +116,9 @@ public class AppServletContextListener implements ServletContextListener {
 	}
 
 	private static void setupScheduler(ServletContext ctx) {
-		//String key = "org.quartz.impl.StdSchedulerFactory.KEY";
-		//StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(key);
-		System.out.print("HERE0");
+
 		try {
-			//Scheduler quartzScheduler = factory.getScheduler("QuartzSchedulerInstance");
+
 			Scheduler quartzScheduler = StdSchedulerFactory.getDefaultScheduler();
 			
 			JobDetail dailyJob = newJob(DailyJob.class).withIdentity("dailyJob", "group1").build();
@@ -144,7 +142,6 @@ public class AppServletContextListener implements ServletContextListener {
 					//.withSchedule(simpleSchedule().withIntervalInMinutes(5).repeatForever()) // debug
 					.withSchedule(monthlyOnDayAndHourAndMinute(1, 8, 0)) // fire every 1st at 08:00
 					.build();
-			System.out.print("HERE: "+quartzScheduler.getSchedulerName());
 			quartzScheduler.scheduleJob(dailyJob, dailyTrigger);
 			quartzScheduler.scheduleJob(weeklyJob, weeklyTrigger);
 			quartzScheduler.scheduleJob(monthlyJob, monthlyTrigger);

@@ -138,6 +138,7 @@ public class Resource implements Comparable<Resource> {
 	 * @param e
 	 *            Resource's owner email.
 	 */
+	@JsonProperty
 	public void setEmail(String e) {
 		this.email = e;
 	}
@@ -145,6 +146,7 @@ public class Resource implements Comparable<Resource> {
 	/**
 	 * @return e Resource's email
 	 */
+	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
