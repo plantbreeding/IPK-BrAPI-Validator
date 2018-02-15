@@ -128,12 +128,12 @@
           </div>
           <div class="modal-body">
             <p class="card-text">BRAVA calls one or more resources in the tested server and tests the response.</p>
-            <p class="card-text">There are two types of tests available: <strong>structure</strong> tests and <strong>data integrity</strong> tests.</p>
-            <p class="card-text"><strong>Structure tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> specific for that resource. It checks the structure, parameter name and parameter types.</p>
+            <p class="card-text">First, the <code>/calls</code> resource is requested. If the response is valid, the list of available calls is parsed.</p>
+            <p class="card-text">Following a predefined order, BRAVA requests the available resources. For every resource, the status code, content type and <a href="http://json-schema.org">JSON schema</a> is checked. Each resource has a specific schema defined. This checks the structure, parameter name and parameter types.</p>
             <p class="card-text">For example, the <code>/germplasm-search</code> test requires the response data object to contain a <var>germplasmDbId</var> attribute with a string value, among others.</p>
             <p class="card-text">We created the JSON schemas using the official BrAPI specifications. They are <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas">available here</a>, feel free to check them and use them in your own tests. They may differ from the official specifications because we update them manually. Let us know of any inconsistencies in the <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/issues"> issue tracker</a>.</p>
 
-            <p class="card-text"><strong>Data integrity tests</strong> compare the response to a <a href="http://json-schema.org">JSON schema</a> and <strong>also</strong> make sure the data is consistent across resources. This test works by storing a few values from the response. The specific parameters that are saved depend on the test. The server will make a request to other resources using these values as input.</p>
+            <p class="card-text">Some tests also make sure the data is consistent across resources. This works by storing a few values from the response. The specific parameters that are saved depend on the test. The server will make a request to other resources using these values as input.</p>
             <p class="card-text">This way you can automatically test some resources that would require manual input for certain parameters.</p>
             <p class="card-text">For example, a call to <code>/markerprofiles</code> could store <var>markerprofileDbId</var>. This value can be used as input for <code>/markerprofiles/{markerprofileDbId}</code>.</p>
           </div>
