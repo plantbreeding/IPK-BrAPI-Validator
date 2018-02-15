@@ -3,6 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestExecReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
@@ -152,8 +154,8 @@ public class TestItemRunner {
         try {
             JsonNode root = mapper.readTree(json);
             JsonNode value = root.at(path);
-            if (value.asText().equals("")) {
-            	throw new IllegalArgumentException("Value is empty string or was not found.");
+            if (value.asText().equals("") || value.isNull()) {
+            	throw new IllegalArgumentException("Value is empty string, null, or was not found.");
             }
             this.variables.setVariable(variableName, value);
             ter.setPassed(true);
@@ -208,8 +210,14 @@ public class TestItemRunner {
      */
     private ValidatableResponse connect() {
         LOGGER.info("New Request. URL: " + this.url);
+        
         RestAssured.useRelaxedHTTPSValidation();
         try {
+        	URL u = new URL(url);
+    		if ((Config.get("advancedMode") != null && Config.get("advancedMode").equals("true"))
+    			&& u.getPort() != 80 && u.getPort() != -1) {
+				throw new IllegalArgumentException();
+			}
             vr =    given()
                     .request(this.method, this.url)
                     .then();
@@ -219,7 +227,7 @@ public class TestItemRunner {
             LOGGER.info(e.getMessage());
             return null;
         } catch (IllegalArgumentException e) {
-            LOGGER.info("Connection error. Missing arguments");
+            LOGGER.info("Connection error. Invalid port");
             LOGGER.info("== cause ==");
             LOGGER.info(e.getMessage());
             return null;

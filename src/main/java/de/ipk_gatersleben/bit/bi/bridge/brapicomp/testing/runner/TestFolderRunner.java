@@ -87,10 +87,8 @@ public class TestFolderRunner {
         	
         	if (inCalls.contains(item.getEndpoint())) {
         		//Calls contains the call. Next test is check if the required tests have been done.
-        		
-        		
-        		
-        		if (doneTests.containsAll(item.getRequires())) {
+        		    		
+        		if (storage.getKeys().containsAll(item.getRequires())) {
         			TestItemRunner tir = new TestItemRunner(item, storage);
             		TestItemReport tiReport = tir.runTests();
                     tcr.addTestReport(tiReport);

@@ -149,7 +149,6 @@ public class AdminResource {
         }
 
         LOGGER.debug("New GET /admin/testallpublic call.");
-        System.out.println("Hello");
         try {
 
             //Check auth header
@@ -159,7 +158,6 @@ public class AdminResource {
             }
             if (!version.equals("v1.0") && !version.equals("v1.1")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
-                System.out.println(jsonError);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
             
@@ -167,9 +165,7 @@ public class AdminResource {
 
             InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + version +".json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
-            System.out.println(tc);
             List<Resource> publicResources = ResourceService.getAllPublicEndpoints();
-            System.out.println(publicResources);
             publicResources.forEach(resource -> {
             	try {
 					RunnerService.TestEndpointWithCallAndSaveReport(resource, tc);
@@ -247,6 +243,7 @@ public class AdminResource {
             		while(it.hasNext()) {
             			Resource res = it.next();
             			res.setProvider(providerJson);
+            			res.setPublic(true);
             			resourceDao.create(res);
             			resourcesUpdated++;
             		}
