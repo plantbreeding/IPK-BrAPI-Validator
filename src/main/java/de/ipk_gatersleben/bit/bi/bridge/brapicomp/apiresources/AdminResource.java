@@ -239,6 +239,8 @@ public class AdminResource {
             	
             	if (providerDb == null) {
             		//Not found in DB, generate
+            		providerDao.create(providerJson);
+            		providerDao.refresh(providerJson);
             		Iterator<Resource> it = providerJson.getResources().iterator();
             		while(it.hasNext()) {
             			Resource res = it.next();
@@ -247,7 +249,7 @@ public class AdminResource {
             			resourceDao.create(res);
             			resourcesUpdated++;
             		}
-            		providerDao.create(providerJson);
+            		
             	} else {
             		// Found in DB, update.
             		providerDb.setDescription(providerJson.getDescription());
