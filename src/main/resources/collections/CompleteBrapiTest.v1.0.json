@@ -66,7 +66,7 @@
 					"name": "POST /germplasm-search",
 					"endpoint": "/germplasm-search",
 					"description": "Tests schema and stores first and second germplasmDbId",
-					"requires":[],
+					"requires": [],
 					"request": {
 						"url": "{baseurl}/germplasm-search",
 						"method": "POST"
@@ -88,7 +88,7 @@
 					"name": "/germplasm/{germplasmDbId}",
 					"endpoint": "/germplasm/{germplasmDbId}",
 					"description": "Tests schema using stored germplasmDbId and checks id",
-					"requires":["/germplasm-search"],
+					"requires":["germplasmDbId"],
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}",
 						"method": "GET"
@@ -111,7 +111,7 @@
 					"name": "/germplasm/{germplasmDbId} with second id",
 					"endpoint": "/germplasm/{germplasmDbId}",
 					"description": "Tests schema using second stored germplasmDbId and checks id",
-					"requires":["/germplasm-search"],
+					"requires":["germplasmDbId1"],
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId1}",
 						"method": "GET"
@@ -134,7 +134,7 @@
 					"name": "/germplasm/{germplasmDbId}/pedigree",
 					"endpoint": "/germplasm/{germplasmDbId}/pedigree",
 					"description": "Tests schema and id",
-					"requires":["/germplasm-search"],
+					"requires":["germplasmDbId"],
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}/pedigree",
 						"method": "GET"
@@ -157,7 +157,7 @@
 					"name": "/germplasm/{germplasmDbId}/markerprofiles",
 					"endpoint": "/germplasm/{germplasmDbId}/markerprofiles",
 					"description": "Tests schema and id",
-					"requires":["/germplasm-search"],
+					"requires":["germplasmDbId"],
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}/markeprofiles",
 						"method": "GET"
@@ -180,7 +180,7 @@
 					"name": "/germplasm/{germplasmDbId}/attributes",
 					"endpoint": "/germplasm/{germplasmDbId}/attributes",
 					"description": "Tests schema and id",
-					"requires":["/germplasm-search"],
+					"requires":["germplasmDbId"],
 					"request": {
 						"url": "{baseurl}/germplasm/{germplasmDbId}/attributes",
 						"method": "GET"
@@ -283,7 +283,7 @@
 					"name": "/markers/{markerDbId}",
 					"endpoint": "/markers/{markerDbId}",
 					"description": "",
-					"requires":["/markers"],
+					"requires":["markerDbId0"],
 					"request": {
 						"url": "{baseurl}/markers/{markerDbId0}",
 						"method": "GET"
@@ -305,7 +305,7 @@
 				{
 					"name": "/markers/{markerDbId} with second id",
 					"endpoint": "/markers/{markerDbId}",
-					"requires":["/markers"],
+					"requires":["markerDbId0"],
 					"request": {
 						"url": "{baseurl}/markers/{markerDbId1}",
 						"method": "GET"
@@ -359,7 +359,7 @@
 					"name": "/markerprofiles?germplasmDbId={germplasmDbId}",
 					"endpoint": "/markerprofiles",
 					"description": "Tests markerprofile with germplasmDbId",
-					"requires":["/germplasm-search"],
+					"requires":["markerprofileDbId"],
 					"request": {
 						"url": "{baseurl}/markerprofiles?germplasmDbId={germplasmDbId}",
 						"method": "GET"
@@ -382,7 +382,7 @@
 					"name": "/markerprofiles/{markerprofileDbId}",
 					"endpoint": "/markerprofiles/{markerprofileDbId}",
 					"description": "Test schema and same id",
-					"requires":["/markerprofiles"],
+					"requires":["markerprofileDbId"],
 					"request": {
 						"url": "{baseurl}/markerprofiles/{markerprofileDbId}",
 						"method": "GET"
@@ -405,7 +405,7 @@
 					"name": "/markerprofiles/{markerprofileDbId} with second id",
 					"endpoint": "/markerprofiles/{markerprofileDbId}",
 					"description": "Test schema and same id for second stored id",
-					"requires":["/markerprofiles"],
+					"requires":["markerprofileDbId1"],
 					"request": {
 						"url": "{baseurl}/markerprofiles/{markerprofileDbId1}",
 						"method": "GET"
@@ -428,7 +428,7 @@
 					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 					"endpoint": "/allelematrix-search",
 					"description": "Test schema",
-					"requires":["/markerprofiles"],
+					"requires":["markerprofileDbId"],
 					"request": {
 						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 						"method": "GET"
@@ -450,7 +450,7 @@
 					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 					"endpoint": "/allelematrix-search",
 					"description": "Test schema for POST",
-					"requires":["/markerprofiles"],
+					"requires":["markerprofileDbId"],
 					"request": {
 						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
 						"method": "POST"
@@ -558,7 +558,7 @@
 					"name": "/trials/{trialDbId}",
 					"endpoint": "/trials/{trialDbId}",
 					"description": "Test schema and check first id",
-					"requires":["/trials"],
+					"requires":["trialDbId0"],
 					"request": {
 						"url": "{baseurl}/trials/{trialDbId0}",
 						"method": "GET"
@@ -581,7 +581,7 @@
 					"name": "/trials/{trialDbId} with second id",
 					"endpoint": "/trials/{trialDbId}",
 					"description": "Test schema and check second id",
-					"requires":["/trials"],
+					"requires":["trialDbId1"],
 					"request": {
 						"url": "{baseurl}/trials/{trialDbId1}",
 						"method": "GET"
@@ -678,7 +678,7 @@
 					"name": "/studies/{studyDbId}",
 					"endpoint": "/studies/{studyDbId}",
 					"description": "Check schema and Id",
-					"requires":["/studies-search"],
+					"requires":["studyDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}",
 						"method": "GET"
@@ -701,7 +701,7 @@
 					"name": "/studies/{studyDbId} with second id",
 					"endpoint": "/studies/{studyDbId}",
 					"description": "Check schema and second Id",
-					"requires":["/studies-search"],
+					"requires":["studyDbId1"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId1}",
 						"method": "GET"
@@ -724,7 +724,7 @@
 					"name": "/studies/{studyDbId}/observationVariables",
 					"endpoint": "/studies/{studyDbId}/observationVariables",
 					"description": "Check schema and id",
-					"requires":["/studies-search"],
+					"requires":["studyDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/observationVariables",
 						"method": "GET"
@@ -748,7 +748,7 @@
 					"name": "/studies/{studyDbId}/germplasm",
 					"endpoint": "/studies/{studyDbId}/germplasm",
 					"description": "Check schema and id",
-					"requires":["/studies-search"],
+					"requires":["studyDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/germplasm",
 						"method": "GET"
@@ -793,7 +793,7 @@
 					"name": "/studies/{studyDbId}/observationUnits",
 					"endpoint": "/studies/{studyDbId}/observationUnits",
 					"description": "Check schema",
-					"requires":["/studies-search"],
+					"requires":["studyDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/observationunits",
 						"method": "GET"
@@ -815,7 +815,7 @@
 					"name": "/studies/{studyDbId}/table",
 					"endpoint": "/studies/{studyDbId}/table",
 					"description": "Check schema and id",
-					"requires":["/studies-search"],
+					"requires":["studyDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/table",
 						"method": "GET"
@@ -837,7 +837,7 @@
 					"name": "/studies/{studyDbId}/layout",
 					"endpoint": "/studies/{studyDbId}/layout",
 					"description": "Check schema",
-					"requires":["/studies-search"],
+					"requires":["studyDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/layout",
 						"method": "GET"
@@ -860,7 +860,7 @@
 					"name": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
 					"endpoint": "/studies/{studyDbId}/observations",
 					"description": "Check schema and id",
-					"requires":["/studies-search", "/studies/{studyDbId}/observationVariables"],
+					"requires":["studyDbId", "observationVariableDbId"],
 					"request": {
 						"url": "{baseurl}/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
 						"method": "GET"
@@ -942,7 +942,7 @@
 					"name": "/traits/{traitDbId}",
 					"endpoint": "/traits/{traitDbId}",
 					"description": "Check schema and first id",
-					"requires":["/traits"],
+					"requires":["traitDbId"],
 					"request": {
 						"url": "{baseurl}/traits/{traitDbId}",
 						"method": "GET"
@@ -965,7 +965,7 @@
 					"name": "/traits/{traitDbId} with second id",
 					"endpoint": "/traits/{traitDbId}",
 					"description": "Check schema and second id",
-					"requires":["/traits"],
+					"requires":["traitDbId1"],
 					"request": {
 						"url": "{baseurl}/traits/{traitDbId1}",
 						"method": "GET"
@@ -1040,7 +1040,7 @@
 					"name": "/variables/{observationVariableDbId}",
 					"endpoint": "/variables/{observationVariableDbId}",
 					"description": "Check schema and id",
-					"requires":["/variables"],
+					"requires":["observationVariableDbId2"],
 					"request": {
 						"url": "{baseurl}/variables/{observationVariableDbId2}",
 						"method": "GET"
@@ -1063,7 +1063,7 @@
 					"name": "/variables/{observationVariableDbId} with second id",
 					"endpoint": "/variables/{observationVariableDbId}",
 					"description": "Check schema and second id",
-					"requires":["/variables"],
+					"requires":["observationVariableDbId3"],
 					"request": {
 						"url": "{baseurl}/variables/{observationVariableDbId3}",
 						"method": "GET"
@@ -1137,7 +1137,7 @@
 					"name": "/maps/{mapDbId}",
 					"endpoint": "/maps/{mapDbId}",
 					"description": "Schema and id check",
-					"requires":["/maps"],
+					"requires":["mapDbId"],
 					"request": {
 						"url": "{baseurl}/maps/{mapDbId}",
 						"method": "GET"
@@ -1160,7 +1160,7 @@
 					"name": "/maps/{mapDbId}/positions",
 					"endpoint": "/maps/{mapDbId}/positions",
 					"description": "Schema and id check",
-					"requires":["/maps"],
+					"requires":["mapDbId"],
 					"request": {
 						"url": "{baseurl}/maps/{mapDbId}/positions",
 						"method": "GET"
@@ -1183,7 +1183,7 @@
 					"name": "/maps/{mapDbId}/positions/{linkageGroupId}",
 					"endpoint": "/maps/{mapDbId}/positions/{linkageGroupId}",
 					"description": "Schema and id check",
-					"requires":["/maps", "/maps/{mapDbId}/positions"],
+					"requires":["mapDbId", "linkageGroupId"],
 					"request": {
 						"url": "{baseurl}/maps/{mapDbId}/positions/{linkageGroupId}",
 						"method": "GET"
@@ -1234,7 +1234,7 @@
 					"name": "/locations/{locationDbId}",
 					"endpoint": "/locations/{locationDbId}",
 					"description": "Check schema and id",
-					"requires":["/locations"],
+					"requires":["locationDbId"],
 					"request": {
 						"url": "{baseurl}/locations/{locationDbId}",
 						"method": "GET"
