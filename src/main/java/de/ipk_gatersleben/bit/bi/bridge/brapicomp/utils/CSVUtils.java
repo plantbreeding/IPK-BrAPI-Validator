@@ -39,6 +39,9 @@ public class CSVUtils {
 
         StringBuilder sb = new StringBuilder();
         for (String value : values) {
+        	if (value == null) {
+        		value = "";
+        	}
             if (!first) {
                 sb.append(separators);
             }

@@ -87,13 +87,18 @@ public class TestReportResource {
         	TestReport tr = TestReportService.getReport(reportId);
         	
         	String output;
+        	String type;
         	if (format.equalsIgnoreCase("csv")) {
+        		type = "text/csv";
         		output = generateCSVReport(tr);
+        		return Response.ok().entity(output).type(type)
+        				.header("Content-Disposition",  "attachment; filename=\"report.csv\"")
+        				.build();
         	} else {
+        		type = "application/json";
         		output = generateJSONReport(tr);
+        		return Response.ok().entity(output).type(type).build();
         	}
-        	
-        	return Response.ok().entity(output).build();
         	
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -107,7 +112,6 @@ public class TestReportResource {
 		MiniTestReport miniReport = tr.getMiniReport();
 		// Columns
 		String resourceName = tr.getResource().getName();
-		String crop = tr.getResource().getCrop();
 		String baseURL = tr.getResourceUrl();
 		String warningCalls = miniReport.getWarningTests().toString();
 		String failedCalls = miniReport.getFailedTests().toString();
@@ -119,13 +123,13 @@ public class TestReportResource {
 		String linkFullTest = Config.get("baseDomain") + "?report=" + tr.getReportId().toString();
 		
 		List<String> header = Arrays.asList("resourceName", 
-				"crop", "baseURL", "warningCalls", 
+				"baseURL", "warningCalls", 
 				"failedCalls", "testedCalls","warningCallsCount", 
 				"failedCallsCount", "testedCallsCount", "medianTestTimeMS", "linkFullTest");
 		csv += CSVUtils.writeLine(header, '\t');
 		
 		List<String> values = Arrays.asList(resourceName,
-				crop, baseURL, warningCalls, 
+				baseURL, warningCalls, 
 				failedCalls, testedCalls, warningCallsCount, failedCallsCount, testedCallsCount, medianTestTime, linkFullTest);		
 		csv += CSVUtils.writeLine(values, '\t');
 		
@@ -137,7 +141,6 @@ public class TestReportResource {
 		MiniTestReport miniReport = tr.getMiniReport();
 		
 		json.put("resourceName", tr.getResource().getName());
-		json.put("crop", tr.getResource().getCrop());
 		json.put("baseURL", tr.getResourceUrl());
 		json.put("implementedCalls", miniReport.getTotalTests());
 		json.put("successfulCalls", miniReport.getPassedTests());
