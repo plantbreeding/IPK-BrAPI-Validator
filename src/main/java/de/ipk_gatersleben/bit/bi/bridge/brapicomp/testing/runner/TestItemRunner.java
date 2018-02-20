@@ -219,6 +219,8 @@ public class TestItemRunner {
 				throw new IllegalArgumentException();
 			}
             vr =    given()
+            		.contentType("application/json")
+            		.body("{}")
                     .request(this.method, this.url)
                     .then();
         } catch (AssertionError e) {
