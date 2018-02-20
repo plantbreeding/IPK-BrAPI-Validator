@@ -159,7 +159,7 @@
 					"description": "Tests schema and id",
 					"requires":["germplasmDbId"],
 					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}/markeprofiles",
+						"url": "{baseurl}/germplasm/{germplasmDbId}/markerprofiles",
 						"method": "GET"
 					},
 					"event": [
