@@ -1269,7 +1269,7 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/v1.1/metadata",
-								"Schema:/v1.1/locations",
+								"Schema:/v1.1/locationsDbId",
 								"IsEqual:/result/locationDbId:locationDbId"
 							]
 						}
