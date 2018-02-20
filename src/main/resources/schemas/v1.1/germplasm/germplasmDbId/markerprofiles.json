@@ -5,18 +5,18 @@
 	"properties": {
 		"result": {
 			"type": "object",
-				"properties":{
-					"germplasmDbId": {"type": "string"},
-					"markerProfiles": {
-						"type": "array",
-						"items": {
-							"type": "integer"
-						}
+			"properties":{
+				"germplasmDbId": {"type": "string"},
+				"markerprofileDbIds": {
+					"type": "array",
+					"items": {
+						"type": "string"
 					}
+				}
 
-				},
-				"required": ["germplasmDbId", "markerProfiles"],
-				"additionalProperties": false	
+			},
+			"required": ["germplasmDbId", "markerprofileDbIds"],
+			"additionalProperties": false	
 		}
 	},
 	"required": ["result"]
