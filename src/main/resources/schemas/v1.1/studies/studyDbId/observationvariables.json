@@ -80,6 +80,9 @@
                                     "scaleDbId": {
                                         "type": "string"
                                     },
+                                    "datatype": {
+                                        "type": "string"
+                                    },
                                     "name": {
                                         "type": ["string", "null"]
                                     },

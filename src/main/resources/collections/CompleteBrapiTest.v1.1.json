@@ -760,7 +760,7 @@
 								"ContentType:application/json",
 								"Schema:/v1.1/metadata",
 								"Schema:/v1.1/studies/studyDbId/observationvariables",
-								"IsEqual:/result/data/0/studyDbId:studyDbId0",
+								"IsEqual:/result/studyDbId:studyDbId0",
 								"GetValue:/result/data/0/observationVariableDbId:observationVariableDbId"
 							]
 						}
@@ -784,7 +784,7 @@
 								"ContentType:application/json",
 								"Schema:/v1.1/metadata",
 								"Schema:/v1.1/studies/studyDbId/germplasm",
-								"IsEqual:/result/data/0/studyDbId:studyDbId0"
+								"IsEqual:/result/studyDbId:studyDbId0"
 							]
 						}
 					]
@@ -812,8 +812,8 @@
 					]
 				},
 				{
-					"name": "/studies/{studyDbId}/observationUnits",
-					"endpoint": "/studies/{studyDbId}/observationUnits",
+					"name": "/studies/{studyDbId}/observationunits",
+					"endpoint": "/studies/{studyDbId}/observationunits",
 					"description": "Check schema",
 					"requires":["studyDbId0"],
 					"request": {
@@ -873,7 +873,7 @@
 								"ContentType:application/json",
 								"Schema:/v1.1/metadata",
 								"Schema:/v1.1/studies/studyDbId/layout",
-								"IsEqual:/result/data/studyDbId:studyDbId0"
+								"IsEqual:/result/data/0/studyDbId:studyDbId0"
 							]
 						}
 					]
@@ -1196,18 +1196,18 @@
 								"ContentType:application/json",
 								"Schema:/v1.1/metadata",
 								"Schema:/v1.1/maps/mapDbId/positions",
-								"GetValue:/result/data/0/linkageGroup:linkageGroupId"
+								"GetValue:/result/data/0/linkageGroupName:linkageGroupName"
 							]
 						}
 					]
 				},
 				{
-					"name": "/maps/{mapDbId}/positions/{linkageGroupId}",
-					"endpoint": "/maps/{mapDbId}/positions/{linkageGroupId}",
+					"name": "/maps/{mapDbId}/positions/{linkageGroupName}",
+					"endpoint": "/maps/{mapDbId}/positions/{linkageGroupName}",
 					"description": "Schema and id check",
-					"requires":["mapDbId", "linkageGroupId"],
+					"requires":["mapDbId", "linkageGroupName"],
 					"request": {
-						"url": "{baseurl}/maps/{mapDbId}/positions/{linkageGroupId}",
+						"url": "{baseurl}/maps/{mapDbId}/positions/{linkageGroupName}",
 						"method": "GET"
 					},
 					"event": [

@@ -34,6 +34,15 @@
                             "observationUnitDbId": {
                                 "type": "string"
                             },
+                            "observationUnitName": {
+                                "type": "string"
+                            },
+                            "entryNumber": {
+                                "type": "string"
+                            },
+                            "entryType": {
+                                "type": "string"
+                            },
                             "observationUnitXref": {
                                 "items": {
                                     "additionalProperties": false,
@@ -51,7 +60,7 @@
                                     ],
                                     "type": "object"
                                 },
-                                "minItems": 1,
+                                "minItems": 0,
                                 "type": ["array", "null"]
                             },
                             "observations": {

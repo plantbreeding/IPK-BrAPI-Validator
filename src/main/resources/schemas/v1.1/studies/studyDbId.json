@@ -102,6 +102,9 @@
             "instituteAddress": {
               "type": ["string", "null"]
             }, 
+            "instituteAdress": {
+              "type": ["string", "null"]
+            }, 
             "instituteName": {
               "type": ["string", "null"]
             }, 

@@ -3,7 +3,7 @@
     "title": "/traits/traitDbId",
     "type": "object",
     "properties": {
-        "result": { "$ref" : "definitions.json#/definitions/trait" }
+        "result": { "$ref" : "../definitions.json#/definitions/trait" }
     },
     "required": [
         "result"
