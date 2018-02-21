@@ -54,6 +54,5 @@
     },
     "required": [
         "result"
-    ],
-    "type": "object"
+    ]
 }

@@ -159,7 +159,7 @@
 					"description": "Tests schema and id",
 					"requires":["germplasmDbId"],
 					"request": {
-						"url": "{baseurl}/germplasm/{germplasmDbId}/markeprofiles",
+						"url": "{baseurl}/germplasm/{germplasmDbId}/markerprofiles",
 						"method": "GET"
 					},
 					"event": [
@@ -1269,7 +1269,7 @@
 								"StatusCode:200:breakiffalse",
 								"ContentType:application/json",
 								"Schema:/v1.1/metadata",
-								"Schema:/v1.1/locations",
+								"Schema:/v1.1/locationsDbId",
 								"IsEqual:/result/locationDbId:locationDbId"
 							]
 						}

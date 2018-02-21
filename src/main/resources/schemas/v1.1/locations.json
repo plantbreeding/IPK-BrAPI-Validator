@@ -7,57 +7,7 @@
             "additionalProperties": false,
             "properties": {
                 "data": {
-                    "items": {
-                        "additionalProperties": false,
-                        "properties": {
-                            "abbreviation": {
-                                "type": ["string", "null"]
-                            },
-                            "additionalInfo": {
-                                "type": ["object", "null"]
-                            },
-                            "altitude": {
-                                "type": ["number", "null"]
-                            },
-                            "countryCode": {
-                                "type": "string"
-                            },
-                            "countryName": {
-                                "type": ["string", "null"]
-                            },
-                            "instituteAddress": {
-                                "type": ["string", "null"]
-                            },
-                            "instituteAdress": {
-                                "description": "Deprecated, but not considered invalid in this version",
-                                "type": ["string", "null"]
-                            },
-                            "instituteName": {
-                                "type": ["string", "null"]
-                            },
-                            "latitude": {
-                                "type": ["number", "null"]
-                            },
-                            "locationDbId": {
-                                "type": "string"
-                            },
-                            "locationType": {
-                                "type": ["string", "null"]
-                            },
-                            "longitude": {
-                                "type": ["number", "null"]
-                            },
-                            "name": {
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "locationDbId",
-                            "name",
-                            "countryCode"
-                        ],
-                        "type": "object"
-                    },
+                    "items": {"$ref": "definitions.json#/definitions/location"},
                     "minItems": 1,
                     "type": "array"
                 }
