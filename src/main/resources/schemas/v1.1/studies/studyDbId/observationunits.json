@@ -82,7 +82,7 @@
                                     },
                                     "required": [
                                         "value",
-                                        "observationVariableId",
+                                        "observationVariableDbId",
                                         "observationDbId"
                                     ],
                                     "type": "object"
