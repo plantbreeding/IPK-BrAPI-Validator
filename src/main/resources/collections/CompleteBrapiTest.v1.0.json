@@ -356,14 +356,20 @@
 					]
 				},
 				{
-					"name": "/markerprofiles?germplasmDbId={germplasmDbId}",
+					"name": "/markerprofiles with germplasmDbId",
 					"endpoint": "/markerprofiles",
 					"description": "Tests markerprofile with germplasmDbId",
 					"requires":["markerprofileDbId"],
 					"request": {
-						"url": "{baseurl}/markerprofiles?germplasmDbId={germplasmDbId}",
+						"url": "{baseurl}/markerprofiles",
 						"method": "GET"
 					},
+					"parameters": [
+						{
+							"param": "germplasmDbId",
+							"value": "{germplasmDbId}"
+						}
+					],
 					"event": [
 						{
 							"listen": "test",
@@ -425,14 +431,20 @@
 					]
 				},
 				{
-					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+					"name": "/allelematrix-search",
 					"endpoint": "/allelematrix-search",
 					"description": "Test schema",
 					"requires":["markerprofileDbId"],
 					"request": {
-						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"url": "{baseurl}/allelematrix-search",
 						"method": "GET"
 					},
+					"parameters": [
+						{
+							"param": "markerprofileDbId",
+							"value": "{markerprofileDbId}"
+						}
+					],
 					"event": [
 						{
 							"listen": "test",
@@ -447,14 +459,20 @@
 					]
 				},
 				{
-					"name": "/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+					"name": "/allelematrix-search",
 					"endpoint": "/allelematrix-search",
 					"description": "Test schema for POST",
 					"requires":["markerprofileDbId"],
 					"request": {
-						"url": "{baseurl}/allelematrix-search?markerprofileDbId={markerprofileDbId}",
+						"url": "{baseurl}/allelematrix-search",
 						"method": "POST"
 					},
+					"parameters": [
+						{
+							"param": "markerprofileDbId",
+							"value": "{markerprofileDbId}"
+						}
+					],
 					"event": [
 						{
 							"listen": "test",
@@ -857,14 +875,20 @@
 					]
 				},
 				{
-					"name": "/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+					"name": "/studies/{studyDbId}/observations with observationVariableDbId",
 					"endpoint": "/studies/{studyDbId}/observations",
 					"description": "Check schema and id",
 					"requires":["studyDbId", "observationVariableDbId"],
 					"request": {
-						"url": "{baseurl}/studies/{studyDbId}/observations?observationVariableDbId={observationVariableDbId}",
+						"url": "{baseurl}/studies/{studyDbId}/observations",
 						"method": "GET"
 					},
+					"parameters": [
+						{
+							"param": "observationVariableDbId",
+							"value": "{observationVariableDbId}"
+						}
+					],
 					"event": [
 						{
 							"listen": "test",

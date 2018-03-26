@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
 
+import org.apache.http.ConnectionClosedException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -19,11 +20,13 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Item;
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Param;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestExecReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 import io.restassured.RestAssured;
 /**
  * Run tests for an item element.
@@ -218,30 +221,34 @@ public class TestItemRunner {
     			&& u.getPort() != 80 && u.getPort() != -1) {
 				throw new IllegalArgumentException();
 			}
-            vr =    given()
-            		.contentType("application/json")
-            		.body("{}")
-                    .request(this.method, this.url)
+            RequestSpecification rs = given()
+            		.contentType("application/json");
+            List<Param> params = this.item.getParameters();
+            if (params != null) {
+            	for (Param p : params) {
+            		String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
+            		rs.param(p.getParam(), value);
+            	}
+            }
+            ValidatableResponse vr = rs.request(this.method, this.url)
                     .then();
+            return vr;
         } catch (AssertionError e) {
             LOGGER.info("Connection error");
             LOGGER.info("== cause ==");
             LOGGER.info(e.getMessage());
-            return null;
         } catch (IllegalArgumentException e) {
             LOGGER.info("Connection error. Invalid port");
             LOGGER.info("== cause ==");
             LOGGER.info(e.getMessage());
-            return null;
         } catch (Exception e) {
         	if (e.getClass().equals(SSLHandshakeException.class)) {
         		LOGGER.info("Connection error");
                 LOGGER.info("== cause ==");
                 LOGGER.info(e.getMessage());
-                return null;
         	}
         }
-        return vr;
+        return null;
     }
 
     /**
@@ -305,8 +312,8 @@ public class TestItemRunner {
         TestExecReport tr = new TestExecReport("Json matches schema: " + p, false);
         tr.setType("schema mismatch");
         tr.setSchema(p);
-        String jsonString = vr.extract().response().asString();
         try {
+        	String jsonString = vr.extract().response().asString();
             SchemaValidator schemaValidator = new SchemaValidator();
 
             ProcessingReport r = schemaValidator.validate(p, jsonString);
@@ -323,7 +330,7 @@ public class TestItemRunner {
 
             return tr;
 
-        } catch (JsonParseException e1) {
+        } catch (ConnectionClosedException | JsonParseException e1) {
 
             LOGGER.info("Invalid response");
             LOGGER.info("== cause ==");
@@ -333,7 +340,6 @@ public class TestItemRunner {
         } catch (AssertionError | IOException | ProcessingException e1) {
             LOGGER.info("Doesn't match schema");
             LOGGER.info("== cause ==");
-            e1.printStackTrace();
             LOGGER.info(e1.getMessage());
             tr.addMessage(e1.getMessage());
             return tr;

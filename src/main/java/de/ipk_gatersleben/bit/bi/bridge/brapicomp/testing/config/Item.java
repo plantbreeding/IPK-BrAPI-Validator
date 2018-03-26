@@ -16,8 +16,9 @@ public class Item {
     private Request request;
     private List<Event> event;
 	private List<String> requires;
+	private List<Param> parameters;
 
-    public Item() {
+	public Item() {
     }
 
     public String getName() {
@@ -93,5 +94,13 @@ public class Item {
 	 */
 	public void setEndpoint(String endpoint) {
 		this.endpoint = endpoint;
+	}
+
+    public List<Param> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<Param> parameters) {
+		this.parameters = parameters;
 	}
 }
