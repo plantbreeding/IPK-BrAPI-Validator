@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 
@@ -223,14 +224,26 @@ public class TestItemRunner {
 			}
             RequestSpecification rs = given()
             		.contentType("application/json");
-            List<Param> params = this.item.getParameters();
-            if (params != null) {
-            	for (Param p : params) {
-            		String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
-            		rs.param(p.getParam(), value);
-            	}
-            }
-            ValidatableResponse vr = rs.request(this.method, this.url)
+			List<Param> params = this.item.getParameters();
+			if (this.method.equals("GET")) {
+				if (params != null) {
+					for (Param p : params) {
+						String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
+						rs.param(p.getParam(), value);
+					}
+				}
+			} else if (this.method.equals("POST") || this.method.equals("PUT")) {
+				ObjectNode bodyParams = (new ObjectMapper()).createObjectNode();
+				if (params != null) {
+					for (Param p : params) {
+						String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
+						bodyParams.put(p.getParam(), value);
+					}
+				}
+				rs.body(bodyParams.toString());
+			}
+
+			ValidatableResponse vr = rs.request(this.method, this.url)
                     .then();
             return vr;
         } catch (AssertionError e) {
