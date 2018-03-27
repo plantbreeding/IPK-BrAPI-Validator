@@ -31,27 +31,6 @@
                     "type": "array"
                 },
                 "linkageGroups": {
-                    "items": {
-                        "additionalProperties": false,
-                        "properties": {
-                            "linkageGroupName": {
-                                "type": "string"
-                            },
-                            "maxPosition": {
-                                "type": "integer"
-                            },
-                            "markerCount": {
-                                "type": "integer"
-                            }
-                        },
-                        "required": [
-                            "maxPosition",
-                            "linkageGroupName",
-                            "markerCount"
-                        ],
-                        "type": "object"
-                    },
-                    "minItems": 1,
                     "type": "array"
                 },
                 "mapDbId": {
@@ -69,7 +48,6 @@
             },
             "required": [
                 "type",
-                "linkageGroups",
                 "mapDbId",
                 "unit"
             ],
