@@ -32,13 +32,13 @@ public class RunnerService {
      * @param testCollection Test to be run
      * @return Report
      */
-    public static TestSuiteReport testEndpoint(Resource ep, TestCollection testCollection) {
+    public static TestSuiteReport testEndpoint(Resource ep, TestCollection testCollection, boolean allowAdditional) {
         String id = "";
         if (ep.getId() != null) {
             id = ep.getId().toString();
         }
         CustomTestSuiteRunner t = new CustomTestSuiteRunner(id, ep.getUrl(), testCollection);
-        return t.runTests();
+        return t.runTests(allowAdditional);
     }
     
     /**
@@ -48,13 +48,13 @@ public class RunnerService {
      * @param tc 
      * @return Report
      */
-	public static TestSuiteReport testEndpointWithCall(Resource ep, TestCollection tc) {
+	public static TestSuiteReport testEndpointWithCall(Resource ep, TestCollection tc, boolean allowAdditional) {
         String id = "";
         if (ep.getId() != null) {
             id = ep.getId().toString();
         }
         CallTestSuiteRunner t = new CallTestSuiteRunner(id, ep.getUrl(), tc);
-        return t.runTests();
+        return t.runTests(allowAdditional);
     }
 
     /**
@@ -65,14 +65,14 @@ public class RunnerService {
      * @return List of TestSuiteReport containing the test results.
      * @throws SQLException SQL connection
      */
-    public static int TestAllEndpointsWithFreq(TestCollection testCollection, String frequency) throws SQLException {
+    public static int TestAllEndpointsWithFreq(TestCollection testCollection, String frequency, boolean allowAdditional) throws SQLException {
         List<Resource> l = ResourceService.getAllEndpointsWithFreq(frequency);
         LOGGER.info("Endpoints found: " + l.size());
         int count = 0;
         boolean sent;
         for (int i = 0; i < l.size(); i++) {
             Resource resource = l.get(i);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, testCollection);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, testCollection, allowAdditional);
             
             final int N = resource.getStoreprev();
             // Get last N reports
@@ -131,9 +131,9 @@ public class RunnerService {
      * @param simple Item that contains the endpoints and tests to be run.
      * @return Test run report.
      */
-    public static TestItemReport singleTestEndpoint(Item simple) {
+    public static TestItemReport singleTestEndpoint(Item simple, boolean allowAdditional) {
         TestItemRunner tir = new TestItemRunner(simple);
-        return tir.runTests();
+        return tir.runTests(allowAdditional);
     }
 
     /**
@@ -143,17 +143,17 @@ public class RunnerService {
      * @param storage Variables to use during tests.
      * @return Test run report.
      */
-    public static TestItemReport singleTestEndpoint(Item simple, VariableStorage storage) {
+    public static TestItemReport singleTestEndpoint(Item simple, VariableStorage storage, boolean allowAdditional) {
         TestItemRunner tir = new TestItemRunner(simple, storage);
-        return tir.runTests();
+        return tir.runTests(allowAdditional);
     }
 
-	public static void TestAllPublicEndpoints(TestCollection tc) throws SQLException {
+	public static void TestAllPublicEndpoints(TestCollection tc, boolean allowAdditional) throws SQLException {
 		List<Resource> l = ResourceService.getAllPublicEndpoints();
 		LOGGER.info("Endpoints found: " + l.size());
 		for (int i = 0; i < l.size(); i++) {
 			Resource resource = l.get(i);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, tc);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, tc, allowAdditional);
             
             ObjectMapper mapper = new ObjectMapper();
             try {
@@ -167,9 +167,9 @@ public class RunnerService {
 		
 	}
 
-	public static void TestEndpointWithCallAndSaveReport(Resource res, TestCollection tc) throws JsonProcessingException, SQLException {
+	public static void TestEndpointWithCallAndSaveReport(Resource res, TestCollection tc, boolean allowAdditional) throws JsonProcessingException, SQLException {
 		ObjectMapper mapper = new ObjectMapper();
-		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc);
+		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional);
         TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
         String reportId = TestReportService.saveReport(report);
         testSuiteReport.setId(reportId);

@@ -33,10 +33,10 @@ public class CustomTestSuiteRunner implements TestSuiteRunner {
      *
      * @return Test report
      */
-    public TestSuiteReport runTests() {
+    public TestSuiteReport runTests(boolean allowAdditional) {
         TestSuiteReport testSuiteReport = new TestSuiteReport(id, url);
         TestCollectionRunner testCollectionRunner = new TestCollectionRunner(testCollection, url);
-        TestCollectionReport tcr = testCollectionRunner.runTests();
+        TestCollectionReport tcr = testCollectionRunner.runTests(allowAdditional);
         testSuiteReport.addTestCollectionReport(tcr);
         return testSuiteReport;
     }

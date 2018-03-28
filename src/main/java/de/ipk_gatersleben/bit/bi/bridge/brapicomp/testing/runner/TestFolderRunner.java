@@ -39,7 +39,7 @@ public class TestFolderRunner {
      *
      * @return Test report.
      */
-    public TestFolderReport runTests(List<String> doneTests) {
+    public TestFolderReport runTests(List<String> doneTests, boolean allowAdditional) {
         TestFolderReport tcr = new TestFolderReport(this.baseUrl);
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());
@@ -47,7 +47,7 @@ public class TestFolderRunner {
         LinkedHashMap<String, Object> folderTests = new LinkedHashMap<String, Object>();
         itemList.forEach(item -> {
             TestItemRunner tir = new TestItemRunner(item, storage);
-            TestItemReport tiReport = tir.runTests();
+            TestItemReport tiReport = tir.runTests(allowAdditional);
             tcr.addTestReport(tiReport);
             doneTests.add(item.getName());
             folderTests.put(item.getName(), tiReport);
@@ -62,11 +62,11 @@ public class TestFolderRunner {
      *
      * @return Test report.
      */
-    public TestFolderReport runTests() {
-    	return runTests(new ArrayList<String>());
+    public TestFolderReport runTests(boolean allowAdditional) {
+    	return runTests(new ArrayList<String>(), allowAdditional);
     }
 
-	public TestFolderReport runTestsFromCall(List<String> doneTests) {
+	public TestFolderReport runTestsFromCall(List<String> doneTests, boolean allowAdditional) {
         TestFolderReport tcr = new TestFolderReport(this.baseUrl);
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());        
@@ -90,7 +90,7 @@ public class TestFolderRunner {
         		    		
         		if (storage.getKeys().containsAll(item.getRequires())) {
         			TestItemRunner tir = new TestItemRunner(item, storage);
-            		TestItemReport tiReport = tir.runTests();
+            		TestItemReport tiReport = tir.runTests(allowAdditional);
                     tcr.addTestReport(tiReport);
                     doneTests.add(item.getName());
                     folderTests.put(item.getName(), tiReport);

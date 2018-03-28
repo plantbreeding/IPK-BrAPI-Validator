@@ -69,7 +69,7 @@ public class TestItemRunner {
      *
      * @return Report
      */
-    public TestItemReport runTests() {
+    public TestItemReport runTests(boolean allowAdditional) {
     	
         this.vr = connect();
         
@@ -101,7 +101,7 @@ public class TestItemRunner {
                         ter = contentType(execSplit[1]);
                         break;
                     case "Schema":
-                        ter = schemaMatch("/schemas" + execSplit[1] + ".json");
+                        ter = schemaMatch("/schemas" + execSplit[1] + ".json", allowAdditional);
                         break;
                     case "GetValue":
                         if (execSplit.length < 3) {
@@ -320,7 +320,7 @@ public class TestItemRunner {
      * @param p Path to the schema to be tested
      * @return TestItemReport
      */
-    private TestExecReport schemaMatch(String p) {
+    private TestExecReport schemaMatch(String p, boolean allowAdditional) {
         LOGGER.info("Testing Schema");
         TestExecReport tr = new TestExecReport("Json matches schema: " + p, false);
         tr.setType("schema mismatch");
@@ -330,7 +330,13 @@ public class TestItemRunner {
             SchemaValidator schemaValidator = new SchemaValidator();
 
             ProcessingReport r = schemaValidator.validate(p, jsonString);
-            if (r.isSuccess()) {
+            r.forEach(message -> {
+            	if( !allowAdditional || 
+            			!message.asJson().get("keyword").toString().equals("\"additionalProperties\"")) {
+            		tr.addError(message.asJson());
+            	};
+            });
+            if (tr.getError().isEmpty()) {
                 LOGGER.info("Schema Test Passed");
                 tr.addMessage("Response structure matches schema.");
                 tr.setPassed(true);
@@ -338,7 +344,6 @@ public class TestItemRunner {
             } else {
                 LOGGER.info("Schema Test Failed");
                 tr.addMessage("Response structure doesn't match schema.");
-                r.forEach(message -> tr.addError(message.asJson()));
             }
 
             return tr;

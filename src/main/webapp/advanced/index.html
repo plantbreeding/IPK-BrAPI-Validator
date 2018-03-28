@@ -6,7 +6,7 @@
   <title>BRAVA - Breeding API Validator</title>
   <meta name="description" content="Breeding API Validator">
   <meta name="author" content="IPK Gatersleben">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/footable.standalone.min.css">
   <link rel="stylesheet" href="css/styles.css?v=1.0">
@@ -128,8 +128,14 @@
                             <option>v1.0</option>
                             <option selected>v1.1</option>
                           </select>
-                        </div>  
-                        <div class="form-group">
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="allow_additional" name="allowadditional">
+                          <label class="form-check-label" for="allow_additional">
+                            Allow additional parameters (<u data-toggle="tooltip" data-placement="top" title="When checked, the validator will allow extra fields in every response object. Use with caution, as it might hide legitimate errors such as typos on optional fields.">?</u>)
+                          </label>
+                        </div>
+                        <div class="form-group mt-2">
                           <label for="fullurl">Tested URL<span id="multiURL"></span></label>
                           <br>
                           <div id="fullUrl" class="font-14">

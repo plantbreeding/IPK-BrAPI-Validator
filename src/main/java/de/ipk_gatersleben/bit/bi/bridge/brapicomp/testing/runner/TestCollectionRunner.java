@@ -33,7 +33,7 @@ public class TestCollectionRunner {
      *
      * @return Test report.
      */
-    public TestCollectionReport runTests() {
+    public TestCollectionReport runTests(boolean allowAdditional) {
         String name = testCollection.getInfo().getName();
         TestCollectionReport tcr = new TestCollectionReport(name, url);
         String baseUrl = url.replaceAll("/$", "");
@@ -41,14 +41,14 @@ public class TestCollectionRunner {
         List<Folder> folderList = testCollection.getItem();
         folderList.forEach(folder -> {
             TestFolderRunner tfr = new TestFolderRunner(baseUrl, folder, storage);
-            TestFolderReport tfReport = tfr.runTests();
+            TestFolderReport tfReport = tfr.runTests(allowAdditional);
             tcr.addFolder(tfReport);
         });
         tcr.setVariables(storage);
         return tcr;
     }
 
-	public TestCollectionReport runTestsFromCall() {
+	public TestCollectionReport runTestsFromCall(boolean allowAdditional) {
         String name = testCollection.getInfo().getName();
         TestCollectionReport tcr = new TestCollectionReport(name, url);
         String baseUrl = url.replaceAll("/$", "");
@@ -62,9 +62,9 @@ public class TestCollectionRunner {
             TestFolderRunner tfr = new TestFolderRunner(baseUrl, folderList.get(i), storage);
             TestFolderReport tfReport;
             if (i == 0) {
-            	tfReport = tfr.runTests(doneTests);
+            	tfReport = tfr.runTests(doneTests, allowAdditional);
             } else {
-            	tfReport = tfr.runTestsFromCall(doneTests);
+            	tfReport = tfr.runTestsFromCall(doneTests, allowAdditional);
             }
            
             tcr.addFolder(tfReport);

@@ -45,7 +45,9 @@ public class SingleTestResource {
     @GET
     @Path("/call")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response callTest(@QueryParam("url") String url, @QueryParam("brapiversion") @DefaultValue("") String version) {
+    public Response callTest(@QueryParam("url") String url, 
+    		@QueryParam("brapiversion") @DefaultValue("") String version,
+    		@QueryParam("allowadditional") @DefaultValue("off") String allowAdditionalParam) {
 
         LOGGER.debug("New GET /call call.");
         try {
@@ -62,13 +64,14 @@ public class SingleTestResource {
             
             ObjectMapper mapper = new ObjectMapper();
 
+            boolean allowAdditional = allowAdditionalParam.equals("on");
             collectionResource = "/collections/CompleteBrapiTest." + version + ".json";
 
             InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
             
             Resource res = new Resource(url);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional);
             TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
             
             

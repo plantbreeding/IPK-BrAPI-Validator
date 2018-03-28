@@ -163,12 +163,14 @@ public class AdminResource {
             
             ObjectMapper mapper = new ObjectMapper();
 
+            boolean allowAdditional = false; // Strict mode by default -- No additional fields allowed. 
+            
             InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + version +".json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
             List<Resource> publicResources = ResourceService.getAllPublicEndpoints();
             publicResources.forEach(resource -> {
             	try {
-					RunnerService.TestEndpointWithCallAndSaveReport(resource, tc);
+					RunnerService.TestEndpointWithCallAndSaveReport(resource, tc, allowAdditional);
 				} catch (SQLException | JsonProcessingException e) {
 					e.printStackTrace();
 				} 
