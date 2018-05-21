@@ -15,7 +15,7 @@
 					"description": "Tests schema.",
 					"requires":[],
 					"request": {
-						"url": "{baseurl}/calls",
+						"url": "{baseurl}/calls?pageSize=1000",
 						"method": "GET"
 					},
 					"event": [
@@ -492,7 +492,8 @@
 					"parameters": [
 						{
 							"param": "markerprofileDbId",
-							"value": "{markerprofileDbId0}"
+							"value": "{markerprofileDbId0}",
+							"array": true
 						}
 					],
 					"event": [
