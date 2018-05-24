@@ -15,7 +15,7 @@
 					"description": "Tests schema.",
 					"requires":[],
 					"request": {
-						"url": "{baseurl}/calls?pageSize=1000",
+						"url": "{baseurl}/calls",
 						"method": "GET"
 					},
 					"event": [
