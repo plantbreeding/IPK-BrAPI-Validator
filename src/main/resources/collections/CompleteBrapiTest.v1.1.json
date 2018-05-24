@@ -492,7 +492,8 @@
 					"parameters": [
 						{
 							"param": "markerprofileDbId",
-							"value": "{markerprofileDbId0}"
+							"value": "{markerprofileDbId0}",
+							"array": true
 						}
 					],
 					"event": [

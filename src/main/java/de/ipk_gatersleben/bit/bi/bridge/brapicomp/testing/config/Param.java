@@ -7,7 +7,14 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config;
 public class Param {
 	String param;
 	String value;
+	boolean array = false;
 	
+	public boolean isArray() {
+		return array;
+	}
+	public void setArray(boolean array) {
+		this.array = array;
+	}
 	public String getParam() {
 		return param;
 	}

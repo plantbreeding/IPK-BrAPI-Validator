@@ -300,7 +300,7 @@
                 "scale": {
                     "additionalProperties": false,
                     "properties": {
-                        "datatype": {
+                        "dataType": {
                             "type": ["string", "null"]
                         },
                         "decimalPlaces": {

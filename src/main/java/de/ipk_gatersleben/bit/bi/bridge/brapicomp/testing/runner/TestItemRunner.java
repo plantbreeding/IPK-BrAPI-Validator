@@ -3,7 +3,11 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -15,6 +19,7 @@ import org.apache.log4j.Logger;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
@@ -236,13 +241,22 @@ public class TestItemRunner {
 				ObjectNode bodyParams = (new ObjectMapper()).createObjectNode();
 				if (params != null) {
 					for (Param p : params) {
-						String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
-						bodyParams.put(p.getParam(), value);
+						if(p.isArray()) {
+							ArrayNode values = (new ObjectMapper()).createArrayNode();
+							for( String value : p.getValue().split(",")) {
+								values.add(RunnerService.replaceVariablesUrl(value, this.variables));
+							}
+							bodyParams.set(p.getParam(), values);
+						}else {
+							String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
+							bodyParams.put(p.getParam(), value);
+						}
 					}
 				}
 				rs.body(bodyParams.toString());
 			}
 
+			rs.accept("application/json");
 			ValidatableResponse vr = rs.request(this.method, this.url)
                     .then();
             return vr;
@@ -301,7 +315,7 @@ public class TestItemRunner {
         TestExecReport tr = new TestExecReport("ContentType is " + ct, false);
         tr.setType("wrong ContentType");
         String responseCT = vr.extract().response().header("Content-Type");
-        if (!responseCT.contains(ct)) {
+        if (responseCT == null || !responseCT.contains(ct)) {
         	LOGGER.info("Wrong content type");
             LOGGER.info("== cause ==");
             LOGGER.info("Response Content-Type ("+responseCT+") different than expected Content-Type("+ct+")");
