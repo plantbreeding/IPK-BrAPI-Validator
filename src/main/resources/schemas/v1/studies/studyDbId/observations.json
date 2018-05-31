@@ -16,7 +16,7 @@
                             "germplasmName": {
                                 "type": ["string", "null"]
                             },
-                            "obserationDbId": {
+                            "observationDbId": {
                                 "type": "string"
                             },
                             "observationLevel": {
@@ -52,7 +52,7 @@
                         },
                         "required": [
                             "observationUnitDbId",
-                            "obserationDbId",
+                            "observationDbId",
                             "observationLevel",
                             "studyDbId",
                             "value",
