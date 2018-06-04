@@ -10,12 +10,45 @@
 	<properties>
 		<tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
 		<webappHome>src/main/webapp</webappHome>
+        <buildDate>${maven.build.timestamp}</buildDate>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 	</properties>
 
 	<build>
+
 		<finalName>BrAPI-validator</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.2.4</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <prefix>git</prefix>
+                    <verbose>false</verbose>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <format>json</format>
+                    <gitDescribe>
+                        <skip>false</skip>
+                        <always>false</always>
+                        <dirty>-dirty</dirty>
+                    </gitDescribe>
+                </configuration>
+
+            </plugin>
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -28,13 +61,20 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
-					<webResources>
-					  <resource>
-					    <directory>src/main/resources/schemas</directory>
-					    <targetPath>schemas</targetPath>
-					  </resource>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/resources/schemas</directory>
+                            <targetPath>schemas</targetPath>
+                        </resource>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>src/main/webapp/advanced</directory>
+                            <includes>
+                                <include>**/index.html</include>
+                            </includes>
+                        </resource>
 					</webResources>
-					<warSourceDirectory>${webappHome}</warSourceDirectory>
+					<warSourceDirectory>${webappHome}/advanced</warSourceDirectory>
 					<failOnMissingWebXml>true</failOnMissingWebXml>
 				</configuration>
 			</plugin>
@@ -61,7 +101,7 @@
 						<descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
 					</webApp>
 					<webAppSourceDirectory>
-						${project.basedir}/${webappHome}
+						${project.basedir}/${webappHome}/advanced
 					</webAppSourceDirectory>
 				</configuration>
 			</plugin>

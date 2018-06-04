@@ -19,7 +19,7 @@
           <div class="jumbotron py-4 clearfix">
             <h1 class="text-center display-3">
               <a href="./" class="link-unstyled">BRAVA</a>
-            </h1>            
+            </h1>
             <p class="text-center lead"><a href="http://www.brapi.org">Breeding API</a> (BrAPI) Validator</p>
             <p class="text-center">BRAVA is a tool designed to help developers test servers that comply with the <a href="https://brapi.docs.apiary.io/">BrAPI specifications</a> (v1.1).</p>
             <button class="btn btn-sm btn-link float-right" data-toggle="modal" data-target="#helpModal">How does it work?</button>
@@ -63,7 +63,7 @@
                             <option>v1.0</option>
                             <option selected>v1.1</option>
                           </select>
-                        </div>  
+                        </div>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="strict" name="allowadditional">
                           <label class="form-check-label" for="strict">
@@ -117,7 +117,7 @@
       <div class="container">
         <div class="footer-text">
           <p class="text-muted my-0">&copy; 2018 | IPK-Gatersleben. Site licensed under the MIT License.</p>
-          <p class="text-muted my-0"><small> Send any issues/requests to <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator">GitHub</a> or basterrechea (at) ipk-gatersleben.de</small></p>
+          <p class="text-muted my-0"><small>Last build on ${buildDate} with version ${git.commit.id.abbrev} | Send any issues/requests to the <a target="_blank" href="https://github.com/plantbreeding/IPK-BrAPI-Validator/issues">GitHub Issues Page</a></small></p>
         </div>
         <a href="http://www.ipk-gatersleben.de"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/ipklogo.png" class="footer-logo"></a>
         <a href="https://www.leibniz-gemeinschaft.de/en/home/"><img src="http://www.ipk-gatersleben.de/fileadmin/template/main/images-ipk/sign01.png" class="footer-logo"></a>
@@ -158,3 +158,4 @@
   <script src="js/script.js"></script>
 </body>
 </html>
+<!-- Version: ${git.commit.id.abbrev} -->
