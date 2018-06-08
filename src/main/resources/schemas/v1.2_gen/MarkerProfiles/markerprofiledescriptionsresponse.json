@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "../definitions.json#/definitions/markerProfileDescription"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "markerProfileDescriptionsResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

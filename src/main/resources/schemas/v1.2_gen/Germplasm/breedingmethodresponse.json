@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "result": {
+      "$ref": "../definitions.json#/definitions/breedingMethod"
+    }
+  },
+  "title": "breedingMethodResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

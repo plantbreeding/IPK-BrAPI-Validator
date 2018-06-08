@@ -20,3 +20,4 @@ src/main/resources/config.properties
 
 .idea/
 src/main/java/de/ipk_gatersleben/bit/bi/bridge/brapicomp/apiresources/DebugResource.java
+.pydevproject

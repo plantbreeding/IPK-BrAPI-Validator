@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "dataTypesResponse",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object"
+}

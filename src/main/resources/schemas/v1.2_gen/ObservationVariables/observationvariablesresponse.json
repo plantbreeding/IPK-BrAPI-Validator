@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationVariable"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "observationVariablesResponse",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object"
+}

@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "items": {
+            "$ref": "../definitions.json#/definitions/studySummary"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "studiesResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

@@ -1,0 +1,6 @@
+{
+  "$ref": "../definitions.json#/definitions/newSampleDbId",
+  "title": "putSamples",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object"
+}

@@ -1,0 +1,5646 @@
+{
+  "definitions": {
+    "alleleMatrixDetails": {
+      "properties": {
+        "description": {
+          "description": "How the matrix was generated",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastUpdated": {
+          "description": "A date format",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "matrixDbId": {
+          "description": "ID of the matrix",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Name of the matrix",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "Link to the study where the matrix was produced",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "alleleMatrixDetails",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "alleleMatrixSearchRequest": {
+      "properties": {
+        "expandHomozygotes": {
+          "description": "Should homozygotes be expanded (true) or collapsed into a single occurence (false)",
+          "type": "boolean"
+        },
+        "format": {
+          "description": "The data format of the response data. ie \"json\", \"tsv\", etc",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerDbId": {
+          "description": "An ID which uniquely identifies a Marker",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "markerprofileDbId": {
+          "description": "An ID which uniquely identifies a Marker Profile",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "matrixDbId": {
+          "description": "An ID which uniquely identifies an Allele Matrix",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "sepPhased": {
+          "description": "The string to use as a separator for phased allele calls.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sepUnphased": {
+          "description": "The string to use as a separator for unphased allele calls.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unknownString": {
+          "description": "The string to use as a representation for missing data.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "alleleMatrixSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "alleleMatrixValues": {
+      "properties": {
+        "data": {
+          "description": "Is an array of arrays; each inner array has three entries: ```markerDbId```, ```markerprofileDbId```, ```alleleCall```. Scores have to be represented as described further up. e.g. unknown data as \"N\", etc. Missing data can be skipped.",
+          "items": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "alleleMatrixValues",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "breedingMethod": {
+      "properties": {
+        "abbreviation": {
+          "description": "an abbreviation for the name of this breeding method",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "breedingMethodDbId": {
+          "description": "the unique identifier for this breeding method",
+          "type": "string"
+        },
+        "description": {
+          "description": "human readable description of the breeding method",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "human readable name of the breeding method",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "breedingMethodDbId"
+      ],
+      "type": "object",
+      "title": "breedingMethod",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "call": {
+      "properties": {
+        "call": {
+          "description": "The name of the available call as recorded in the documentation",
+          "type": "string"
+        },
+        "datatypes": {
+          "description": "The possible data formats returned by the available call",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "methods": {
+          "description": "The possible HTTP Methods to be used with the available call",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "versions": {
+          "description": "The supported versions of a particular call",
+          "items": {
+            "enum": [
+              "1.0",
+              "1.1",
+              "1.2",
+              "1.3"
+            ],
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "call",
+        "datatypes",
+        "methods"
+      ],
+      "type": "object",
+      "title": "call",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "contact": {
+      "properties": {
+        "contactDbId": {
+          "description": "The ID which uniquely identifies this contact",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "email": {
+          "description": "The contacts email address ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instituteName": {
+          "description": "The name of the institution which this contact is part of",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The full name of this contact person",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "orcid": {
+          "description": "The Open Researcher and Contributor ID for this contact person (orcid.org)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "The type of person this contact represents (ex: Coordinator, Scientist, PI, etc.)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "contact",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "dataLink": {
+      "properties": {
+        "name": {
+          "description": "The name of the external data link",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "The type of external data link",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "description": "The URL which links to external data",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "dataLink",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "genomeMap": {
+      "properties": {
+        "comments": {
+          "description": "Additional comments",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "linkageGroupCount": {
+          "description": "The number of linkage groups present in this genome map",
+          "format": "int32",
+          "type": "integer"
+        },
+        "mapDbId": {
+          "description": "The ID which uniquely identifies this genome map",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerCount": {
+          "description": "The number of markers present in this genome map",
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "description": "A human readable name for this genome map",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "publishedDate": {
+          "description": "The date this genome was published",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "species": {
+          "description": "The name of the species ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "The type of map this represents, ussually \"Genetic\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "description": "The units used to describe the data in this map",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "genomeMap",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "germplasm": {
+      "properties": {
+        "accessionNumber": {
+          "description": "This is the unique identifier for accessions within a genebank, and is assigned when a sample is entered into the genebank collection",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "acquisitionDate": {
+          "description": "The date this germplasm was aquired by the genebank (MCPD)",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "biologicalStatusOfAccessionCode": {
+          "description": "The 3 digit code representing the biological status of the accession (MCPD)",
+          "type": "integer"
+        },
+        "breedingMethodDbId": {
+          "description": "The unique identifier for the breeding method used to create this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commonCropName": {
+          "description": "Common name for the crop (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "countryOfOriginCode": {
+          "description": "3-letter ISO 3166-1 code of the country in which the sample was originally collected (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "defaultDisplayName": {
+          "description": "Human readable name used for display purposes",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "donors": {
+          "description": "List of donor institutes (MCPD)",
+          "items": {
+            "properties": {
+              "donorAccessionNumber": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "donorInstituteCode": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "germplasmPUI": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "genus": {
+          "description": "Genus name for taxon. Initial uppercase letter required. (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": "The ID which uniquely identifies a germplasm within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmPUI": {
+          "description": "The Permanent Unique Identifier which represents a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instituteCode": {
+          "description": "The code for the Institute that has bred the material. (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instituteName": {
+          "description": "The name of the institution which bred the material (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pedigree": {
+          "description": "The cross name and optional selection history.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "seedSource": {
+          "description": "The source of the seed ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "species": {
+          "description": "Specific epithet portion of the scientific name in lowercase letters. (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "speciesAuthority": {
+          "description": "The authority organization responsible for tracking and maintaining the species name (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subtaxa": {
+          "description": "Subtaxon can be used to store any additional taxonomic identifier. (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subtaxaAuthority": {
+          "description": " The authority organization responsible for tracking and maintaining the subtaxon information (MCPD)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "synonyms": {
+          "description": "List of alternative names or IDs used to reference this germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "taxonIds": {
+          "description": "The list of IDs for this SPECIES from different sources. If present, NCBI Taxon should be always listed as \"ncbiTaxon\" preferably with a purl. The rank of this ID should be species.",
+          "items": {
+            "$ref": "../definitions.json#/definitions/taxonID"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "typeOfGermplasmStorageCode": {
+          "description": "The 2 digit code representing the type of storage this germplasm is kept in at a genebank. (MCPD)",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasm",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmAttribute": {
+      "properties": {
+        "attributeCode": {
+          "description": "Short abbreviation which represents this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributeDbId": {
+          "description": "The ID which uniquely identifies this attribute within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributeName": {
+          "description": "The human readable name of this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "determinedDate": {
+          "description": "The date the value of this attribute was determined for a given germplasm",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "The value of this attribute for a given germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmAttribute",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmAttributeCategory": {
+      "properties": {
+        "attributeCategoryDbId": {
+          "description": "The ID which uniquely identifies this attribute category within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "A human readable name for this attribute category",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmAttributeCategory",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmAttributeDef": {
+      "properties": {
+        "attributeCategoryDbId": {
+          "description": "The ID which uniquely identifies this attribute category within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributeDbId": {
+          "description": "The ID which uniquely identifies this attribute within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "code": {
+          "description": "Short abbreviation which represents this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "datatype": {
+          "description": "The type of data represented by this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "A human readable description of this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "A human readable name for this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uri": {
+          "description": "The URI reference some external documentation or ontology for this attribute",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "values": {
+          "description": "List of acceptable values for this attribute",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmAttributeDef",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmAttributeList": {
+      "properties": {
+        "data": {
+          "description": "List of attributes associated with the given germplasm",
+          "items": {
+            "$ref": "../definitions.json#/definitions/germplasmAttribute"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": "The ID which uniquely identifies a germplasm within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmAttributeList",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmMarkerprofilesList": {
+      "properties": {
+        "germplasmDbId": {
+          "description": "The ID which uniquely identifies a germplasm within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerprofileDbIds": {
+          "description": "The ID which uniquely identifies a marker profile within the given database server",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmMarkerprofilesList",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmSearchRequest": {
+      "properties": {
+        "accessionNumbers": {
+          "description": "List unique identifiers for accessions within a genebank",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "commonCropNames": {
+          "description": "List crops to search by",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "germplasmDbIds": {
+          "description": "List of IDs which uniquely identify germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "germplasmGenus": {
+          "description": "List of Genus names to identify germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "germplasmNames": {
+          "description": "List of human readable names to identify germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "germplasmPUIs": {
+          "description": "List of Permanent Unique Identifiers to identify germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "germplasmSpecies": {
+          "description": "List of Species names to identify germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        }
+      },
+      "title": "germplasmSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmSummary": {
+      "properties": {
+        "accessionNumber": {
+          "description": "This is the unique identifier for accessions within a genebank, and is assigned when a sample is entered into the genebank collection",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryNumber": {
+          "description": "The entry number for this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": "The ID which uniquely identifies a germplasm within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmPUI": {
+          "description": "The Permanent Unique Identifier which represents a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pedigree": {
+          "description": "The cross name and optional selection history.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "seedSource": {
+          "description": "The source of the seed ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "synonyms": {
+          "description": "List of alternative names or IDs used to reference this germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmSummary",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "germplasmSummaryList": {
+      "properties": {
+        "data": {
+          "description": "List of germplasm associated with a given trial and study",
+          "items": {
+            "$ref": "../definitions.json#/definitions/germplasmSummary"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialName": {
+          "description": "The human readable name of a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "germplasmSummaryList",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "linkageGroup": {
+      "properties": {
+        "linkageGroupName": {
+          "description": "The Uniquely Identifiable name of this linkage group",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerCount": {
+          "description": "The number of markers associated with this linkage group",
+          "type": "integer"
+        },
+        "maxPosition": {
+          "description": "The maximum position of a marker within this linkage group",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "linkageGroup",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "location": {
+      "properties": {
+        "abbreviation": {
+          "description": "An abbreviation which represents this location",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "abreviation": {
+          "description": "Deprecated  <strong>Use abbreviation</strong> ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "altitude": {
+          "description": "The altitude of this location",
+          "type": "number"
+        },
+        "countryCode": {
+          "description": "[ISO_3166-1_alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) spec",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "countryName": {
+          "description": "The full name of the country where this location is",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instituteAddress": {
+          "description": "The street address of the institute representing this location",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instituteAdress": {
+          "description": "Deprecated  <strong>Use instituteAddress</strong> ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instituteName": {
+          "description": "each institute/laboratory can have several experimental field",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "latitude": {
+          "description": "The latitude of this location",
+          "type": "number"
+        },
+        "locationDbId": {
+          "description": "string identifier",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locationType": {
+          "description": "The type of location this represents (ex. Breeding Location, Storage Location, etc)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "longitude": {
+          "description": "the longitude of this location",
+          "type": "number"
+        },
+        "name": {
+          "description": "A human readable name for this location",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "location",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "mapDetails": {
+      "properties": {
+        "data": {
+          "description": "List of linkage group details associated with a given map",
+          "items": {
+            "$ref": "../definitions.json#/definitions/linkageGroup"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "linkageGroups": {
+          "description": "**Deprecated** Use \"data\"",
+          "items": {
+            "$ref": "../definitions.json#/definitions/linkageGroup"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "mapDbId": {
+          "description": "The ID which uniquely identifies this genome map",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "A human readable name for this map",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "The type of map this represents, ussually \"Genetic\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "description": "The units used to describe the data in this map",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "mapDetails",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "marker": {
+      "properties": {
+        "analysisMethods": {
+          "description": "List of the genotyping platforms used to interrogate the marker",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "defaultDisplayName": {
+          "description": "A string representing the marker that will be meaningful to the user",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerDbId": {
+          "description": "Internal db identifier",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "refAlt": {
+          "description": "List of the reference (as the first item) and alternatives (the remaining items)",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "synonyms": {
+          "description": "List of other names for this marker",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "The type of marker, e.g. SNP",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "marker",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "markerProfile": {
+      "properties": {
+        "analysisMethod": {
+          "description": "The type of analysis performed to determine a set of marker data",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data": {
+          "description": "<strong>Required</strong>\narray of marker-name/score pairs",
+          "items": {
+            "additionalProperties": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": "object"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "extractDbId": {
+          "description": "<strong>Required</strong>",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": "<strong>Required</strong>",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerprofileDbId": {
+          "description": "Unique in the database. Can be a catenation of unique IDs for germplasm and extract. <strong>Required</strong>",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uniqueDisplayName": {
+          "description": "Human readable display name for this marker profile",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "markerProfile",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "markerProfileDescription": {
+      "properties": {
+        "analysisMethod": {
+          "description": "The type of analysis performed to determine a set of marker data",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extractDbId": {
+          "description": " The ID which uniquely identifies this data extract",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerprofileDbId": {
+          "description": "Unique in the database. Can be a catenation of unique IDs for germplasm and extract. <strong>Required</strong>",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resultCount": {
+          "description": "Number of markers present in the marker profile",
+          "type": "integer"
+        },
+        "sampleDbId": {
+          "description": "The ID which uniquely identifies a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uniqueDisplayName": {
+          "description": "Human readable display name for this marker profile",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "markerProfileDescription",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "markerSummaryLinkageGroup": {
+      "properties": {
+        "location": {
+          "description": "The position of a marker within a linkage group",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerDbId": {
+          "description": "Internal db identifier",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerName": {
+          "description": "The human readable name for a marker",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "markerSummaryLinkageGroup",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "markerSummaryMap": {
+      "properties": {
+        "linkageGroupName": {
+          "description": "The Uniquely Identifiable name of this linkage group",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "location": {
+          "description": "The position of a marker within a linkage group",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerDbId": {
+          "description": "Internal db identifier",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "markerName": {
+          "description": "The human readable name for a marker",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "markerSummaryMap",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "markersSearchRequest": {
+      "properties": {
+        "includeSynonyms": {
+          "description": "Should an array of synonyms be included in the response",
+          "type": "boolean"
+        },
+        "markerDbIds": {
+          "description": "List of IDs which uniquely identify markers ",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "matchMethod": {
+          "description": "How to perform string matching during search. 'exact' will search for exact, case sensitive matches only. 'case_insensitive' will search for exact matches, but case insensitive. 'wildcard' will allow the special characters '*' (star) and '%' (percent) to represent variable length arbitrary strings, and the special character '?' (question) to represent one arbitrary character.",
+          "enum": [
+            "exact",
+            "case_insensitive",
+            "wildcard"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The search pattern for the marker name or synonym.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "type": {
+          "description": "The type of marker, e.g. SNP",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "markersSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "metadata": {
+      "properties": {
+        "datafiles": {
+          "description": "The datafiles key contains a list of file paths, which can be relative or complete URLs. These files contain additional information related to the returned object and can be retrieved by a subsequent call. The empty list should be returned if no additional data files are present.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "pagination": {
+          "description": "The pagination object is applicable only when the payload contains a \"data\" key. It describes the pagination of the data contained in the \"data\" array, as a way to identify which subset of data is being returned. Pages are zero indexed, so the first page will be page 0 (zero).",
+          "properties": {
+            "currentPage": {
+              "type": "integer"
+            },
+            "pageSize": {
+              "type": "integer"
+            },
+            "totalCount": {
+              "type": "integer"
+            },
+            "totalPages": {
+              "type": "integer"
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "status": {
+          "description": "The status field contains a list of informational status messages from the server. If no status is reported, an empty list should be returned. See Error Reporting for more information.",
+          "items": {
+            "$ref": "../definitions.json#/definitions/status"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "metadata",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "method": {
+      "description": "Method metadata",
+      "properties": {
+        "class": {
+          "description": "Method class (examples: \"Measurement\", \"Counting\", \"Estimation\", \"Computation\", etc.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "Method description.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formula": {
+          "description": "For computational methods i.e., when the method consists in assessing the trait by computing measurements, write the generic formula used for the calculation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "methodDbId": {
+          "description": "Method unique identifier",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Method name (usually a short name)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reference": {
+          "description": "Bibliographical reference describing the method.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "method",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "newObservationDbIds": {
+      "properties": {
+        "observations": {
+          "description": "List of observation references which have been created or updated",
+          "items": {
+            "properties": {
+              "observationDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationUnitDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationVariableDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "newObservationDbIds",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "newObservationUnitDbIds": {
+      "properties": {
+        "observationUnitDbIds": {
+          "description": "List of observation unit references which have been created or updated",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "newObservationUnitDbIds",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "newObservationUnitRequest": {
+      "properties": {
+        "X": {
+          "description": "The X position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Y": {
+          "description": "The Y position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blockNumber": {
+          "description": "The block number for an observation unit. Different systems may use different block designs.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryNumber": {
+          "description": "The entry number for an observation unit. Different systems may use different entry systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryType": {
+          "description": "The type of entry for this observation unit. ex. \"check\", \"test\", \"filler\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevel": {
+          "description": "The level of an observation unit. ex. \"plot\", \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitName": {
+          "description": "A human readable name for an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitXref": {
+          "description": "A list of external references to this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationUnitXref"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observations": {
+          "description": "List of observations associated with this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observation"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "plantNumber": {
+          "description": "The plant number in a field. Applicable for observationLevel: \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plotNumber": {
+          "description": "The plot number in a field. Applicable for observationLevel: \"plot\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "replicate": {
+          "description": "The replicate number of an observation unit. May be the same as blockNumber.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "treatments": {
+          "description": "List of treatments applied to an observation unit.",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationTreatment"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "newObservationUnitRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "newObservationsRequest": {
+      "properties": {
+        "observations": {
+          "description": "List of observation references to be created or updated",
+          "items": {
+            "properties": {
+              "collector": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationTimeStamp": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationUnitDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationVariableDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "newObservationsRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "newObservationsRequestDeprecated": {
+      "properties": {
+        "commit": {
+          "description": "Should these changes be commited",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data": {
+          "description": "<strong>Required</strong>\narray of marker-name/score pairs",
+          "items": {
+            "properties": {
+              "observatioUnitDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observations": {
+                "items": {
+                  "properties": {
+                    "collector": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "observationDbId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "observationTimeStamp": {
+                      "format": "date-time",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "observationUnitDbId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "observationVariableDbId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "studyDbId": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "transactionDbId": {
+          "description": "The ID representing this transaction",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "newObservationsRequestDeprecated",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "newObservationsTableRequest": {
+      "properties": {
+        "data": {
+          "description": "Matrix of observation data recorded for different observation variables across different observation units",
+          "items": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "headerRow": {
+          "description": "The header row describing the data matrix. Append 'observationVariableDbIds' for complete header row.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableDbIds": {
+          "description": "The list of observation variables which have values recorded for them in the data matrix. Append to the 'headerRow' for comlete header row.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "result": {
+          "description": "DEPRECATED",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "newObservationsTableRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "newSampleDbId": {
+      "properties": {
+        "result": {
+          "description": "List of sample references which have been created or updated",
+          "properties": {
+            "sampleDbId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sampleId": {
+              "description": "** Deprecated ** use sampleDbId",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "title": "newSampleDbId",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observation": {
+      "properties": {
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationDbId": {
+          "description": "The ID which uniquely identifies an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevel": {
+          "description": "The level of an observation unit. ex. \"plot\", \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationTimeStamp": {
+          "description": "The date and time  when this observation was made ",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitName": {
+          "description": "A human readable name for an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableDbId": {
+          "description": "The ID which uniquely identifies an observation variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableName": {
+          "description": "A human readable name for an observation variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operator": {
+          "description": "The name or identifier of the entity which collected the observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uploadedBy": {
+          "description": "The name or id of the user who uploaded the observation to the database system",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "The value of the data collected as an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observation",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationSummary": {
+      "properties": {
+        "collector": {
+          "description": "The name or identifier of the entity which collected the observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationDbId": {
+          "description": "The ID which uniquely identifies an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationTimeStamp": {
+          "description": "The date and time  when this observation was made ",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableDbId": {
+          "description": "The ID which uniquely identifies an observation variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableName": {
+          "description": "A human readable name for an observation variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "The value of the data collected as an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observationSummary",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationSummaryPhenotype": {
+      "properties": {
+        "collector": {
+          "description": "The name or identifier of the entity which collected the observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationDbId": {
+          "description": "The ID which uniquely identifies an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationTimeStamp": {
+          "description": "The date and time  when this observation was made ",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableDbId": {
+          "description": "The ID which uniquely identifies an observation variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableName": {
+          "description": "A human readable name for an observation variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "season": {
+          "description": "The season when the observation data was collected",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "The value of the data collected as an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observationSummaryPhenotype",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationTreatment": {
+      "properties": {
+        "factor": {
+          "description": "The type of treatment/factor. ex. 'fertilizer', 'inoculation', 'irrigation', etc",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "modality": {
+          "description": "The treatment/factor descritpion. ex. 'low fertilizer', 'yellow rust inoculation', 'high water', etc",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observationTreatment",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationUnit": {
+      "properties": {
+        "X": {
+          "description": "The X position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "title": "xCoordinate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Y": {
+          "description": "The Y position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "title": "yCoordinate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blockNumber": {
+          "description": "The block number for an observation unit. Different systems may use different block designs.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryNumber": {
+          "description": "The entry number for an observation unit. Different systems may use different entry systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryType": {
+          "description": "The type of entry for this observation unit. ex. \"check\", \"test\", \"filler\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevel": {
+          "description": "The level of an observation unit. ex. \"plot\", \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevels": {
+          "description": "Concatenation of the levels of this observationUnit. Used to handle non canonical level structures. Format levelType:levelID,levelType:levelID",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitName": {
+          "description": "A human readable name for an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitXref": {
+          "description": "A list of external references to this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationUnitXref"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observations": {
+          "description": "List of observations associated with this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observation"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "plantNumber": {
+          "description": "The plant number in a field. Applicable for observationLevel: \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plotNumber": {
+          "description": "The plot number in a field. Applicable for observationLevel: \"plot\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programName": {
+          "description": "The human readable name of a program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "replicate": {
+          "description": "The replicate number of an observation unit. May be the same as blockNumber.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyLocation": {
+          "description": "The human readable name of a location associated with this study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyLocationDbId": {
+          "description": "The ID which uniquely identifies a location, associated with this study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyName": {
+          "description": "The human readable name for a study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "treatments": {
+          "description": "List of treatments applied to an observation unit.",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationTreatment"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "observationUnit",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationUnitPhenotype": {
+      "properties": {
+        "X": {
+          "description": "The X position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "title": "xCoordinate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Y": {
+          "description": "The Y position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "title": "yCoordinate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blockNumber": {
+          "description": "The block number for an observation unit. Different systems may use different block designs.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryNumber": {
+          "description": "The entry number for an observation unit. Different systems may use different entry systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryType": {
+          "description": "The type of entry for this observation unit. ex. \"check\", \"test\", \"filler\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevel": {
+          "description": "The level of an observation unit. ex. \"plot\", \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevels": {
+          "description": "Concatenation of the levels of this observationUnit. Used to handle non canonical level structures. Format levelType:levelID,levelType:levelID",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitName": {
+          "description": "A human readable name for an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitXref": {
+          "description": "A list of external references to this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationUnitXref"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observations": {
+          "description": "List of observations associated with this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationSummaryPhenotype"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "plantNumber": {
+          "description": "The plant number in a field. Applicable for observationLevel: \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plotNumber": {
+          "description": "The plot number in a field. Applicable for observationLevel: \"plot\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programName": {
+          "description": "The human readable name of a program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "replicate": {
+          "description": "The replicate number of an observation unit. May be the same as blockNumber.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyLocation": {
+          "description": "The human readable name of a location associated with this study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyLocationDbId": {
+          "description": "The ID which uniquely identifies a location, associated with this study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyName": {
+          "description": "The human readable name for a study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "treatments": {
+          "description": "List of treatments applied to an observation unit.",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationTreatment"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "observationUnitPhenotype",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationUnitPosition": {
+      "properties": {
+        "X": {
+          "description": "The X position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Y": {
+          "description": "The Y position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "blockNumber": {
+          "description": "The block number for an observation unit. Different systems may use different block designs.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryType": {
+          "description": "The type of entry for this observation unit. ex. \"check\", \"test\", \"filler\"",
+          "enum": [
+            "CHECK",
+            "TEST",
+            "FILLER"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationLevel": {
+          "description": "The level of an observation unit. ex. \"plot\", \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitName": {
+          "description": "A human readable name for an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "replicate": {
+          "description": "The replicate number of an observation unit. May be the same as blockNumber.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observationUnitPosition",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationUnitStudy": {
+      "properties": {
+        "X": {
+          "description": "The X position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "title": "xCoordinate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Y": {
+          "description": "The Y position coordinate for an observation unit. Different systems may use different coordinate systems.",
+          "title": "yCoordinate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blockNumber": {
+          "description": "The block number for an observation unit. Different systems may use different block designs.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryNumber": {
+          "description": "The entry number for an observation unit. Different systems may use different entry systems.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entryType": {
+          "description": "The type of entry for this observation unit. ex. \"check\", \"test\", \"filler\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmName": {
+          "description": "Name of the germplasm. It can be the prefered name and does not have to be unique.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitName": {
+          "description": "A human readable name for an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitXref": {
+          "description": "A list of external references to this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationUnitXref"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observations": {
+          "description": "List of observations associated with this observation unit",
+          "items": {
+            "$ref": "../definitions.json#/definitions/observationSummary"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "pedigree": {
+          "description": "The string representation of the pedigree of this observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plantNumber": {
+          "description": "The plant number in a field. Applicable for observationLevel: \"plant\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plotNumber": {
+          "description": "The plot number in a field. Applicable for observationLevel: \"plot\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "replicate": {
+          "description": "The replicate number of an observation unit. May be the same as blockNumber.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observationUnitStudy",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationUnitXref": {
+      "properties": {
+        "id": {
+          "description": "The unique ID in the external reference 'source' system",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "description": "The system identifier (name, URL, etc) which has an external reference to the observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "observationUnitXref",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationUnitsTableResponse": {
+      "properties": {
+        "data": {
+          "description": "Matrix of observation meta-data and recorded values. Each inner array represents 1 row of data.",
+          "items": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "headerRow": {
+          "description": "Names of the columns included in the data matrix. Any or All of [ \"year\",\"studyDbId\",\"studyName\",\"locationDbId\",\"locationName\",\"germplasmDbId\",\"germplasmName\",\"observationUnitDbId\",\"plotNumber\",\"replicate\",\"blockNumber\", \"observationTimestamp\", \"entryType\", \"X\", \"Y\"]",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableDbIds": {
+          "description": "Array of observation variable DbIds for the collected data. This array is appended to the \"headerRow\" to get the complete header of the data matrix",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableNames": {
+          "description": "Human readable names of the observation variables for the collected data. This array should match 1 to 1 with the \"observationVariableDbIds\" array.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "observationUnitsTableResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationVariable": {
+      "properties": {
+        "contextOfUse": {
+          "description": "Indication of how trait is routinely used. (examples: [\"Trial evaluation\", \"Nursery evaluation\"])",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "crop": {
+          "description": "Crop name (examples: \"Maize\", \"Wheat\")",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "description": "Date of submission of the variable (ISO 8601).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "defaultValue": {
+          "description": "Variable default value. (examples: \"red\", \"2.3\", etc.)",
+          "type": "string"
+        },
+        "growthStage": {
+          "description": "Growth stage at which measurement is made (examples: \"flowering\")",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "institution": {
+          "description": "Name of institution submitting the variable",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "language": {
+          "description": "2 letter ISO code for the language of submission of the variable.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "method": {
+          "$ref": "../definitions.json#/definitions/method",
+          "description": "The description of the method used to collect data for this variable"
+        },
+        "name": {
+          "description": "Variable name (usually a short name)",
+          "type": "string"
+        },
+        "observationVariableDbId": {
+          "description": "Variable unique identifier",
+          "type": "string"
+        },
+        "ontologyDbId": {
+          "description": "Variable ontology unique identifier",
+          "type": "string"
+        },
+        "ontologyName": {
+          "description": "Variable ontology name (usually a short name)",
+          "type": "string"
+        },
+        "scale": {
+          "$ref": "../definitions.json#/definitions/scale",
+          "description": "The description of the reference scale and units used on the collected data for this variable"
+        },
+        "scientist": {
+          "description": "Name of scientist submitting the variable.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "description": "Variable status. (examples: \"recommended\", \"obsolete\", \"legacy\", etc.)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "submissionTimeStamp": {
+          "description": "Timestamp when the Variable was added",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "synonyms": {
+          "description": "Other variable names",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "trait": {
+          "$ref": "../definitions.json#/definitions/trait",
+          "description": "The description of the trait which is being examined for this variable"
+        },
+        "xref": {
+          "description": "Cross reference of the variable term to a term from an external ontology or to a database of a major system.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "observationVariableDbId",
+        "name",
+        "ontologyDbId",
+        "ontologyName",
+        "trait",
+        "method",
+        "scale",
+        "defaultValue"
+      ],
+      "type": "object",
+      "title": "observationVariable",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "observationVariableSearchRequest": {
+      "properties": {
+        "datatypes": {
+          "description": "List of scale data types to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "methodDbIds": {
+          "description": "List of methods to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "names": {
+          "description": "List of human readable observation variable names to search for",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableDbIds": {
+          "description": "List of observation variable IDs to search for",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "ontologyDbIds": {
+          "description": "List of ontology IDs to search for",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "ontologyXrefs": {
+          "description": "List of ontology IDs to search for",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "scaleDbIds": {
+          "description": "List of scales to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "traitClasses": {
+          "description": "List of trait classes to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "observationVariableSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "observationsTable": {
+      "properties": {
+        "data": {
+          "description": "Matrix of observation data recorded for different observation variables across different observation units",
+          "items": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "headerRow": {
+          "description": "The header row describing the data matrix. Append 'observationVariableDbIds' for complete header row.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableDbIds": {
+          "description": "The list of observation variables which have values recorded for them in the data matrix. Append to the 'headerRow' for comlete header row.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableNames": {
+          "description": "The list of observation variable names which have values recorded for them in the data matrix. Order should match 'observationVariableDbIds'.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "observationsTable",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "ontology": {
+      "properties": {
+        "authors": {
+          "description": "Ontology's list of authors (no specific format)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "copyright": {
+          "description": "Ontology copyright",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "Human readable description of Ontology",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "licence": {
+          "description": "Ontology licence",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ontologyDbId": {
+          "description": "Ontology database unique identifier",
+          "type": "string"
+        },
+        "ontologyName": {
+          "description": "Ontology name",
+          "type": "string"
+        },
+        "version": {
+          "description": "Ontology version (no specific format)",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ontologyDbId",
+        "ontologyName"
+      ],
+      "type": "object",
+      "title": "ontology",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "pedigree": {
+      "properties": {
+        "crossingPlan": {
+          "description": "The crossing strategy used to generate this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "crossingYear": {
+          "description": "The year the parents were originally crossed",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "defaultDisplayName": {
+          "description": "A human readable name for a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "familyCode": {
+          "description": "The code representing the family",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent1DbId": {
+          "description": "The germplasm DbId of the first parent of this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent1Id": {
+          "description": "**Deprecated** use parent1DbId",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent1Name": {
+          "description": "the human readable name of the first parent of this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent1Type": {
+          "description": "The type of parent the first parent is. ex. 'MALE', 'FEMALE', 'SELF', 'POPULATION', etc.",
+          "enum": [
+            "MALE",
+            "FEMALE",
+            "SELF",
+            "POPULATION"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent2DbId": {
+          "description": "The germplasm DbId of the second parent of this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent2Id": {
+          "description": "**Deprecated** use parent2DbId",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent2Name": {
+          "description": "The human readable name of the second parent of this germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent2Type": {
+          "description": "The type of parent the second parent is. ex. 'MALE', 'FEMALE', 'SELF', 'POPULATION', etc.",
+          "enum": [
+            "MALE",
+            "FEMALE",
+            "SELF",
+            "POPULATION"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pedigree": {
+          "description": "The string representation of the pedigree.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "siblings": {
+          "description": "List of sibling germplasm ",
+          "items": {
+            "properties": {
+              "defaultDisplayName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "germplasmDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "pedigree",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "phenotypesRequest": {
+      "properties": {
+        "data": {
+          "description": "Matrix of observation data recorded for different observation variables across different observation units",
+          "items": {
+            "description": "new phenotypes",
+            "properties": {
+              "observatioUnitDbId": {
+                "type": "string"
+              },
+              "observations": {
+                "items": {
+                  "$ref": "../definitions.json#/definitions/phenotypesRequestObservation"
+                },
+                "type": "array"
+              },
+              "studyDbId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "observatioUnitDbId",
+              "studyDbId",
+              "observations"
+            ],
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "phenotypesRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "phenotypesRequestObservation": {
+      "properties": {
+        "collector": {
+          "description": "The name or identifier of the entity which collected the observation",
+          "type": "string"
+        },
+        "observationDbId": {
+          "description": "The ID which uniquely identifies an observation",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationTimeStamp": {
+          "description": "The date and time  when this observation was made ",
+          "format": "date-time",
+          "type": "string"
+        },
+        "observationVariableDbId": {
+          "description": "Variable unique identifier",
+          "type": "string"
+        },
+        "observationVariableName": {
+          "description": "A human readable name for an observation variable",
+          "type": "string"
+        },
+        "season": {
+          "description": "The season when the observation data was collected",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "The value of the data collected as an observation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "observationVariableDbId",
+        "observationVariableName",
+        "collector",
+        "observationTimeStamp",
+        "value"
+      ],
+      "title": "phenotypesRequestObservation",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "phenotypesSearchRequest": {
+      "properties": {
+        "germplasmDbIds": {
+          "description": "The name or synonym of external genebank accession identifiers",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "locationDbIds": {
+          "description": "locations these traits were collected",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationLevel": {
+          "description": "The type of the observationUnit. Returns only the observation unit of the specified type; the parent levels ID can be accessed through observationUnit Structure.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationTimeStampRangeEnd": {
+          "description": "Timestamp range end",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationTimeStampRangeStart": {
+          "description": "Timestamp range start",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariableDbIds": {
+          "description": "The IDs of traits, could be ontology ID, database ID or PUI",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "programDbIds": {
+          "description": "list of programs to search across",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "seasonDbIds": {
+          "description": "The year or Phenotyping campaign of a multi-annual study (trees, grape, ...)",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "studyDbIds": {
+          "description": "The database ID / PK of the studies search parameter",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "trialDbIds": {
+          "description": "list of trials to search across",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "phenotypesSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "progeny": {
+      "properties": {
+        "defaultDisplayName": {
+          "description": "A human readable name for a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "progeny": {
+          "description": "List of germplasm entities which are direct children of this germplasm",
+          "items": {
+            "properties": {
+              "defaultDisplayName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "germplasmDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "parentType": {
+                "enum": [
+                  "MALE",
+                  "FEMALE",
+                  "SELF",
+                  "POPULATION"
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "progeny",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "program": {
+      "properties": {
+        "abbreviation": {
+          "description": "An abbreviation which represnts this program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "leadPerson": {
+          "description": "The name or identifier of the program leader",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Human readable name of the program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "objective": {
+          "description": "The primary objective of the program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programDbId": {
+          "description": "The ID which uniquely identifies the program",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "program",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "programsSearchRequest": {
+      "properties": {
+        "abbreviation": {
+          "description": "An abbreviation of a program to search for",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "leadPerson": {
+          "description": "The name or identifier of the program leader to search for",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "A name of a program to search for",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "objective": {
+          "description": "A program objective to search for",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "programDbId": {
+          "description": "A program identifier to search for",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "programsSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "sample": {
+      "properties": {
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "description": "Additional notes about a samle",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plantDbId": {
+          "description": "The ID which uniquely identifies a plant. Usually 'plantNumber'",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plateDbId": {
+          "description": "The ID which uniquely identifies a plate of samples",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plateIndex": {
+          "description": "The index number of this sample on a plate",
+          "type": "integer"
+        },
+        "plotDbId": {
+          "description": " The ID which uniquely identifies a plot. Usually 'plotNumber'",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleDbId": {
+          "description": "The ID which uniquely identifies a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleTimestamp": {
+          "description": "The date and time a sample was collected from the field",
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleType": {
+          "description": "The type of sample taken. ex. 'DNA', 'RNA', 'Tissue', etc ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "takenBy": {
+          "description": "The name or identifier of the entity which took the sample from the field",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tissueType": {
+          "description": "The type of tissue sampled. ex. 'Leaf', 'Root', etc.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "sample",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "sampleSearchRequest": {
+      "properties": {
+        "germplasmDbId": {
+          "description": " The ID which uniquely identifies a germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationUnitDbId": {
+          "description": "The ID which uniquely identifies an observation unit",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which result page is requested. The page indexing starts at 0 (the first page is 'page'= 0). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The size of the pages to be returned. Default is 1000.",
+          "type": "integer"
+        },
+        "plateDbId": {
+          "description": "The ID which uniquely identifies a plate of samples",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "sampleDbId": {
+          "description": "The ID which uniquely identifies a sample",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "sampleSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "scale": {
+      "description": "Scale metadata",
+      "properties": {
+        "dataType": {
+          "description": "Class of the scale, entries can be \"Numerical\", \"Nominal\", \"Ordinal\", \"Text\", \"Code\", \"Time\", \"Duration\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decimalPlaces": {
+          "description": "For numerical, number of decimal places to be reported",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Name of the scale",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scaleDbId": {
+          "description": "Unique identifier of the scale. If left blank, the upload system will automatically generate a scale ID.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validValues": {
+          "$ref": "../definitions.json#/definitions/validValues",
+          "description": "List of valid values expected for non-numeric data"
+        },
+        "xref": {
+          "description": "Cross reference to the scale, for example to a unit ontology such as UO or to a unit of an external major database",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "scale",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "season": {
+      "properties": {
+        "season": {
+          "description": "Name of the season. ex. 'Spring', 'Q2', 'Season A', etc.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "seasonDbId": {
+          "description": "The ID which uniquely identifies a season",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "year": {
+          "description": "The 4 digit year of the season.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "season",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "status": {
+      "properties": {
+        "code": {
+          "description": "Short numeric code to represent the status message",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message": {
+          "description": "A short message concerning the status of this request/response",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "status",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "study": {
+      "properties": {
+        "active": {
+          "description": "Is this study currently active",
+          "type": "boolean"
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "contacts": {
+          "description": "List of contact entities associated with this study",
+          "items": {
+            "$ref": "../definitions.json#/definitions/contact"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "dataLinks": {
+          "description": "List of links to extra data files associated with this study. Extra data could include notes, images, and reference data.",
+          "items": {
+            "$ref": "../definitions.json#/definitions/dataLink"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "endDate": {
+          "description": "The date the study ends",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastUpdate": {
+          "description": "The date and time when this study was last modified",
+          "properties": {
+            "timestamp": {
+              "format": "date-time",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "license": {
+          "description": "The usage license associated with the study data",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "location": {
+          "$ref": "../definitions.json#/definitions/location",
+          "description": "The location reference where this study is located."
+        },
+        "seasons": {
+          "description": "List of seasons over which this study was performed.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "startDate": {
+          "description": "The date this study started",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDescription": {
+          "description": "The description of this study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyName": {
+          "description": "The human readable name for a study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyType": {
+          "description": "The type of study being performed. ex. \"Yeald Trial\", etc",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialDbId": {
+          "description": "The ID which uniquely identifies a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialName": {
+          "description": "The human readable name of a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "study",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "studyLayoutRequest": {
+      "properties": {
+        "layout": {
+          "description": "List of observation unit position data entities which need to be updated",
+          "items": {
+            "properties": {
+              "X": {
+                "type": "integer"
+              },
+              "Y": {
+                "type": "integer"
+              },
+              "blockNumber": {
+                "type": "integer"
+              },
+              "entryType": {
+                "enum": [
+                  "CHECK",
+                  "TEST",
+                  "FILLER"
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationUnitDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "replicate": {
+                "type": "integer"
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "studyLayoutRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "studySearchRequest": {
+      "properties": {
+        "active": {
+          "description": "Is this study currently active",
+          "type": "boolean"
+        },
+        "germplasmDbIds": {
+          "description": "List of IDs which uniquely identify germplasm",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "locationDbIds": {
+          "description": "List of location identifiers to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "observationVariableDbIds": {
+          "description": "List of observation variable IDs to search for",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "programDbIds": {
+          "description": "List of program identifiers to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "programNames": {
+          "description": "List of program names to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "seasonDbId": {
+          "description": "The ID which uniquely identifies a season",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "sortBy": {
+          "description": "Name of one of the fields within the study object on which results can be sorted",
+          "enum": [
+            "studyDbId",
+            "trialDbId",
+            "programDbId",
+            "locationDbId",
+            "seasonDbId",
+            "studyType",
+            "studyName",
+            "studyLocation",
+            "programName",
+            "germplasmDbId",
+            "observationVariableDbId"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sortOrder": {
+          "description": "Order results should be sorted. ex. \"ASC\" or \"DESC\"",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbIds": {
+          "description": "List of study identifiers to search for",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "studyLocations": {
+          "description": "List of location names to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "studyNames": {
+          "description": "List of study names to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "studyType": {
+          "description": "The type of study being performed. ex. \"Yeald Trial\", etc",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialDbIds": {
+          "description": "List of trial identifiers to filter search results",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "studySearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "studySummary": {
+      "properties": {
+        "active": {
+          "description": "Is this study currently active",
+          "type": "boolean"
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "endDate": {
+          "description": "The date the study ends",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locationDbId": {
+          "description": "The ID which uniquely identifies a location",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locationName": {
+          "description": "The human readable name for a location",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The humane readable name of a study",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programDbId": {
+          "description": "The ID which uniquely identifies a program within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programName": {
+          "description": "The humane readable name of a program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "seasons": {
+          "description": "List of seasons over which this study was performed.",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "startDate": {
+          "description": "The date this study started",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyDbId": {
+          "description": "The ID which uniquely identifies a study within the given database server",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studyType": {
+          "description": "The type of study being performed. ex. \"Yeald Trial\", etc",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialDbId": {
+          "description": "The ID which uniquely identifies a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialName": {
+          "description": "The human readable name of a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "studySummary",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "studyType": {
+      "properties": {
+        "description": {
+          "description": "The description of this study type",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The human readable name of a study type",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "studyType",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "taxonID": {
+      "properties": {
+        "sourceName": {
+          "description": "The human readable name of the taxonomy provider",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "taxonId": {
+          "description": "The identifier (name, ID, URI) of a particular taxonomy within the source provider",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "taxonID",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "trait": {
+      "properties": {
+        "alternativeAbbreviations": {
+          "description": "Other frequent abbreviations of the trait, if any. These abbreviations do not have to follow a convention",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "attribute": {
+          "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the attribute is the observed feature (or characteristic) of the entity e.g., for \"grain colour\", attribute = \"colour\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "class": {
+          "description": "Trait class. (examples: \"morphological trait\", \"phenological trait\", \"agronomical trait\", \"physiological trait\", \"abiotic stress trait\", \"biotic stress trait\", \"biochemical trait\", \"quality traits trait\", \"fertility trait\", etc.)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "The description of a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entity": {
+          "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the entity is the part of the plant that the trait refers to e.g., for \"grain colour\", entity = \"grain\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mainAbbreviation": {
+          "description": "Main abbreviation for trait name. (examples: \"Carotenoid content\" => \"CC\")",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The human readable name of a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "description": "Trait status (examples: \"recommended\", \"obsolete\", \"legacy\", etc.)",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "synonyms": {
+          "description": "Other trait names",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "traitDbId": {
+          "description": "The ID which uniquely identifies a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "xref": {
+          "description": "Cross reference of the trait to an external ontology or database term e.g., Xref to a trait ontology (TO) term",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "trait",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "traitSummary": {
+      "properties": {
+        "defaultValue": {
+          "description": "The default value of a trait (if applicable) ex. \"0\", \"\", \"null\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "The description of a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The human readable name of a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observationVariables": {
+          "description": "List of observation variable DbIds which include this trait",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "traitDbId": {
+          "description": "The ID which uniquely identifies a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "traitId": {
+          "description": "<strong>DEPRECATED</strong> The ID which uniquely identifies a trait",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "traitSummary",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "trial": {
+      "properties": {
+        "active": {
+          "description": "Is this trail currently active",
+          "type": "boolean"
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "contacts": {
+          "description": "List of contact entities associated with this trial",
+          "items": {
+            "$ref": "../definitions.json#/definitions/contact"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "datasetAuthorship": {
+          "description": "License and citation information for the data in this trial",
+          "properties": {
+            "datasetPUI": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "license": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "endDate": {
+          "description": "The date this trial ends",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programDbId": {
+          "description": "A program identifier to search for",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programName": {
+          "description": "The human readable name of a program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "startDate": {
+          "description": "The date this trial started",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studies": {
+          "description": "List of studies inside this trial",
+          "items": {
+            "properties": {
+              "locationDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "locationName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "studyDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "studyName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "trialDbId": {
+          "description": "The ID which uniquely identifies a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialName": {
+          "description": "The human readable name of a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "trial",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "trialSummary": {
+      "properties": {
+        "active": {
+          "description": "Is this trail currently active",
+          "type": "boolean"
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "endDate": {
+          "description": "The date this trial ends",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programDbId": {
+          "description": "The ID which uniquely identifies a program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "programName": {
+          "description": "The human readable name of a program",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "startDate": {
+          "description": "The date this trial started",
+          "format": "date",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studies": {
+          "description": "List of studies inside this trial",
+          "items": {
+            "properties": {
+              "locationDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "locationName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "studyDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "studyName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "trialDbId": {
+          "description": "The ID which uniquely identifies a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trialName": {
+          "description": "The human readable name of a trial",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "trialSummary",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "validValues": {
+      "properties": {
+        "categories": {
+          "description": "List of possible values and their meaning (examples: [\"0=low\", \"1=medium\", \"2=high\"]",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "max": {
+          "description": "Maximum value (used for field data capture control).",
+          "type": "integer"
+        },
+        "min": {
+          "description": "Minimum value (used for data capture control) for numerical and date scales",
+          "type": "integer"
+        }
+      },
+      "type": "object",
+      "title": "validValues",
+      "$schema": "http://json-schema.org/draft-04/schema#"
+    },
+    "vendorPlate": {
+      "properties": {
+        "clientPlateDbId": {
+          "description": "The ID which uniquely identifies this plate in the clients database",
+          "type": "string"
+        },
+        "files": {
+          "description": "The array of data files produced by the vendors analysis",
+          "items": {
+            "$ref": "../definitions.json#/definitions/vendorPlateFile"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "plateFormat": {
+          "description": "Defines the plate layout format, usually \"Plate_96\" for a 96 well plate or \"Tubes\" for plateless format",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleType": {
+          "description": "The type of sample. ie \"DNA\", \"RNA\", \"Tissue\", etc ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "samples": {
+          "description": "List of samples in the plate",
+          "items": {
+            "$ref": "../definitions.json#/definitions/vendorSample"
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "The status of the plate in the processing pipeline. Typically, \"Received\", \"Processing\", \"QC_passed\", QC_failed\", \"Completed\" (as per vendor specifications)",
+          "type": "string"
+        },
+        "statusTimeStamp": {
+          "description": "The time stamp of the most recent status update",
+          "format": "date-time",
+          "type": "string"
+        },
+        "vendorBarcode": {
+          "description": "A string that can be represented as a barcode, identifying this plate ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorBarcodeImageURL": {
+          "description": "A URL pointing to an image file which has the bar code which identifies this plate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorPlateDbId": {
+          "description": "The ID which uniquely identifies this plate in the vendors database",
+          "type": "string"
+        },
+        "vendorProjectDbId": {
+          "description": "The ID which uniquely identifies this project in the vendors database",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clientPlateDbId",
+        "samples",
+        "status",
+        "statusTimeStamp",
+        "vendorPlateDbId",
+        "vendorProjectDbId"
+      ],
+      "title": "vendorPlate",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorPlateFile": {
+      "properties": {
+        "URL": {
+          "description": "The URL to a file with the results of a vendor analysis",
+          "type": "string"
+        },
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "fileType": {
+          "description": "Format of the file",
+          "type": "string"
+        },
+        "filename": {
+          "description": "Name of the file",
+          "type": "string"
+        },
+        "md5sum": {
+          "description": "MD5 Hash Check Sum for the file to confirm download without error",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleDbIds": {
+          "description": "The list of sampleDbIds included in the file",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "URL",
+        "fileType",
+        "filename",
+        "sampleDbIds"
+      ],
+      "title": "vendorPlateFile",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorPlateRequest": {
+      "properties": {
+        "plates": {
+          "description": "Array of new plates to be submitted to a vendor",
+          "items": {
+            "properties": {
+              "clientPlateDbId": {
+                "description": "The ID which uniquely identifies this plate in the clients database",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "plateFormat": {
+                "description": "Defines the plate layout format, usually \"Plate_96\" for a 96 well plate or \"Tubes\" for plateless format",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sampleType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "samples": {
+                "items": {
+                  "properties": {
+                    "column": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "concentration": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "row": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sampleDbId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "taxonId": {
+                      "$ref": "../definitions.json#/definitions/taxonID"
+                    },
+                    "tissueType": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "volume": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "well": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "vendorProjectDbId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "vendorPlateRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorPlateSearchRequest": {
+      "properties": {
+        "clientPlateDbIds": {
+          "description": "List of plate ids from the client database to filter search",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "page": {
+          "description": "Which page of the \"data\" array to return. The page indexing starts at 0 (page=0 will return the first page). Default is 0.",
+          "type": "integer"
+        },
+        "pageSize": {
+          "description": "The maximum number of items to return per page of the \"data\" array. Default is 1000.",
+          "type": "integer"
+        },
+        "sampleInfo": {
+          "description": "Include array of sample information or not in response",
+          "type": "boolean"
+        },
+        "vendorPlateDbIds": {
+          "description": "List of plate ids from the vendors database to filter search",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "vendorProjectDbIds": {
+          "description": "List of project ids from the vendors database to filter search",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "vendorPlateSearchRequest",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorSample": {
+      "properties": {
+        "column": {
+          "description": "The sample column index number in a plate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "concentration": {
+          "description": "The concentration of a sample in solution",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "row": {
+          "description": "the sample row index number in a plate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleDbId": {
+          "description": "The ID which uniquely identifies a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "taxonId": {
+          "$ref": "../definitions.json#/definitions/taxonID",
+          "description": "The identifier (name, ID, URI) of a particular taxonomy within the source provider"
+        },
+        "tissueType": {
+          "description": "The type of tissue sampled. ex. 'Leaf', 'Root', etc.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "volume": {
+          "description": "The physical volume of a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "well": {
+          "description": "The plate well number where a sample is located",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "vendorSample",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorSpecification": {
+      "properties": {
+        "additionalInfo": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Additional arbitrary info",
+          "type": "object"
+        },
+        "contactName": {
+          "description": "The name or identifier of the primary vendor contact",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "platforms": {
+          "description": "List of platform specifications available at the vendor",
+          "items": {
+            "$ref": "../definitions.json#/definitions/vendorSpecificationPlatform"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "vendorAddress": {
+          "description": "The street address of the vendor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorCity": {
+          "description": "The name of the city where the vendor is located",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorCountry": {
+          "description": "The name of the country where the vendor is located",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorDescription": {
+          "description": "A description of the vendor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorEmail": {
+          "description": "The primary email address used to contact the vendor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorName": {
+          "description": "The human readable name of the vendor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorPhone": {
+          "description": "The primary phone number used to contact the vendor",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendorURL": {
+          "description": "The primary URL for the vendor",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "vendorSpecification",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorSpecificationPlatform": {
+      "properties": {
+        "contactEmail": {
+          "description": "The primary email address to contact a particular vendor platform",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "contactName": {
+          "description": "The name or identifier of the primary vendor platfrom contact",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "contactPhone": {
+          "description": "The phone number used to contact the vendor about a particular platform",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deliverables": {
+          "description": "List of specific deliverables provided by the vendor platform",
+          "items": {
+            "properties": {
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "format": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "platformDescription": {
+          "description": "Description of the vendor platform",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "platformName": {
+          "description": "The human readable name of a platform",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "platformURL": {
+          "description": "The URL for a vendor platform",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "shippingAddress": {
+          "description": "The street address for a vendor platform",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "specificRequirements": {
+          "description": "Additional arbitrary requirements for a particular platform",
+          "type": "object"
+        },
+        "standardRequirements": {
+          "$ref": "../definitions.json#/definitions/vendorSpecificationStandardRequirement",
+          "description": "Set of standard requirements for a vendor platform"
+        },
+        "statuses": {
+          "description": "List of possible status messages for a vendor platform",
+          "items": {
+            "properties": {
+              "statusDescription": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "statusName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object",
+            "additionalProperties": false
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "taxonomyIdSystem": {
+          "$ref": "../definitions.json#/definitions/vendorSpecificationReferenceSystem",
+          "description": "Details about the systems used to track taxonomies"
+        },
+        "tissueIdSystem": {
+          "$ref": "../definitions.json#/definitions/vendorSpecificationReferenceSystem",
+          "description": "Details about the systems used to track sample IDs"
+        }
+      },
+      "title": "vendorSpecificationPlatform",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorSpecificationReferenceSystem": {
+      "properties": {
+        "URI": {
+          "description": "The primary URI for this reference system",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The human readable name for this reference system",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "vendorSpecificationReferenceSystem",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    },
+    "vendorSpecificationStandardRequirement": {
+      "properties": {
+        "blankWellPosition": {
+          "description": "Position data for reference blank well",
+          "properties": {
+            "numberOfBlanksPerPlate": {
+              "type": "integer"
+            },
+            "positions": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "type": "object",
+          "additionalProperties": false
+        },
+        "inputFormatDetails": {
+          "description": "Human readable details about the accepted input formats",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "inputFormats": {
+          "description": "List of accepted data formats",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "maxConcentration": {
+          "description": "The maximum allowed concentration",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxVolume": {
+          "description": "The minimum allowed volume of a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "minConcentration": {
+          "description": "the minimum allowed concentration of a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "minSampleNumber": {
+          "description": "The first sample number ",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "minVolume": {
+          "description": "The minimum allowed volume of a sample",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plateOrientation": {
+          "description": "The orientation of a plate",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleTypeDetails": {
+          "description": "Human readable details about the allowed sample types",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sampleTypes": {
+          "description": "List of allowed sample types",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "vendorSpecificationStandardRequirement",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object"
+    }
+  }
+}

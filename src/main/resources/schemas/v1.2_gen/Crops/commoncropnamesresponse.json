@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "description": "array of crop names availible on the server",
+          "items": {
+            "description": "supported crop name",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "commonCropNamesResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

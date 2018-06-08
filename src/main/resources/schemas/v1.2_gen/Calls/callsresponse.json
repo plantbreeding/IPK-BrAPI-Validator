@@ -1,0 +1,23 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "description": "Array of availible calls on this server",
+          "items": {
+            "$ref": "../definitions.json#/definitions/call"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "callsResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

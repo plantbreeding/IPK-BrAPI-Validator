@@ -1,0 +1,26 @@
+{
+  "properties": {
+    "result": {
+      "properties": {
+        "data": {
+          "items": {
+            "description": "observation levels available in this database",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "title": "observationLevelsResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

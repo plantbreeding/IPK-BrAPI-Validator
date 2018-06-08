@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "result": {
+      "items": {
+        "$ref": "../definitions.json#/definitions/alleleMatrixDetails"
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    }
+  },
+  "title": "alleleMatrixDetailsResponse",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
