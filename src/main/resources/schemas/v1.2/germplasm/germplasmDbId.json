@@ -1,0 +1,10 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/germplasm/germplasmDbId",
+	"type": "object",
+	"properties": {
+		"result": { "$ref": "../definitions.json#/definitions/germplasm"}
+	},
+	"required": ["result"]
+
+}

@@ -73,22 +73,22 @@ public class AdminResource {
         }
 
         LOGGER.debug("New POST /admin/resources call.");
-        
+
         Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
 
         try {
-        	
+
         	//Check auth header
             if (!auth(headers)) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4001);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
-        	
+
         	res.setEmail(null);
         	res.setPublic(true);
             endpointDao.create(res);
             return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Public endpoint added.", 2101)).build();
-        
+
         } catch (SQLException e) {
             e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
@@ -114,11 +114,11 @@ public class AdminResource {
         }
 
         LOGGER.debug("New POST /admin/provider call.");
-        
+
         Dao<Provider, UUID> providerDao = DataSourceManager.getDao(Provider.class);
 
         try {
-        	
+
         	//Check auth header
             if (!auth(headers)) {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
@@ -127,14 +127,14 @@ public class AdminResource {
 
             providerDao.create(prov);
             return Response.status(Status.ACCEPTED).entity(JsonMessageManager.jsonMessage(200, "Provider added.", 2102)).build();
-        
+
         } catch (SQLException e) {
             e.printStackTrace();
             String e1 = JsonMessageManager.jsonMessage(500, "Internal server error", 5002);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
-    
+
     /**
      * Run the default test on all public resources
      *
@@ -156,15 +156,15 @@ public class AdminResource {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
-            if (!version.equals("v1.0") && !version.equals("v1.1")) {
+            if (!version.equals("v1.0") && !version.equals("v1.1") && !version.equals("v1.2")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-            
+
             ObjectMapper mapper = new ObjectMapper();
 
-            boolean allowAdditional = false; // Strict mode by default -- No additional fields allowed. 
-            
+            boolean allowAdditional = false; // Strict mode by default -- No additional fields allowed.
+
             InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + version +".json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
             List<Resource> publicResources = ResourceService.getAllPublicEndpoints();
@@ -173,7 +173,7 @@ public class AdminResource {
 					RunnerService.TestEndpointWithCallAndSaveReport(resource, tc, allowAdditional);
 				} catch (SQLException | JsonProcessingException e) {
 					e.printStackTrace();
-				} 
+				}
             });
             System.out.println("Done");
             return Response.ok().build();
@@ -183,7 +183,7 @@ public class AdminResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
-    
+
     /**
      * Update database information using public json document.
      *
@@ -192,15 +192,15 @@ public class AdminResource {
     @POST
     @Path("/updateproviders")
     public Response updateProviders(@Context HttpHeaders headers) {
-        
+
         if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
-        
+
         LOGGER.debug("New GET /admin/testallpublic call.");
-        
+
         int resourcesUpdated = 0;
-        
+
         try {
 
             //Check auth header
@@ -208,14 +208,14 @@ public class AdminResource {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
-            
+
             ObjectMapper mapper = new ObjectMapper();
             // Required because some resource properties are arrays and some objects.
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-            
+
             // Download Json
             URL url = new URL(Config.get("resourceJsonUrl"));
-            
+
             URLConnection connection;
             if (!Config.get("http.proxyHost").equals("")) {
             	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(Config.get("http.proxyHost"), Integer.parseInt(Config.get("http.proxyPort"))));
@@ -223,22 +223,22 @@ public class AdminResource {
             } else {
             	connection = url.openConnection();
             }
-            
+
             connection.connect();
             InputStream is = connection.getInputStream();
             JsonNode node = mapper.readTree(is).at("/brapi-providers/category");
-            
+
             Dao<Provider, UUID> providerDao = DataSourceManager.getDao(Provider.class);
             Dao<Resource, UUID>  resourceDao = DataSourceManager.getDao(Resource.class);
-            
+
             // Iterate through providers.
             for (int i = 0; i < node.size(); i++) {
             	Provider providerJson = mapper.treeToValue(node.get(i), Provider.class);
             	// Check if provider existed (by name)
-            	Provider providerDb = providerDao.queryBuilder().where()            	
+            	Provider providerDb = providerDao.queryBuilder().where()
             		.eq(Provider.NAME_FIELD_NAME, providerJson.getName())
             		.queryForFirst();
-            	
+
             	if (providerDb == null) {
             		//Not found in DB, generate
             		providerDao.create(providerJson);
@@ -251,7 +251,7 @@ public class AdminResource {
             			resourceDao.create(res);
             			resourcesUpdated++;
             		}
-            		
+
             	} else {
             		// Found in DB, update.
             		providerDb.setDescription(providerJson.getDescription());
@@ -264,7 +264,7 @@ public class AdminResource {
             					.eq(Resource.URL_FIELD_NAME, res.getUrl()).and()
             					.eq(Resource.PROVIDER_FIELD_NAME, providerDb.getId())
             					.queryForFirst();
-            			
+
             			if (resDb == null) {
             				// Not found, create
             				res.setProvider(providerDb);
@@ -293,8 +293,8 @@ public class AdminResource {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
     }
-    
-    
+
+
     private boolean auth(HttpHeaders headers) {
     	String[] auth = ApiResourceService.getAuth(headers);
         //Check auth header
@@ -306,7 +306,7 @@ public class AdminResource {
         if (!auth[1].equals(Config.get("adminkey"))) {
             return false;
         }
-    	
+
     	return true;
     }
 }

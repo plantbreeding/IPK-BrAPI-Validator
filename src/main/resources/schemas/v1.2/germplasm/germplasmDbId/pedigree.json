@@ -1,0 +1,49 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/germplasm/id/pedigree",
+	"type": "object",
+	"properties": {
+		"result": {
+			"type": "object",
+				"properties": {
+					"germplasmDbId": {"type": "string"},
+					"defaultDisplayName": {"type": "string"},
+					"pedigree": {"type": "string"},
+                    "crossingPlan": {"type": ["string", "null"]},
+                    "crossingYear": {"type": ["string", "null"]},
+                    "familyCode": {"type": ["string", "null"]},
+                    
+					"parent1DbId": {"type": ["string", "null"]},
+					"parent2DbId": {"type": ["string", "null"]},
+					"parent1Id": {
+						"description": "Deprecated, use parent1DbId",
+						"type": ["string", "null"]
+					},
+					"parent2Id": {
+						"description": "Deprecated, use parent2DbId",
+						"type": ["string", "null"]
+					},
+                    
+                    "parent1Name": {"type": ["string", "null"]},
+                    "parent1Type": {"type": ["string", "null"]},
+                    "parent2Name": {"type": ["string", "null"]},
+                    "parent2Type": {"type": ["string", "null"]},
+                    "siblings": {
+                        "type": ["array", "null"],
+                        "items": { 
+                            "type": "object",
+                            "properties": {
+                                "germplasmDbId" : {"type": ["string", "null"]},
+                                "defaultDisplayName": {"type": ["string", "null"]}
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+				},
+				"required": ["germplasmDbId", "defaultDisplayName", "pedigree"],
+				"additionalProperties": false	
+		}
+	},
+	"required": ["result"]
+
+}

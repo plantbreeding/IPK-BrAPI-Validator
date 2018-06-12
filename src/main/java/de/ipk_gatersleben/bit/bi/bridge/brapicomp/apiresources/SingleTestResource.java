@@ -55,7 +55,7 @@ public class SingleTestResource {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-            if (!version.equals("v1.0") && !version.equals("v1.1")) {
+            if (!version.equals("v1.0") && !version.equals("v1.1") && !version.equals("v1.2")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }

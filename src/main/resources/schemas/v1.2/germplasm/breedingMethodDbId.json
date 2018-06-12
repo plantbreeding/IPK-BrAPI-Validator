@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "/breedingmethods/breedingMethodDbId",
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "breedingMethodDbId": {"type": "string"},
+                "abbreviation": {"type": "string"},
+                "name": {"type": "string"},
+                "description": {"type": "string"}
+              },
+              "required": [
+                "breedingMethodDbId",
+                "abbreviation",
+                "name",
+                "description"
+              ]
+            }
+          ]
+        }
+      },
+      "required": ["data"]
+    }
+  },
+  "required": ["result"]
+}
