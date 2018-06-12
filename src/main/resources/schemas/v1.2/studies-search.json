@@ -11,7 +11,7 @@
                         "additionalProperties": false,
                         "properties": {
                             "active": {
-                                "type": ["boolean", "null"]
+                                "type": ["string", "null"]
                             },
                             "additionalInfo": {
                                 "type": ["object", "null"]

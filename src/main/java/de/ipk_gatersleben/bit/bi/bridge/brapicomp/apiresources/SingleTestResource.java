@@ -47,7 +47,7 @@ public class SingleTestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response callTest(@QueryParam("url") String url, 
     		@QueryParam("brapiversion") @DefaultValue("") String version,
-    		@QueryParam("strict") @DefaultValue("on") String strict) {
+    		@QueryParam("strict") @DefaultValue("") String strict) {
 
         LOGGER.debug("New GET /call call.");
         try {
