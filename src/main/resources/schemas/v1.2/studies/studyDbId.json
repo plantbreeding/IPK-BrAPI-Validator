@@ -81,52 +81,7 @@
         "license": {
           "type": ["string", "null"]
         }, 
-        "location": {
-          "additionalProperties": false, 
-          "properties": {
-            "abbreviation": {
-              "type": ["string", "null"]
-            }, 
-            "additionalInfo": {  
-              "type": ["object", "null"]
-            }, 
-            "altitude": {
-              "type": ["number", "null"]
-            }, 
-            "countryCode": {
-              "type": ["string", "null"]
-            }, 
-            "countryName": {
-              "type": ["string", "null"]
-            }, 
-            "instituteAddress": {
-              "type": ["string", "null"]
-            }, 
-            "instituteAdress": {
-              "type": ["string", "null"]
-            }, 
-            "instituteName": {
-              "type": ["string", "null"]
-            }, 
-            "latitude": {
-              "type": ["number", "null"]
-            }, 
-            "locationDbId": {
-              "type": "string"
-            }, 
-            "longitude": {
-              "type": ["number", "null"]
-            }, 
-            "name": {
-              "type": "string"
-            }
-          }, 
-          "required": [
-            "locationDbId", 
-            "name"
-          ], 
-          "type": "object"
-        }, 
+        "location": { "$ref": "../definitions.json#/definitions/location"  }, 
         "seasons": {
           "items": {
             "type": "string"

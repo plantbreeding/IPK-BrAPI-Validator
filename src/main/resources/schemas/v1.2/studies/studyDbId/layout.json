@@ -11,10 +11,10 @@
                         "additionalProperties": false,
                         "properties": {
                             "X": {
-                                "type": ["integer", "null"]
+                                "type": ["string", "null"]
                             },
                             "Y": {
-                                "type": ["integer", "null"]
+                                "type": ["string", "null"]
                             },
                             "additionalInfo": {
                                 "additionalProperties": false,

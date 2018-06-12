@@ -345,8 +345,7 @@ public class TestItemRunner {
 
             ProcessingReport r = schemaValidator.validate(p, jsonString);
             r.forEach(message -> {
-            	if( !allowAdditional || 
-            			!message.asJson().get("keyword").toString().equals("\"additionalProperties\"")) {
+            	if( ! (allowAdditional && "\"additionalProperties\"".equals(String.valueOf(message.asJson().get("keyword"))))) {
             		tr.addError(message.asJson());
             	};
             });

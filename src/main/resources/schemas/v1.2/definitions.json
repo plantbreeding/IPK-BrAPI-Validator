@@ -1,6 +1,6 @@
 {
 	"$schema" : "http://json-schema.org/draft-04/schema" ,
-  	"id": "resource:/schemas/definitions.json#",
+  	"id": "definitions.json",
 	"definitions": {
 		"metadata" : {
 			"description": "test for the presence of metadata object",
@@ -422,6 +422,10 @@
         "location":{
             "additionalProperties": false,
             "properties": {
+                "abreviation": {
+                    "description": "Deprecated, but not considered invalid in this version",
+                    "type": ["string", "null"]
+                },
                 "abbreviation": {
                     "type": ["string", "null"]
                 },
@@ -499,6 +503,44 @@
                 },
                 "statusTimeStamp": {
                   "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties":{
+                        "filename": {
+                          "type": "string"
+                        },
+                        "URL": {
+                          "type": "string"
+                        },
+                        "md5sum": {
+                          "type": "string"
+                        },
+                        "fileType": {
+                          "type": "string"
+                        },
+                        "sampleDbIds": {
+                          "type": "array",
+                          "items": [
+                            {"type": "string"}
+                          ]
+                        },
+                        "additionalInfo": {
+			              "additionalProperties": {
+			                "type": [
+			                  "string",
+			                  "null"
+			                ]
+			              },
+			              "description": "Additional arbitrary info",
+			              "type": "object"
+                        }
+                      }
+                    }
+                  ]
                 },
                 "samples": {
                   "type": "array",
@@ -593,7 +635,7 @@
             "platforms": {
               "description": "List of platform specifications available at the vendor",
               "items": {
-                "$ref": "../definitions.json#/definitions/vendorSpecificationPlatform"
+                "$ref": "#/definitions/vendorSpecificationPlatform"
               },
               "type": [
                 "array",
@@ -748,7 +790,7 @@
               "type": "object"
             },
             "standardRequirements": {
-              "$ref": "../definitions.json#/definitions/vendorSpecificationStandardRequirement",
+              "$ref": "#/definitions/vendorSpecificationStandardRequirement",
               "description": "Set of standard requirements for a vendor platform"
             },
             "statuses": {
@@ -777,11 +819,11 @@
               ]
             },
             "taxonomyIdSystem": {
-              "$ref": "../definitions.json#/definitions/vendorSpecificationReferenceSystem",
+              "$ref": "#/definitions/vendorSpecificationReferenceSystem",
               "description": "Details about the systems used to track taxonomies"
             },
             "tissueIdSystem": {
-              "$ref": "../definitions.json#/definitions/vendorSpecificationReferenceSystem",
+              "$ref": "#/definitions/vendorSpecificationReferenceSystem",
               "description": "Details about the systems used to track sample IDs"
             }
           },
