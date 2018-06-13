@@ -8,7 +8,7 @@
       "additionalProperties": false, 
       "properties": {
         "active": {
-          "type": ["string", "null"]
+          "type": ["boolean", "null"]
         }, 
         "additionalInfo": { 
           "type": ["object", "null"]
