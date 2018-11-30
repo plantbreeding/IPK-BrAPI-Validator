@@ -1,0 +1,120 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "description": "Method metadata",
+            "properties": {
+                "class": {
+                    "description": "Method class (examples: \"Measurement\", \"Counting\", \"Estimation\", \"Computation\", etc.",
+                    "title": "className",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "description": {
+                    "description": "Method description.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "formula": {
+                    "description": "For computational methods i.e., when the method consists in assessing the trait by computing measurements, write the generic formula used for the calculation",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "methodDbId": {
+                    "description": "Method unique identifier",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "methodName": {
+                    "description": "Human readable name for the method",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "ontologyRefernce": {
+                    "properties": {
+                        "documentationLinks": {
+                            "description": "links to various ontology documentation",
+                            "items": {
+                                "properties": {
+                                    "URL": {
+                                        "format": "uri",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "type": {
+                                        "enum": [
+                                            "OBO",
+                                            "RDF",
+                                            "WEBPAGE"
+                                        ],
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": [
+                                "null",
+                                "array"
+                            ]
+                        },
+                        "ontologyDbId": {
+                            "description": "Ontology database unique identifier",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "ontologyName": {
+                            "description": "Ontology name",
+                            "type": "string"
+                        },
+                        "version": {
+                            "description": "Ontology version (no specific format)",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "ontologyName"
+                    ],
+                    "title": "ontologyRefernce",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "reference": {
+                    "description": "Bibliographical reference describing the method.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "title": "method",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getMethodsMethoddbidResponse",
+    "type": "object"
+}

@@ -1,0 +1,137 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "abbreviation": {
+                                "description": "An abbreviation which represents this location",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "abreviation": {
+                                "description": "Deprecated  Use abbreviation ",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "altitude": {
+                                "description": "The altitude of this location",
+                                "type": [
+                                    "null",
+                                    "number"
+                                ]
+                            },
+                            "countryCode": {
+                                "description": "[ISO_3166-1_alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) spec",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "countryName": {
+                                "description": "The full name of the country where this location is",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "documentationURL": {
+                                "description": "A URL to the human readable documentation of this object",
+                                "format": "uri",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "instituteAddress": {
+                                "description": "The street address of the institute representing this location",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "instituteAdress": {
+                                "description": "Deprecated  Use instituteAddress ",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "instituteName": {
+                                "description": "each institute/laboratory can have several experimental field",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "latitude": {
+                                "description": "The latitude of this location",
+                                "type": [
+                                    "null",
+                                    "number"
+                                ]
+                            },
+                            "locationDbId": {
+                                "description": "string identifier",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "locationName": {
+                                "description": "A human readable name for this location",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "locationType": {
+                                "description": "The type of location this represents (ex. Breeding Location, Storage Location, etc)",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "longitude": {
+                                "description": "the longitude of this location",
+                                "type": [
+                                    "null",
+                                    "number"
+                                ]
+                            }
+                        },
+                        "title": "location",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getLocationsResponse",
+    "type": "object"
+}

@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "germplasmDbId": {
+                    "description": "The ID which uniquely identifies a germplasm within the given database server",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "markerProfileDbIds": {
+                    "description": "The ID which uniquely identifies a marker profile within the given database server",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                }
+            },
+            "title": "germplasmMarkerprofilesList",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getGermplasmGermplasmdbidMarkerprofilesResponse",
+    "type": "object"
+}

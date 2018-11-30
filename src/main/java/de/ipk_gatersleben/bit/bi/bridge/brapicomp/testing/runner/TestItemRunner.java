@@ -71,12 +71,13 @@ public class TestItemRunner {
 
     /**
      * Run the tests
+     * @param singleTest 
      *
      * @return Report
      */
-    public TestItemReport runTests(boolean allowAdditional) {
+    public TestItemReport runTests(boolean allowAdditional, Boolean singleTest) {
     	
-        this.vr = connect();
+        this.vr = connect(singleTest);
         
         //TODO: Only first event in Item.event is executed.
         List<String> execList = this.item.getEvent().get(0).getExec();
@@ -214,19 +215,22 @@ public class TestItemRunner {
 
     /**
      * Connect to an endpoint and store the server response.
+     * @param singleTest 
      *
      * @return server response
      */
-    private ValidatableResponse connect() {
+    private ValidatableResponse connect(Boolean singleTest) {
         LOGGER.info("New Request. URL: " + this.url);
         
         RestAssured.useRelaxedHTTPSValidation();
         try {
         	URL u = new URL(url);
-    		if ((Config.get("advancedMode") != null && Config.get("advancedMode").equals("true"))
-    			&& u.getPort() != 80 && u.getPort() != -1) {
-				throw new IllegalArgumentException();
-			}
+        	if(singleTest == null || !singleTest) { // singleTest indicates this came from a manual web submission and should not be restricted by port
+	    		if ((Config.get("advancedMode") != null && Config.get("advancedMode").equals("true"))
+	    			&& u.getPort() != 80 && u.getPort() != -1) {
+					throw new IllegalArgumentException();
+				}
+        	}
             RequestSpecification rs = given()
             		.contentType("application/json");
 			List<Param> params = this.item.getParameters();

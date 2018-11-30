@@ -30,13 +30,14 @@ public class CallTestSuiteRunner implements TestSuiteRunner {
 
     /**
      * Run the tests
+     * @param singleTest 
      *
      * @return Test report
      */
-    public TestSuiteReport runTests(boolean allowAdditional) {
+    public TestSuiteReport runTests(boolean allowAdditional, Boolean singleTest) {
         TestSuiteReport testSuiteReport = new TestSuiteReport(id, url);
         TestCollectionRunner testCollectionRunner = new TestCollectionRunner(testCollection, url);
-        TestCollectionReport tcr = testCollectionRunner.runTestsFromCall(allowAdditional);
+        TestCollectionReport tcr = testCollectionRunner.runTestsFromCall(allowAdditional, singleTest);
         testSuiteReport.addTestCollectionReport(tcr);
         return testSuiteReport;
     }

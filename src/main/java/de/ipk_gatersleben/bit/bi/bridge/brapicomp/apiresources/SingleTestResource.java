@@ -3,6 +3,9 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -55,7 +58,7 @@ public class SingleTestResource {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-            if (!version.equals("v1.0") && !version.equals("v1.1") && !version.equals("v1.2")) {
+            if (!getBrAPIVersions().contains(version)) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
@@ -64,14 +67,15 @@ public class SingleTestResource {
             
             ObjectMapper mapper = new ObjectMapper();
 
-            boolean allowAdditional = !strict.equals("on");
+            boolean allowAdditional = !strict.equals("on"); // Controlled by the "Strict test" check box on the web page 
+            Boolean singleTest = true; // Flag to indicate that this is a one off test manually generated from the web page. Used to relax some restrictions set for production systems 
             collectionResource = "/collections/CompleteBrapiTest." + version + ".json";
 
             InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
             
             Resource res = new Resource(url);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional, singleTest);
             TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
             
             
@@ -86,5 +90,17 @@ public class SingleTestResource {
             String e1 = JsonMessageManager.jsonMessage(500, "internal server error", 5201);
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e1).build();
         }
+    }
+    
+
+    @GET
+    @Path("/brapiversions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBrAPIVersionsWeb() {
+    	return Response.ok().entity(getBrAPIVersions()).build();
+    }
+    
+    private List<String> getBrAPIVersions(){
+    	return Arrays.asList("v1.0","v1.1","v1.2","v1.3");
     }
 }

@@ -38,7 +38,7 @@ public class RunnerService {
             id = ep.getId().toString();
         }
         CustomTestSuiteRunner t = new CustomTestSuiteRunner(id, ep.getUrl(), testCollection);
-        return t.runTests(allowAdditional);
+        return t.runTests(allowAdditional, false);
     }
     
     /**
@@ -46,15 +46,16 @@ public class RunnerService {
      *
      * @param ep             Resource to be tested
      * @param tc 
+     * @param singleTest 
      * @return Report
      */
-	public static TestSuiteReport testEndpointWithCall(Resource ep, TestCollection tc, boolean allowAdditional) {
+	public static TestSuiteReport testEndpointWithCall(Resource ep, TestCollection tc, boolean allowAdditional, Boolean singleTest) {
         String id = "";
         if (ep.getId() != null) {
             id = ep.getId().toString();
         }
         CallTestSuiteRunner t = new CallTestSuiteRunner(id, ep.getUrl(), tc);
-        return t.runTests(allowAdditional);
+        return t.runTests(allowAdditional, singleTest);
     }
 
     /**
@@ -72,7 +73,7 @@ public class RunnerService {
         boolean sent;
         for (int i = 0; i < l.size(); i++) {
             Resource resource = l.get(i);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, testCollection, allowAdditional);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, testCollection, allowAdditional, false);
             
             final int N = resource.getStoreprev();
             // Get last N reports
@@ -133,7 +134,7 @@ public class RunnerService {
      */
     public static TestItemReport singleTestEndpoint(Item simple, boolean allowAdditional) {
         TestItemRunner tir = new TestItemRunner(simple);
-        return tir.runTests(allowAdditional);
+        return tir.runTests(allowAdditional, false);
     }
 
     /**
@@ -145,7 +146,7 @@ public class RunnerService {
      */
     public static TestItemReport singleTestEndpoint(Item simple, VariableStorage storage, boolean allowAdditional) {
         TestItemRunner tir = new TestItemRunner(simple, storage);
-        return tir.runTests(allowAdditional);
+        return tir.runTests(allowAdditional, false);
     }
 
 	public static void TestAllPublicEndpoints(TestCollection tc, boolean allowAdditional) throws SQLException {
@@ -153,7 +154,7 @@ public class RunnerService {
 		LOGGER.info("Endpoints found: " + l.size());
 		for (int i = 0; i < l.size(); i++) {
 			Resource resource = l.get(i);
-            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, tc, allowAdditional);
+            TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(resource, tc, allowAdditional, false);
             
             ObjectMapper mapper = new ObjectMapper();
             try {
@@ -169,7 +170,7 @@ public class RunnerService {
 
 	public static void TestEndpointWithCallAndSaveReport(Resource res, TestCollection tc, boolean allowAdditional) throws JsonProcessingException, SQLException {
 		ObjectMapper mapper = new ObjectMapper();
-		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional);
+		TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional, false);
         TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
         String reportId = TestReportService.saveReport(report);
         testSuiteReport.setId(reportId);

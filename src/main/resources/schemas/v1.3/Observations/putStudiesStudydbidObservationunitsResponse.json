@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "observationUnitDbIds": {
+                    "description": "List of observation unit references which have been created or updated",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                }
+            },
+            "title": "newObservationUnitDbIds",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "putStudiesStudydbidObservationunitsResponse",
+    "type": "object"
+}

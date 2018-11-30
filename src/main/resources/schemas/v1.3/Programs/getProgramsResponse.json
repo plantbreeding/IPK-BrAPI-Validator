@@ -1,0 +1,85 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "abbreviation": {
+                                "description": "An abbreviation which represnts this program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "commonCropName": {
+                                "description": "Common name for the crop which this program is for",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "documentationURL": {
+                                "description": "A URL to the human readable documentation of this object",
+                                "format": "uri",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "leadPersonDbId": {
+                                "description": "The unique identifier of the program leader",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "leadPersonName": {
+                                "description": "The name of the program leader",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "objective": {
+                                "description": "The primary objective of the program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "programDbId": {
+                                "description": "The ID which uniquely identifies the program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "programName": {
+                                "description": "Human readable name of the program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "program",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getProgramsResponse",
+    "type": "object"
+}

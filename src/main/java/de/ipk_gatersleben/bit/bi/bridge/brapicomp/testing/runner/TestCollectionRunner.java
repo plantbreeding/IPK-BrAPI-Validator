@@ -48,7 +48,7 @@ public class TestCollectionRunner {
         return tcr;
     }
 
-	public TestCollectionReport runTestsFromCall(boolean allowAdditional) {
+	public TestCollectionReport runTestsFromCall(boolean allowAdditional, Boolean singleTest) {
         String name = testCollection.getInfo().getName();
         TestCollectionReport tcr = new TestCollectionReport(name, url);
         String baseUrl = url.replaceAll("/$", "");
@@ -62,9 +62,9 @@ public class TestCollectionRunner {
             TestFolderRunner tfr = new TestFolderRunner(baseUrl, folderList.get(i), storage);
             TestFolderReport tfReport;
             if (i == 0) {
-            	tfReport = tfr.runTests(doneTests, allowAdditional);
+            	tfReport = tfr.runTests(doneTests, allowAdditional, singleTest);
             } else {
-            	tfReport = tfr.runTestsFromCall(doneTests, allowAdditional);
+            	tfReport = tfr.runTestsFromCall(doneTests, allowAdditional, singleTest);
             }
            
             tcr.addFolder(tfReport);

@@ -1,0 +1,99 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "dateCreated": {
+                    "format": "date-time",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "dateModified": {
+                    "format": "date-time",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "listDbId": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "listName": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "listOwnerName": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "listOwnerPersonDbId": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "listSize": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "listSource": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "listType": {
+                    "enum": [
+                        "germplasm",
+                        "markers",
+                        "programs",
+                        "trials",
+                        "studies",
+                        "observationUnits",
+                        "observations",
+                        "observationVariables",
+                        "samples"
+                    ],
+                    "title": "listTypes",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "title": "listDetails"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "postListsListdbidItemsResponse",
+    "type": "object"
+}
