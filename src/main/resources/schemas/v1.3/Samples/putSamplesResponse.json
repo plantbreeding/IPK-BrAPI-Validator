@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "description": "List of sample references which have been created or updated",
+            "properties": {
+                "sampleDbId": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "sampleId": {
+                    "description": "** Deprecated ** use sampleDbId",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "putSamplesResponse",
+    "type": "object"
+}

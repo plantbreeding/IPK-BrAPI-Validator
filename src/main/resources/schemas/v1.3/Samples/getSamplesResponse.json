@@ -1,0 +1,120 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "germplasmDbId": {
+                                "description": " The ID which uniquely identifies a germplasm",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "notes": {
+                                "description": "Additional notes about a samle",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "observationUnitDbId": {
+                                "description": "The ID which uniquely identifies an observation unit",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "plantDbId": {
+                                "description": "The ID which uniquely identifies a plant. Usually 'plantNumber'",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "plateDbId": {
+                                "description": "The ID which uniquely identifies a plate of samples",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "plateIndex": {
+                                "description": "The index number of this sample on a plate",
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "plotDbId": {
+                                "description": " The ID which uniquely identifies a plot. Usually 'plotNumber'",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "sampleDbId": {
+                                "description": "The ID which uniquely identifies a sample",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "sampleTimestamp": {
+                                "description": "The date and time a sample was collected from the field",
+                                "format": "date-time",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "sampleType": {
+                                "description": "The type of sample taken. ex. 'DNA', 'RNA', 'Tissue', etc ",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyDbId": {
+                                "description": "The ID which uniquely identifies a study within the given database server",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "takenBy": {
+                                "description": "The name or identifier of the entity which took the sample from the field",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "tissueType": {
+                                "description": "The type of tissue sampled. ex. 'Leaf', 'Root', etc.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "sample",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getSamplesResponse",
+    "type": "object"
+}

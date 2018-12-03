@@ -172,7 +172,27 @@ $(function() {
     }
 
 
-
+    //Load BrAPI versions
+    function populateBrAPIVersions() {
+        $.ajax({
+            url: 'api/test/brapiversions',
+            type: 'GET',
+            success: function(res) {
+			    var versionElement = document.getElementById('brapiversion');
+				for (var i = 0; i<res.length; i++){
+					var val = res[i];
+				    var opt = document.createElement('option');
+				    opt.value = val;
+				    opt.innerHTML = val;
+				    if(i == res.length - 1){
+				    	opt.selected = true;
+				    }
+				    versionElement.appendChild(opt);
+				}
+            }
+        });
+    }
+    
     // Modal form
     $("#modalForm").submit(function(e){
         e.preventDefault();
@@ -607,8 +627,10 @@ $(function() {
 
         populateServerTable();
 
-        updateCropForm()
+        updateCropForm();
 
+        populateBrAPIVersions();
+        
         // Remove initial /calls option as it is replaced by the one on the tests list.
         $(".del").remove();
 

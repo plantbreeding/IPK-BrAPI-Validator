@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "description": "Array of generic list summaries",
+                    "items": {
+                        "properties": {
+                            "dateCreated": {
+                                "format": "date-time",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "dateModified": {
+                                "format": "date-time",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "description": {
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "listDbId": {
+                                "type": "string"
+                            },
+                            "listName": {
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "listOwnerName": {
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "listOwnerPersonDbId": {
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "listSize": {
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "listSource": {
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "listType": {
+                                "enum": [
+                                    "germplasm",
+                                    "markers",
+                                    "programs",
+                                    "trials",
+                                    "studies",
+                                    "observationUnits",
+                                    "observations",
+                                    "observationVariables",
+                                    "samples"
+                                ],
+                                "title": "listTypes",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "listDbId",
+                            "listType"
+                        ],
+                        "title": "listSummary",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getListsResponse",
+    "type": "object"
+}

@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "searchResultDbId": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "postSearchObservationunitsResponse",
+    "type": "object"
+}

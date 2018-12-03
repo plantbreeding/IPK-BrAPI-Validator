@@ -10,7 +10,7 @@ public interface TestSuiteRunner {
      *
      * @return Test report
      */
-    public TestSuiteReport runTests(boolean allowAdditional);
+    public TestSuiteReport runTests(boolean allowAdditional, Boolean singleTest);
 
     /**
      * @return the id

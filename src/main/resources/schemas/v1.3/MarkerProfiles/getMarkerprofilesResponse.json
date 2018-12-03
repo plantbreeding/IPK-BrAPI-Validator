@@ -1,0 +1,84 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "analysisMethod": {
+                                "description": "The type of analysis performed to determine a set of marker data",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "extractDbId": {
+                                "description": " The ID which uniquely identifies this data extract",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "germplasmDbId": {
+                                "description": " The ID which uniquely identifies a germplasm",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "markerProfileDbId": {
+                                "description": "Unique in the database. Can be a catenation of unique IDs for germplasm and extract. Required",
+                                "type": "string"
+                            },
+                            "markerprofileDbId": {
+                                "description": "DEPRECATED in v1.3 - see \"markerProfileDbId\" (camel case)",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "resultCount": {
+                                "description": "Number of markers present in the marker profile",
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "sampleDbId": {
+                                "description": "The ID which uniquely identifies a sample",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "uniqueDisplayName": {
+                                "description": "Human readable display name for this marker profile",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "markerProfileDbId"
+                        ],
+                        "title": "markerProfileDescription",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getMarkerprofilesResponse",
+    "type": "object"
+}

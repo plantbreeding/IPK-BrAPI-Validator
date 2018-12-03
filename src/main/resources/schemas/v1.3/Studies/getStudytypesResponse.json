@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "description": {
+                                "description": "The description of this study type",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyTypeDbId": {
+                                "description": "The unique identifier of a study type",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyTypeName": {
+                                "description": "The human readable name of a study type",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "studyType",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getStudytypesResponse",
+    "type": "object"
+}
