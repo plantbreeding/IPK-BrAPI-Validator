@@ -49,7 +49,7 @@
                         "string"
                     ]
                 },
-                "ontologyRefernce": {
+                "ontologyReference": {
                     "properties": {
                         "documentationLinks": {
                             "description": "links to various ontology documentation",
@@ -103,7 +103,7 @@
                     "required": [
                         "ontologyName"
                     ],
-                    "title": "ontologyRefernce",
+                    "title": "ontologyReference",
                     "type": [
                         "null",
                         "object"

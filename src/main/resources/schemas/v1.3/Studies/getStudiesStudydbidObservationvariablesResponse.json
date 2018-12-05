@@ -98,7 +98,7 @@
                                             "string"
                                         ]
                                     },
-                                    "ontologyRefernce": {
+                                    "ontologyReference": {
                                         "properties": {
                                             "documentationLinks": {
                                                 "description": "links to various ontology documentation",
@@ -152,7 +152,7 @@
                                         "required": [
                                             "ontologyName"
                                         ],
-                                        "title": "ontologyRefernce",
+                                        "title": "ontologyReference",
                                         "type": [
                                             "null",
                                             "object"
@@ -186,7 +186,7 @@
                                     "string"
                                 ]
                             },
-                            "ontologyRefernce": {
+                            "ontologyReference": {
                                 "properties": {
                                     "documentationLinks": {
                                         "description": "links to various ontology documentation",
@@ -240,7 +240,7 @@
                                 "required": [
                                     "ontologyName"
                                 ],
-                                "title": "ontologyRefernce",
+                                "title": "ontologyReference",
                                 "type": [
                                     "null",
                                     "object"
@@ -273,7 +273,7 @@
                                             "integer"
                                         ]
                                     },
-                                    "ontologyRefernce": {
+                                    "ontologyReference": {
                                         "properties": {
                                             "documentationLinks": {
                                                 "description": "links to various ontology documentation",
@@ -327,7 +327,7 @@
                                         "required": [
                                             "ontologyName"
                                         ],
-                                        "title": "ontologyRefernce",
+                                        "title": "ontologyReference",
                                         "type": [
                                             "null",
                                             "object"
@@ -474,7 +474,7 @@
                                             "string"
                                         ]
                                     },
-                                    "ontologyRefernce": {
+                                    "ontologyReference": {
                                         "properties": {
                                             "documentationLinks": {
                                                 "description": "links to various ontology documentation",
@@ -528,7 +528,7 @@
                                         "required": [
                                             "ontologyName"
                                         ],
-                                        "title": "ontologyRefernce",
+                                        "title": "ontologyReference",
                                         "type": [
                                             "null",
                                             "object"
