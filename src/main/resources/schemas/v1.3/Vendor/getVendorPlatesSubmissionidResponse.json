@@ -149,7 +149,7 @@
                                                     ]
                                                 }
                                             },
-                                            "title": "ontologyReference",
+                                            "title": "vendorOntologyReference",
                                             "type": [
                                                 "null",
                                                 "object"
@@ -187,7 +187,7 @@
                                                     ]
                                                 }
                                             },
-                                            "title": "ontologyReference",
+                                            "title": "vendorOntologyReference",
                                             "type": [
                                                 "null",
                                                 "object"
