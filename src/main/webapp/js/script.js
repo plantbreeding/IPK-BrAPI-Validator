@@ -155,6 +155,8 @@ $(function() {
                     statusBar.show("Can't connect to the server.");
                 } else if (a.status === 500) {
                     statusBar.show("Internal server error.");
+                } else {
+                    statusBar.show("Internal server error. (HTTP Status Code: "+a.status+")");
                 }
             }
         });
