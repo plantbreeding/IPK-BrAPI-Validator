@@ -69,6 +69,9 @@ public class AppServletContextListener implements ServletContextListener {
 		
 		
 		String path = Config.get("dbpath");
+		
+		System.out.println(path);
+		
 		String databaseUrl = path;
 		ConnectionSource connectionSource;
 		try {

@@ -16,7 +16,6 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.ResourceService;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 
 @Path("/public")

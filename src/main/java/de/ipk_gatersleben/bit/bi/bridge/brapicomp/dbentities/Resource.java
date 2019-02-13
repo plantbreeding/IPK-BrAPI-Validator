@@ -10,8 +10,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.fasterxml.jackson.annotation.*;
 
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
-
 /**
  * Resource - table model An endpoint instance contains the information related
  * to one endpoint (url, and user it belongs to) It represents the "endpoints"

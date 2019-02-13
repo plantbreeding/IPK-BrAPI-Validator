@@ -24,7 +24,6 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.MiniTestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReportService;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.CSVUtils;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 

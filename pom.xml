@@ -17,7 +17,7 @@
 
 	<build>
 
-		<finalName>BrAPI-validator</finalName>
+		<finalName>brapivalidator</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 
@@ -69,13 +69,13 @@
 						</resource>
 						<resource>
 							<filtering>true</filtering>
-							<directory>src/main/webapp/advanced</directory>
+							<directory>${webappHome}</directory>
 							<includes>
 								<include>**/index.html</include>
 							</includes>
 						</resource>
 					</webResources>
-					<warSourceDirectory>${webappHome}/advanced</warSourceDirectory>
+					<warSourceDirectory>${webappHome}</warSourceDirectory>
 					<failOnMissingWebXml>true</failOnMissingWebXml>
 				</configuration>
 			</plugin>
@@ -102,7 +102,7 @@
 						<descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
 					</webApp>
 					<webAppSourceDirectory>
-						${project.basedir}/${webappHome}/advanced
+						${project.basedir}/${webappHome}
 					</webAppSourceDirectory>
 				</configuration>
 			</plugin>
@@ -120,6 +120,25 @@
 		</plugins>
 	</build>
 	<dependencies>
+
+		<!-- DB Drivers -->
+
+		<!-- Orcale -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.oracle.jdbc</groupId> -->
+		<!-- <artifactId>ojdbc7</artifactId> -->
+		<!-- <version>12.1.0.1</version> -->
+		<!-- </dependency> -->
+
+		<!-- Postgres -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.5</version>
+		</dependency>
+
+		<!-- DB Drivers -->
+
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
@@ -195,11 +214,6 @@
 			<groupId>com.j256.ormlite</groupId>
 			<artifactId>ormlite-jdbc</artifactId>
 			<version>5.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.jdbc</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>12.1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.fge</groupId>

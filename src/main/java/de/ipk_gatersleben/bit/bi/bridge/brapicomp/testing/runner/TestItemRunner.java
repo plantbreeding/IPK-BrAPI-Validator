@@ -3,11 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
