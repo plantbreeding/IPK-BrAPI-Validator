@@ -37,7 +37,7 @@ public class RunnerService {
         if (ep.getId() != null) {
             id = ep.getId().toString();
         }
-        CustomTestSuiteRunner t = new CustomTestSuiteRunner(id, ep.getUrl(), testCollection);
+        CustomTestSuiteRunner t = new CustomTestSuiteRunner(id, ep, testCollection);
         return t.runTests(allowAdditional, false);
     }
     
@@ -54,7 +54,7 @@ public class RunnerService {
         if (ep.getId() != null) {
             id = ep.getId().toString();
         }
-        CallTestSuiteRunner t = new CallTestSuiteRunner(id, ep.getUrl(), tc);
+        CallTestSuiteRunner t = new CallTestSuiteRunner(id, ep, tc);
         return t.runTests(allowAdditional, singleTest);
     }
 
@@ -134,7 +134,7 @@ public class RunnerService {
      */
     public static TestItemReport singleTestEndpoint(Item simple, boolean allowAdditional) {
         TestItemRunner tir = new TestItemRunner(simple);
-        return tir.runTests(allowAdditional, false);
+        return tir.runTests(null, allowAdditional, false);
     }
 
     /**
@@ -146,7 +146,7 @@ public class RunnerService {
      */
     public static TestItemReport singleTestEndpoint(Item simple, VariableStorage storage, boolean allowAdditional) {
         TestItemRunner tir = new TestItemRunner(simple, storage);
-        return tir.runTests(allowAdditional, false);
+        return tir.runTests(null, allowAdditional, false);
     }
 
 	public static void TestAllPublicEndpoints(TestCollection tc, boolean allowAdditional) throws SQLException {

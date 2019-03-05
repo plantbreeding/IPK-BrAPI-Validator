@@ -1,5 +1,6 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
 
@@ -29,7 +30,7 @@ public interface TestSuiteRunner {
     /**
      * @param url the url to set
      */
-    public void setUrl(String url);
+    public void setEp(Resource ep);
 
     void setTestCollection(TestCollection tc);
 
