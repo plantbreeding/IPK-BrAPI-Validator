@@ -3,6 +3,8 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
+
 /**
  * Contains multiple TestCollectionReports and the base url to be used (endpoint url) in those collections.
  */
@@ -10,11 +12,11 @@ public class TestSuiteReport {
 
 	private List<TestCollectionReport> testCollections = new ArrayList<TestCollectionReport>();
     private String id;
-    private String baseUrl;
+    private Resource ep;
 
-    public TestSuiteReport(String id, String url) {
+    public TestSuiteReport(String id, Resource ep) {
         setId(id);
-        setBaseUrl(url);
+        setEp(ep);
     }
 
     public String getId() {
@@ -26,12 +28,12 @@ public class TestSuiteReport {
     }
 
     public String getBaseUrl() {
-        return baseUrl;
+        return ep.getUrl();
     }
 
 
-    public void setBaseUrl(String url) {
-        baseUrl = url;
+    public void setEp(Resource ep) {
+        this.ep = ep;
     }
 
     public void addTestCollectionReport(TestCollectionReport tc) {

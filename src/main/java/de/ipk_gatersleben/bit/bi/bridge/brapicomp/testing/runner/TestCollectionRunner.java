@@ -3,6 +3,7 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.Folder;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
@@ -13,7 +14,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorag
  * Runs the tests for a test collection
  */
 public class TestCollectionRunner {
-    private String url;
+    private Resource ep;
     private TestCollection testCollection;
     //private VariableStorage variableStorage;
 
@@ -21,11 +22,11 @@ public class TestCollectionRunner {
      * Constructor
      *
      * @param tc  TestCollection config instance
-     * @param url Base URL of the endpoint to be tested.
+     * @param ep Base URL of the endpoint to be tested.
      */
-    public TestCollectionRunner(TestCollection tc, String url) {
+    public TestCollectionRunner(TestCollection tc, Resource ep) {
         this.testCollection = tc;
-        this.url = url;
+        this.ep = ep;
     }
 
     /**
@@ -35,13 +36,14 @@ public class TestCollectionRunner {
      */
     public TestCollectionReport runTests(boolean allowAdditional) {
         String name = testCollection.getInfo().getName();
-        TestCollectionReport tcr = new TestCollectionReport(name, url);
-        String baseUrl = url.replaceAll("/$", "");
+        TestCollectionReport tcr = new TestCollectionReport(name, ep.getUrl());
+        String baseUrl = ep.getUrl().replaceAll("/$", "");
+        String accessToken = ep.getAccessToken();
         VariableStorage storage = new VariableStorage(baseUrl);
         List<Folder> folderList = testCollection.getItem();
         folderList.forEach(folder -> {
             TestFolderRunner tfr = new TestFolderRunner(baseUrl, folder, storage);
-            TestFolderReport tfReport = tfr.runTests(allowAdditional);
+            TestFolderReport tfReport = tfr.runTests(accessToken, allowAdditional);
             tcr.addFolder(tfReport);
         });
         tcr.setVariables(storage);
@@ -50,8 +52,9 @@ public class TestCollectionRunner {
 
 	public TestCollectionReport runTestsFromCall(boolean allowAdditional, Boolean singleTest) {
         String name = testCollection.getInfo().getName();
-        TestCollectionReport tcr = new TestCollectionReport(name, url);
-        String baseUrl = url.replaceAll("/$", "");
+        TestCollectionReport tcr = new TestCollectionReport(name, ep.getUrl());
+        String baseUrl = ep.getUrl().replaceAll("/$", "");
+        String accessToken = ep.getAccessToken();
         VariableStorage storage = new VariableStorage(baseUrl);
         
         List<Folder> folderList = testCollection.getItem();
@@ -62,9 +65,9 @@ public class TestCollectionRunner {
             TestFolderRunner tfr = new TestFolderRunner(baseUrl, folderList.get(i), storage);
             TestFolderReport tfReport;
             if (i == 0) {
-            	tfReport = tfr.runTests(doneTests, allowAdditional, singleTest);
+            	tfReport = tfr.runTests(doneTests, accessToken, allowAdditional, singleTest);
             } else {
-            	tfReport = tfr.runTestsFromCall(doneTests, allowAdditional, singleTest);
+            	tfReport = tfr.runTestsFromCall(doneTests, accessToken, allowAdditional, singleTest);
             }
            
             tcr.addFolder(tfReport);

@@ -2,8 +2,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.apiresources;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +13,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.process.internal.RequestScoped;
@@ -25,7 +24,6 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
-import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.ApiResourceService;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.JsonMessageManager;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
@@ -49,7 +47,8 @@ public class SingleTestResource {
     @Path("/call")
     @Produces(MediaType.APPLICATION_JSON)
     public Response callTest(@QueryParam("url") String url, 
-    		@QueryParam("brapiversion") @DefaultValue("") String version,
+            @QueryParam("accessToken") @DefaultValue("") String accessToken,
+            @QueryParam("brapiversion") @DefaultValue("") String version,
     		@QueryParam("strict") @DefaultValue("") String strict) {
 
         LOGGER.debug("New GET /call call.");
@@ -74,7 +73,7 @@ public class SingleTestResource {
             InputStream inJson = TestCollection.class.getResourceAsStream(collectionResource);
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
             
-            Resource res = new Resource(url);
+            Resource res = new Resource(url, accessToken);
             TestSuiteReport testSuiteReport = RunnerService.testEndpointWithCall(res, tc, allowAdditional, singleTest);
             TestReport report = new TestReport(res, mapper.writeValueAsString(testSuiteReport));
             

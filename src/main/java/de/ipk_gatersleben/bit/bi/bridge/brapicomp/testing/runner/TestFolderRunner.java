@@ -36,10 +36,11 @@ public class TestFolderRunner {
     /**
      * Runs the tests specified in the Folder config
      * @param doneTests 
+     * @param accessToken 
      *
      * @return Test report.
      */
-    public TestFolderReport runTests(List<String> doneTests, boolean allowAdditional, Boolean singleTest) {
+    public TestFolderReport runTests(List<String> doneTests, String accessToken, boolean allowAdditional, Boolean singleTest) {
         TestFolderReport tcr = new TestFolderReport(this.baseUrl);
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());
@@ -47,7 +48,7 @@ public class TestFolderRunner {
         LinkedHashMap<String, Object> folderTests = new LinkedHashMap<String, Object>();
         itemList.forEach(item -> {
             TestItemRunner tir = new TestItemRunner(item, storage);
-            TestItemReport tiReport = tir.runTests(allowAdditional, singleTest);
+            TestItemReport tiReport = tir.runTests(accessToken, allowAdditional, singleTest);
             tcr.addTestReport(tiReport);
             doneTests.add(item.getName());
             folderTests.put(item.getName(), tiReport);
@@ -58,15 +59,16 @@ public class TestFolderRunner {
     
     /**
      * Runs the tests specified in the Folder config
+     * @param accessToken
      * @param doneTests 
      *
      * @return Test report.
      */
-    public TestFolderReport runTests(boolean allowAdditional) {
-    	return runTests(new ArrayList<String>(), allowAdditional, false);
+    public TestFolderReport runTests(String accessToken, boolean allowAdditional) {
+    	return runTests(new ArrayList<String>(), accessToken, allowAdditional, false);
     }
 
-	public TestFolderReport runTestsFromCall(List<String> doneTests, boolean allowAdditional, Boolean singleTest) {
+	public TestFolderReport runTestsFromCall(List<String> doneTests, String accessToken, boolean allowAdditional, Boolean singleTest) {
         TestFolderReport tcr = new TestFolderReport(this.baseUrl);
         tcr.setName(this.folder.getName());
         tcr.setDescription(this.folder.getDescription());        
@@ -90,7 +92,7 @@ public class TestFolderRunner {
         		    		
         		if (storage.getKeys().containsAll(item.getRequires())) {
         			TestItemRunner tir = new TestItemRunner(item, storage);
-            		TestItemReport tiReport = tir.runTests(allowAdditional, singleTest);
+            		TestItemReport tiReport = tir.runTests(accessToken, allowAdditional, singleTest);
                     tcr.addTestReport(tiReport);
                     doneTests.add(item.getName());
                     folderTests.put(item.getName(), tiReport);

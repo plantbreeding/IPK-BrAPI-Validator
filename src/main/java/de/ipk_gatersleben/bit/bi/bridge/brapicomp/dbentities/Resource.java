@@ -54,6 +54,9 @@ public class Resource implements Comparable<Resource> {
 	@JsonProperty("base-url")
 	@DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
 	private String url;
+	
+    @JsonProperty("access-token")
+	private String accessToken;
 
 	@DatabaseField(columnName = CROP_FIELD_NAME)
 	private String crop;
@@ -101,11 +104,15 @@ public class Resource implements Comparable<Resource> {
 	public Resource() {
 	}
 
-	public Resource(String url) throws MalformedURLException {
-		this.setUrl(url);
-	}
+    public Resource(String url) throws MalformedURLException {
+        this.setUrl(url);
+    }
+    public Resource(String url, String accessToken) throws MalformedURLException {
+        this.setUrl(url);
+        this.setAccessToken(accessToken);
+    }
 
-	public Resource(String u, String e, String f) throws IllegalArgumentException, MalformedURLException {
+    public Resource(String u, String e, String f) throws IllegalArgumentException, MalformedURLException {
 		this.setUrl(u);
 		this.setEmail(e);
 		this.setFrequency(f);
@@ -129,6 +136,22 @@ public class Resource implements Comparable<Resource> {
 	public String getUrl() {
 		return url;
 	}
+	
+	/**
+     * Sets the access token to access OAuth2 protected BrAPI endpoint
+     *
+     * @param accessToken the new access token
+     */
+	public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+	
+	/**
+     * @return the access token
+     */
+	public String getAccessToken() {
+        return accessToken;
+    }
 
 	/**
 	 * @param e

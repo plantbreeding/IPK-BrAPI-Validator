@@ -3,15 +3,12 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.ConnectionClosedException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -31,9 +28,9 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestExecReport
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestItemReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.VariableStorage;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
+import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.RestAssured;
 /**
  * Run tests for an item element.
  */
@@ -71,13 +68,14 @@ public class TestItemRunner {
 
     /**
      * Run the tests
+     * @param accessToken 
      * @param singleTest 
      *
      * @return Report
      */
-    public TestItemReport runTests(boolean allowAdditional, Boolean singleTest) {
+    public TestItemReport runTests(String accessToken, boolean allowAdditional, Boolean singleTest) {
     	
-        this.vr = connect(singleTest);
+        this.vr = connect(accessToken, singleTest);
         
         //TODO: Only first event in Item.event is executed.
         List<String> execList = this.item.getEvent().get(0).getExec();
@@ -219,7 +217,7 @@ public class TestItemRunner {
      *
      * @return server response
      */
-    private ValidatableResponse connect(Boolean singleTest) {
+    private ValidatableResponse connect(String accessToken, Boolean singleTest) {
         LOGGER.info("New Request. URL: " + this.url);
         
         RestAssured.useRelaxedHTTPSValidation();
@@ -233,6 +231,10 @@ public class TestItemRunner {
         	}
             RequestSpecification rs = given()
             		.contentType("application/json");
+            
+            if (StringUtils.isNotBlank(accessToken)) {
+                rs.given().header("Authorization", "Bearer " + accessToken);
+            }
 			List<Param> params = this.item.getParameters();
 			if (this.method.equals("GET")) {
 				if (params != null) {
@@ -296,7 +298,7 @@ public class TestItemRunner {
         try {
             vr.statusCode(i);
         } catch (AssertionError e1) {
-            LOGGER.info("Wrong Status code");
+            LOGGER.info("Wrong Status code " + statusCode);
             LOGGER.info("== cause ==");
             LOGGER.info(e1.getMessage());
             tr.addMessage("Response Status code: " + statusCode);

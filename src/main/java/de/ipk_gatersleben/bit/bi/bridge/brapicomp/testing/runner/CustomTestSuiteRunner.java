@@ -1,6 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestCollectionReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteReport;
@@ -12,7 +13,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteRepor
 public class CustomTestSuiteRunner implements TestSuiteRunner {
 
     private String id;
-    private String url;
+    private Resource ep;
     private TestCollection testCollection;
 
     /**
@@ -22,9 +23,9 @@ public class CustomTestSuiteRunner implements TestSuiteRunner {
      * @param url    Base URL of the endpoint to be tested
      * @param tc     TestCollection config instance.
      */
-    public CustomTestSuiteRunner(String string, String url, TestCollection tc) {
+    public CustomTestSuiteRunner(String string, Resource ep, TestCollection tc) {
         this.setId(string);
-        this.setUrl(url);
+        this.setEp(ep);
         this.setTestCollection(tc);
     }
 
@@ -34,8 +35,8 @@ public class CustomTestSuiteRunner implements TestSuiteRunner {
      * @return Test report
      */
     public TestSuiteReport runTests(boolean allowAdditional, Boolean singleTest) {
-        TestSuiteReport testSuiteReport = new TestSuiteReport(id, url);
-        TestCollectionRunner testCollectionRunner = new TestCollectionRunner(testCollection, url);
+        TestSuiteReport testSuiteReport = new TestSuiteReport(id, ep);
+        TestCollectionRunner testCollectionRunner = new TestCollectionRunner(testCollection, ep);
         TestCollectionReport tcr = testCollectionRunner.runTests(allowAdditional);
         testSuiteReport.addTestCollectionReport(tcr);
         return testSuiteReport;
@@ -54,20 +55,23 @@ public class CustomTestSuiteRunner implements TestSuiteRunner {
     public void setId(String id) {
         this.id = id;
     }
+    
+    public Resource getEp() {
+        return ep;
+    }
+    
+    @Override
+    public void setEp(Resource ep) {
+        this.ep = ep;
+    }
 
     /**
      * @return the url
      */
     public String getUrl() {
-        return url;
+        return ep.getUrl();
     }
 
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     public void setTestCollection(TestCollection tc) {
         this.testCollection = tc;
