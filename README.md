@@ -2,57 +2,43 @@
 
 Test suite for BrAPI servers. Test your server at [http://webapps.ipk-gatersleben.de/brapivalidator/](http://webapps.ipk-gatersleben.de/brapivalidator/).
 
-Under development, not carefully tested. If you find any errors or bugs, please report them as an issue!
+**Please note:** This tool is under development and not fully tested. If you find any errors or bugs, please report them as an issue!
 
-BRAVA currently has two execution modes, simple and advanced mode. Simple mode contains the basic functionality: you can test any BrAPI server and get every endpoint defined in /calls tested. 
+BRAVA currently has two execution modes, simple and advanced mode. Simple mode contains the basic functionality: you can test any BrAPI server and get every endpoint defined in /calls tested.
 
 The advanced mode requires a database (it can be an H2 database) to store test results and resource information. It includes a public repository list and the possibility to register resources to be tested periodically.
 
-## Installation
+## Running BRAVA
 
 It is a bit of an awkward process right now. We'll migrate to Gradle and make things smoother in the future.
 
-For now, you need to install Maven.
+For now, you need to install Maven on your system.
 
-### For simple version (just testing, no database required)
+To start up the *simple* version for testing of BrAPI endpoints without support for scheduled testing:
 
-1. Go to pom.xml and search for oracle jdbc driver:
-```
-<dependency>
-	<groupId>com.oracle.jdbc</groupId>
-	<artifactId>ojdbc7</artifactId>
-	<version>12.1.0.1</version>
-</dependency>
-```
-Comment or delete it.
+1. Create an empty file named `config.properties` in src/main/resources based on `config.properties.example` in the same folder.
 
-2. Create an empty file named config.properties in src/main/resources.
-
-3. If you are behind a proxy, add this to config.properties:
+2. If your network requires use of an HTTP(s) proxy, then set the two proxy properties in your `config.properties` file:
 ```
 http.proxyHost=
 http.proxyPort=
 ```
-4. Run it locally for the first time with:
+
+3. Run it locally for the first time with:
 ```
 mvn -U clean package jetty:run
 ```
 
-### Advanced version (includes public repository list and scheduled testing)
+This will start jetty on port 8080, accessible at http://localhost:8080/brapivalidator.
+
+
+## Running BRAVA in advanced mode
+
+Running BRAVA in *advanced* mode provides a public repository list and scheduled testing.
 
 WARNING: This procedure is highly dependent on your environment and it hasn't been tested thoroughly. Something is likely to go wrong. DON'T PANIC and create an issue.
 
-1. If you use oracle, skip this step. Otherwise, go to pom.xml and search for oracle jdbc driver:
-```
-<dependency>
-	<groupId>com.oracle.jdbc</groupId>
-	<artifactId>ojdbc7</artifactId>
-	<version>12.1.0.1</version>
-</dependency>
-```
-Comment or delete it.
-
-2. In pom.xml search for this line:
+1. In pom.xml search for this line:
 ```
 <warSourceDirectory>${webappHome}</warSourceDirectory>
 ```
@@ -61,22 +47,50 @@ and replace it with:
 <warSourceDirectory>${webappHome}/advanced</warSourceDirectory>
 ```
 
-3. Go to src/main/resources and rename config.properties.example to config.properties. Fill the fields with your details.
+2. Go to `src/main/resources` and rename `config.properties.example` to `config.properties`. Fill the fields with configuration relevant to your database connection:
 
-4. Run it locally for the first time with:
+
+```properties
+## Database username
+dbuser=
+# Database password
+dbpass=
+# JDBC connect string to your database
+dbpath=
+## mysql
+# dbpath=jdbc:mysql://localhost/brava
+```
+
+3. Make sure the required JDBC driver is on the classpath by updating the `pom.xml` file:
+
+Uncomment relevant XML block in `pom.xml`:
+
+```xml
+
+```
+
+
+
+3. Run it locally with:
 ```
 mvn -U clean package jetty:run
 ```
+This will start up BRAVA and create the database tables required for BRAVA to operate.
 
-## Usage
 
-To run locally use:
+## Jetty and Tomcat
 
-`mvn jetty:run`
+To start BRAVA locally use:
 
-To deploy to tomcat use:
+```
+mvn jetty:run
+```
 
-`mvn tomcat7:deploy`
+To deploy to a local Tomcat instance use:
+
+```
+mvn tomcat7:deploy
+```
 
 The tomcat server location must be defined as maven parameters. For example as a profile in settings.xml:
 
@@ -121,11 +135,11 @@ This testing suite uses RestAssured for testing.
 
 To validate the responses, JsonSchema is used. All schemas are located in src/test/resources/schemas.
 
-The test configurations are stored in two ways. For the 'simple' tests, where one resource is tested for status code, content type and response schema, are stored in tests.json. 
+The test configurations are stored in two ways. For the 'simple' tests, where one resource is tested for status code, content type and response schema, are stored in tests.json.
 
 The complex tests (Test Collections) are stored in the collections/ folder. They roughly follow Postman's collections format. Instead of using JavaScript for the tests, we define them using a few simple commands.
 
-| Command  | Description  | Example  | 
+| Command  | Description  | Example  |
 |---|---|---|
 |StatusCode:{int} | Check the status code of the response  | StatusCode:200 |
 |ContentType:{String} | Check the Content Type of the response  | ContentType:application/json |
