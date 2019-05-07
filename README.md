@@ -156,5 +156,5 @@ The complex tests (Test Collections) are stored in the collections/ folder. They
 
 You can use the Dockerfile to create a docker version of the BRAVA application, which will be installed in the tomcat server. The tomcat server will only have the BRAVA application. To use this with your own BRAPI application you can start the docker image, and use the local test to point it to your machine. You can use `host.docker.internal` in the URL, localhost  will resolve to the BRAVA servercontainer and can thus not be used.
 
-To build you can use `docker build -t brava .` and you can run it using `docker run -d --rm -p 8080:8080 brava`. You can now access the BRAVA application at http://localhost:8080/ and use for example http://host.docker.internal:5000/brapi/v1 as the url that needs to be tested.
+To build you can use `docker build --build-arg HTTPS_PROXY=<[http|https]://proxyserver:port> --build-arg HTTP_PROXY=<[http|https]://proxyserver:port  -t brava .` and you can run it using `docker run -d --rm -p 8080:8080 brava`. You can now access the BRAVA application at http://localhost:8080/ and use for example http://host.docker.internal:5000/brapi/v1 as the url that needs to be tested.
 
