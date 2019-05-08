@@ -20,6 +20,18 @@ Execute following commands in your linux shell (you need to have Docker installe
 $  docker pull ipkbit/brapi-validator
 $  docker run -d --rm -p 8080:8080 ipkbit/brapi-validator
 ```
+BRAVA will then be available at the following URL: http://localhost:8080
+
+To change the published port to something else than 8080 you have to change the first port value in the -p Parameter.
+
+Example for mapping to port 80 instead of 8080 on the host:
+```
+$  docker run -d --rm -p 80:8080 ipkbit/brapi-validator
+```
+BRAVA will then be available at the following URL: http://localhost
+
+(For details about the Docker port mapping please refer the Docker documentation: https://docs.docker.com/config/containers/container-networking/#published-ports )
+
 
 ### Running BRAVA by compiling the source code on your machine
 
@@ -165,9 +177,9 @@ The complex tests (Test Collections) are stored in the collections/ folder. They
 
 * Edit test collection found in /collections/
 
-## Docker
+## Building a Docker Image by your own
 
-You can use the Dockerfile to create a docker version of the BRAVA application, which will be installed in the tomcat server. The tomcat server will only have the BRAVA application. To use this with your own BRAPI application you can start the docker image, and use the local test to point it to your machine. You can use `host.docker.internal` in the URL, localhost  will resolve to the BRAVA servercontainer and can thus not be used.
+You can use the included Dockerfile to build a Docker Image of the BRAVA application that includes a Tomcat server. The Tomcat server will only have the BRAVA application. To use this with your own BRAPI application you can start the Docker Image and use the local test ("Test your own" tab in the BRAVA frontend) to point it to your machine. You can use `host.docker.internal` in the URL, localhost  will resolve to the BRAVA servercontainer and can thus not be used.
 
 To build you can use `docker build --build-arg HTTPS_PROXY=<[http|https]://proxyserver:port> --build-arg HTTP_PROXY=<[http|https]://proxyserver:port  -t brava .` and you can run it using `docker run -d --rm -p 8080:8080 brava`. You can now access the BRAVA application at http://localhost:8080/ and use for example http://host.docker.internal:5000/brapi/v1 as the url that needs to be tested.
 
