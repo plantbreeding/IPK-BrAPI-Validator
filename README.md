@@ -10,6 +10,19 @@ The advanced mode requires a database (it can be an H2 database) to store test r
 
 ## Running BRAVA
 
+### Using the Docker image from Dockerhub
+
+You can run BRAVA by using the ready-to-go Docker image on Dockerhub: https://hub.docker.com/r/ipkbit/brapi-validator
+
+Execute following commands in your linux shell (you need to have Docker installed):
+
+```
+$  docker pull ipkbit/brapi-validator
+$  docker run -d --rm -p 8080:8080 ipkbit/brapi-validator
+```
+
+### Running BRAVA by compiling the source code on your machine
+
 It is a bit of an awkward process right now. We'll migrate to Gradle and make things smoother in the future.
 
 For now, you need to install Maven on your system.
@@ -32,7 +45,7 @@ mvn -U clean package jetty:run
 This will start jetty on port 8080, accessible at http://localhost:8080/brapivalidator.
 
 
-## Running BRAVA in advanced mode
+### Running BRAVA in advanced mode
 
 Running BRAVA in *advanced* mode provides a public repository list and scheduled testing.
 
@@ -78,7 +91,7 @@ mvn -U clean package jetty:run
 This will start up BRAVA and create the database tables required for BRAVA to operate.
 
 
-## Jetty and Tomcat
+### Jetty and Tomcat
 
 To start BRAVA locally use:
 
