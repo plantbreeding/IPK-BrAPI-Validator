@@ -20,6 +20,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.TestReport;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
@@ -36,6 +37,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 public class SingleTestResource {
 
     private static final Logger LOGGER = LogManager.getLogger(SingleTestResource.class.getName());
+    private static final List<String> brapiVersions = Config.getBrAPIVersions();
     
     /**
      * Run a call test
@@ -57,7 +59,7 @@ public class SingleTestResource {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
-            if (!getBrAPIVersions().contains(version)) {
+            if (!brapiVersions.contains(version)) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }
@@ -96,10 +98,7 @@ public class SingleTestResource {
     @Path("/brapiversions")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBrAPIVersionsWeb() {
-    	return Response.ok().entity(getBrAPIVersions()).build();
+    	return Response.ok().entity(brapiVersions).build();
     }
-    
-    private List<String> getBrAPIVersions(){
-    	return Arrays.asList("v1.0","v1.1","v1.2","v1.3");
-    }
+
 }

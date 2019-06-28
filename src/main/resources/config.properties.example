@@ -34,4 +34,5 @@ contactEmail=
 baseDomain=http://www.example.com/brapivalidator/
 
 resourceJsonUrl=https://raw.githubusercontent.com/plantbreeding/API/master/brapi-resources.json
-testedVersion=v1.1
+availableVersions=v1.0,v1.1,v1.2,v1.3
+testedVersion=v1.2

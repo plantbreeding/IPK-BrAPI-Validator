@@ -144,6 +144,8 @@ public class AdminResource {
     @Path("/testallpublic")
     public Response generalTest(@Context HttpHeaders headers, @QueryParam("version") @DefaultValue("") String version) {
 
+        List<String> brapiVersions = Config.getBrAPIVersions();
+
         if (Config.get("advancedMode") == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
@@ -156,7 +158,7 @@ public class AdminResource {
                 String e = JsonMessageManager.jsonMessage(401, "unauthorized", 4002);
                 return Response.status(Status.UNAUTHORIZED).entity(e).build();
             }
-            if (!version.equals("v1.0") && !version.equals("v1.1") && !version.equals("v1.2")) {
+            if (!brapiVersions.contains(version)) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
                 return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
             }

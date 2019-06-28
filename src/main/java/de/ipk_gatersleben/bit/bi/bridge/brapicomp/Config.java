@@ -7,6 +7,9 @@ import java.util.Properties;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+import java.util.Arrays;
+
 /**
  * Helper class to get values from config file.
  */
@@ -44,6 +47,17 @@ public class Config {
      */
     public static String get(String key) {
         return prop.getProperty(key);
+    }
+
+    /**
+     * Get all available BrAPI versions
+     *
+     * @return List of available BrAPI versions
+     */
+    public static List<String> getBrAPIVersions() {
+        String[] versions = prop.getProperty("availableVersions").toString().split(",");
+        List<String> versionsList = Arrays.asList(versions);
+        return versionsList;
     }
 
 }
