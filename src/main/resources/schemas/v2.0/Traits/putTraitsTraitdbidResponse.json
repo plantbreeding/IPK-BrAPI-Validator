@@ -1,0 +1,176 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "alternativeAbbreviations": {
+                    "description": "Other frequent abbreviations of the trait, if any. These abbreviations do not have to follow a convention",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "attribute": {
+                    "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the attribute is the observed feature (or characteristic) of the entity e.g., for \"grain colour\", attribute = \"colour\"",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "entity": {
+                    "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the entity is the part of the plant that the trait refers to e.g., for \"grain colour\", entity = \"grain\"",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "externalReferences": {
+                    "description": "An array of external reference ids. These are references to this piece of data in an external system. Could be a simple string or a URI.",
+                    "items": {
+                        "properties": {
+                            "referenceID": {
+                                "description": "The external reference ID. Could be a simple string or a URI.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "referenceSource": {
+                                "description": "An identifier for the source system or database of this reference",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "title": "ExternalReferences",
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "mainAbbreviation": {
+                    "description": "Main abbreviation for trait name. (examples: \"Carotenoid content\" => \"CC\")",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "ontologyReference": {
+                    "description": "MIAPPE V1.1\n\n(DM-85) Variable accession number - Accession number of the variable in the Crop Ontology\n\n(DM-87) Trait accession number - Accession number of the trait in a suitable controlled vocabulary (Crop Ontology, Trait Ontology).\n\n(DM-89) Method accession number - Accession number of the method in a suitable controlled vocabulary (Crop Ontology, Trait Ontology).\n\n(DM-93) Scale accession number - Accession number of the scale in a suitable controlled vocabulary (Crop Ontology).",
+                    "properties": {
+                        "documentationLinks": {
+                            "description": "links to various ontology documentation",
+                            "items": {
+                                "properties": {
+                                    "URL": {
+                                        "format": "uri",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "type": {
+                                        "enum": [
+                                            "OBO",
+                                            "RDF",
+                                            "WEBPAGE"
+                                        ],
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": [
+                                "null",
+                                "array"
+                            ]
+                        },
+                        "ontologyDbId": {
+                            "description": "Ontology database unique identifier",
+                            "type": "string"
+                        },
+                        "ontologyName": {
+                            "description": "Ontology name",
+                            "type": "string"
+                        },
+                        "version": {
+                            "description": "Ontology version (no specific format)",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "ontologyName",
+                        "ontologyDbId"
+                    ],
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "status": {
+                    "description": "Trait status (examples: \"recommended\", \"obsolete\", \"legacy\", etc.)",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "synonyms": {
+                    "description": "Other trait names",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "traitClass": {
+                    "description": "Trait class. (examples: \"morphological\", \"phenological\", \"agronomical\", \"physiological\", \"abiotic stress\", \"biotic stress\", \"biochemical\", \"quality traits\", \"fertility\", etc.)",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "traitDbId": {
+                    "description": "The ID which uniquely identifies a trait",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "traitDescription": {
+                    "description": "The description of a trait",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "traitName": {
+                    "description": "The human readable name of a trait\n\nMIAPPE V1.1 (DM-86) Trait - Name of the (plant or environmental) trait under observation",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "putTraitsTraitdbidResponse",
+    "type": "object"
+}

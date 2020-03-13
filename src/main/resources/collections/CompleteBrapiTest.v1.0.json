@@ -27,7 +27,7 @@
 								"ContentType:application/json",
 								"Schema:/v1/metadata",
 								"Schema:/v1/calls",
-								"SaveCalls"
+								"SaveCalls:v1"
 							]
 						}
 					]

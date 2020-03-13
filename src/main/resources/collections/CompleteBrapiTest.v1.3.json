@@ -18,7 +18,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v1.3/metadata",
                                 "Schema:/v1.3/Calls/getCallsResponse",
-                                "SaveCalls"
+								"SaveCalls:v1"
                             ],
                             "listen": "test",
                             "type": "text/plain"

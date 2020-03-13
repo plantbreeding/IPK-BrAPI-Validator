@@ -74,11 +74,20 @@ public class TestFolderRunner {
         tcr.setDescription(this.folder.getDescription());        
         
         List<String> inCalls = new ArrayList<String>();
+        //V1
         JsonNode calls = storage.getVariable("callResult");
         if (calls != null && calls.isArray()) {
         	ObjectMapper mapper = new ObjectMapper();
         	for (JsonNode call : calls) {
         		inCalls.add("/" + mapper.convertValue(call.get("call"), String.class));
+        	}
+        }
+        //V2
+        JsonNode services = storage.getVariable("serviceResult");
+        if (services != null && services.isArray()) {
+        	ObjectMapper mapper = new ObjectMapper();
+        	for (JsonNode service : services) {
+        		inCalls.add("/" + mapper.convertValue(service.get("service"), String.class));
         	}
         }
         
