@@ -16,6 +16,6 @@
     "required": [
         "result"
     ],
-    "title": "getSearchMarkerpositionsSearchresultsdbidResponse102",
+    "title": "getSearchObservationsSearchresultsdbidResponse202",
     "type": "object"
 }

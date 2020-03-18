@@ -222,7 +222,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Programs/getSearchProgramsSearchresultsdbidResponse:programsSearchResultDbId"
@@ -402,7 +402,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Trials/getSearchTrialsSearchresultsdbidResponse:trialsSearchResultDbId"
@@ -605,7 +605,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Studies/getSearchStudiesSearchresultsdbidResponse:studiesSearchResultDbId"
@@ -785,7 +785,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Locations/getSearchLocationsSearchresultsdbidResponse:locationsSearchResultDbId"
@@ -1097,7 +1097,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/People/getSearchPeopleSearchresultsdbidResponse:peopleSearchResultDbId"
@@ -1302,7 +1302,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Lists/getSearchListsSearchresultsdbidResponse:listsSearchResultDbId"
@@ -1634,7 +1634,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Germplasm/getSearchGermplasmSearchresultsdbidResponse:germplasmSearchResultDbId"
@@ -1837,7 +1837,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/GermplasmAttributes/getSearchAttributesSearchresultsdbidResponse:attributesSearchResultDbId"
@@ -2017,7 +2017,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/GermplasmAttributeValues/getSearchAttributevaluesSearchresultsdbidResponse:attributevaluesSearchResultDbId"
@@ -2184,8 +2184,8 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Crosses/getCrossesResponse",
-                                "GetValue:/result/data/0/crosseDbId:crosseDbId0",
-                                "GetValue:/result/data/1/crosseDbId:crosseDbId1"
+                                "GetValue:/result/data/0/crossDbId:crossDbId0",
+                                "GetValue:/result/data/1/crossDbId:crossDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2209,8 +2209,8 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Crosses/getPlannedcrossesResponse",
-                                "GetValue:/result/data/0/plannedcrosseDbId:plannedcrosseDbId0",
-                                "GetValue:/result/data/1/plannedcrosseDbId:plannedcrosseDbId1"
+                                "GetValue:/result/data/0/plannedCrossDbId:plannedCrossDbId0",
+                                "GetValue:/result/data/1/plannedCrossDbId:plannedCrossDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2749,7 +2749,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/ObservationUnits/getSearchObservationunitsSearchresultsdbidResponse:observationunitsSearchResultDbId"
@@ -2975,7 +2975,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Observations/getSearchObservationsSearchresultsdbidResponse:observationsSearchResultDbId"
@@ -3180,7 +3180,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Images/getSearchImagesSearchresultsdbidResponse:imagesSearchResultDbId"
@@ -3360,7 +3360,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/ObservationVariables/getSearchVariablesSearchresultsdbidResponse:variablesSearchResultDbId"
@@ -3950,9 +3950,7 @@
                                 "StatusCode:200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
-                                "Schema:/v2.0/GenomeMaps/getMarkerpositionsResponse",
-                                "GetValue:/result/data/0/markerpositionDbId:markerpositionDbId0",
-                                "GetValue:/result/data/1/markerpositionDbId:markerpositionDbId1"
+                                "Schema:/v2.0/GenomeMaps/getMarkerpositionsResponse"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3995,7 +3993,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/GenomeMaps/getSearchMarkerpositionsSearchresultsdbidResponse:markerpositionsSearchResultDbId"
@@ -4175,7 +4173,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Samples/getSearchSamplesSearchresultsdbidResponse:samplesSearchResultDbId"
@@ -4404,7 +4402,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/VariantSets/getSearchVariantsetsSearchresultsdbidResponse:variantsetsSearchResultDbId"
@@ -4560,7 +4558,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Variants/getSearchVariantsSearchresultsdbidResponse:variantsSearchResultDbId"
@@ -4716,7 +4714,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/CallSets/getSearchCallsetsSearchresultsdbidResponse:callsetsSearchResultDbId"
@@ -4795,7 +4793,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/Calls/getSearchCallsSearchresultsdbidResponse:callsSearchResultDbId"
@@ -4926,7 +4924,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/ReferenceSets/getSearchReferencesetsSearchresultsdbidResponse:referencesetsSearchResultDbId"
@@ -5082,7 +5080,7 @@
                     "event": [
                         {
                             "exec": [
-                                "StatusCode:102,200:breakiffalse",
+                                "StatusCode:202,200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "SearchSchema:/v2.0/References/getSearchReferencesSearchresultsdbidResponse:referencesSearchResultDbId"

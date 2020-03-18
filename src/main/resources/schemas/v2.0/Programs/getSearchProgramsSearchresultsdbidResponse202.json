@@ -16,6 +16,6 @@
     "required": [
         "result"
     ],
-    "title": "getSearchSamplesSearchresultsdbidResponse102",
+    "title": "getSearchProgramsSearchresultsdbidResponse202",
     "type": "object"
 }

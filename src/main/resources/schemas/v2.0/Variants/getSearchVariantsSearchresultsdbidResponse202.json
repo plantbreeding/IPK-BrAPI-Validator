@@ -16,6 +16,6 @@
     "required": [
         "result"
     ],
-    "title": "getSearchReferencesetsSearchresultsdbidResponse102",
+    "title": "getSearchVariantsSearchresultsdbidResponse202",
     "type": "object"
 }

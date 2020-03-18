@@ -16,6 +16,6 @@
     "required": [
         "result"
     ],
-    "title": "getSearchTrialsSearchresultsdbidResponse102",
+    "title": "getSearchGermplasmSearchresultsdbidResponse202",
     "type": "object"
 }

@@ -16,6 +16,6 @@
     "required": [
         "result"
     ],
-    "title": "getSearchCallsetsSearchresultsdbidResponse102",
+    "title": "getSearchVariantsetsSearchresultsdbidResponse202",
     "type": "object"
 }
