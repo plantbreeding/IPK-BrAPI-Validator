@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "searchResultsDbId": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getSearchTrialsSearchresultsdbidResponse102",
+    "type": "object"
+}
