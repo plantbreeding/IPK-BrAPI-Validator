@@ -3,7 +3,6 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.net.URL;
@@ -432,8 +431,13 @@ public class TestItemRunner {
                 if (data.isArray()) {
                     this.variables.setVariable("serviceResult", data);
                 }
+            }else{
+                tr = new TestExecReport("Invalid exec command", false);
+                tr.setType("can't connect");
+                LOGGER.info("Bad Version Number");
+                tr.addMessage("Bad Version Number");
+                return tr;
             }
-            assertNotNull(data);
         } catch (AssertionError | IOException e1) {
         	e1.printStackTrace();
             LOGGER.info("Error parsing calls");
