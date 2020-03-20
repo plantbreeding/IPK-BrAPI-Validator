@@ -1,9 +1,12 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -12,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.ConnectionClosedException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.hamcrest.Matcher;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -92,6 +96,7 @@ public class TestItemRunner {
             String exec = execList.get(i);
             String[] execSplit = exec.split(":");
             TestExecReport ter = new TestExecReport("Invalid exec command", false);
+            ter.setType("can't connect");
             if (execSplit.length >= 1) {
                 boolean breakIfFalse = false;
                 if (execSplit.length > 2 && execSplit[execSplit.length - 1].equals("breakiffalse")) {
@@ -99,7 +104,7 @@ public class TestItemRunner {
                 }
                 switch (execSplit[0]) {
                     case "StatusCode":
-                        ter = statusCode(Integer.parseInt(execSplit[1]));
+                        ter = statusCode(execSplit[1]);
                         break;
                     case "ContentType":
                         ter = contentType(execSplit[1]);
@@ -121,7 +126,17 @@ public class TestItemRunner {
                         ter = isEqual(execSplit[1], execSplit[2]);
                         break;
                     case "SaveCalls":
-                        ter = saveCalls();
+                        ter = saveCalls(execSplit[1]);
+                        break;
+                    case "SearchSchema":
+                    	ter = null;
+                    	List<TestExecReport> reports = testSearch(execSplit[1], execSplit[2], allowAdditional);
+                    	for(TestExecReport report: reports) {
+                    		tir.addTest(report);
+                            if (!report.isPassed()) {
+                            	tir.addTestStatus(report.getType());
+                            }
+                    	}
                         break;
                 }
 
@@ -193,7 +208,7 @@ public class TestItemRunner {
             JsonNode value = root.at(path);
             if (value != null) {
                 JsonNode storedValue = this.variables.getVariable(variableName);
-                if (storedValue.equals(value)) {
+                if (value.equals(storedValue)) {
                     ter.setPassed(true);
                     ter.addMessage("Found: " + value + ". Expected: " + storedValue);
                     return ter;
@@ -290,23 +305,31 @@ public class TestItemRunner {
      * @param i Status code to be tested.
      * @return TestItemReport
      */
-    private TestExecReport statusCode(int i) {
+    private TestExecReport statusCode(String expectedCodes) {
         LOGGER.info("Testing Status Code");
-        TestExecReport tr = new TestExecReport("Status code should be " + i, false);
+        TestExecReport tr = new TestExecReport("Status code should be " + expectedCodes, false);
         tr.setType("wrong status code");
-        int statusCode = vr.extract().response().getStatusCode();
+        int actualCode = vr.extract().response().getStatusCode();
+        
+        List<Matcher<? super Integer>> matchersList = new ArrayList<Matcher<? super Integer>>();
+        for(String codeStr: expectedCodes.split(",")) {
+        	int code = Integer.parseInt(codeStr);
+        	matchersList.add(equalTo(code));
+        }
+
+        Iterable<Matcher<? super Integer>> matchers = matchersList;
         try {
-            vr.statusCode(i);
+            vr.statusCode(anyOf(matchers));
         } catch (AssertionError e1) {
-            LOGGER.info("Wrong Status code " + statusCode);
+            LOGGER.info("Wrong Status code " + actualCode);
             LOGGER.info("== cause ==");
             LOGGER.info(e1.getMessage());
-            tr.addMessage("Response Status code: " + statusCode);
+            tr.addMessage("Response Status code: " + actualCode);
             return tr;
         }
         LOGGER.info("Status Code Test Passed");
         tr.setPassed(true);
-        tr.addMessage("Response Status code: " + statusCode);
+        tr.addMessage("Response Status code: " + actualCode);
         return tr;
     }
 
@@ -382,38 +405,89 @@ public class TestItemRunner {
             return tr;
         }
     }
-    
+
     /**
      * Save all /call resources
      *
      * @param ct Content type string to test.
      * @return TestItemReport
      */
-    private TestExecReport saveCalls() {
-        LOGGER.info("Saving Calls");
-        TestExecReport tr = new TestExecReport("Saving /calls", false);
-        tr.setType("error parsing /calls");
+    private TestExecReport saveCalls(String brapiVersion) {
+        LOGGER.info("Saving Server Call Info");
+        TestExecReport tr = new TestExecReport("Saving Server Call Info", false);
+        tr.setType("error parsing call info");
         String json = this.vr.extract().asString();
         ObjectMapper mapper = new ObjectMapper();
         try {
         	JsonNode root = mapper.readTree(json);
-            JsonNode data = root.at("/result/data");
-            if (data.isArray()) {
-                this.variables.setVariable("callResult", data);
+            JsonNode data = null;
+            if ("v1".equalsIgnoreCase(brapiVersion)) {
+            	data = root.at("/result/data");
+                if (data.isArray()) {
+                    this.variables.setVariable("callResult", data);
+                }
+            }else if ("v2".equalsIgnoreCase(brapiVersion)) {
+            	data = root.at("/result/calls");
+                if (data.isArray()) {
+                    this.variables.setVariable("serviceResult", data);
+                }
+            }else{
+                tr = new TestExecReport("Invalid exec command", false);
+                tr.setType("can't connect");
+                LOGGER.info("Bad Version Number");
+                tr.addMessage("Bad Version Number");
+                return tr;
             }
         } catch (AssertionError | IOException e1) {
         	e1.printStackTrace();
             LOGGER.info("Error parsing calls");
             LOGGER.info("== cause ==");
             LOGGER.info(e1.getMessage());
-            tr.addMessage("Error parsing /calls");
+            tr.addMessage("Error parsing call info");
             return tr;
         }
-        LOGGER.info("Saved /calls");
+        LOGGER.info("Saved call info");
         tr.setPassed(true);
-        tr.addMessage("Saved /calls");
+        tr.addMessage("Saved call info");
         return tr;
     }
 
+    /**
+     * Check if search is working
+     *
+     * @param p Path to the schema to be tested
+     * @return TestItemReport
+     */
+    private List<TestExecReport> testSearch(String schemaPath, String searchResultVariableName, boolean allowAdditional) {
+        LOGGER.info("Testing Search");
+        List<TestExecReport> testReports = new ArrayList<>();
+        
+        TestExecReport tr = new TestExecReport("Search matches schema", false);
+        tr.setType("search schema mismatch");
+        
+        int statusCode = vr.extract().response().getStatusCode();
+        try {
+        	boolean passed = false;
+        	if(statusCode == 200) {
+        		testReports.add(schemaMatch("/schemas" + schemaPath + ".json", allowAdditional));
+        		passed = true;
+        	}else if(statusCode == 202) {
+        		testReports.add(saveVariable("/result/searchResultsDbId", searchResultVariableName));
+        		testReports.add(schemaMatch("/schemas" + schemaPath + "202.json", allowAdditional));
+        		passed = true;
+        	}
 
+        	tr.setPassed(passed);
+        	testReports.add(tr);
+
+        } catch (AssertionError e1) {
+            LOGGER.info("Doesn't match schema");
+            LOGGER.info("== cause ==");
+            LOGGER.info(e1.getMessage());
+            tr.addMessage(e1.getMessage());
+            testReports.add(tr);
+        }
+        
+        return testReports;
+    }    
 }

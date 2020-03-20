@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "linkageGroupName": {
+                                "description": "The Uniquely Identifiable name of this linkage group",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "mapDbId": {
+                                "description": "The unique ID of the map",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "mapName": {
+                                "description": "The human readable name of the map",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "position": {
+                                "description": "The position of a marker within a linkage group",
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "variantDbId": {
+                                "description": "Internal db identifier",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "variantName": {
+                                "description": "The human readable name for a marker",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getMarkerpositionsResponse",
+    "type": "object"
+}

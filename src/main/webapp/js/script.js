@@ -42,8 +42,13 @@ $(function() {
 
         var fullUrlDiv = $("#fullUrl");
 
+        var version = $("#brapiversion").val();
+        var res = '/calls';
+        if(version && version.startsWith('v2')){
+        	res = '/serverinfo';
+        }
         // Single structure test
-        var fullUrl = getFullUrl("/calls");
+        var fullUrl = getFullUrl(res);
         fullUrlDiv.html("<a target=\"_blank\" href=\""
             + fullUrl + "\">" + fullUrl + "</a><br>");
         $("#multiURL").html("");
@@ -638,6 +643,7 @@ $(function() {
 
         // Listeners
         $("#serverurl").on("input", updateFullUrl);
+        $("#brapiversion").on("change", updateFullUrl);
 
 
         updateFullUrl();
