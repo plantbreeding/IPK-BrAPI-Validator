@@ -258,23 +258,18 @@ public class TestItemRunner {
 						rs.param(p.getParam(), value);
 					}
 				}
-			} else if (this.method.equals("POST") || this.method.equals("PUT")) {
-				ObjectNode bodyParams = (new ObjectMapper()).createObjectNode();
-				if (params != null) {
-					for (Param p : params) {
-						if(p.isArray()) {
-							ArrayNode values = (new ObjectMapper()).createArrayNode();
-							for( String value : p.getValue().split(",")) {
-								values.add(RunnerService.replaceVariablesUrl(value, this.variables));
-							}
-							bodyParams.set(p.getParam(), values);
-						}else {
-							String value = RunnerService.replaceVariablesUrl(p.getValue(), this.variables);
-							bodyParams.put(p.getParam(), value);
-						}
-					}
+			} else if (this.method.equals("POST")) {
+				String jsonBody = "[{}]"; 
+				if (params != null && params.size() >= 1) {
+					jsonBody = RunnerService.replaceVariablesJSON(params.get(0).getValue(), this.variables);
 				}
-				rs.body(bodyParams.toString());
+				rs.body(jsonBody);
+			} else if (this.method.equals("PUT")) {
+				String jsonBody = "{}"; 
+				if (params != null && params.size() >= 1) {
+					jsonBody = RunnerService.replaceVariablesJSON(params.get(0).getValue(), this.variables);
+				}
+				rs.body(jsonBody);
 			}
 
 			rs.accept("application/json");

@@ -9,7 +9,8 @@
                         "received",
                         "inProgress",
                         "completed",
-                        "rejected"
+                        "rejected",
+                        null
                     ],
                     "type": [
                         "null",

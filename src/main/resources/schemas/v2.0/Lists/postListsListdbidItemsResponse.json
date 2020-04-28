@@ -126,7 +126,8 @@
                         "observationUnits",
                         "observations",
                         "observationVariables",
-                        "samples"
+                        "samples",
+                        null
                     ],
                     "type": [
                         "null",

@@ -128,7 +128,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Programs/getProgramsProgramdbidResponse",
-                                "IsEqual:/result/programDbId:programDbId0"
+                                "IsEqual:/result/programDbId:programDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -160,7 +160,12 @@
                         }
                     ],
                     "name": "POST /programs",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/programs"
@@ -184,7 +189,12 @@
                         }
                     ],
                     "name": "PUT /programs/{programDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/programs/{programDbId0}"
@@ -209,7 +219,12 @@
                         }
                     ],
                     "name": "POST /search/programs",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/programs"
@@ -308,7 +323,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Trials/getTrialsTrialdbidResponse",
-                                "IsEqual:/result/trialDbId:trialDbId0"
+                                "IsEqual:/result/trialDbId:trialDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -340,7 +355,12 @@
                         }
                     ],
                     "name": "POST /trials",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/trials"
@@ -364,7 +384,12 @@
                         }
                     ],
                     "name": "PUT /trials/{trialDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/trials/{trialDbId0}"
@@ -389,7 +414,12 @@
                         }
                     ],
                     "name": "POST /search/trials",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/trials"
@@ -488,7 +518,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Studies/getStudiesStudydbidResponse",
-                                "IsEqual:/result/studyDbId:studyDbId0"
+                                "IsEqual:/result/studyDbId:studyDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -543,7 +573,12 @@
                         }
                     ],
                     "name": "POST /studies",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/studies"
@@ -567,7 +602,12 @@
                         }
                     ],
                     "name": "PUT /studies/{studyDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/studies/{studyDbId0}"
@@ -592,7 +632,12 @@
                         }
                     ],
                     "name": "POST /search/studies",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/studies"
@@ -691,7 +736,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Locations/getLocationsLocationdbidResponse",
-                                "IsEqual:/result/locationDbId:locationDbId0"
+                                "IsEqual:/result/locationDbId:locationDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -723,7 +768,12 @@
                         }
                     ],
                     "name": "POST /locations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/locations"
@@ -747,7 +797,12 @@
                         }
                     ],
                     "name": "PUT /locations/{locationDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/locations/{locationDbId0}"
@@ -772,7 +827,12 @@
                         }
                     ],
                     "name": "POST /search/locations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/locations"
@@ -871,7 +931,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Seasons/getSeasonsSeasondbidResponse",
-                                "IsEqual:/result/seasonDbId:seasonDbId0"
+                                "IsEqual:/result/seasonDbId:seasonDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -903,7 +963,12 @@
                         }
                     ],
                     "name": "POST /seasons",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/seasons"
@@ -927,7 +992,12 @@
                         }
                     ],
                     "name": "PUT /seasons/{seasonDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/seasons/{seasonDbId0}"
@@ -1003,7 +1073,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/People/getPeoplePersondbidResponse",
-                                "IsEqual:/result/personDbId:personDbId0"
+                                "IsEqual:/result/personDbId:personDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -1035,7 +1105,12 @@
                         }
                     ],
                     "name": "POST /people",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/people"
@@ -1059,7 +1134,12 @@
                         }
                     ],
                     "name": "PUT /people/{personDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/people/{personDbId0}"
@@ -1084,7 +1164,12 @@
                         }
                     ],
                     "name": "POST /search/people",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/people"
@@ -1183,7 +1268,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Lists/getListsListdbidResponse",
-                                "IsEqual:/result/listDbId:listDbId0"
+                                "IsEqual:/result/listDbId:listDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -1200,7 +1285,7 @@
                     ]
                 },
                 {
-                    "description": "Create a new list",
+                    "description": "Create new list objects in the database",
                     "endpoint": "/lists",
                     "event": [
                         {
@@ -1215,7 +1300,12 @@
                         }
                     ],
                     "name": "POST /lists",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/lists"
@@ -1238,7 +1328,12 @@
                         }
                     ],
                     "name": "POST /lists/{listDbId}/items",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/lists/{listDbId0}/items"
@@ -1264,7 +1359,12 @@
                         }
                     ],
                     "name": "PUT /lists/{listDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/lists/{listDbId0}"
@@ -1289,7 +1389,12 @@
                         }
                     ],
                     "name": "POST /search/lists",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/lists"
@@ -1388,7 +1493,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Germplasm/getBreedingmethodsBreedingmethoddbidResponse",
-                                "IsEqual:/result/breedingMethodDbId:breedingMethodDbId0"
+                                "IsEqual:/result/breedingMethodDbId:breedingMethodDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -1465,7 +1570,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Germplasm/getGermplasmGermplasmdbidResponse",
-                                "IsEqual:/result/germplasmDbId:germplasmDbId0"
+                                "IsEqual:/result/germplasmDbId:germplasmDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -1572,7 +1677,12 @@
                         }
                     ],
                     "name": "POST /germplasm",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/germplasm"
@@ -1596,7 +1706,12 @@
                         }
                     ],
                     "name": "PUT /germplasm/{germplasmDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/germplasm/{germplasmDbId0}"
@@ -1621,7 +1736,12 @@
                         }
                     ],
                     "name": "POST /search/germplasm",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/germplasm"
@@ -1743,7 +1863,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/GermplasmAttributes/getAttributesAttributedbidResponse",
-                                "IsEqual:/result/attributeDbId:attributeDbId0"
+                                "IsEqual:/result/attributeDbId:attributeDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -1775,7 +1895,12 @@
                         }
                     ],
                     "name": "POST /attributes",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/attributes"
@@ -1799,7 +1924,12 @@
                         }
                     ],
                     "name": "PUT /attributes/{attributeDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/attributes/{attributeDbId0}"
@@ -1824,7 +1954,12 @@
                         }
                     ],
                     "name": "POST /search/attributes",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/attributes"
@@ -1923,7 +2058,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/GermplasmAttributeValues/getAttributevaluesAttributevaluedbidResponse",
-                                "IsEqual:/result/attributeValueDbId:attributeValueDbId0"
+                                "IsEqual:/result/attributeValueDbId:attributeValueDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -1955,7 +2090,12 @@
                         }
                     ],
                     "name": "POST /attributevalues",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/attributevalues"
@@ -1979,7 +2119,12 @@
                         }
                     ],
                     "name": "PUT /attributevalues/{attributeValueDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/attributevalues/{attributeValueDbId0}"
@@ -2004,7 +2149,12 @@
                         }
                     ],
                     "name": "POST /search/attributevalues",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/attributevalues"
@@ -2103,7 +2253,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/CrossingProjects/getCrossingprojectsCrossingprojectdbidResponse",
-                                "IsEqual:/result/crossingProjectDbId:crossingProjectDbId0"
+                                "IsEqual:/result/crossingProjectDbId:crossingProjectDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2135,7 +2285,12 @@
                         }
                     ],
                     "name": "POST /crossingprojects",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/crossingprojects"
@@ -2159,7 +2314,12 @@
                         }
                     ],
                     "name": "PUT /crossingprojects/{crossingProjectDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/crossingprojects/{crossingProjectDbId0}"
@@ -2240,7 +2400,12 @@
                         }
                     ],
                     "name": "POST /crosses",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/crosses"
@@ -2263,7 +2428,12 @@
                         }
                     ],
                     "name": "POST /plannedcrosses",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/plannedcrosses"
@@ -2286,7 +2456,12 @@
                         }
                     ],
                     "name": "PUT /crosses",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/crosses"
@@ -2309,7 +2484,12 @@
                         }
                     ],
                     "name": "PUT /plannedcrosses",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/plannedcrosses"
@@ -2406,7 +2586,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/SeedLots/getSeedlotsSeedlotdbidResponse",
-                                "IsEqual:/result/seedLotDbId:seedLotDbId0"
+                                "IsEqual:/result/seedLotDbId:seedLotDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2463,7 +2643,12 @@
                         }
                     ],
                     "name": "POST /seedlots",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/seedlots"
@@ -2486,7 +2671,12 @@
                         }
                     ],
                     "name": "POST /seedlots/transactions",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/seedlots/transactions"
@@ -2510,7 +2700,12 @@
                         }
                     ],
                     "name": "PUT /seedlots/{seedLotDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/seedlots/{seedLotDbId0}"
@@ -2609,7 +2804,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/ObservationUnits/getObservationunitsObservationunitdbidResponse",
-                                "IsEqual:/result/observationUnitDbId:observationUnitDbId0"
+                                "IsEqual:/result/observationUnitDbId:observationUnitDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2641,7 +2836,12 @@
                         }
                     ],
                     "name": "POST /observationunits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/observationunits"
@@ -2664,7 +2864,12 @@
                         }
                     ],
                     "name": "PUT /observationunits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/observationunits"
@@ -2688,7 +2893,12 @@
                         }
                     ],
                     "name": "PUT /observationunits/{observationUnitDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/observationunits/{observationUnitDbId0}"
@@ -2736,7 +2946,12 @@
                         }
                     ],
                     "name": "POST /search/observationunits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/observationunits"
@@ -2835,7 +3050,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Observations/getObservationsObservationdbidResponse",
-                                "IsEqual:/result/observationDbId:observationDbId0"
+                                "IsEqual:/result/observationDbId:observationDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2867,7 +3082,12 @@
                         }
                     ],
                     "name": "POST /observations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/observations"
@@ -2890,7 +3110,12 @@
                         }
                     ],
                     "name": "PUT /observations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/observations"
@@ -2914,7 +3139,12 @@
                         }
                     ],
                     "name": "PUT /observations/{observationDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/observations/{observationDbId0}"
@@ -2962,7 +3192,12 @@
                         }
                     ],
                     "name": "POST /search/observations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/observations"
@@ -3061,7 +3296,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Images/getImagesImagedbidResponse",
-                                "IsEqual:/result/imageDbId:imageDbId0"
+                                "IsEqual:/result/imageDbId:imageDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3078,7 +3313,7 @@
                     ]
                 },
                 {
-                    "description": "Create a new image meta data object\n\nImplementation Notes\n\n- ''imageURL'' should be a complete URL describing the location of the image. There is no BrAPI call for retrieving the image content, so it could be on a different path, or a different host.\n\n- ''descriptiveOntologyTerm'' can be thought of as Tags for the image. These could be simple descriptive words, or ontology references, or full ontology URI''s.\n\n- The '/images' calls support a GeoJSON object structure for describing their location. The BrAPI spec for GeoJSON only supports two of the possible geometries: Points and Polygons.\n\n- With most images, the Point geometry should be used, and it should indicate the longitude and latitude of the camera.\n\n- For top down images (ie from drones, cranes, etc), the Point geometry may be used to indicate the longitude and latitude of the centroid of the image content, and the Polygon geometry may be used to indicate the border of the image content. '",
+                    "description": "Create new image meta data objects\n\nImplementation Notes\n\n- ''imageURL'' should be a complete URL describing the location of the image. There is no BrAPI call for retrieving the image content, so it could be on a different path, or a different host.\n\n- ''descriptiveOntologyTerm'' can be thought of as Tags for the image. These could be simple descriptive words, or ontology references, or full ontology URI''s.\n\n- The '/images' calls support a GeoJSON object structure for describing their location. The BrAPI spec for GeoJSON only supports two of the possible geometries: Points and Polygons.\n\n- With most images, the Point geometry should be used, and it should indicate the longitude and latitude of the camera.\n\n- For top down images (ie from drones, cranes, etc), the Point geometry may be used to indicate the longitude and latitude of the centroid of the image content, and the Polygon geometry may be used to indicate the border of the image content. '",
                     "endpoint": "/images",
                     "event": [
                         {
@@ -3093,7 +3328,12 @@
                         }
                     ],
                     "name": "POST /images",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/images"
@@ -3117,7 +3357,12 @@
                         }
                     ],
                     "name": "PUT /images/{imageDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/images/{imageDbId0}"
@@ -3142,7 +3387,12 @@
                         }
                     ],
                     "name": "PUT /images/{imageDbId}/imagecontent",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/images/{imageDbId0}/imagecontent"
@@ -3167,7 +3417,12 @@
                         }
                     ],
                     "name": "POST /search/images",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/images"
@@ -3266,7 +3521,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/ObservationVariables/getVariablesObservationvariabledbidResponse",
-                                "IsEqual:/result/observationVariableDbId:observationVariableDbId0"
+                                "IsEqual:/result/observationVariableDbId:observationVariableDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3298,7 +3553,12 @@
                         }
                     ],
                     "name": "POST /variables",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/variables"
@@ -3322,7 +3582,12 @@
                         }
                     ],
                     "name": "PUT /variables/{observationVariableDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/variables/{observationVariableDbId0}"
@@ -3347,7 +3612,12 @@
                         }
                     ],
                     "name": "POST /search/variables",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/variables"
@@ -3446,7 +3716,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Traits/getTraitsTraitdbidResponse",
-                                "IsEqual:/result/traitDbId:traitDbId0"
+                                "IsEqual:/result/traitDbId:traitDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3463,7 +3733,7 @@
                     ]
                 },
                 {
-                    "description": "Create a new trait object in the database",
+                    "description": "Create new trait objects in the database",
                     "endpoint": "/traits",
                     "event": [
                         {
@@ -3478,7 +3748,12 @@
                         }
                     ],
                     "name": "POST /traits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/traits"
@@ -3502,7 +3777,12 @@
                         }
                     ],
                     "name": "PUT /traits/{traitDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/traits/{traitDbId0}"
@@ -3578,7 +3858,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Methods/getMethodsMethoddbidResponse",
-                                "IsEqual:/result/methodDbId:methodDbId0"
+                                "IsEqual:/result/methodDbId:methodDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3595,7 +3875,7 @@
                     ]
                 },
                 {
-                    "description": "Create a new method object in the database",
+                    "description": "Create new method objects in the database",
                     "endpoint": "/methods",
                     "event": [
                         {
@@ -3610,7 +3890,12 @@
                         }
                     ],
                     "name": "POST /methods",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/methods"
@@ -3634,7 +3919,12 @@
                         }
                     ],
                     "name": "PUT /methods/{methodDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/methods/{methodDbId0}"
@@ -3710,7 +4000,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Scales/getScalesScaledbidResponse",
-                                "IsEqual:/result/scaleDbId:scaleDbId0"
+                                "IsEqual:/result/scaleDbId:scaleDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3727,7 +4017,7 @@
                     ]
                 },
                 {
-                    "description": "Create a new scale object in the database",
+                    "description": "Create new scale objects in the database",
                     "endpoint": "/scales",
                     "event": [
                         {
@@ -3742,7 +4032,12 @@
                         }
                     ],
                     "name": "POST /scales",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/scales"
@@ -3766,7 +4061,12 @@
                         }
                     ],
                     "name": "PUT /scales/{scaleDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/scales/{scaleDbId0}"
@@ -3900,7 +4200,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/GenomeMaps/getMapsMapdbidResponse",
-                                "IsEqual:/result/mapDbId:mapDbId0"
+                                "IsEqual:/result/mapDbId:mapDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -3980,7 +4280,12 @@
                         }
                     ],
                     "name": "POST /search/markerpositions",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/markerpositions"
@@ -4079,7 +4384,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Samples/getSamplesSampledbidResponse",
-                                "IsEqual:/result/sampleDbId:sampleDbId0"
+                                "IsEqual:/result/sampleDbId:sampleDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -4111,7 +4416,12 @@
                         }
                     ],
                     "name": "POST /samples",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/samples"
@@ -4135,7 +4445,12 @@
                         }
                     ],
                     "name": "PUT /samples/{sampleDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/samples/{sampleDbId0}"
@@ -4160,7 +4475,12 @@
                         }
                     ],
                     "name": "POST /search/samples",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/samples"
@@ -4259,7 +4579,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/VariantSets/getVariantsetsVariantsetdbidResponse",
-                                "IsEqual:/result/variantSetDbId:variantSetDbId0"
+                                "IsEqual:/result/variantSetDbId:variantSetDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -4366,7 +4686,12 @@
                         }
                     ],
                     "name": "POST /variantsets/extract",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/variantsets/extract"
@@ -4389,7 +4714,12 @@
                         }
                     ],
                     "name": "POST /search/variantsets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/variantsets"
@@ -4488,7 +4818,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/Variants/getVariantsVariantdbidResponse",
-                                "IsEqual:/result/variantDbId:variantDbId0"
+                                "IsEqual:/result/variantDbId:variantDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -4545,7 +4875,12 @@
                         }
                     ],
                     "name": "POST /search/variants",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/variants"
@@ -4644,7 +4979,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/CallSets/getCallsetsCallsetdbidResponse",
-                                "IsEqual:/result/callSetDbId:callSetDbId0"
+                                "IsEqual:/result/callSetDbId:callSetDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -4701,7 +5036,12 @@
                         }
                     ],
                     "name": "POST /search/callsets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/callsets"
@@ -4780,7 +5120,12 @@
                         }
                     ],
                     "name": "POST /search/calls",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/calls"
@@ -4879,7 +5224,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/ReferenceSets/getReferencesetsReferencesetdbidResponse",
-                                "IsEqual:/result/referenceSetDbId:referenceSetDbId0"
+                                "IsEqual:/result/referenceSetDbId:referenceSetDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -4911,7 +5256,12 @@
                         }
                     ],
                     "name": "POST /search/referencesets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/referencesets"
@@ -5010,7 +5360,7 @@
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
                                 "Schema:/v2.0/References/getReferencesReferencedbidResponse",
-                                "IsEqual:/result/referenceDbId:referenceDbId0"
+                                "IsEqual:/result/referenceDbId:referenceDbId1"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -5067,7 +5417,12 @@
                         }
                     ],
                     "name": "POST /search/references",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/references"
@@ -5144,7 +5499,12 @@
                         }
                     ],
                     "name": "POST /vendor/orders",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/vendor/orders"
@@ -5242,7 +5602,12 @@
                         }
                     ],
                     "name": "POST /vendor/plates",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/vendor/plates"

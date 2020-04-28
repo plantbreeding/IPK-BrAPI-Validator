@@ -59,7 +59,8 @@
                                     "MALE",
                                     "FEMALE",
                                     "SELF",
-                                    "POPULATION"
+                                    "POPULATION",
+                                    null
                                 ],
                                 "type": [
                                     "null",

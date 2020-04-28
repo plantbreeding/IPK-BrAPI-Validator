@@ -24,7 +24,8 @@
                                 "description": "Enum for plate formats, usually \"PLATE_96\" for a 96 well plate or \"TUBES\" for plateless format",
                                 "enum": [
                                     "PLATE_96",
-                                    "TUBES"
+                                    "TUBES",
+                                    null
                                 ],
                                 "type": [
                                     "null",
@@ -123,7 +124,8 @@
                                                                 "enum": [
                                                                     "OBO",
                                                                     "RDF",
-                                                                    "WEBPAGE"
+                                                                    "WEBPAGE",
+                                                                    null
                                                                 ],
                                                                 "type": [
                                                                     "null",
@@ -188,7 +190,8 @@
                                                                 "enum": [
                                                                     "OBO",
                                                                     "RDF",
-                                                                    "WEBPAGE"
+                                                                    "WEBPAGE",
+                                                                    null
                                                                 ],
                                                                 "type": [
                                                                     "null",

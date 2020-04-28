@@ -93,7 +93,8 @@
                                     "VCF",
                                     "Hapmap",
                                     "tabular",
-                                    "JSON"
+                                    "JSON",
+                                    null
                                 ],
                                 "type": [
                                     "null",
@@ -107,7 +108,8 @@
                                     "text/tsv",
                                     "application/excel",
                                     "application/zip",
-                                    "application/json"
+                                    "application/json",
+                                    null
                                 ],
                                 "type": [
                                     "null",
