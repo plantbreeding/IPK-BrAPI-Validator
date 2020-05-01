@@ -25,7 +25,12 @@
                         }
                     ],
                     "name": "GET /serverinfo",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/serverinfo"
@@ -54,7 +59,12 @@
                         }
                     ],
                     "name": "GET /commoncropnames",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/commoncropnames"
@@ -85,7 +95,12 @@
                         }
                     ],
                     "name": "GET /programs",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/programs"
@@ -109,7 +124,12 @@
                         }
                     ],
                     "name": "GET /programs/{programDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/programs/{programDbId0}"
@@ -135,7 +155,12 @@
                         }
                     ],
                     "name": "GET /programs/{programDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/programs/{programDbId1}"
@@ -247,7 +272,12 @@
                         }
                     ],
                     "name": "GET /search/programs/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/programs/{programsSearchResultDbId}"
@@ -280,7 +310,12 @@
                         }
                     ],
                     "name": "GET /trials",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/trials"
@@ -304,7 +339,12 @@
                         }
                     ],
                     "name": "GET /trials/{trialDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/trials/{trialDbId0}"
@@ -330,7 +370,12 @@
                         }
                     ],
                     "name": "GET /trials/{trialDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/trials/{trialDbId1}"
@@ -442,7 +487,12 @@
                         }
                     ],
                     "name": "GET /search/trials/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/trials/{trialsSearchResultDbId}"
@@ -475,7 +525,12 @@
                         }
                     ],
                     "name": "GET /studies",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/studies"
@@ -499,7 +554,12 @@
                         }
                     ],
                     "name": "GET /studies/{studyDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/studies/{studyDbId0}"
@@ -525,7 +585,12 @@
                         }
                     ],
                     "name": "GET /studies/{studyDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/studies/{studyDbId1}"
@@ -550,7 +615,12 @@
                         }
                     ],
                     "name": "GET /studytypes",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/studytypes"
@@ -660,7 +730,12 @@
                         }
                     ],
                     "name": "GET /search/studies/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/studies/{studiesSearchResultDbId}"
@@ -693,7 +768,12 @@
                         }
                     ],
                     "name": "GET /locations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/locations"
@@ -717,7 +797,12 @@
                         }
                     ],
                     "name": "GET /locations/{locationDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/locations/{locationDbId0}"
@@ -743,7 +828,12 @@
                         }
                     ],
                     "name": "GET /locations/{locationDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/locations/{locationDbId1}"
@@ -855,7 +945,12 @@
                         }
                     ],
                     "name": "GET /search/locations/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/locations/{locationsSearchResultDbId}"
@@ -888,7 +983,12 @@
                         }
                     ],
                     "name": "GET /seasons",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seasons"
@@ -912,7 +1012,12 @@
                         }
                     ],
                     "name": "GET /seasons/{seasonDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seasons/{seasonDbId0}"
@@ -938,7 +1043,12 @@
                         }
                     ],
                     "name": "GET /seasons/{seasonDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seasons/{seasonDbId1}"
@@ -1030,7 +1140,12 @@
                         }
                     ],
                     "name": "GET /people",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/people"
@@ -1054,7 +1169,12 @@
                         }
                     ],
                     "name": "GET /people/{personDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/people/{personDbId0}"
@@ -1080,7 +1200,12 @@
                         }
                     ],
                     "name": "GET /people/{personDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/people/{personDbId1}"
@@ -1192,7 +1317,12 @@
                         }
                     ],
                     "name": "GET /search/people/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/people/{peopleSearchResultDbId}"
@@ -1225,7 +1355,12 @@
                         }
                     ],
                     "name": "GET /lists",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/lists"
@@ -1249,7 +1384,12 @@
                         }
                     ],
                     "name": "GET /lists/{listDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/lists/{listDbId0}"
@@ -1275,7 +1415,12 @@
                         }
                     ],
                     "name": "GET /lists/{listDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/lists/{listDbId1}"
@@ -1417,7 +1562,12 @@
                         }
                     ],
                     "name": "GET /search/lists/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/lists/{listsSearchResultDbId}"
@@ -1450,7 +1600,12 @@
                         }
                     ],
                     "name": "GET /breedingmethods",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/breedingmethods"
@@ -1474,7 +1629,12 @@
                         }
                     ],
                     "name": "GET /breedingmethods/{breedingMethodDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/breedingmethods/{breedingMethodDbId0}"
@@ -1500,7 +1660,12 @@
                         }
                     ],
                     "name": "GET /breedingmethods/{breedingMethodDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/breedingmethods/{breedingMethodDbId1}"
@@ -1527,7 +1692,12 @@
                         }
                     ],
                     "name": "GET /germplasm",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/germplasm"
@@ -1551,7 +1721,12 @@
                         }
                     ],
                     "name": "GET /germplasm/{germplasmDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/germplasm/{germplasmDbId0}"
@@ -1577,7 +1752,12 @@
                         }
                     ],
                     "name": "GET /germplasm/{germplasmDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/germplasm/{germplasmDbId1}"
@@ -1602,7 +1782,12 @@
                         }
                     ],
                     "name": "GET /germplasm/{germplasmDbId}/mcpd",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/germplasm/{germplasmDbId0}/mcpd"
@@ -1627,7 +1812,12 @@
                         }
                     ],
                     "name": "GET /germplasm/{germplasmDbId}/pedigree",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/germplasm/{germplasmDbId0}/pedigree"
@@ -1652,7 +1842,12 @@
                         }
                     ],
                     "name": "GET /germplasm/{germplasmDbId}/progeny",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/germplasm/{germplasmDbId0}/progeny"
@@ -1764,7 +1959,12 @@
                         }
                     ],
                     "name": "GET /search/germplasm/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/germplasm/{germplasmSearchResultDbId}"
@@ -1797,7 +1997,12 @@
                         }
                     ],
                     "name": "GET /attributes",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributes"
@@ -1820,7 +2025,12 @@
                         }
                     ],
                     "name": "GET /attributes/categories",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributes/categories"
@@ -1844,7 +2054,12 @@
                         }
                     ],
                     "name": "GET /attributes/{attributeDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributes/{attributeDbId0}"
@@ -1870,7 +2085,12 @@
                         }
                     ],
                     "name": "GET /attributes/{attributeDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributes/{attributeDbId1}"
@@ -1982,7 +2202,12 @@
                         }
                     ],
                     "name": "GET /search/attributes/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/attributes/{attributesSearchResultDbId}"
@@ -2015,7 +2240,12 @@
                         }
                     ],
                     "name": "GET /attributevalues",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributevalues"
@@ -2039,7 +2269,12 @@
                         }
                     ],
                     "name": "GET /attributevalues/{attributeValueDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributevalues/{attributeValueDbId0}"
@@ -2065,7 +2300,12 @@
                         }
                     ],
                     "name": "GET /attributevalues/{attributeValueDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/attributevalues/{attributeValueDbId1}"
@@ -2177,7 +2417,12 @@
                         }
                     ],
                     "name": "GET /search/attributevalues/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/attributevalues/{attributevaluesSearchResultDbId}"
@@ -2210,7 +2455,12 @@
                         }
                     ],
                     "name": "GET /crossingprojects",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/crossingprojects"
@@ -2234,7 +2484,12 @@
                         }
                     ],
                     "name": "GET /crossingprojects/{crossingProjectDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/crossingprojects/{crossingProjectDbId0}"
@@ -2260,7 +2515,12 @@
                         }
                     ],
                     "name": "GET /crossingprojects/{crossingProjectDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/crossingprojects/{crossingProjectDbId1}"
@@ -2352,7 +2612,12 @@
                         }
                     ],
                     "name": "GET /crosses",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/crosses"
@@ -2377,7 +2642,12 @@
                         }
                     ],
                     "name": "GET /plannedcrosses",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/plannedcrosses"
@@ -2520,7 +2790,12 @@
                         }
                     ],
                     "name": "GET /seedlots",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seedlots"
@@ -2543,7 +2818,12 @@
                         }
                     ],
                     "name": "GET /seedlots/transactions",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seedlots/transactions"
@@ -2567,7 +2847,12 @@
                         }
                     ],
                     "name": "GET /seedlots/{seedLotDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seedlots/{seedLotDbId0}"
@@ -2593,7 +2878,12 @@
                         }
                     ],
                     "name": "GET /seedlots/{seedLotDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seedlots/{seedLotDbId1}"
@@ -2618,7 +2908,12 @@
                         }
                     ],
                     "name": "GET /seedlots/{seedLotDbId}/transactions",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/seedlots/{seedLotDbId0}/transactions"
@@ -2736,7 +3031,12 @@
                         }
                     ],
                     "name": "GET /observationlevels",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observationlevels"
@@ -2761,7 +3061,12 @@
                         }
                     ],
                     "name": "GET /observationunits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observationunits"
@@ -2785,7 +3090,12 @@
                         }
                     ],
                     "name": "GET /observationunits/{observationUnitDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observationunits/{observationUnitDbId0}"
@@ -2811,7 +3121,12 @@
                         }
                     ],
                     "name": "GET /observationunits/{observationUnitDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observationunits/{observationUnitDbId1}"
@@ -2923,7 +3238,12 @@
                         }
                     ],
                     "name": "GET /observationunits/table",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observationunits/table"
@@ -2974,7 +3294,12 @@
                         }
                     ],
                     "name": "GET /search/observationunits/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/observationunits/{observationunitsSearchResultDbId}"
@@ -3007,7 +3332,12 @@
                         }
                     ],
                     "name": "GET /observations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observations"
@@ -3031,7 +3361,12 @@
                         }
                     ],
                     "name": "GET /observations/{observationDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observations/{observationDbId0}"
@@ -3057,7 +3392,12 @@
                         }
                     ],
                     "name": "GET /observations/{observationDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observations/{observationDbId1}"
@@ -3169,7 +3509,12 @@
                         }
                     ],
                     "name": "GET /observations/table",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/observations/table"
@@ -3220,7 +3565,12 @@
                         }
                     ],
                     "name": "GET /search/observations/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/observations/{observationsSearchResultDbId}"
@@ -3253,7 +3603,12 @@
                         }
                     ],
                     "name": "GET /images",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/images"
@@ -3277,7 +3632,12 @@
                         }
                     ],
                     "name": "GET /images/{imageDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/images/{imageDbId0}"
@@ -3303,7 +3663,12 @@
                         }
                     ],
                     "name": "GET /images/{imageDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/images/{imageDbId1}"
@@ -3445,7 +3810,12 @@
                         }
                     ],
                     "name": "GET /search/images/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/images/{imagesSearchResultDbId}"
@@ -3478,7 +3848,12 @@
                         }
                     ],
                     "name": "GET /variables",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variables"
@@ -3502,7 +3877,12 @@
                         }
                     ],
                     "name": "GET /variables/{observationVariableDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variables/{observationVariableDbId0}"
@@ -3528,7 +3908,12 @@
                         }
                     ],
                     "name": "GET /variables/{observationVariableDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variables/{observationVariableDbId1}"
@@ -3640,7 +4025,12 @@
                         }
                     ],
                     "name": "GET /search/variables/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/variables/{variablesSearchResultDbId}"
@@ -3673,7 +4063,12 @@
                         }
                     ],
                     "name": "GET /traits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/traits"
@@ -3697,7 +4092,12 @@
                         }
                     ],
                     "name": "GET /traits/{traitDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/traits/{traitDbId0}"
@@ -3723,7 +4123,12 @@
                         }
                     ],
                     "name": "GET /traits/{traitDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/traits/{traitDbId1}"
@@ -3815,7 +4220,12 @@
                         }
                     ],
                     "name": "GET /methods",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/methods"
@@ -3839,7 +4249,12 @@
                         }
                     ],
                     "name": "GET /methods/{methodDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/methods/{methodDbId0}"
@@ -3865,7 +4280,12 @@
                         }
                     ],
                     "name": "GET /methods/{methodDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/methods/{methodDbId1}"
@@ -3957,7 +4377,12 @@
                         }
                     ],
                     "name": "GET /scales",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/scales"
@@ -3981,7 +4406,12 @@
                         }
                     ],
                     "name": "GET /scales/{scaleDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/scales/{scaleDbId0}"
@@ -4007,7 +4437,12 @@
                         }
                     ],
                     "name": "GET /scales/{scaleDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/scales/{scaleDbId1}"
@@ -4097,7 +4532,12 @@
                         }
                     ],
                     "name": "GET /ontologies",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/ontologies"
@@ -4126,7 +4566,12 @@
                         }
                     ],
                     "name": "GET /events",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/events"
@@ -4157,7 +4602,12 @@
                         }
                     ],
                     "name": "GET /maps",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/maps"
@@ -4181,7 +4631,12 @@
                         }
                     ],
                     "name": "GET /maps/{mapDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/maps/{mapDbId0}"
@@ -4207,7 +4662,12 @@
                         }
                     ],
                     "name": "GET /maps/{mapDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/maps/{mapDbId1}"
@@ -4232,7 +4692,12 @@
                         }
                     ],
                     "name": "GET /maps/{mapDbId}/linkagegroups",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/maps/{mapDbId0}/linkagegroups"
@@ -4257,7 +4722,12 @@
                         }
                     ],
                     "name": "GET /markerpositions",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/markerpositions"
@@ -4308,7 +4778,12 @@
                         }
                     ],
                     "name": "GET /search/markerpositions/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/markerpositions/{markerpositionsSearchResultDbId}"
@@ -4341,7 +4816,12 @@
                         }
                     ],
                     "name": "GET /samples",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/samples"
@@ -4365,7 +4845,12 @@
                         }
                     ],
                     "name": "GET /samples/{sampleDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/samples/{sampleDbId0}"
@@ -4391,7 +4876,12 @@
                         }
                     ],
                     "name": "GET /samples/{sampleDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/samples/{sampleDbId1}"
@@ -4503,7 +4993,12 @@
                         }
                     ],
                     "name": "GET /search/samples/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/samples/{samplesSearchResultDbId}"
@@ -4536,7 +5031,12 @@
                         }
                     ],
                     "name": "GET /variantsets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variantsets"
@@ -4560,7 +5060,12 @@
                         }
                     ],
                     "name": "GET /variantsets/{variantSetDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variantsets/{variantSetDbId0}"
@@ -4586,7 +5091,12 @@
                         }
                     ],
                     "name": "GET /variantsets/{variantSetDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variantsets/{variantSetDbId1}"
@@ -4611,7 +5121,12 @@
                         }
                     ],
                     "name": "GET /variantsets/{variantSetDbId}/calls",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variantsets/{variantSetDbId0}/calls"
@@ -4636,7 +5151,12 @@
                         }
                     ],
                     "name": "GET /variantsets/{variantSetDbId}/callsets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variantsets/{variantSetDbId0}/callsets"
@@ -4661,7 +5181,12 @@
                         }
                     ],
                     "name": "GET /variantsets/{variantSetDbId}/variants",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variantsets/{variantSetDbId0}/variants"
@@ -4742,7 +5267,12 @@
                         }
                     ],
                     "name": "GET /search/variantsets/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/variantsets/{variantsetsSearchResultDbId}"
@@ -4775,7 +5305,12 @@
                         }
                     ],
                     "name": "GET /variants",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variants"
@@ -4799,7 +5334,12 @@
                         }
                     ],
                     "name": "GET /variants/{variantDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variants/{variantDbId0}"
@@ -4825,7 +5365,12 @@
                         }
                     ],
                     "name": "GET /variants/{variantDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variants/{variantDbId1}"
@@ -4850,7 +5395,12 @@
                         }
                     ],
                     "name": "GET /variants/{variantDbId}/calls",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/variants/{variantDbId0}/calls"
@@ -4903,7 +5453,12 @@
                         }
                     ],
                     "name": "GET /search/variants/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/variants/{variantsSearchResultDbId}"
@@ -4936,7 +5491,12 @@
                         }
                     ],
                     "name": "GET /callsets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/callsets"
@@ -4960,7 +5520,12 @@
                         }
                     ],
                     "name": "GET /callsets/{callSetDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/callsets/{callSetDbId0}"
@@ -4986,7 +5551,12 @@
                         }
                     ],
                     "name": "GET /callsets/{callSetDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/callsets/{callSetDbId1}"
@@ -5011,7 +5581,12 @@
                         }
                     ],
                     "name": "GET /callsets/{callSetDbId}/calls",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/callsets/{callSetDbId0}/calls"
@@ -5064,7 +5639,12 @@
                         }
                     ],
                     "name": "GET /search/callsets/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/callsets/{callsetsSearchResultDbId}"
@@ -5088,16 +5668,19 @@
                                 "StatusCode:200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
-                                "Schema:/v2.0/Calls/getCallsResponse",
-                                "GetValue:/result/data/0/callDbId:callDbId0",
-                                "GetValue:/result/data/1/callDbId:callDbId1"
+                                "Schema:/v2.0/Calls/getCallsResponse"
                             ],
                             "listen": "test",
                             "type": "text/plain"
                         }
                     ],
                     "name": "GET /calls",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/calls"
@@ -5148,7 +5731,12 @@
                         }
                     ],
                     "name": "GET /search/calls/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/calls/{callsSearchResultDbId}"
@@ -5181,7 +5769,12 @@
                         }
                     ],
                     "name": "GET /referencesets",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/referencesets"
@@ -5205,7 +5798,12 @@
                         }
                     ],
                     "name": "GET /referencesets/{referenceSetDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/referencesets/{referenceSetDbId0}"
@@ -5231,7 +5829,12 @@
                         }
                     ],
                     "name": "GET /referencesets/{referenceSetDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/referencesets/{referenceSetDbId1}"
@@ -5284,7 +5887,12 @@
                         }
                     ],
                     "name": "GET /search/referencesets/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/referencesets/{referencesetsSearchResultDbId}"
@@ -5317,7 +5925,12 @@
                         }
                     ],
                     "name": "GET /references",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/references"
@@ -5341,7 +5954,12 @@
                         }
                     ],
                     "name": "GET /references/{referenceDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/references/{referenceDbId0}"
@@ -5367,7 +5985,12 @@
                         }
                     ],
                     "name": "GET /references/{referenceDbId} with second DbId",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/references/{referenceDbId1}"
@@ -5392,7 +6015,12 @@
                         }
                     ],
                     "name": "GET /references/{referenceDbId}/bases",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/references/{referenceDbId0}/bases"
@@ -5445,7 +6073,12 @@
                         }
                     ],
                     "name": "GET /search/references/{searchResultsDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/search/references/{referencesSearchResultDbId}"
@@ -5469,14 +6102,20 @@
                                 "StatusCode:200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
-                                "Schema:/v2.0/Vendor/getVendorOrdersResponse"
+                                "Schema:/v2.0/Vendor/getVendorOrdersResponse",
+                                "GetValue:/result/data/0/orderId:orderId0"
                             ],
                             "listen": "test",
                             "type": "text/plain"
                         }
                     ],
                     "name": "GET /vendor/orders",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/vendor/orders"
@@ -5502,7 +6141,7 @@
                     "parameters": [
                         {
                             "param": "json",
-                            "value": "[{}]"
+                            "value": "{}"
                         }
                     ],
                     "request": {
@@ -5527,7 +6166,12 @@
                         }
                     ],
                     "name": "GET /vendor/orders/{orderId}/plates",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/vendor/orders/{orderId0}/plates"
@@ -5552,7 +6196,12 @@
                         }
                     ],
                     "name": "GET /vendor/orders/{orderId}/results",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/vendor/orders/{orderId0}/results"
@@ -5577,7 +6226,12 @@
                         }
                     ],
                     "name": "GET /vendor/orders/{orderId}/status",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/vendor/orders/{orderId0}/status"
@@ -5595,7 +6249,8 @@
                                 "StatusCode:200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v2.0/metadata",
-                                "Schema:/v2.0/Vendor/postVendorPlatesResponse"
+                                "Schema:/v2.0/Vendor/postVendorPlatesResponse",
+                                "GetValue:/result/submissionId:submissionId0"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -5605,7 +6260,7 @@
                     "parameters": [
                         {
                             "param": "json",
-                            "value": "[{}]"
+                            "value": "{}"
                         }
                     ],
                     "request": {
@@ -5630,7 +6285,12 @@
                         }
                     ],
                     "name": "GET /vendor/plates/{submissionId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/vendor/plates/{submissionId0}"
@@ -5655,7 +6315,12 @@
                         }
                     ],
                     "name": "GET /vendor/specifications",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": ""
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "url": "{baseurl}/vendor/specifications"

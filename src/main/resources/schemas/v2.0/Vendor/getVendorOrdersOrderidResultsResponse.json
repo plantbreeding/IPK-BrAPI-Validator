@@ -52,7 +52,6 @@
                         ],
                         "type": "object"
                     },
-                    "minItems": 1,
                     "type": "array"
                 }
             },

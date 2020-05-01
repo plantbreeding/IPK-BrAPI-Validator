@@ -9,11 +9,11 @@
                         "properties": {
                             "clientId": {
                                 "description": "A unique, alpha-numeric ID which identifies the client to the vendor. Used to connect the order to the correct billing and contact info.",
-                                "type": "string"
+                                "type": ["string", "null"]
                             },
                             "numberOfSamples": {
                                 "description": "The total number of samples contained in this request. Used for billing and basic validation of the request.",
-                                "type": "integer"
+                                "type": ["integer", "null"]
                             },
                             "orderId": {
                                 "description": "The order id returned by the vendor when the order was successfully submitted.",
