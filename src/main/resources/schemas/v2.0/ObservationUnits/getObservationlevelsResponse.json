@@ -20,7 +20,8 @@
                                     "sub-plot",
                                     "plant",
                                     "pot",
-                                    "sample"
+                                    "sample",
+                                    null
                                 ],
                                 "type": [
                                     "null",

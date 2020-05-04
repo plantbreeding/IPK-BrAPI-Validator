@@ -469,8 +469,8 @@
 					},
 					"parameters": [
 						{
-							"param": "markerprofileDbId",
-							"value": "{markerprofileDbId}"
+							"param": "json",
+							"value": "{\"markerprofileDbId\": ${markerprofileDbId0}}"
 						}
 					],
 					"event": [

@@ -6,6 +6,16 @@
                 "data": {
                     "items": {
                         "properties": {
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
                             "commonCropName": {
                                 "description": "the common name of a crop (for multi-crop systems)",
                                 "type": [

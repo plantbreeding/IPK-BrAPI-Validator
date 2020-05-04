@@ -36,7 +36,8 @@
                                 "description": "The type of markers used in this services platform",
                                 "enum": [
                                     "FIXED",
-                                    "DISCOVERABLE"
+                                    "DISCOVERABLE",
+                                    null
                                 ],
                                 "type": [
                                     "null",

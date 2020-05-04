@@ -25,7 +25,8 @@
                                     "BULK",
                                     "BULK_SELFED",
                                     "BULK_OPEN_POLLINATED",
-                                    "DOUBLE_HAPLOID"
+                                    "DOUBLE_HAPLOID",
+                                    null
                                 ],
                                 "type": [
                                     "null",
@@ -109,7 +110,8 @@
                                             "MALE",
                                             "FEMALE",
                                             "SELF",
-                                            "POPULATION"
+                                            "POPULATION",
+                                            null
                                         ],
                                         "type": [
                                             "null",
@@ -158,7 +160,8 @@
                                             "MALE",
                                             "FEMALE",
                                             "SELF",
-                                            "POPULATION"
+                                            "POPULATION",
+                                            null
                                         ],
                                         "type": [
                                             "null",
@@ -188,7 +191,6 @@
                         },
                         "type": "object"
                     },
-                    "minItems": 1,
                     "type": "array"
                 }
             },

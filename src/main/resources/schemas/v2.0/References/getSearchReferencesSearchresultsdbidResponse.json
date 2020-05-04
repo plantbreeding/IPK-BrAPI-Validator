@@ -46,7 +46,14 @@
                                 ]
                             },
                             "referenceName": {
-                                "description": "The unique name of this reference within the Reference Set (e.g. '22').",
+                                "description": "The unique name of this reference within the Reference Set.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "referenceSetDbId": {
+                                "description": "The reference ID. Unique within the repository.",
                                 "type": [
                                     "null",
                                     "string"

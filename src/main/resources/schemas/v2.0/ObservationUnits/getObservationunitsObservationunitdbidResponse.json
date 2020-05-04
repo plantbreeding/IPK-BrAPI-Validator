@@ -97,7 +97,8 @@
                             "enum": [
                                 "CHECK",
                                 "TEST",
-                                "FILLER"
+                                "FILLER",
+                                null
                             ],
                             "type": [
                                 "null",
@@ -202,7 +203,8 @@
                                         "sub-plot",
                                         "plant",
                                         "pot",
-                                        "sample"
+                                        "sample",
+                                        null
                                     ],
                                     "type": [
                                         "null",
@@ -248,7 +250,8 @@
                                             "sub-plot",
                                             "plant",
                                             "pot",
-                                            "sample"
+                                            "sample",
+                                            null
                                         ],
                                         "type": [
                                             "null",
@@ -288,7 +291,8 @@
                                 "GRID_ROW",
                                 "GRID_COL",
                                 "MEASURED_ROW",
-                                "MEASURED_COL"
+                                "MEASURED_COL",
+                                null
                             ],
                             "type": [
                                 "null",
@@ -312,7 +316,8 @@
                                 "GRID_ROW",
                                 "GRID_COL",
                                 "MEASURED_ROW",
-                                "MEASURED_COL"
+                                "MEASURED_COL",
+                                null
                             ],
                             "type": [
                                 "null",

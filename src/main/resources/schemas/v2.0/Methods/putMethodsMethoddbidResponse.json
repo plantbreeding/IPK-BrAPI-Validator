@@ -100,7 +100,8 @@
                                         "enum": [
                                             "OBO",
                                             "RDF",
-                                            "WEBPAGE"
+                                            "WEBPAGE",
+                                            null
                                         ],
                                         "type": [
                                             "null",

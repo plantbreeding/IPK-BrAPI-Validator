@@ -61,7 +61,7 @@
                                     "string"
                                 ]
                             },
-                            "variantSetIds": {
+                            "variantSetDbIds": {
                                 "description": "The IDs of the variant sets this call set has calls in.",
                                 "items": {
                                     "type": "string"

@@ -127,6 +127,18 @@ public class RunnerService {
     }
 
     /**
+     * Replace all variable placeholders in a string to be used in JSON string
+     *
+     * @param s  String
+     * @param vs VariableStorage instance containing the variables.
+     * @return The string with placeholders replaced for variable values.
+     */
+    public static String replaceVariablesJSON(String s, VariableStorage vs) {
+        StrSubstitutor sub = new StrSubstitutor(vs.getVariables());
+        return sub.replace(s);
+    }
+
+    /**
      * Run tests on a single endpoint.
      *
      * @param simple Item that contains the endpoints and tests to be run.
