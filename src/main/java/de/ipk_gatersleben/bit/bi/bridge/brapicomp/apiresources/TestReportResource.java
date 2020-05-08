@@ -107,7 +107,7 @@ public class TestReportResource {
         }
     }
 
-	private String generateCSVReport(TestReport tr) throws JsonProcessingException, IOException {
+	public String generateCSVReport(TestReport tr) throws JsonProcessingException, IOException {
 		String csv = "";
 		MiniTestReport miniReport = tr.getMiniReport();
 		// Columns
@@ -120,7 +120,9 @@ public class TestReportResource {
 		String failedCallsCount = ""+miniReport.getFailedTests().size();
 		String testedCallsCount = ""+miniReport.getTotalTests().size();
 		String medianTestTime = Double.toString(miniReport.getTime());
-		String linkFullTest = Config.get("baseDomain") + "?report=" + tr.getReportId().toString();
+		String linkFullTest = "";
+		if (Config.get("baseDomain") != null && tr.getReportId() != null) //Headless does not save reports in a db
+			linkFullTest = Config.get("baseDomain") + "?report=" + tr.getReportId().toString();
 		
 		List<String> header = Arrays.asList("resourceName", 
 				"baseURL", "warningCalls", 
@@ -136,7 +138,7 @@ public class TestReportResource {
 		return csv;
 	}
 
-	private String generateJSONReport(TestReport tr) throws IOException {
+	public String generateJSONReport(TestReport tr) throws IOException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		MiniTestReport miniReport = tr.getMiniReport();
 		
@@ -146,7 +148,8 @@ public class TestReportResource {
 		json.put("successfulCalls", miniReport.getPassedTests());
 		json.put("failedCalls", miniReport.getFailedTests());
 		json.put("medianTestTimeMS", miniReport.getTime());
-		json.put("linkFullTest", Config.get("baseDomain") + "?report=" + tr.getReportId().toString());
+		if (Config.get("baseDomain") != null && tr.getReportId() != null) //Headless does not save reports in a db
+			json.put("linkFullTest", Config.get("baseDomain") + "?report=" + tr.getReportId().toString());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(json);

@@ -57,11 +57,11 @@ public class SingleTestResource {
         try {
             if (url.equals("")) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid url parameter", 4202);
-                return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
+                return Response.status(Status.BAD_REQUEST).entity(jsonError).build();
             }
             if (!brapiVersions.contains(version)) {
                 String jsonError = JsonMessageManager.jsonMessage(400, "Missing or invalid version parameter", 4202);
-                return Response.status(Status.BAD_REQUEST).encoding(jsonError).build();
+                return Response.status(Status.BAD_REQUEST).entity(jsonError).build();
             }
             
             String collectionResource;
