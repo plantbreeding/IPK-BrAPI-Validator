@@ -109,7 +109,12 @@
                         }
                     ],
                     "name": "POST /search/programs",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                        ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/programs"
@@ -326,7 +331,12 @@
                         }
                     ],
                     "name": "POST /search/studies",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/studies"
@@ -522,7 +532,12 @@
                         }
                     ],
                     "name": "PUT /studies/{studyDbId}/layouts",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{\"layout\":[]}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/studies/{studyDbId0}/layouts"
@@ -572,7 +587,12 @@
                         }
                     ],
                     "name": "PUT /studies/{studyDbId}/observations",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{\"observations\":[]}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/studies/{studyDbId0}/observations"
@@ -622,35 +642,15 @@
                         }
                     ],
                     "name": "PUT /studies/{studyDbId}/observationunits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[{}]"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/studies/{studyDbId0}/observationunits"
-                    },
-                    "requires": [
-                        "studyDbId0"
-                    ]
-                },
-                {
-                    "description": "If ''observationUnitDbId'' or ''observationDbId'' is populated, they should be considered updates to existing records. \n\nIf an existing record of that DbId is not found, the document should be treated as new records and assigned new DbIds. \n\nIf ''observationUnitDbId'' or ''observationDbId'' is un-populated (empty string or null) the document should be treated as new records and assigned new DbIds.",
-                    "endpoint": "/studies/{studyDbId}/observationunits/zip",
-                    "event": [
-                        {
-                            "exec": [
-                                "StatusCode:200:breakiffalse",
-                                "ContentType:application/json",
-                                "Schema:/v1.3/metadata",
-                                "Schema:/v1.3/Studies/postStudiesStudydbidObservationunitsZipResponse"
-                            ],
-                            "listen": "test",
-                            "type": "text/plain"
-                        }
-                    ],
-                    "name": "POST /studies/{studyDbId}/observationunits/zip",
-                    "parameters": [],
-                    "request": {
-                        "method": "POST",
-                        "url": "{baseurl}/studies/{studyDbId0}/observationunits/zip"
                     },
                     "requires": [
                         "studyDbId0"
@@ -722,7 +722,12 @@
                         }
                     ],
                     "name": "POST /studies/{studyDbId}/table",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/studies/{studyDbId0}/table"
@@ -822,7 +827,12 @@
                         }
                     ],
                     "name": "POST /phenotypes",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{\"data\": []}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/phenotypes"
@@ -846,7 +856,12 @@
                         }
                     ],
                     "name": "POST /search/observationtables",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/observationtables"
@@ -895,7 +910,12 @@
                         }
                     ],
                     "name": "POST /search/observationunits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/observationunits"
@@ -974,7 +994,12 @@
                         }
                     ],
                     "name": "POST /methods",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/methods"
@@ -1120,7 +1145,12 @@
                         }
                     ],
                     "name": "POST /scales",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/scales"
@@ -1219,7 +1249,12 @@
                         }
                     ],
                     "name": "POST /search/variables",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/variables"
@@ -1292,7 +1327,12 @@
                         }
                     ],
                     "name": "POST /traits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/traits"
@@ -1752,7 +1792,12 @@
                         }
                     ],
                     "name": "POST /search/germplasm",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/germplasm"
@@ -1934,7 +1979,12 @@
                         }
                     ],
                     "name": "POST /search/markers",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/markers"
@@ -2034,7 +2084,12 @@
                         }
                     ],
                     "name": "POST /allelematrices-search",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/allelematrices-search"
@@ -2371,7 +2426,12 @@
                         }
                     ],
                     "name": "POST /search/samples",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/samples"
@@ -2418,7 +2478,8 @@
                                 "StatusCode:200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v1.3/metadata",
-                                "Schema:/v1.3/Vendor/getVendorOrdersResponse"
+                                "Schema:/v1.3/Vendor/getVendorOrdersResponse",
+                                "GetValue:/result/data/0/orderId:orderId0"
                             ],
                             "listen": "test",
                             "type": "text/plain"
@@ -2448,7 +2509,12 @@
                         }
                     ],
                     "name": "POST /vendor/orders",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/vendor/orders"
@@ -2539,14 +2605,20 @@
                                 "StatusCode:200:breakiffalse",
                                 "ContentType:application/json",
                                 "Schema:/v1.3/metadata",
-                                "Schema:/v1.3/Vendor/postVendorPlatesResponse"
+                                "Schema:/v1.3/Vendor/postVendorPlatesResponse",
+                                "GetValue:/result/submissionId:submissionId0"
                             ],
                             "listen": "test",
                             "type": "text/plain"
                         }
                     ],
                     "name": "POST /vendor/plates",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{\"plates\": []}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/vendor/plates"
@@ -2648,7 +2720,12 @@
                         }
                     ],
                     "name": "POST /lists",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/lists"
@@ -2721,7 +2798,12 @@
                         }
                     ],
                     "name": "PUT /lists/{listDbId}",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "PUT",
                         "url": "{baseurl}/lists/{listDbId0}"
@@ -2746,7 +2828,12 @@
                         }
                     ],
                     "name": "POST /lists/{listDbId}/items",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "[]"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/lists/{listDbId0}/items"
@@ -2802,7 +2889,12 @@
                         }
                     ],
                     "name": "POST /images",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/images"
@@ -2885,31 +2977,6 @@
                     ]
                 },
                 {
-                    "description": "Update an image with the image file content\n\nImplementation Notes\n\n- This call should be paired with 'PUT /images/{imageDbId}' for full capability\n\n- A server may choose to modify the image meta data object based on the actually image which has been uploaded. \n\n- Image data may be stored in a database or file system. Servers should generate and provide the \"imageURL\" for retrieving the image, wherever it happens to live.  ",
-                    "endpoint": "/images/{imageDbId}/imagecontent",
-                    "event": [
-                        {
-                            "exec": [
-                                "StatusCode:200:breakiffalse",
-                                "ContentType:application/json",
-                                "Schema:/v1.3/metadata",
-                                "Schema:/v1.3/Images/putImagesImagedbidImagecontentResponse"
-                            ],
-                            "listen": "test",
-                            "type": "text/plain"
-                        }
-                    ],
-                    "name": "PUT /images/{imageDbId}/imagecontent",
-                    "parameters": [],
-                    "request": {
-                        "method": "PUT",
-                        "url": "{baseurl}/images/{imageDbId0}/imagecontent"
-                    },
-                    "requires": [
-                        "imageDbId0"
-                    ]
-                },
-                {
                     "description": "Get filtered set of image meta data\n\nImplementation Notes\n\n- 'imageURL' should be a complete URL decribing the location of the image. There is no BrAPI call for retireiving the image content, so it could be on a different path, or a different host.\n\n- 'descriptiveOntologyTerm' can be thought of as Tags for the image. These could be simple descriptive words, or ontology references, or full ontology URI's.  \n\nSee Search Services for additional implementation details.",
                     "endpoint": "/search/images",
                     "event": [
@@ -2926,7 +2993,12 @@
                         }
                     ],
                     "name": "POST /search/images",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/search/images"
@@ -3005,7 +3077,12 @@
                         }
                     ],
                     "name": "POST /people",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "param": "json",
+                            "value": "{}"
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "url": "{baseurl}/people"
