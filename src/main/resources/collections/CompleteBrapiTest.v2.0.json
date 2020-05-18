@@ -3737,36 +3737,6 @@
                     ]
                 },
                 {
-                    "description": "Update an image with the image file content\n\nImplementation Notes\n\n- This call should be paired with 'PUT /images/{imageDbId}' for full capability\n\n- A server may choose to modify the image meta data object based on the actually image which has been uploaded. \n\n- Image data may be stored in a database or file system. Servers should generate and provide the \"imageURL\" for retrieving the image, wherever it happens to live.",
-                    "endpoint": "/images/{imageDbId}/imagecontent",
-                    "event": [
-                        {
-                            "exec": [
-                                "StatusCode:200:breakiffalse",
-                                "ContentType:application/json",
-                                "Schema:/v2.0/metadata",
-                                "Schema:/v2.0/Images/putImagesImagedbidImagecontentResponse"
-                            ],
-                            "listen": "test",
-                            "type": "text/plain"
-                        }
-                    ],
-                    "name": "PUT /images/{imageDbId}/imagecontent",
-                    "parameters": [
-                        {
-                            "param": "json",
-                            "value": "{}"
-                        }
-                    ],
-                    "request": {
-                        "method": "PUT",
-                        "url": "{baseurl}/images/{imageDbId0}/imagecontent"
-                    },
-                    "requires": [
-                        "imageDbId0"
-                    ]
-                },
-                {
                     "description": "Get filtered set of image meta data\n\nImplementation Notes\n\n- ''imageURL'' should be a complete URL describing the location of the image. There is no BrAPI call for retrieving the image content, so it could be on a different path, or a different host.\n\n- 'descriptiveOntologyTerm' can be thought of as Tags for the image. These could be simple descriptive words, or ontology references, or full ontology URI's.\n\nSee Search Services for additional implementation details.",
                     "endpoint": "/search/images",
                     "event": [
@@ -5214,7 +5184,7 @@
                     "parameters": [
                         {
                             "param": "json",
-                            "value": "[{}]"
+                            "value": "{}"
                         }
                     ],
                     "request": {

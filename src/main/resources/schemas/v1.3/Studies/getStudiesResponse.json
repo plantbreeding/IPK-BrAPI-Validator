@@ -10,7 +10,7 @@
                                 "description": "Is this study currently active",
                                 "type": [
                                     "null",
-                                    "boolean"
+                                    "string"
                                 ]
                             },
                             "additionalInfo": {

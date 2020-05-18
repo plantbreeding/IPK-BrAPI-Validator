@@ -28,7 +28,8 @@
                                 "enum": [
                                     "CHECK",
                                     "TEST",
-                                    "FILLER"
+                                    "FILLER",
+                                    null
                                 ],
                                 "type": [
                                     "null",

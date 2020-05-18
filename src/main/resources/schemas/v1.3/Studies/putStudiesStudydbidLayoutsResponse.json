@@ -28,7 +28,8 @@
                                 "enum": [
                                     "CHECK",
                                     "TEST",
-                                    "FILLER"
+                                    "FILLER",
+                                    null
                                 ],
                                 "type": [
                                     "null",
@@ -136,7 +137,6 @@
                         "title": "observationUnitPosition",
                         "type": "object"
                     },
-                    "minItems": 1,
                     "type": "array"
                 }
             },
