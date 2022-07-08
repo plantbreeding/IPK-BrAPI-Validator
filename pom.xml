@@ -13,7 +13,7 @@
 		<webappHome>src/main/webapp</webappHome>
 		<buildDate>${maven.build.timestamp}</buildDate>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-		<jetty-version>9.4.17.v20190418</jetty-version>
+		<jetty-version>9.4.41.v20210516</jetty-version>
 		<jersey-version>2.24</jersey-version>
 		<rest-assured-version>3.0.5</rest-assured-version>
 	</properties>
