@@ -1,5 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner;
 
+import io.restassured.config.HttpClientConfig;
+import io.restassured.config.RestAssuredConfig;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -236,6 +238,12 @@ public class TestItemRunner {
         LOGGER.info("New Request. URL: " + this.url);
         
         RestAssured.useRelaxedHTTPSValidation();
+
+        RestAssured.config = RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig().
+        setParam("http.connection.timeout",300000).
+        setParam("http.socket.timeout",300000).
+        setParam("http.connection-manager.timeout",300000));
+
         try {
         	URL u = new URL(url);
         	if(singleTest == null || !singleTest) { // singleTest indicates this came from a manual web submission and should not be restricted by port
@@ -244,7 +252,7 @@ public class TestItemRunner {
 					throw new IllegalArgumentException();
 				}
         	}
-            RequestSpecification rs = given()
+            RequestSpecification rs = given().config(RestAssured.config)
             		.contentType("application/json");
             
             if (StringUtils.isNotBlank(accessToken)) {

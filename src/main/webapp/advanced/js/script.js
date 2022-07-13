@@ -256,9 +256,9 @@ $(function() {
             success: function(res) {
                 var endpoints = res.map(function(d) {
                     resourcesData[d.id] = d;
-                    var shortUrl = d['base-url'];
-                    if (d['base-url'] && d['base-url'].length > 45) {
-                        shortUrl = d['base-url'].slice(0, 45) + '...';
+                    var shortUrl = d['url'];
+                    if (d['url'] && d['url'].length > 45) {
+                        shortUrl = d['url'].slice(0, 45) + '...';
                     }
                     return {
                         id : d.id,
@@ -266,7 +266,7 @@ $(function() {
                         desc: d.description || '',
                         provider: d.provider.name || '',
                         crop: d.crop || '',
-                        url: d['base-url'],
+                        url: d['url'],
                         shortUrl: shortUrl,
                         status: generateStats(d.lastTestReports[0])
                     };

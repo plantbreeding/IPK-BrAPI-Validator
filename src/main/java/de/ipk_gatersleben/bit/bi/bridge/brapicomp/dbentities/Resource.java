@@ -18,11 +18,16 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
  * table.
  */
 @DatabaseTable(tableName = "resources")
+@JsonIgnoreProperties(value = { "badges" })
 public class Resource implements Comparable<Resource> {
 
 	public static final String EMAIL_FIELD_NAME = "EMAIL";
 
 	public static final String URL_FIELD_NAME = "URL";
+
+    public static final String V1_URL_FIELD_NAME = "V1_URL";
+
+    public static final String V2_URL_FIELD_NAME = "V2_URL";
 
 	public static final String ID_FIELD_NAME = "ID";
 
@@ -51,9 +56,19 @@ public class Resource implements Comparable<Resource> {
 	@DatabaseField(generatedId = true, columnName = ID_FIELD_NAME)
 	private UUID id;
 
-	@JsonProperty("base-url")
-	@DatabaseField(canBeNull = false, columnName = URL_FIELD_NAME)
+	//@JsonProperty("base-url")
+    //@JsonProperty("v1-url")
+	@DatabaseField(canBeNull = true, columnName = URL_FIELD_NAME)
 	private String url;
+
+    @JsonProperty("v1-url")
+	@DatabaseField(canBeNull = true, columnName = V1_URL_FIELD_NAME)
+	private String v1url;
+
+    @JsonProperty("v2-url")
+	@DatabaseField(canBeNull = true, columnName = V2_URL_FIELD_NAME)
+	private String v2url;
+
 	
     @JsonProperty("access-token")
 	private String accessToken;
@@ -127,14 +142,32 @@ public class Resource implements Comparable<Resource> {
 
 	public void setUrl(String url) throws MalformedURLException {
 		URL u = new URL(url);
-		this.url = u.toString();
+		this.v1url = u.toString();
+	}
+
+	public void setV1url(String url) throws MalformedURLException {
+		URL u = new URL(url);
+		this.v1url = u.toString();
+	}
+
+	public void setV2url(String url) throws MalformedURLException {
+		URL u = new URL(url);
+		this.v2url = u.toString();
 	}
 
 	/**
 	 * @return endpoint's url
 	 */
 	public String getUrl() {
-		return url;
+		return v1url;
+	}
+
+	public String getV1url() {
+		return v1url;
+	}
+
+	public String getV2url() {
+		return v2url;
 	}
 	
 	/**

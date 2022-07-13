@@ -165,7 +165,7 @@ public class AdminResource {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            boolean allowAdditional = false; // Strict mode by default -- No additional fields allowed.
+            boolean allowAdditional = true; // Strict mode by default -- No additional fields allowed.
 
             InputStream inJson = TestCollection.class.getResourceAsStream("/collections/CompleteBrapiTest." + version +".json");
             TestCollection tc = mapper.readValue(inJson, TestCollection.class);
@@ -191,7 +191,7 @@ public class AdminResource {
      *
      * @return Empty response with status code
      */
-    @POST
+    @GET
     @Path("/updateproviders")
     public Response updateProviders(@Context HttpHeaders headers) {
 
@@ -228,7 +228,7 @@ public class AdminResource {
 
             connection.connect();
             InputStream is = connection.getInputStream();
-            JsonNode node = mapper.readTree(is).at("/brapi-providers/category");
+            JsonNode node = mapper.readTree(is);
 
             Dao<Provider, UUID> providerDao = DataSourceManager.getDao(Provider.class);
             Dao<Resource, UUID>  resourceDao = DataSourceManager.getDao(Resource.class);
