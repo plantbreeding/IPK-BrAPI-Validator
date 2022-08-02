@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +23,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.runner.CustomTestSuite
  * Various tester and helper functions for the Runner classes.
  */
 public class RunnerService {
-    private static final Logger LOGGER = LogManager.getLogger(RunnerService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunnerService.class.getName());
 
     /**
      * Test a single endpoint and return report

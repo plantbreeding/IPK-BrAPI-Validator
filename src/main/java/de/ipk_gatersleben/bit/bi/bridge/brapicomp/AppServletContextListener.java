@@ -6,10 +6,10 @@ import static org.quartz.CronScheduleBuilder.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 
 import org.quartz.DateBuilder;
 import org.quartz.JobDetail;
@@ -19,6 +19,7 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.jdbc.db.OracleDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Provider;
@@ -45,6 +46,8 @@ public class AppServletContextListener implements ServletContextListener {
 				SchedulerManager.getScheduler().shutdown();
 
 			} catch (IOException | SchedulerException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -76,7 +79,7 @@ public class AppServletContextListener implements ServletContextListener {
 			((JdbcPooledConnectionSource) connectionSource).setUsername(Config.get("dbuser"));
 			((JdbcPooledConnectionSource) connectionSource).setPassword(Config.get("dbpass"));
 			if (connectionSource.getDatabaseType().getClass()
-					.equals(com.j256.ormlite.db.OracleDatabaseType.class)) {
+					.equals(OracleDatabaseType.class)) {
 				Cache.addToCache("dbType", "oracle");
 			} else {
 				Cache.addToCache("dbType", "other");

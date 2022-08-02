@@ -70,7 +70,7 @@ public class DataSourceManager {
         source = s;
     }
 
-    public static void closeConnectionSource() throws IOException {
+    public static void closeConnectionSource() throws Exception {
         source.close();
     }
 }

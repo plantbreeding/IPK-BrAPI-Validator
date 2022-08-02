@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities.Resource;
@@ -19,7 +19,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.reports.TestSuiteRepor
  * Runs a test on an resource and sends an email to the owner.
  */
 public class EmailManager {
-    private static final Logger LOGGER = LogManager.getLogger(EmailManager.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailManager.class.getName());
     private Resource resource;
     private List<TestReport> prevReports;
 

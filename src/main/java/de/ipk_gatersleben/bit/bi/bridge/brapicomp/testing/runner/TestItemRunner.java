@@ -15,8 +15,8 @@ import javax.net.ssl.SSLHandshakeException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.ConnectionClosedException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.hamcrest.Matcher;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -41,7 +41,7 @@ import io.restassured.specification.RequestSpecification;
  * Run tests for an item element.
  */
 public class TestItemRunner {
-    private static final Logger LOGGER = LogManager.getLogger(TestItemRunner.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestItemRunner.class.getName());
     private String url;
     private ValidatableResponse vr;
     private Item item;

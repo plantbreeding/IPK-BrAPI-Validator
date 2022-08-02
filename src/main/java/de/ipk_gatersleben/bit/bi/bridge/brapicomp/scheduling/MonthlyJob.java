@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -16,7 +16,7 @@ import de.ipk_gatersleben.bit.bi.bridge.brapicomp.testing.config.TestCollection;
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils.RunnerService;
 
 public class MonthlyJob implements org.quartz.Job {
-	private static final Logger LOGGER = LogManager.getLogger(MonthlyJob.class.getName());
+	private static final Logger LOGGER = LoggerFactory.getLogger(MonthlyJob.class.getName());
 	
     public MonthlyJob() {
     }
