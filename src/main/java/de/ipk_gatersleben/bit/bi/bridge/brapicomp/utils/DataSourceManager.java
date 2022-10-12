@@ -55,7 +55,9 @@ public class DataSourceManager {
     	try {
     		TableUtils.createTableIfNotExists(source, tableClass);
     	} catch (SQLException e) {
-    		if (Cache.getFromCache("dbType").equals("oracle") && e.getSQLState().equals("42000")) {
+    		if (Cache.getFromCache("dbType").equals("oracle")  ) { // && e.getSQLState().equals("42000")
+                System.out.println(e.getSQLState());
+                System.out.println(e.getErrorCode());
 				System.err.println("Warning: Tried to create db table but it already exists.");
 			} else {
 				throw e;
