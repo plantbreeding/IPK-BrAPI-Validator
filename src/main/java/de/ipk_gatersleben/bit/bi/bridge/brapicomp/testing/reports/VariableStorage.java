@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Variables can also be used to compare against results from the query
  */
 public class VariableStorage {
-    private static final Logger LOGGER = LogManager.getLogger(VariableStorage.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(VariableStorage.class.getName());
     private HashMap<String, JsonNode> variables;
     private HashMap<String, String> variablesAsString;
 

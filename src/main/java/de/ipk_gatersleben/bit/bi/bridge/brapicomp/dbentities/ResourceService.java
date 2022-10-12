@@ -1,6 +1,7 @@
 package de.ipk_gatersleben.bit.bi.bridge.brapicomp.dbentities;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -155,10 +156,14 @@ public class ResourceService {
 	}
 
 	public static List<Resource> getAllPublicEndpoints() throws SQLException {
-        Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
-        return endpointDao.queryBuilder().where()
-        		.eq(Resource.ISPUBLIC_FIELD_NAME, true)
-        		.query();
+        List<Resource> resources = new ArrayList<>();
+		Dao<Resource, UUID> endpointDao = DataSourceManager.getDao(Resource.class);
+        if(endpointDao != null) {
+        	resources = endpointDao.queryBuilder().where()
+            		.eq(Resource.ISPUBLIC_FIELD_NAME, true)
+            		.query();
+        }
+        return resources;
 	}
 	
 }

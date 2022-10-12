@@ -2,14 +2,14 @@ package de.ipk_gatersleben.bit.bi.bridge.brapicomp.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-import javax.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.HttpHeaders;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.glassfish.jersey.internal.util.Base64;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Helper functions for the resource classes.
  */
 public class ApiResourceService {
-    private static final Logger LOGGER = LogManager.getLogger(ApiResourceService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiResourceService.class.getName());
 
     /**
      * Finds a test collection file given a test collection name using the info stored in tests.json
@@ -74,7 +74,7 @@ public class ApiResourceService {
         final String encodedUserPassword = authorization.get(0).replaceFirst("Basic ", "");
 
         //Decode username and password
-        String usernameAndPassword = new String(Base64.decode(encodedUserPassword.getBytes()));
+        String usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
         ;
 
         //Split username and password tokens

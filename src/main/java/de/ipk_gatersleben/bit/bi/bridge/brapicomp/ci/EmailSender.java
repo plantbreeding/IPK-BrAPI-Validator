@@ -8,102 +8,99 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import de.ipk_gatersleben.bit.bi.bridge.brapicomp.Config;
 
 class EmailSender {
-    private static final Logger LOGGER = LogManager.getLogger(EmailSender.class.getName());
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class.getName());
 
-    static void sendEmail(final String message, final String subject, final String emailAddress) {
+	static void sendEmail(final String message, final String subject, final String emailAddress) {
 
-        javax.mail.Session session;
+		Session session;
 
-        InternetAddress addressFrom = null;
+		InternetAddress addressFrom = null;
 
-        final Properties properties = new Properties();
+		final Properties properties = new Properties();
 
-        properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
-        
-        if (Config.get("mailSmtpPort") != null) {
-        	properties.put("mail.smtp.port", Config.get("mailSmtpPort"));
-        }
+		properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
 
-        if (Config.get("mailSmtpLogin") == null
-                || Config.get("mailSmtpLogin").isEmpty()) {
+		if (Config.get("mailSmtpPort") != null) {
+			properties.put("mail.smtp.port", Config.get("mailSmtpPort"));
+		}
 
-            session = javax.mail.Session.getDefaultInstance(properties);
+		if (Config.get("mailSmtpLogin") == null || Config.get("mailSmtpLogin").isEmpty()) {
 
-            try {
-                addressFrom = new InternetAddress(Config.get("fromEmailAddress"),
-                        Config.get("fromPersonalName"));
-            } catch (final UnsupportedEncodingException e) {
-                e.printStackTrace();
+			session = Session.getDefaultInstance(properties);
 
-                LOGGER.warn(emailAddress + " : " + e.getMessage());
-            }
+			try {
+				addressFrom = new InternetAddress(Config.get("fromEmailAddress"), Config.get("fromPersonalName"));
+			} catch (final UnsupportedEncodingException e) {
+				e.printStackTrace();
 
-        } else {
+				LOGGER.warn(emailAddress + " : " + e.getMessage());
+			}
 
-            properties.put("mail.smtp.auth", "true");
+		} else {
 
-            final Authenticator authenticator = new Authenticator() {
-                private PasswordAuthentication authentication;
+			properties.put("mail.smtp.auth", "true");
 
-                {
-                    this.authentication = new PasswordAuthentication(Config.get("mailSmtpLogin"),
-                            Config.get("mailSmtpPassword"));
-                }
+			final Authenticator authenticator = new Authenticator() {
+				private PasswordAuthentication authentication;
 
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return this.authentication;
-                }
-            };
+				{
+					this.authentication = new PasswordAuthentication(Config.get("mailSmtpLogin"),
+							Config.get("mailSmtpPassword"));
+				}
 
-            session = javax.mail.Session.getInstance(properties, authenticator);
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return this.authentication;
+				}
+			};
 
-            try {
-                addressFrom = new InternetAddress(Config.get("fromEmailAddress"),
-                        Config.get("fromPersonalName"));
-            } catch (final UnsupportedEncodingException e) {
-                e.printStackTrace();
-                LOGGER.warn(emailAddress + " : " + e.getMessage());
-            }
+			session = Session.getInstance(properties, authenticator);
 
-        }
+			try {
+				addressFrom = new InternetAddress(Config.get("fromEmailAddress"), Config.get("fromPersonalName"));
+			} catch (final UnsupportedEncodingException e) {
+				e.printStackTrace();
+				LOGGER.warn(emailAddress + " : " + e.getMessage());
+			}
 
-        try {
-            final Message mail = new MimeMessage(session);
+		}
 
-            final InternetAddress addressTo = new InternetAddress(emailAddress);
-            mail.setRecipient(Message.RecipientType.TO, addressTo);
-            mail.setSubject(subject);
-            mail.setFrom(addressFrom);
+		try {
+			final Message mail = new MimeMessage(session);
 
-            Multipart multipart = new MimeMultipart();
+			final InternetAddress addressTo = new InternetAddress(emailAddress);
+			mail.setRecipient(Message.RecipientType.TO, addressTo);
+			mail.setSubject(subject);
+			mail.setFrom(addressFrom);
 
-            MimeBodyPart content = new MimeBodyPart();
-            content.setText(message, "UTF-8", "html");
+			Multipart multipart = new MimeMultipart();
 
-            multipart.addBodyPart(content);
+			MimeBodyPart content = new MimeBodyPart();
+			content.setText(message, "UTF-8", "html");
 
+			multipart.addBodyPart(content);
 
-            mail.setContent(multipart);
-            Transport.send(mail);
-            //System.out.println(message);
+			mail.setContent(multipart);
+			Transport.send(mail);
+			// System.out.println(message);
 
-        } catch (final MessagingException e) {
-            e.printStackTrace();
+		} catch (final MessagingException e) {
+			e.printStackTrace();
 
-            LOGGER.warn(emailAddress + " : " + e.getMessage());
-        }
-    }
+			LOGGER.warn(emailAddress + " : " + e.getMessage());
+		}
+	}
 }
