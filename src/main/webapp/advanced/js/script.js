@@ -212,7 +212,7 @@ $(function() {
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify({
-                'base-url': $("#serverUrlModal").val(),
+                url: $("#serverUrlModal").val(),
                 email: $("#emailModal").val(),
                 crop: $("#cropSpecies").val(),
                 frequency: $("input[name=frequency]:checked").val(),

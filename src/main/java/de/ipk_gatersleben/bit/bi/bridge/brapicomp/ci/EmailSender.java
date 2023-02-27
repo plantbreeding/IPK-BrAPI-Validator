@@ -31,7 +31,12 @@ class EmailSender {
 
 		final Properties properties = new Properties();
 
-		properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
+		if (Config.get("mailSmtpHost") != null) {
+			properties.put("mail.smtp.host", Config.get("mailSmtpHost"));
+		}else {
+			// no smtp host, no emails
+			return;
+		}
 
 		if (Config.get("mailSmtpPort") != null) {
 			properties.put("mail.smtp.port", Config.get("mailSmtpPort"));
