@@ -1,0 +1,9 @@
+plugins {
+    id 'brava.spring-conventions'
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':database')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
