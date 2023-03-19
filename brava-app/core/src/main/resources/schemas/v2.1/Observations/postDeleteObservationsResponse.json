@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "observationDbIds": {
+                    "description": "The unique ids of the Observation records which have been successfully deleted",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "observationDbIds"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "postDeleteObservationsResponse",
+    "type": "object"
+}

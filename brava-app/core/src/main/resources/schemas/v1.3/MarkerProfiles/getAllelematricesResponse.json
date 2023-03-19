@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "description": {
+                                "description": "How the matrix was generated",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "lastUpdated": {
+                                "description": "A date format",
+                                "format": "date-time",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "matrixDbId": {
+                                "description": "ID of the matrix",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "matrixName": {
+                                "description": "Name of the matrix",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyDbId": {
+                                "description": "Link to the study where the matrix was produced",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "alleleMatrixDetails",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getAllelematricesResponse",
+    "type": "object"
+}

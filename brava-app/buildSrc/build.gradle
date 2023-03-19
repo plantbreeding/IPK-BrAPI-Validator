@@ -1,0 +1,13 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.4'
+    implementation 'io.spring.dependency-management:io.spring.dependency-management.gradle.plugin:1.1.0'
+}

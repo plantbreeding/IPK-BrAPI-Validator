@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "description": "Response to an order request",
+            "properties": {
+                "submissionId": {
+                    "description": "A unique, alpha-numeric ID which identifies a set of plates which have been successfully submitted.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "submissionId"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "postVendorPlatesResponse",
+    "type": "object"
+}

@@ -1,0 +1,66 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/studies/studyDbId/germplasm",
+	"type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "accessionNumber": {
+                                "type": ["string", "null"]
+                            },
+                            "entryNumber": {
+                                "type": ["string", "null"]
+                            },
+                            "germplasmDbId": {
+                                "type": "string"
+                            },
+                            "germplasmName": {
+                                "type": ["string", "null"]
+                            },
+                            "germplasmPUI": {
+                                "type": ["string", "null"]
+                            },
+                            "pedigree": {
+                                "type": ["string", "null"]
+                            },
+                            "seedSource": {
+                                "type": ["string", "null"]
+                            },
+                            "synonyms": {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": ["array", "null"]
+                            }
+                        },
+                        "required": [
+                            "germplasmDbId"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "studyDbId": {
+                    "type": "string"
+                },
+                "trialName": {
+                    "type": ["string", "null"]
+                }
+            },
+            "required": [
+                "data",
+                "studyDbId"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

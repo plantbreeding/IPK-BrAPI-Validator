@@ -1,0 +1,125 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/studies/studyDbId/observationunits",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "X": {
+                                "type": ["string", "null"]
+                            },
+                            "Y": {
+                                "type": ["string", "null"]
+                            },
+                            "blockNumber": {
+                                "type": ["string", "null"]
+                            },
+                            "entryNumber": {
+                                "type": ["string", "null"]
+                            },
+                            "entryType": {
+                                "type": ["string", "null"]
+                            },
+                            "germplasmDbId": {
+                                "type": ["string", "null"]
+                            },
+                            "germplasmName": {
+                                "type": ["string", "null"]
+                            },
+                            "observationUnitDbId": {
+                                "type": "string"
+                            },
+                            "observationUnitName": {
+                                "type": ["string", "null"]
+                            },
+                            "observationUnitXref": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "source": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "source",
+                                        "id"
+                                    ],
+                                    "type": "object"
+                                },
+                                "minItems": 1,
+                                "type": ["array", "null"]
+                            },
+                            "observations": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "collector": {
+                                            "type": ["string", "null"]
+                                        },
+                                        "observationDbId": {
+                                            "type": "string"
+                                        },
+                                        "observationTimeStamp": {
+                                            "type": ["string", "null"]
+                                        },
+                                        "observationVariableDbId": {
+                                            "type": "string"
+                                        },
+                                        "observationVariableName": {
+                                            "type": ["string", "null"]
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "value",
+                                        "observationVariableDbId",
+                                        "observationDbId"
+                                    ],
+                                    "type": "object"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                            },
+                            "pedigree": {
+                                "type": ["string", "null"]
+                            },
+                            "plantNumber": {
+                                "type": ["string", "null"]
+                            },
+                            "plotNumber": {
+                                "type": ["string", "null"]
+                            },
+                            "replicate": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": [
+                            "observationUnitDbId",
+                            "observations"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

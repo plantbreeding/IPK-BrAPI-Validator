@@ -1,0 +1,21 @@
+plugins {
+    id 'brava.java-conventions'
+    id 'application'
+}
+
+dependencies {
+    implementation project(':core')
+    implementation 'info.picocli:picocli:4.7.0'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.4.6'
+}
+
+application {
+    mainClass = 'org.brapi.brava.cli.BRAVACommand'
+    applicationName = 'brava'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}

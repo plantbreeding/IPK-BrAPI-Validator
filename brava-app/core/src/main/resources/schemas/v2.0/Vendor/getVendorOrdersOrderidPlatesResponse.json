@@ -1,0 +1,292 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "clientPlateBarcode": {
+                                "description": "(Optional) The value of the bar code attached to this plate",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "clientPlateId": {
+                                "description": "The ID which uniquely identifies this plate to the client making the request",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "sampleSubmissionFormat": {
+                                "description": "Enum for plate formats, usually \"PLATE_96\" for a 96 well plate or \"TUBES\" for plateless format",
+                                "enum": [
+                                    "PLATE_96",
+                                    "TUBES",
+                                    null
+                                ],
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "samples": {
+                                "items": {
+                                    "properties": {
+                                        "clientSampleBarCode": {
+                                            "description": "(Optional) The value of the bar code attached to this sample",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "clientSampleId": {
+                                            "description": "The ID which uniquely identifies this sample to the client making the request",
+                                            "type": "string"
+                                        },
+                                        "column": {
+                                            "description": "The Column identifier for this samples location in the plate",
+                                            "maximum": 12,
+                                            "minimum": 1,
+                                            "type": [
+                                                "null",
+                                                "integer"
+                                            ]
+                                        },
+                                        "comments": {
+                                            "description": "Generic comments about this sample for the vendor",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "concentration": {
+                                            "description": "A value with units",
+                                            "properties": {
+                                                "units": {
+                                                    "description": "Units (example: \"ng/ul\")",
+                                                    "type": [
+                                                        "null",
+                                                        "string"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "description": "Value (example: \"2.3\")",
+                                                    "type": [
+                                                        "null",
+                                                        "number"
+                                                    ]
+                                                }
+                                            },
+                                            "type": [
+                                                "null",
+                                                "object"
+                                            ]
+                                        },
+                                        "organismName": {
+                                            "description": "Scientific organism name",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "row": {
+                                            "description": "The Row identifier for this samples location in the plate",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "speciesName": {
+                                            "description": "Scientific species name",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "taxonomyOntologyReference": {
+                                            "description": "MIAPPE V1.1\n\n(DM-85) Variable accession number - Accession number of the variable in the Crop Ontology\n\n(DM-87) Trait accession number - Accession number of the trait in a suitable controlled vocabulary (Crop Ontology, Trait Ontology).\n\n(DM-89) Method accession number - Accession number of the method in a suitable controlled vocabulary (Crop Ontology, Trait Ontology).\n\n(DM-93) Scale accession number - Accession number of the scale in a suitable controlled vocabulary (Crop Ontology).",
+                                            "properties": {
+                                                "documentationLinks": {
+                                                    "description": "links to various ontology documentation",
+                                                    "items": {
+                                                        "properties": {
+                                                            "URL": {
+                                                                "format": "uri",
+                                                                "type": [
+                                                                    "null",
+                                                                    "string"
+                                                                ]
+                                                            },
+                                                            "type": {
+                                                                "enum": [
+                                                                    "OBO",
+                                                                    "RDF",
+                                                                    "WEBPAGE",
+                                                                    null
+                                                                ],
+                                                                "type": [
+                                                                    "null",
+                                                                    "string"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "type": [
+                                                        "null",
+                                                        "array"
+                                                    ]
+                                                },
+                                                "ontologyDbId": {
+                                                    "description": "Ontology database unique identifier",
+                                                    "type": "string"
+                                                },
+                                                "ontologyName": {
+                                                    "description": "Ontology name",
+                                                    "type": "string"
+                                                },
+                                                "version": {
+                                                    "description": "Ontology version (no specific format)",
+                                                    "type": [
+                                                        "null",
+                                                        "string"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "ontologyName",
+                                                "ontologyDbId"
+                                            ],
+                                            "type": [
+                                                "null",
+                                                "object"
+                                            ]
+                                        },
+                                        "tissueType": {
+                                            "description": "The type of tissue in this sample. List of accepted tissue types can be found in the Vendor Specs.",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "tissueTypeOntologyReference": {
+                                            "description": "MIAPPE V1.1\n\n(DM-85) Variable accession number - Accession number of the variable in the Crop Ontology\n\n(DM-87) Trait accession number - Accession number of the trait in a suitable controlled vocabulary (Crop Ontology, Trait Ontology).\n\n(DM-89) Method accession number - Accession number of the method in a suitable controlled vocabulary (Crop Ontology, Trait Ontology).\n\n(DM-93) Scale accession number - Accession number of the scale in a suitable controlled vocabulary (Crop Ontology).",
+                                            "properties": {
+                                                "documentationLinks": {
+                                                    "description": "links to various ontology documentation",
+                                                    "items": {
+                                                        "properties": {
+                                                            "URL": {
+                                                                "format": "uri",
+                                                                "type": [
+                                                                    "null",
+                                                                    "string"
+                                                                ]
+                                                            },
+                                                            "type": {
+                                                                "enum": [
+                                                                    "OBO",
+                                                                    "RDF",
+                                                                    "WEBPAGE",
+                                                                    null
+                                                                ],
+                                                                "type": [
+                                                                    "null",
+                                                                    "string"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "type": [
+                                                        "null",
+                                                        "array"
+                                                    ]
+                                                },
+                                                "ontologyDbId": {
+                                                    "description": "Ontology database unique identifier",
+                                                    "type": "string"
+                                                },
+                                                "ontologyName": {
+                                                    "description": "Ontology name",
+                                                    "type": "string"
+                                                },
+                                                "version": {
+                                                    "description": "Ontology version (no specific format)",
+                                                    "type": [
+                                                        "null",
+                                                        "string"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "ontologyName",
+                                                "ontologyDbId"
+                                            ],
+                                            "type": [
+                                                "null",
+                                                "object"
+                                            ]
+                                        },
+                                        "volume": {
+                                            "description": "A value with units",
+                                            "properties": {
+                                                "units": {
+                                                    "description": "Units (example: \"ng/ul\")",
+                                                    "type": [
+                                                        "null",
+                                                        "string"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "description": "Value (example: \"2.3\")",
+                                                    "type": [
+                                                        "null",
+                                                        "number"
+                                                    ]
+                                                }
+                                            },
+                                            "type": [
+                                                "null",
+                                                "object"
+                                            ]
+                                        },
+                                        "well": {
+                                            "description": "The Well identifier for this samples location in the plate. Usually a concatenation of Row and Column, or just a number if the samples are not part of an ordered plate.",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "clientSampleId"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": [
+                                    "null",
+                                    "array"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getVendorOrdersOrderidPlatesResponse",
+    "type": "object"
+}

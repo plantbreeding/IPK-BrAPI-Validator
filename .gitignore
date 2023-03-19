@@ -1,22 +1,20 @@
-target/
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.meta-data
 
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-*.sublime-*
-.classpath
-.project
-.settings/
-.directory
-src/main/resources/config.properties
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
-!/.mvn/wrapper/maven-wrapper.jar
+### VS Code ###
+.vscode/
 
-.idea/
-src/main/java/de/ipk_gatersleben/bit/bi/bridge/brapicomp/apiresources/DebugResource.java
+### Gradle ###
+.gradle
+build

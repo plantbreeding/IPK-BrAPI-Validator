@@ -1,0 +1,60 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/token(logout)",
+    "type": "object",
+    "properties": {
+        "metadata" : {
+            "type" : "object",
+            "properties" : {
+                "pagination" : {
+                    "type" : "object",
+                    "properties" : {
+                        "currentPage" : {
+                            "type" : "integer",
+                            "minimum" : 0
+                        },
+                        "totalPages" : {
+                            "type" : "integer",
+                            "minimum" : 0 
+                        },
+                        "totalCount" : {
+                            "type" : "integer",
+                            "minimum" : 0
+                        },
+                        "pageSize" : {
+                            "type" : "integer",
+                            "minimum" : 0
+                        }
+                    },
+                    "required" : ["currentPage", "totalPages", "totalCount", "pageSize"],
+                    "additionalProperties": false
+                }, 
+                
+                "status": {
+                    "type" : "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string",
+                                "enum": ["User has been logged out successfully."]
+                            }
+                        },
+                        "required":["message"]
+                    }
+                }, 
+                
+                "datafiles": {
+                    "type": "array",
+                    "items": {"type":"string"}
+                } 
+                
+            },
+            "required" : ["pagination", "status", "datafiles"],
+            "additionalProperties": false
+        }
+    },
+    "required": ["metadata"]
+}
+
+

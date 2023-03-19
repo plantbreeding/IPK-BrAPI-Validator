@@ -1,0 +1,140 @@
+.formfield {
+	width: 300px;
+}
+
+.fail-p {
+	color: #a94442;
+}
+
+.success-p {
+	color: #3c763d;
+}
+
+.hidden {
+	display: none;
+}
+
+.caret.accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: FontAwesome;  /* essential for enabling fontAwesome */
+    content: "\f0d7";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.caret.collapsed.accordion-toggle:after {
+    /* symbol for "collapsed" panels */
+    content: "\f0da";    /* adjust as needed, taken from bootstrap.css */
+}
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  background-color: #FFF;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 70px;
+  background-color: #f5f5f5;
+}
+
+.footer-text {
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.footer-logo {
+    height: 40px;
+    float:right;
+    margin: 10px 10px;
+}
+
+#testform {
+    padding-bottom: 29px;
+}
+
+#testform h2 {
+    margin-bottom: 30px;
+}
+
+#helpLink {
+    cursor:default;
+}
+
+.font-14 {
+    font-size: 14px;
+}
+
+.link-unstyled, .link-unstyled:visited, .link-unstyled:hover {
+    font-style: inherit;
+    color: inherit;
+    background-color: transparent;
+    font-size: inherit;
+    text-decoration: none;
+    font-variant: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    border-radius: inherit;
+    border: inherit;
+    outline: inherit;
+    box-shadow: inherit;
+    padding: inherit;
+    vertical-align: inherit;
+}
+
+.close-up {
+  margin-top: -12px;
+}
+
+.list-group-item {
+  padding: 0.25rem 1.25rem;
+}
+
+.list-group-item.skipped_test_0.collapse {
+  display: none;
+}
+
+.list-group-item.skipped_test_0.collapse.show {
+  display: block;
+}
+
+.list-group-item.skipped_test_1.collapse {
+  display: none;
+}
+
+.list-group-item.skipped_test_1.collapse.show {
+  display: block;
+}
+
+.list-group-item.skipped_test_2.collapse {
+  display: none;
+}
+
+.list-group-item.skipped_test_2.collapse.show {
+  display: block;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.statusCol {
+  width: 170px;
+}
+
+.nav-right {
+  margin: 0 0 -1px auto;
+}
+.select-nav {
+  padding: .45rem 1rem;
+}

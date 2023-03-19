@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "linkageGroupName": {
+                                "description": "The Uniquely Identifiable name of this linkage group",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "location": {
+                                "description": "The position of a marker within a linkage group",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "markerDbId": {
+                                "description": "Internal db identifier",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "markerName": {
+                                "description": "The human readable name for a marker",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "markerSummaryMap",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getMapsMapdbidPositionsResponse",
+    "type": "object"
+}

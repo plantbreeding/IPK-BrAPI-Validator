@@ -1,0 +1,136 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "additionalInfo": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Additional arbitrary info",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "externalReferences": {
+                    "description": "An array of external reference ids. These are references to this piece of data in an external system. Could be a simple string or a URI.",
+                    "items": {
+                        "properties": {
+                            "referenceId": {
+                                "description": "The external reference ID. Could be a simple string or a URI.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "referenceSource": {
+                                "description": "An identifier for the source system or database of this reference",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "referenceId",
+                            "referenceSource"
+                        ],
+                        "type": "object"
+                    },
+                    "title": "ExternalReferences",
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "plateBarcode": {
+                    "description": "A unique identifier physically attached to a `Plate`",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "plateDbId": {
+                    "description": "The ID which uniquely identifies a `Plate`",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "plateFormat": {
+                    "description": "Enum for plate formats, usually \"PLATE_96\" for a 96 well plate or \"TUBES\" for plateless format",
+                    "enum": [
+                        "PLATE_96",
+                        "TUBES",
+                        null
+                    ],
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "plateName": {
+                    "description": "A human readable name for a `Plate`",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "programDbId": {
+                    "description": "The ID which uniquely identifies a `Program` within the given database server",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "sampleType": {
+                    "description": "The type of samples taken. ex. 'DNA', 'RNA', 'Tissue', etc",
+                    "enum": [
+                        "DNA",
+                        "RNA",
+                        "TISSUE",
+                        "MIXED",
+                        null
+                    ],
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "studyDbId": {
+                    "description": "The ID which uniquely identifies a `Study` within the given database server",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "trialDbId": {
+                    "description": "The ID which uniquely identifies a `Trial` within the given database server",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "required": [
+                "additionalInfo",
+                "externalReferences",
+                "plateBarcode",
+                "plateDbId",
+                "plateFormat",
+                "plateName",
+                "programDbId",
+                "sampleType",
+                "studyDbId",
+                "trialDbId"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getPlatesPlatedbidResponse",
+    "type": "object"
+}

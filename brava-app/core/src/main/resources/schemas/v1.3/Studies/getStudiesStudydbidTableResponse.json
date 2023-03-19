@@ -1,0 +1,78 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "description": "Matrix of observation data recorded for different observation variables across different observation units",
+                    "items": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "headerRow": {
+                    "description": "The header row describing observation unit fields. Append 'observationVariableDbIds' for complete header row of the table.\nThis array should contain any or all of the following strings; year, studyDbId, studyName, locationDbId, locationName, germplasmDbId, germplasmName, observationUnitDbId, plotNumber, replicate, blockNumber, observationTimestamp (DEPRECATED in V1.3), entryType, X, Y",
+                    "items": {
+                        "description": "valid header fields",
+                        "enum": [
+                            "year",
+                            "studyDbId",
+                            "studyName",
+                            "locationDbId",
+                            "locationName",
+                            "germplasmDbId",
+                            "germplasmName",
+                            "observationUnitDbId",
+                            "plotNumber",
+                            "replicate",
+                            "blockNumber",
+                            "observationTimestamp",
+                            "entryType",
+                            "X",
+                            "Y"
+                        ],
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "observationVariableDbIds": {
+                    "description": "The list of observation variables which have values recorded for them in the data matrix. Append to the 'headerRow' for comlete header row.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "observationVariableNames": {
+                    "description": "The list of observation variable names which have values recorded for them in the data matrix. Order should match 'observationVariableDbIds'.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                }
+            },
+            "title": "observationsTable",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getStudiesStudydbidTableResponse",
+    "type": "object"
+}

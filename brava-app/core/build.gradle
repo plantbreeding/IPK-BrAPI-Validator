@@ -1,0 +1,13 @@
+plugins {
+    id 'brava.java-conventions'
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'io.rest-assured:rest-assured:5.3.0'
+    implementation 'org.apache.commons:commons-text:1.10.0'
+    implementation 'com.github.java-json-tools:json-schema-validator:2.2.14'
+    implementation 'com.opencsv:opencsv:5.7.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.6'
+}

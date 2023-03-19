@@ -1,0 +1,138 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "active": {
+                                "description": "Is this trail currently active",
+                                "type": [
+                                    "null",
+                                    "boolean"
+                                ]
+                            },
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "commonCropName": {
+                                "description": "Common name for the crop associated with this trial",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "documentationURL": {
+                                "description": "A URL to the human readable documentation of this object",
+                                "format": "uri",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "endDate": {
+                                "description": "The date this trial ends",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "programDbId": {
+                                "description": "The ID which uniquely identifies a program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "programName": {
+                                "description": "The human readable name of a program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "startDate": {
+                                "description": "The date this trial started",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studies": {
+                                "description": "List of studies inside this trial",
+                                "items": {
+                                    "properties": {
+                                        "locationDbId": {
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "locationName": {
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "studyDbId": {
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "studyName": {
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "type": [
+                                    "null",
+                                    "array"
+                                ]
+                            },
+                            "trialDbId": {
+                                "description": "The ID which uniquely identifies a trial",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "trialName": {
+                                "description": "The human readable name of a trial",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "trialSummary",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getTrialsResponse",
+    "type": "object"
+}

@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/studies/studyDbId/observationvariables",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": { "$ref": "../../definitions.json#/definitions/variable" },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "studyDbId": {
+                    "type": "string"
+                },
+                "trialName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "data",
+                "studyDbId",
+                "trialName"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

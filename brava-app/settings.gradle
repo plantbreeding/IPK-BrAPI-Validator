@@ -1,0 +1,8 @@
+rootProject.name = 'brava'
+include 'api'
+include 'core'
+include 'cli'
+include 'database'
+include 'web'
+
+

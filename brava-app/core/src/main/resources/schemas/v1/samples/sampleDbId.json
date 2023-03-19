@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/samples/sampleId",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "entryNumber": {
+                    "type": "integer"
+                },
+                "germplasmDbId": {
+                    "type": "string"
+                },
+                "harvestTimestamp": {
+                    "type": ["string", "null"]
+                },
+                "locationDbId": {
+                    "type": ["string", "null"]
+                },
+                "locationName": {
+                    "type": ["string", "null"]
+                },
+                "notes": {
+                    "type": ["string", "null"]
+                },
+                "plantId": {
+                    "type": ["string", "null"]
+                },
+                "plantingTimestamp": {
+                    "type": ["string", "null"]
+                },
+                "plotId": {
+                    "type": ["string", "null"]
+                },
+                "plotNumber": {
+                    "type": ["integer", "null"]
+                },
+                "sampleTimestamp": {
+                    "type": ["string", "null"]
+                },
+                "sampleId": {
+                    "type": "string"
+                },
+                "sampleType": {
+                    "type": ["string", "null"]
+                },
+                "season": {
+                    "type": ["string", "null"]
+                },
+                "studyDbId": {
+                    "type": ["string", "null"]
+                },
+                "studyName": {
+                    "type": ["string", "null"]
+                },
+                "takenBy": {
+                    "type": ["string", "null"]
+                },
+                "tissueType": {
+                    "type": ["string", "null"]
+                }
+            },
+            "required": [
+                "sampleId",
+                "entryNumber",
+                "germplasmDbId"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

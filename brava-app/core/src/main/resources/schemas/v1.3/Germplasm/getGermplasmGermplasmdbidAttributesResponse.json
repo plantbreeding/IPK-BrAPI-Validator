@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "description": "List of attributes associated with the given germplasm",
+                    "items": {
+                        "properties": {
+                            "attributeCode": {
+                                "description": "Short abbreviation which represents this attribute",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "attributeDbId": {
+                                "description": "The ID which uniquely identifies this attribute within the given database server",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "attributeName": {
+                                "description": "The human readable name of this attribute",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "determinedDate": {
+                                "description": "The date the value of this attribute was determined for a given germplasm",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "value": {
+                                "description": "The value of this attribute for a given germplasm",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "germplasmAttribute",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "germplasmDbId": {
+                    "description": "The ID which uniquely identifies a germplasm within the given database server",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "title": "germplasmAttributeList",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getGermplasmGermplasmdbidAttributesResponse",
+    "type": "object"
+}

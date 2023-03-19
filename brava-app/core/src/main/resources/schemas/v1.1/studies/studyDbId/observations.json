@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/studies/studyDbId/observations",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "germplasmDbId": {
+                                "type": "string"
+                            },
+                            "germplasmName": {
+                                "type": ["string", "null"]
+                            },
+                            "observationDbId": {
+                                "type": "string"
+                            },
+                            "observationLevel": {
+                                "type": "string"
+                            },
+                            "observationTimestamp": {
+                                "type": ["string", "null"]
+                            },
+                            "observationUnitDbId": {
+                                "type": "string"
+                            },
+                            "observationUnitName": {
+                                "type": "string"
+                            },
+                            "observationVariableDbId": {
+                                "type": ["string", "null"]
+                            },
+                            "observationVariableName": {
+                                "type": ["string", "null"]
+                            },
+                            "operator": {
+                                "type": ["string", "null"]
+                            },
+                            "studyDbId": {
+                                "type": "string"
+                            },
+                            "uploadedBy": {
+                                "type": ["string", "null"]
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "observationUnitDbId",
+                            "observationDbId",
+                            "observationLevel",
+                            "studyDbId",
+                            "value",
+                            "observationUnitName",
+                            "germplasmDbId"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

@@ -1,0 +1,119 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "comments": {
+                                "description": "Additional comments",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "commonCropName": {
+                                "description": "The common name of the crop",
+                                "type": "string"
+                            },
+                            "documentationURL": {
+                                "description": "A URL to the human readable documentation of this object",
+                                "format": "uri",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "linkageGroupCount": {
+                                "description": "The number of linkage groups present in this genomic map",
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "mapDbId": {
+                                "description": "The ID which uniquely identifies this genomic map",
+                                "type": "string"
+                            },
+                            "mapName": {
+                                "description": "A human readable name for this genomic map",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "mapPUI": {
+                                "description": "The DOI or other permanent identifier for this genomic map",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "markerCount": {
+                                "description": "The number of markers present in this genomic map",
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "publishedDate": {
+                                "description": "The date this genome was published",
+                                "format": "date-time",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "scientificName": {
+                                "description": "Full scientific binomial format name. This includes Genus, Species, and Sub-species",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "type": {
+                                "description": "The type of map this represents, usually \"Genetic\"",
+                                "type": "string"
+                            },
+                            "unit": {
+                                "description": "The units used to describe the data in this map",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "mapDbId",
+                            "commonCropName",
+                            "type"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getMapsResponse",
+    "type": "object"
+}

@@ -1,0 +1,160 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "alternativeAbbreviations": {
+                    "description": "Other frequent abbreviations of the trait, if any. These abbreviations do not have to follow a convention",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "attribute": {
+                    "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the attribute is the observed feature (or characteristic) of the entity e.g., for \"grain colour\", attribute = \"colour\"",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "class": {
+                    "description": "Trait class. (examples: \"morphological trait\", \"phenological trait\", \"agronomical trait\", \"physiological trait\", \"abiotic stress trait\", \"biotic stress trait\", \"biochemical trait\", \"quality traits trait\", \"fertility trait\", etc.)",
+                    "title": "className",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "description": {
+                    "description": "The description of a trait",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "entity": {
+                    "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the entity is the part of the plant that the trait refers to e.g., for \"grain colour\", entity = \"grain\"",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "mainAbbreviation": {
+                    "description": "Main abbreviation for trait name. (examples: \"Carotenoid content\" => \"CC\")",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "ontologyReference": {
+                    "properties": {
+                        "documentationLinks": {
+                            "description": "links to various ontology documentation",
+                            "items": {
+                                "properties": {
+                                    "URL": {
+                                        "format": "uri",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "type": {
+                                        "enum": [
+                                            "OBO",
+                                            "RDF",
+                                            "WEBPAGE"
+                                        ],
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": [
+                                "null",
+                                "array"
+                            ]
+                        },
+                        "ontologyDbId": {
+                            "description": "Ontology database unique identifier",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "ontologyName": {
+                            "description": "Ontology name",
+                            "type": "string"
+                        },
+                        "version": {
+                            "description": "Ontology version (no specific format)",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "ontologyName"
+                    ],
+                    "title": "ontologyReference",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "status": {
+                    "description": "Trait status (examples: \"recommended\", \"obsolete\", \"legacy\", etc.)",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "synonyms": {
+                    "description": "Other trait names",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "traitDbId": {
+                    "description": "The ID which uniquely identifies a trait",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "traitName": {
+                    "description": "The human readable name of a trait",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "xref": {
+                    "description": "Cross reference of the trait to an external ontology or database term e.g., Xref to a trait ontology (TO) term",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "title": "trait",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "putTraitsTraitdbidResponse",
+    "type": "object"
+}

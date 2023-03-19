@@ -1,0 +1,155 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "description": "Scale metadata",
+            "properties": {
+                "dataType": {
+                    "description": "Class of the scale, entries can be \n\n  \"Code\" -  This scale class is exceptionally used to express complex traits. Code is a nominal\n            scale that combines the expressions of the different traits composing the complex\n            trait. For exemple a severity trait might be expressed by a 2 digit and 2 character\n            code. The first 2 digits are the percentage of the plant covered by a fungus and the 2\n            characters refer to the delay in development, e.g. \"75VD\" means \"75%\" of the plant is \n            Crop Ontology & Integrated Breeding Platform | Curation Guidelines | 5/6/2016 9\n            infected and the plant is very delayed.\n  \n  \"Date\" - The date class is for events expressed in a time format, e.g. yyyymmddThh:mm:ssZ or dd/mm/yy\n  \n  \"Duration\" - The Duration class is for time elapsed between two events expressed in a time format, e.g. days, hours, months\n  \n  \"Nominal\" - Categorical scale that can take one of a limited and fixed number of categories. There is no intrinsic ordering to the categories\n  \n  \"Numerical\" - Numerical scales express the trait with real numbers. The numerical scale defines the unit e.g. centimeter, ton per hectar, branches\n  \n  \"Ordinal\" - Ordinal scales are scales composed of ordered categories\n  \n  \"Text\" - A free text is used to express the trait.\n  ",
+                    "enum": [
+                        "Code",
+                        "Duration",
+                        "Nominal",
+                        "Numerical",
+                        "Ordinal",
+                        "Text",
+                        "Date"
+                    ],
+                    "title": "traitDataType",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "decimalPlaces": {
+                    "description": "For numerical, number of decimal places to be reported",
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "ontologyReference": {
+                    "properties": {
+                        "documentationLinks": {
+                            "description": "links to various ontology documentation",
+                            "items": {
+                                "properties": {
+                                    "URL": {
+                                        "format": "uri",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "type": {
+                                        "enum": [
+                                            "OBO",
+                                            "RDF",
+                                            "WEBPAGE"
+                                        ],
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": [
+                                "null",
+                                "array"
+                            ]
+                        },
+                        "ontologyDbId": {
+                            "description": "Ontology database unique identifier",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "ontologyName": {
+                            "description": "Ontology name",
+                            "type": "string"
+                        },
+                        "version": {
+                            "description": "Ontology version (no specific format)",
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "ontologyName"
+                    ],
+                    "title": "ontologyReference",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "scaleDbId": {
+                    "description": "Unique identifier of the scale. If left blank, the upload system will automatically generate a scale ID.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "scaleName": {
+                    "description": "Name of the scale",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "validValues": {
+                    "properties": {
+                        "categories": {
+                            "description": "List of possible values and their meaning (examples: [\"0=low\", \"1=medium\", \"2=high\"]",
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": [
+                                "null",
+                                "array"
+                            ]
+                        },
+                        "max": {
+                            "description": "Maximum value (used for field data capture control).",
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        },
+                        "min": {
+                            "description": "Minimum value (used for data capture control) for numerical and date scales",
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        }
+                    },
+                    "title": "validValues",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "xref": {
+                    "description": "Cross reference to the scale, for example to a unit ontology such as UO or to a unit of an external major database",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "title": "scale",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "putScalesScaledbidResponse",
+    "type": "object"
+}

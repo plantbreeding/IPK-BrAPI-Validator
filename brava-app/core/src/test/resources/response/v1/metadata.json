@@ -1,0 +1,390 @@
+{
+  "metadata": {
+    "pagination": {
+      "pageSize": 100,
+      "currentPage": 0,
+      "totalCount": 30,
+      "totalPages": 1
+    },
+    "status": [
+
+    ],
+    "datafiles": [
+
+    ]
+  },
+  "result": {
+    "data": [
+      {
+        "call": "allelematrices",
+        "dataTypes": [
+          "application/flapjack",
+          "text/csv"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "allelematrix-search",
+        "dataTypes": [
+          "application/flapjack",
+          "application/json",
+          "text/tsv"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "allelematrix-search/status",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "allelematrices/{studyDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "markerprofiles",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "markerprofiles/{markerprofileDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": null
+      },
+      {
+        "call": "markerprofiles/{germplasmDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "calls",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "germplasm-search",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "germplasm",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "germplasm/{germplasmDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "germplasm/{germplasmDbId}/pedigree",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "germplasm/{germplasmDbId}/progeny",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "studies-search",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "studies-search/{studyType}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "studies",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "studies/{studyDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "trials",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "trials/{trialDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "traits",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "maps",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "maps/{mapDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "maps/{mapDbId}/positions",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "commoncropnames",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "locations",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "markers",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "markers/{markerDbId}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "markers-search",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "markers-search/{markerDbIds}",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      },
+      {
+        "call": "observationunits",
+        "dataTypes": [
+          "application/json"
+        ],
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "versions": [
+          "1.3"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "linkageGroupName": {
+                                "description": "The Uniquely Identifiable name of a `LinkageGroup`\n<br> This might be a chromosome identifier or the generic linkage group identifier if the chromosome is not applicable.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "mapDbId": {
+                                "description": "The ID which uniquely identifies a `GenomeMap`",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "mapName": {
+                                "description": "A human readable name for a `GenomeMap`",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "position": {
+                                "description": "The position of a marker or variant within a `LinkageGroup`",
+                                "type": [
+                                    "null",
+                                    "integer"
+                                ]
+                            },
+                            "variantDbId": {
+                                "description": "The ID which uniquely identifies a `Variant` within the given database server\n<br> A `Variant` can also represent a Marker ",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "variantName": {
+                                "description": "The human readable name for a `Variant`\n<br> A `Variant` can also represent a Marker ",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "additionalInfo",
+                            "linkageGroupName",
+                            "mapDbId",
+                            "mapName",
+                            "position",
+                            "variantDbId",
+                            "variantName"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "postSearchMarkerpositionsResponse",
+    "type": "object"
+}

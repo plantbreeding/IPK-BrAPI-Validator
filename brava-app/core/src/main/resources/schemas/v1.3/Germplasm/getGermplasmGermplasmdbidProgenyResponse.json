@@ -1,0 +1,69 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "defaultDisplayName": {
+                    "description": "A human readable name for a germplasm",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "germplasmDbId": {
+                    "description": "The ID which uniquely identifies a germplasm",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "progeny": {
+                    "description": "List of germplasm entities which are direct children of this germplasm",
+                    "items": {
+                        "properties": {
+                            "defaultDisplayName": {
+                                "description": "The human readable name of a progeny germplasm",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "germplasmDbId": {
+                                "description": "The unique identifier of a progeny germplasm",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "parentType": {
+                                "description": "Given a germplasm A having a progeny B and C, 'parentType' for progeny B item refers to the 'parentType' of A toward B.",
+                                "enum": [
+                                    "MALE",
+                                    "FEMALE",
+                                    "SELF",
+                                    "POPULATION"
+                                ],
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                }
+            },
+            "title": "progeny",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getGermplasmGermplasmdbidProgenyResponse",
+    "type": "object"
+}

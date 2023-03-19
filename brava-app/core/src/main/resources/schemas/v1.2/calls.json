@@ -1,0 +1,55 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/calls",
+	"type": "object",
+	"properties": {
+		"result": {
+			"type": "object",
+			"properties": {
+				"data": {
+					"type": "array",
+					"items": {
+						"type":"object",
+						"properties":{
+							"call": {"type":"string"},
+							"methods": {
+								"type": "array",
+								"items": {"type": "string"}
+							},
+							"datatypes": {
+								"type": "array",
+								"items": {"type": "string"}
+							},
+                            "versions": {
+                              "description": "The supported versions of a particular call",
+                              "items": {
+                                "enum": [
+                                  "1.0",
+                                  "1.1",
+                                  "1.2",
+                                  "1.3"
+                                ],
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "type": [
+                                "array",
+                                "null"
+                              ]
+                            }
+						},
+						"additionalProperties": false
+						
+					},
+					"minItems": 1
+				}
+			},
+			"additionalProperties": false
+			
+		}
+	},
+	"required": ["result"]
+
+}

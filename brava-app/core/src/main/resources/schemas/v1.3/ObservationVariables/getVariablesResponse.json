@@ -1,0 +1,607 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "contextOfUse": {
+                                "description": "Indication of how trait is routinely used. (examples: [\"Trial evaluation\", \"Nursery evaluation\"])",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": [
+                                    "null",
+                                    "array"
+                                ]
+                            },
+                            "crop": {
+                                "description": "Crop name (examples: \"Maize\", \"Wheat\")",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "defaultValue": {
+                                "description": "Variable default value. (examples: \"red\", \"2.3\", etc.)",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "documentationURL": {
+                                "description": "A URL to the human readable documentation of this object",
+                                "format": "uri",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "growthStage": {
+                                "description": "Growth stage at which measurement is made (examples: \"flowering\")",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "institution": {
+                                "description": "Name of institution submitting the variable",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "language": {
+                                "description": "2 letter ISO code for the language of submission of the variable.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "method": {
+                                "description": "Method metadata",
+                                "properties": {
+                                    "class": {
+                                        "description": "Method class (examples: \"Measurement\", \"Counting\", \"Estimation\", \"Computation\", etc.",
+                                        "title": "className",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "description": {
+                                        "description": "Method description.",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "formula": {
+                                        "description": "For computational methods i.e., when the method consists in assessing the trait by computing measurements, write the generic formula used for the calculation",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "methodDbId": {
+                                        "description": "Method unique identifier",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "methodName": {
+                                        "description": "Human readable name for the method",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "ontologyReference": {
+                                        "properties": {
+                                            "documentationLinks": {
+                                                "description": "links to various ontology documentation",
+                                                "items": {
+                                                    "properties": {
+                                                        "URL": {
+                                                            "format": "uri",
+                                                            "type": [
+                                                                "null",
+                                                                "string"
+                                                            ]
+                                                        },
+                                                        "type": {
+                                                            "enum": [
+                                                                "OBO",
+                                                                "RDF",
+                                                                "WEBPAGE"
+                                                            ],
+                                                            "type": [
+                                                                "null",
+                                                                "string"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": [
+                                                    "null",
+                                                    "array"
+                                                ]
+                                            },
+                                            "ontologyDbId": {
+                                                "description": "Ontology database unique identifier",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ]
+                                            },
+                                            "ontologyName": {
+                                                "description": "Ontology name",
+                                                "type": "string"
+                                            },
+                                            "version": {
+                                                "description": "Ontology version (no specific format)",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "ontologyName"
+                                        ],
+                                        "title": "ontologyReference",
+                                        "type": [
+                                            "null",
+                                            "object"
+                                        ]
+                                    },
+                                    "reference": {
+                                        "description": "Bibliographical reference describing the method.",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "title": "method",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "observationVariableDbId": {
+                                "description": "Variable unique identifier",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "observationVariableName": {
+                                "description": "Variable name (usually a short name)",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "ontologyReference": {
+                                "properties": {
+                                    "documentationLinks": {
+                                        "description": "links to various ontology documentation",
+                                        "items": {
+                                            "properties": {
+                                                "URL": {
+                                                    "format": "uri",
+                                                    "type": [
+                                                        "null",
+                                                        "string"
+                                                    ]
+                                                },
+                                                "type": {
+                                                    "enum": [
+                                                        "OBO",
+                                                        "RDF",
+                                                        "WEBPAGE"
+                                                    ],
+                                                    "type": [
+                                                        "null",
+                                                        "string"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "type": [
+                                            "null",
+                                            "array"
+                                        ]
+                                    },
+                                    "ontologyDbId": {
+                                        "description": "Ontology database unique identifier",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "ontologyName": {
+                                        "description": "Ontology name",
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "description": "Ontology version (no specific format)",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "ontologyName"
+                                ],
+                                "title": "ontologyReference",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "scale": {
+                                "description": "Scale metadata",
+                                "properties": {
+                                    "dataType": {
+                                        "description": "Class of the scale, entries can be \n\n  \"Code\" -  This scale class is exceptionally used to express complex traits. Code is a nominal\n            scale that combines the expressions of the different traits composing the complex\n            trait. For exemple a severity trait might be expressed by a 2 digit and 2 character\n            code. The first 2 digits are the percentage of the plant covered by a fungus and the 2\n            characters refer to the delay in development, e.g. \"75VD\" means \"75%\" of the plant is \n            Crop Ontology & Integrated Breeding Platform | Curation Guidelines | 5/6/2016 9\n            infected and the plant is very delayed.\n  \n  \"Date\" - The date class is for events expressed in a time format, e.g. yyyymmddThh:mm:ssZ or dd/mm/yy\n  \n  \"Duration\" - The Duration class is for time elapsed between two events expressed in a time format, e.g. days, hours, months\n  \n  \"Nominal\" - Categorical scale that can take one of a limited and fixed number of categories. There is no intrinsic ordering to the categories\n  \n  \"Numerical\" - Numerical scales express the trait with real numbers. The numerical scale defines the unit e.g. centimeter, ton per hectar, branches\n  \n  \"Ordinal\" - Ordinal scales are scales composed of ordered categories\n  \n  \"Text\" - A free text is used to express the trait.\n  ",
+                                        "enum": [
+                                            "Code",
+                                            "Duration",
+                                            "Nominal",
+                                            "Numerical",
+                                            "Ordinal",
+                                            "Text",
+                                            "Date"
+                                        ],
+                                        "title": "traitDataType",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "decimalPlaces": {
+                                        "description": "For numerical, number of decimal places to be reported",
+                                        "type": [
+                                            "null",
+                                            "integer"
+                                        ]
+                                    },
+                                    "ontologyReference": {
+                                        "properties": {
+                                            "documentationLinks": {
+                                                "description": "links to various ontology documentation",
+                                                "items": {
+                                                    "properties": {
+                                                        "URL": {
+                                                            "format": "uri",
+                                                            "type": [
+                                                                "null",
+                                                                "string"
+                                                            ]
+                                                        },
+                                                        "type": {
+                                                            "enum": [
+                                                                "OBO",
+                                                                "RDF",
+                                                                "WEBPAGE"
+                                                            ],
+                                                            "type": [
+                                                                "null",
+                                                                "string"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": [
+                                                    "null",
+                                                    "array"
+                                                ]
+                                            },
+                                            "ontologyDbId": {
+                                                "description": "Ontology database unique identifier",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ]
+                                            },
+                                            "ontologyName": {
+                                                "description": "Ontology name",
+                                                "type": "string"
+                                            },
+                                            "version": {
+                                                "description": "Ontology version (no specific format)",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "ontologyName"
+                                        ],
+                                        "title": "ontologyReference",
+                                        "type": [
+                                            "null",
+                                            "object"
+                                        ]
+                                    },
+                                    "scaleDbId": {
+                                        "description": "Unique identifier of the scale. If left blank, the upload system will automatically generate a scale ID.",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "scaleName": {
+                                        "description": "Name of the scale",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "validValues": {
+                                        "properties": {
+                                            "categories": {
+                                                "description": "List of possible values and their meaning (examples: [\"0=low\", \"1=medium\", \"2=high\"]",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "type": [
+                                                    "null",
+                                                    "array"
+                                                ]
+                                            },
+                                            "max": {
+                                                "description": "Maximum value (used for field data capture control).",
+                                                "type": [
+                                                    "null",
+                                                    "integer"
+                                                ]
+                                            },
+                                            "min": {
+                                                "description": "Minimum value (used for data capture control) for numerical and date scales",
+                                                "type": [
+                                                    "null",
+                                                    "integer"
+                                                ]
+                                            }
+                                        },
+                                        "title": "validValues",
+                                        "type": [
+                                            "null",
+                                            "object"
+                                        ]
+                                    },
+                                    "xref": {
+                                        "description": "Cross reference to the scale, for example to a unit ontology such as UO or to a unit of an external major database",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "title": "scale",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "scientist": {
+                                "description": "Name of scientist submitting the variable.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "status": {
+                                "description": "Variable status. (examples: \"recommended\", \"obsolete\", \"legacy\", etc.)",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "submissionTimestamp": {
+                                "description": "Timestamp when the Variable was added (ISO 8601)",
+                                "format": "date-time",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "synonyms": {
+                                "description": "Other variable names",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": [
+                                    "null",
+                                    "array"
+                                ]
+                            },
+                            "trait": {
+                                "properties": {
+                                    "alternativeAbbreviations": {
+                                        "description": "Other frequent abbreviations of the trait, if any. These abbreviations do not have to follow a convention",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "type": [
+                                            "null",
+                                            "array"
+                                        ]
+                                    },
+                                    "attribute": {
+                                        "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the attribute is the observed feature (or characteristic) of the entity e.g., for \"grain colour\", attribute = \"colour\"",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "class": {
+                                        "description": "Trait class. (examples: \"morphological trait\", \"phenological trait\", \"agronomical trait\", \"physiological trait\", \"abiotic stress trait\", \"biotic stress trait\", \"biochemical trait\", \"quality traits trait\", \"fertility trait\", etc.)",
+                                        "title": "className",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "description": {
+                                        "description": "The description of a trait",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "entity": {
+                                        "description": "A trait can be decomposed as \"Trait\" = \"Entity\" + \"Attribute\", the entity is the part of the plant that the trait refers to e.g., for \"grain colour\", entity = \"grain\"",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "mainAbbreviation": {
+                                        "description": "Main abbreviation for trait name. (examples: \"Carotenoid content\" => \"CC\")",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "ontologyReference": {
+                                        "properties": {
+                                            "documentationLinks": {
+                                                "description": "links to various ontology documentation",
+                                                "items": {
+                                                    "properties": {
+                                                        "URL": {
+                                                            "format": "uri",
+                                                            "type": [
+                                                                "null",
+                                                                "string"
+                                                            ]
+                                                        },
+                                                        "type": {
+                                                            "enum": [
+                                                                "OBO",
+                                                                "RDF",
+                                                                "WEBPAGE"
+                                                            ],
+                                                            "type": [
+                                                                "null",
+                                                                "string"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": [
+                                                    "null",
+                                                    "array"
+                                                ]
+                                            },
+                                            "ontologyDbId": {
+                                                "description": "Ontology database unique identifier",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ]
+                                            },
+                                            "ontologyName": {
+                                                "description": "Ontology name",
+                                                "type": "string"
+                                            },
+                                            "version": {
+                                                "description": "Ontology version (no specific format)",
+                                                "type": [
+                                                    "null",
+                                                    "string"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "ontologyName"
+                                        ],
+                                        "title": "ontologyReference",
+                                        "type": [
+                                            "null",
+                                            "object"
+                                        ]
+                                    },
+                                    "status": {
+                                        "description": "Trait status (examples: \"recommended\", \"obsolete\", \"legacy\", etc.)",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "synonyms": {
+                                        "description": "Other trait names",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "type": [
+                                            "null",
+                                            "array"
+                                        ]
+                                    },
+                                    "traitDbId": {
+                                        "description": "The ID which uniquely identifies a trait",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "traitName": {
+                                        "description": "The human readable name of a trait",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    },
+                                    "xref": {
+                                        "description": "Cross reference of the trait to an external ontology or database term e.g., Xref to a trait ontology (TO) term",
+                                        "type": [
+                                            "null",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "title": "trait",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "xref": {
+                                "description": "Cross reference of the variable term to a term from an external ontology or to a database of a major system.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "observationVariable"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getVariablesResponse",
+    "type": "object"
+}

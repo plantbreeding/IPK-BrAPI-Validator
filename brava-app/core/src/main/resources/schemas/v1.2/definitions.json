@@ -1,0 +1,967 @@
+{
+	"$schema" : "http://json-schema.org/draft-04/schema" ,
+  	"id": "definitions.json",
+	"definitions": {
+		"metadata" : {
+			"description": "test for the presence of metadata object",
+			"type": "object",
+			"properties" : {
+				"pagination" : {
+					"type" : "object",
+					"properties" : {
+						"currentPage" : {
+							"type" : "integer",
+							"minimum" : 0
+						},
+						"totalPages" : {
+							"type" : "integer",
+							"minimum" : 0 
+						},
+						"totalCount" : {
+							"type" : "integer",
+							"minimum" : 0
+						},
+						"pageSize" : {
+							"type" : "integer",
+							"minimum" : 0
+						}
+					},
+					"required" : ["currentPage", "totalPages", "totalCount", "pageSize"],
+					"additionalProperties": false
+				}, 
+				
+				"status": {
+					"type" : "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"code": {"type": "string"},
+							"message": {"type": "string"}
+						}
+					}
+				}, 
+				
+				"datafiles": {
+					"type": "array",
+					"items": {"type":"string"}
+				} 
+				
+			},
+			"required" : ["pagination", "status", "datafiles"],
+			"additionalProperties": false
+		},
+		"germplasm" : {
+			"type": "object",
+			"properties": {
+				"germplasmDbId": {"type": "string"},
+				"defaultDisplayName": {"type": "string"},
+				"accessionNumber": {"type": ["string", "null"]},
+				"germplasmName": {"type": ["string", "null"]},
+				"germplasmPUI": {"type": ["string", "null"]},
+				"pedigree": {"type": ["string", "null"]},
+				"seedSource": {"type": ["string", "null"]},
+                "breedingMethodDbId": {"type": ["string", "null"]},
+				"synonyms": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "string"
+					}
+				},
+				"commonCropName": {"type": ["string", "null"]},
+				"instituteCode": {"type": "string"},
+				"instituteName": {"type": ["string", "null"]},
+				"biologicalStatusOfAccessionCode": {"type": ["integer", "null"]},
+				"countryOfOriginCode": {"type": ["string", "null"]},
+				"typeOfGermplasmStorageCode": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "string"
+					}
+				},
+				"genus": {"type": ["string", "null"]},
+				"species": {"type": ["string", "null"]},
+				"taxonIds": {
+					"type": ["array", "null"],
+					"items": { 
+						"type": "object",
+						"properties": {
+							"sourceName" : {"type": ["string", "null"]},
+							"taxonId": {"type": ["string", "null"]}
+						},
+						"additionalProperties": false
+					}
+				},
+				"speciesAuthority": {"type": ["string", "null"]},
+				"subtaxa": {"type": ["string", "null"]},
+				"subtaxaAuthority": {"type": ["string", "null"]},
+				"donors": {
+					"type": ["array", "null"],
+					"items": {
+						"type": "object",
+						"properties": {
+							"donorAccessionNumber": {"type": ["string", "null"]},
+							"donorInstituteCode": {"type": ["string", "null"]},
+							"germplasmPUI": {"type": ["string", "null"]}
+						},
+						"additionalProperties": false
+					}
+				},
+				"acquisitionDate": {"type": ["string", "null"]}
+
+			},
+			"required": ["germplasmDbId", "defaultDisplayName", "instituteCode"],
+			"additionalProperties": true
+		},
+		"marker" : {
+			"additionalProperties": false,
+			"properties": {
+			 	"analysisMethods": {
+			     	"items": {
+			         	"type": ["string", "null"]
+					},
+					"minItems": 1,
+					"type": ["array", "null"]
+				},
+				"defaultDisplayName": {
+				 	"type": "string"
+				},
+				"markerDbId": {
+				 	"type": "string"
+				},
+				"refAlt": {
+				 	"items": {
+				     	"type": "string"
+				 	},
+				 	"minItems": 1,
+				 	"type": ["array", "null"]
+				},
+			 	"synonyms": {
+			     	"items": {
+			         	"type": "string"
+			     	},
+			     	"type": ["array", "null"]
+			 	},
+			 	"type": {
+			     	"type": "string"
+			 	}
+			},
+			"required": [
+			 	"defaultDisplayName",
+			 	"markerDbId",
+			 	"type"
+			],
+			"type": "object"
+		},
+		"trait" : {
+            "additionalProperties": false,
+            "properties": {
+                "defaultValue": {
+                    "type": ["string", "null"]
+                },
+                "description": {
+                    "type": ["string", "null"]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "observationVariables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "traitDbId": {
+                    "type": "string"
+                },
+                "traitId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "traitDbId",
+                "traitId",
+                "name",
+                "observationVariables"
+            ],
+            "type": "object"
+        },
+        "sample": {
+            "additionalProperties": false,
+            "properties": {
+                "germplasmDbId": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": ["string", "null"]
+                },
+                "observationUnitDbId" :{
+                    "type": ["string", "null"]
+                },
+                "plantDbId": {
+                    "type": ["string", "null"]
+                },
+                "plateDbId": {
+                    "type": ["string", "null"]
+                },
+                "plateIndex": {
+                    "type": ["integer", "null"]
+                },
+                "plotDbId": {
+                    "type": ["string", "null"]
+                },
+                "sampleTimestamp": {
+                    "type": ["string", "null"]
+                },
+                "sampleDbId": {
+                    "type": "string"
+                },
+                "sampleType": {
+                    "type": ["string", "null"]
+                },
+                "studyDbId": {
+                    "type": ["string", "null"]
+                },
+                "takenBy": {
+                    "type": ["string", "null"]
+                },
+                "tissueType": {
+                    "type": ["string", "null"]
+                }
+            },
+            "required": [
+                "sampleDbId",
+                "germplasmDbId"
+            ],
+            "type": "object"
+        },
+        "variable": {
+            "additionalProperties": false,
+            "properties": {
+                "contextOfUse": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": ["array", "null"]
+                },
+                "crop": {
+                    "type": ["string", "null"]
+                },
+                "date": {
+                    "type": ["string", "null"]
+                },
+                "defaultValue": {
+                    "type": ["string", "null"]
+                },
+                "growthStage": {
+                    "type": ["string", "null"]
+                },
+                "institution": {
+                    "type": ["string", "null"]
+                },
+                "language": {
+                    "type": ["string", "null"]
+                },
+                "method": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "class": {
+                            "type": ["string", "null"]
+                        },
+                        "description": {
+                            "type": ["string", "null"]
+                        },
+                        "formula": {
+                            "type": ["string", "null"]
+                        },
+                        "methodDbId": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        },
+                        "reference": {
+                            "type": ["string", "null"]
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "observationVariableDbId": {
+                    "type": "string"
+                },
+                "ontologyDbId": {
+                    "type": "string"
+                },
+                "ontologyName": {
+                    "type": "string"
+                },
+                "scale": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "dataType": {
+                            "type": ["string", "null"]
+                        },
+                        "decimalPlaces": {
+                            "type": ["integer", "null"]
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        },
+                        "scaleDbId": {
+                            "type": ["string", "null"]
+                        },
+                        "validValues": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "categories": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "minItems": 1,
+                                    "type": "array"
+                                },
+                                "max": {
+                                    "type": ["integer", "null"]
+                                },
+                                "min": {
+                                    "type": ["integer", "null"]
+                                }
+                            },
+                            "type": ["object", "null"]
+                        },
+                        "xref": {
+                            "type": ["string", "null"]
+                        }
+                    },
+                    "type": "object"
+                },
+                "scientist": {
+                    "type": ["string", "null"]
+                },
+                "status": {
+                    "type": ["string", "null"]
+                },
+                "submissionTimestamp": {
+                    "description": "Deprecated, but not considered invalid in this version",
+                    "type": ["string", "null"]
+                },
+                "synonyms": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": ["array", "null"]
+                },
+                "trait": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "alternativeAbbreviations": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": ["array", "null"]
+                        },
+                        "attribute": {
+                            "type": ["string", "null"]
+                        },
+                        "class": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": ["string", "null"]
+                        },
+                        "entity": {
+                            "type": ["string", "null"]
+                        },
+                        "mainAbbreviation": {
+                            "type": ["string", "null"]
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        },
+                        "status": {
+                            "type": ["string", "null"]
+                        },
+                        "synonyms": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": ["array", "null"]
+                        },
+                        "traitDbId": {
+                            "type": "string"
+                        },
+                        "xref": {
+                            "type": ["string", "null"]
+                        }
+                    },
+                    "required": [
+                        "traitDbId",
+                        "class"
+                    ],
+                    "type": "object"
+                },
+                "xref": {
+                    "type": ["string", "null"]
+                }
+            },
+            "required": [
+                "name",
+                "trait",
+                "ontologyDbId",
+                "defaultValue",
+                "method",
+                "observationVariableDbId",
+                "scale",
+                "ontologyName"
+            ],
+            "type": "object"
+        },
+        "location":{
+            "additionalProperties": false,
+            "properties": {
+                "abreviation": {
+                    "description": "Deprecated, but not considered invalid in this version",
+                    "type": ["string", "null"]
+                },
+                "abbreviation": {
+                    "type": ["string", "null"]
+                },
+                "additionalInfo": {
+                    "type": ["object", "null"]
+                },
+                "altitude": {
+                    "type": ["number", "null"]
+                },
+                "countryCode": {
+                    "type": "string"
+                },
+                "countryName": {
+                    "type": ["string", "null"]
+                },
+                "instituteAddress": {
+                    "type": ["string", "null"]
+                },
+                "instituteAdress": {
+                    "description": "Deprecated, but not considered invalid in this version",
+                    "type": ["string", "null"]
+                },
+                "instituteName": {
+                    "type": ["string", "null"]
+                },
+                "latitude": {
+                    "type": ["number", "null"]
+                },
+                "locationDbId": {
+                    "type": "string"
+                },
+                "locationType": {
+                    "type": ["string", "null"]
+                },
+                "longitude": {
+                    "type": ["number", "null"]
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "locationDbId",
+                "name",
+                "countryCode"
+            ],
+            "type": "object"
+        },
+        "vendorPlate": {
+              "type": "object",
+              "properties": {
+                "vendorProjectDbId": {
+                  "type": "string"
+                },
+                "vendorPlateDbId": {
+                  "type": "string"
+                },
+                "clientPlateDbId": {
+                  "type": "string"
+                },
+                "vendorBarcode": {
+                  "type": "string"
+                },
+                "vendorBarcodeImageURL": {
+                  "type": "string"
+                },
+                "plateFormat": {
+                  "type": "string"
+                },
+                "sampleType": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "statusTimeStamp": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties":{
+                        "filename": {
+                          "type": "string"
+                        },
+                        "URL": {
+                          "type": "string"
+                        },
+                        "md5sum": {
+                          "type": "string"
+                        },
+                        "fileType": {
+                          "type": "string"
+                        },
+                        "sampleDbIds": {
+                          "type": "array",
+                          "items": [
+                            {"type": "string"}
+                          ]
+                        },
+                        "additionalInfo": {
+			              "additionalProperties": {
+			                "type": [
+			                  "string",
+			                  "null"
+			                ]
+			              },
+			              "description": "Additional arbitrary info",
+			              "type": "object"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "samples": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "sampleDbId": {
+                          "type": "string"
+                        },
+                        "well": {
+                          "type": "string"
+                        },
+                        "row": {
+                          "type": "string"
+                        },
+                        "column": {
+                          "type": "string"
+                        },
+                        "concentration": {
+                          "type": "string"
+                        },
+                        "volume": {
+                          "type": "string"
+                        },
+                        "tissueType": {
+                          "type": "string"
+                        },
+                        "taxonId": {
+                          "type": "object",
+                          "properties": {
+                            "sourceName": {
+                              "type": "string"
+                            },
+                            "taxonId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "sourceName",
+                            "taxonId"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "sampleDbId",
+                        "well",
+                        "row",
+                        "column",
+                        "concentration",
+                        "volume",
+                        "tissueType",
+                        "taxonId"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "vendorProjectDbId",
+                "vendorPlateDbId",
+                "clientPlateDbId",
+                "vendorBarcode",
+                "vendorBarcodeImageURL",
+                "plateFormat",
+                "sampleType",
+                "status",
+                "statusTimeStamp",
+                "samples"
+              ]
+        },
+        "vendorSpecification": {
+          "properties": {
+            "additionalInfo": {
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "description": "Additional arbitrary info",
+              "type": "object"
+            },
+            "contactName": {
+              "description": "The name or identifier of the primary vendor contact",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "platforms": {
+              "description": "List of platform specifications available at the vendor",
+              "items": {
+                "$ref": "#/definitions/vendorSpecificationPlatform"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "vendorAddress": {
+              "description": "The street address of the vendor",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorCity": {
+              "description": "The name of the city where the vendor is located",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorCountry": {
+              "description": "The name of the country where the vendor is located",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorDescription": {
+              "description": "A description of the vendor",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorEmail": {
+              "description": "The primary email address used to contact the vendor",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorName": {
+              "description": "The human readable name of the vendor",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorPhone": {
+              "description": "The primary phone number used to contact the vendor",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "vendorURL": {
+              "description": "The primary URL for the vendor",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "title": "vendorSpecification",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object"
+        },
+        "vendorSpecificationPlatform": {
+          "properties": {
+            "contactEmail": {
+              "description": "The primary email address to contact a particular vendor platform",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "contactName": {
+              "description": "The name or identifier of the primary vendor platfrom contact",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "contactPhone": {
+              "description": "The phone number used to contact the vendor about a particular platform",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "deliverables": {
+              "description": "List of specific deliverables provided by the vendor platform",
+              "items": {
+                "properties": {
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "format": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "platformDescription": {
+              "description": "Description of the vendor platform",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "platformName": {
+              "description": "The human readable name of a platform",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "platformURL": {
+              "description": "The URL for a vendor platform",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shippingAddress": {
+              "description": "The street address for a vendor platform",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "specificRequirements": {
+              "description": "Additional arbitrary requirements for a particular platform",
+              "type": "object"
+            },
+            "standardRequirements": {
+              "$ref": "#/definitions/vendorSpecificationStandardRequirement",
+              "description": "Set of standard requirements for a vendor platform"
+            },
+            "statuses": {
+              "description": "List of possible status messages for a vendor platform",
+              "items": {
+                "properties": {
+                  "statusDescription": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "statusName": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object",
+                "additionalProperties": false
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "taxonomyIdSystem": {
+              "$ref": "#/definitions/vendorSpecificationReferenceSystem",
+              "description": "Details about the systems used to track taxonomies"
+            },
+            "tissueIdSystem": {
+              "$ref": "#/definitions/vendorSpecificationReferenceSystem",
+              "description": "Details about the systems used to track sample IDs"
+            }
+          },
+          "title": "vendorSpecificationPlatform",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object"
+        },
+        "vendorSpecificationReferenceSystem": {
+          "properties": {
+            "URI": {
+              "description": "The primary URI for this reference system",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "description": "The human readable name for this reference system",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "title": "vendorSpecificationReferenceSystem",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object"
+        },
+        "vendorSpecificationStandardRequirement": {
+          "properties": {
+            "blankWellPosition": {
+              "description": "Position data for reference blank well",
+              "properties": {
+                "numberOfBlanksPerPlate": {
+                  "type": "integer"
+                },
+                "positions": {
+                  "items": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "type": [
+                    "array",
+                    "null"
+                  ]
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "inputFormatDetails": {
+              "description": "Human readable details about the accepted input formats",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "inputFormats": {
+              "description": "List of accepted data formats",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "maxConcentration": {
+              "description": "The maximum allowed concentration",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "maxVolume": {
+              "description": "The minimum allowed volume of a sample",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "minConcentration": {
+              "description": "the minimum allowed concentration of a sample",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "minSampleNumber": {
+              "description": "The first sample number ",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "minVolume": {
+              "description": "The minimum allowed volume of a sample",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "plateOrientation": {
+              "description": "The orientation of a plate",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sampleTypeDetails": {
+              "description": "Human readable details about the allowed sample types",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sampleTypes": {
+              "description": "List of allowed sample types",
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            }
+          },
+          "title": "vendorSpecificationStandardRequirement",
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object"
+        }
+	}
+}

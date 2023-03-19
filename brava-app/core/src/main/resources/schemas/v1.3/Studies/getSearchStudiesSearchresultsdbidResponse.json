@@ -1,0 +1,178 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "active": {
+                                "description": "Is this study currently active",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "commonCropName": {
+                                "description": "Common name for the crop associated with this study",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "documentationURL": {
+                                "description": "A URL to the human readable documentation of this object",
+                                "format": "uri",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "endDate": {
+                                "description": "The date the study ends",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "locationDbId": {
+                                "description": "The ID which uniquely identifies a location",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "locationName": {
+                                "description": "The human readable name for a location",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "programDbId": {
+                                "description": "The ID which uniquely identifies a program within the given database server",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "programName": {
+                                "description": "The humane readable name of a program",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "seasons": {
+                                "description": "List of seasons over which this study was performed.",
+                                "items": {
+                                    "properties": {
+                                        "season": {
+                                            "description": "Name of the season. ex. 'Spring', 'Q2', 'Season A', etc.",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "seasonDbId": {
+                                            "description": "The ID which uniquely identifies a season",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        },
+                                        "year": {
+                                            "description": "The 4 digit year of the season.",
+                                            "type": [
+                                                "null",
+                                                "string"
+                                            ]
+                                        }
+                                    },
+                                    "title": "season",
+                                    "type": "object"
+                                },
+                                "type": [
+                                    "null",
+                                    "array"
+                                ]
+                            },
+                            "startDate": {
+                                "description": "The date this study started",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyDbId": {
+                                "description": "The ID which uniquely identifies a study within the given database server",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyName": {
+                                "description": "The humane readable name of a study",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyTypeDbId": {
+                                "description": "The unique identifier of the type of study being performed.",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "studyTypeName": {
+                                "description": "The name of the type of study being performed. ex. \"Yield Trial\", etc",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "trialDbId": {
+                                "description": "The ID which uniquely identifies a trial",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "trialName": {
+                                "description": "The human readable name of a trial",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "title": "studySummary",
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getSearchStudiesSearchresultsdbidResponse",
+    "type": "object"
+}

@@ -1,0 +1,199 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/studies/studyDbId/observationVariables",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "contextOfUse": {
+                                "type": ["array", "null"],
+                                "items": {"type": "string"}
+                            },
+                            "crop": {
+                                "type": ["string", "null"]
+                            },
+                            "date": {
+                                "type": ["string", "null"]
+                            },
+                            "defaultValue": {
+                                "type": "string"
+                            },
+                            "growthStage": {
+                                "type": ["string", "null"]
+                            },
+                            "institution": {
+                                "type": ["string", "null"]
+                            },
+                            "language": {
+                                "type": ["string", "null"]
+                            },
+                            "method": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "class": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "description": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "formula": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "methodDbId": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "reference": {
+                                        "type": ["string", "null"]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "observationVariableDbId": {
+                                "type": "string"
+                            },
+                            "ontologyDbId": {
+                                "type": "string"
+                            },
+                            "ontologyName": {
+                                "type": "string"
+                            },
+                            "scale": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "class": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "decimalPlaces": {
+                                        "type": ["integer", "null"]
+                                    },
+                                    "scaleDbId": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "reference": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "validValues": {
+                                        "type": ["object", "null"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "categories": {
+                                                "type": "array",
+                                                "items": {"type": "string"}
+                                            },
+                                            "max": {"type": "number"},
+                                            "min": {"type": "number"}
+                                        }
+                                    },
+                                    "xref": {
+                                        "type": ["string", "null"]
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "scientist": {
+                                "type": ["string", "null"]
+                            },
+                            "status": {
+                                "type": ["string", "null"]
+                            },
+                            "synonyms": {
+                                "type": ["array", "null"],
+                                "items": {"type": "string"}
+                            },
+                            "trait": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "alternativeAbbreviations": {
+                                        "type": ["array", "null"],
+                                        "items": {"type": "string"}
+                                    },
+                                    "attribute": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "class": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "description": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "entity": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "mainAbbreviation": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "synonyms": {
+                                        "type": ["array", "null"],
+                                        "items": {"type": "string"}
+                                    },
+                                    "traitDbId": {
+                                        "type": "string"
+                                    },
+                                    "xref": {
+                                        "type": ["string", "null"]
+                                    }
+                                },
+                                "required": [
+                                    "traitDbId",
+                                    "name"
+                                ],
+                                "type": "object"
+                            },
+                            "xref": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": [
+                            "scale",
+                            "name",
+                            "trait",
+                            "ontologyDbId",
+                            "defaultValue",
+                            "observationVariableDbId",
+                            "ontologyName",
+                            "method"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "studyDbId": {
+                    "type": "string"
+                },
+                "trialName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "data",
+                "studyDbId",
+                "trialName"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

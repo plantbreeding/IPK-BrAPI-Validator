@@ -1,0 +1,93 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "additionalInfo": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Additional arbitrary info",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "authors": {
+                    "description": "Ontology's list of authors (no specific format)",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "copyright": {
+                    "description": "Ontology copyright",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "description": {
+                    "description": "Human readable description of Ontology",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "documentationURL": {
+                    "description": "A URL to the human readable documentation of this object",
+                    "format": "uri",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "licence": {
+                    "description": "Ontology licence",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "ontologyDbId": {
+                    "description": "Ontology database unique identifier",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "ontologyName": {
+                    "description": "Ontology name",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "version": {
+                    "description": "Ontology version (no specific format)",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "required": [
+                "additionalInfo",
+                "authors",
+                "copyright",
+                "description",
+                "documentationURL",
+                "licence",
+                "ontologyDbId",
+                "ontologyName",
+                "version"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getOntologiesOntologydbidResponse",
+    "type": "object"
+}

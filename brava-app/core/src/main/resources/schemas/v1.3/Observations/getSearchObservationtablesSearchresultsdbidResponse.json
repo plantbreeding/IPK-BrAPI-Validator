@@ -1,0 +1,60 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "description": "Matrix of observation meta-data and recorded values. Each inner array represents 1 row of data.",
+                    "items": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "headerRow": {
+                    "description": "Names of the columns included in the data matrix. Any or All of [ \"year\",\"studyDbId\",\"studyName\",\"locationDbId\",\"locationName\",\"germplasmDbId\",\"germplasmName\",\"observationUnitDbId\",\"plotNumber\",\"replicate\",\"blockNumber\", \"entryType\", \"X\", \"Y\"]",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "observationVariableDbIds": {
+                    "description": "Array of observation variable DbIds for the collected data. This array is appended to the \"headerRow\" to get the complete header of the data matrix",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "observationVariableNames": {
+                    "description": "Human readable names of the observation variables for the collected data. This array should match 1 to 1 with the \"observationVariableDbIds\" array.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                }
+            },
+            "title": "observationUnitsTableResponse",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getSearchObservationtablesSearchresultsdbidResponse",
+    "type": "object"
+}

@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/variables/observationVariableDbId",
+    "type": "object",
+    "properties": {
+        "result": { "$ref": "../definitions.json#/definitions/variable" }
+    },
+    "required": [
+        "result"
+    ]
+}

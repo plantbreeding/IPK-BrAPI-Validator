@@ -1,0 +1,24 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "/germplasm/id/markerprofiles",
+	"type": "object",
+	"properties": {
+		"result": {
+			"type": "object",
+			"properties":{
+				"germplasmDbId": {"type": "string"},
+				"markerprofileDbIds": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+
+			},
+			"required": ["germplasmDbId", "markerprofileDbIds"],
+			"additionalProperties": false	
+		}
+	},
+	"required": ["result"]
+
+}

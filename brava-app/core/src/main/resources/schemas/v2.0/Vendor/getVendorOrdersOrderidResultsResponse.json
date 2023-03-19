@@ -1,0 +1,69 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "data": {
+                    "items": {
+                        "properties": {
+                            "additionalInfo": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "description": "Additional arbitrary info",
+                                "type": [
+                                    "null",
+                                    "object"
+                                ]
+                            },
+                            "clientSampleIds": {
+                                "description": "The list of sampleDbIds included in the file",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            "fileName": {
+                                "description": "Name of the file",
+                                "type": "string"
+                            },
+                            "fileType": {
+                                "description": "Format of the file",
+                                "type": "string"
+                            },
+                            "fileURL": {
+                                "description": "The URL to a file with the results of a vendor analysis",
+                                "format": "uri",
+                                "type": "string"
+                            },
+                            "md5sum": {
+                                "description": "MD5 Hash Check Sum for the file to confirm download without error",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "fileURL",
+                            "fileType",
+                            "fileName",
+                            "clientSampleIds"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "getVendorOrdersOrderidResultsResponse",
+    "type": "object"
+}

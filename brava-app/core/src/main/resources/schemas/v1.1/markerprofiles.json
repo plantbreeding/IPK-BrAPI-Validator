@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "/markerprofiles",
+    "type": "object",
+    "properties": {
+        "result": {
+            "additionalProperties": false,
+            "properties": {
+                "data": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "analysisMethod": {
+                                "type": "string"
+                            },
+                            "extractDbId": {
+                                "type": "string"
+                            },
+                            "germplasmDbId": {
+                                "type": "string"
+                            },
+                            "markerprofileDbId": {
+                                "type": "string"
+                            },
+                            "resultCount": {
+                                "type": "integer"
+                            },
+                            "sampleDbId": {
+                                "type": "string"
+                            },
+                            "uniqueDisplayName": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "resultCount",
+                            "sampleDbId",
+                            "markerprofileDbId",
+                            "extractDbId",
+                            "germplasmDbId",
+                            "analysisMethod",
+                            "uniqueDisplayName"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ]
+}

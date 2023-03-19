@@ -1,0 +1,213 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "result": {
+            "properties": {
+                "additionalInfo": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "copyright": {
+                    "description": "The copyright information of this image. Example 'Copyright 2018 Bob Robertson'",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "description": {
+                    "description": "The human readable description of an image.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "descriptiveOntologyTerms": {
+                    "description": "A list of terms to formally describe the image. Each item could be a simple Tag, an Ontology reference Id, or a full ontology URL.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "imageDbId": {
+                    "description": "The unique identifier of an image",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "imageFileName": {
+                    "description": "The name of the image file. Might be the same as 'imageName', but could be different.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "imageFileSize": {
+                    "description": "The size of the image in Bytes.",
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "imageHeight": {
+                    "description": "The height of the image in Pixels.",
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "imageLocation": {
+                    "description": "One geometry as defined by GeoJSON (RFC 7946). All coordinates are decimal values on the WGS84 geographic coordinate reference system.",
+                    "properties": {
+                        "geometry": {
+                            "oneOf": [
+                                {
+                                    "description": "Example \n\n    [ -76.506042, 42.417373 ]",
+                                    "properties": {
+                                        "coordinates": {
+                                            "description": "A single position",
+                                            "items": {
+                                                "type": "number"
+                                            },
+                                            "minItems": 2,
+                                            "title": "position",
+                                            "type": "array"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Point"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "title": "Point",
+                                    "type": "object"
+                                },
+                                {
+                                    "description": "Example \n\n    [ \n    \n      [ \n      \n        [ -77.456654, 42.241133 ], \n        \n        [ -75.414133, 41.508282 ],\n      \n        [ -76.506042, 42.417373 ], \n        \n        [ -77.456654, 42.241133 ] \n      \n      ] \n    \n    ]",
+                                    "properties": {
+                                        "coordinates": {
+                                            "description": "An array of linear rings",
+                                            "items": {
+                                                "description": "An array of at least four positions where the first equals the last",
+                                                "items": {
+                                                    "description": "A single position",
+                                                    "items": {
+                                                        "type": "number"
+                                                    },
+                                                    "minItems": 2,
+                                                    "title": "position",
+                                                    "type": "array"
+                                                },
+                                                "minItems": 4,
+                                                "title": "linearRing",
+                                                "type": "array"
+                                            },
+                                            "title": "polygon",
+                                            "type": "array"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Polygon"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "title": "Polygon",
+                                    "type": "object"
+                                }
+                            ],
+                            "title": "GeoJSON Geometry",
+                            "type": [
+                                "null",
+                                "object"
+                            ]
+                        },
+                        "type": {
+                            "enum": [
+                                "Feature"
+                            ],
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
+                    },
+                    "title": "geoJSON",
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "imageName": {
+                    "description": "The human readable name of an image. Might be the same as 'imageFileName', but could be different.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "imageTimeStamp": {
+                    "description": "The date and time the image was taken",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "imageURL": {
+                    "description": "The complete, absolute URI path to the image file. Images might be stored on a different host or path than the BrAPI web server.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "imageWidth": {
+                    "description": "The width of the image in Pixels.",
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "mimeType": {
+                    "description": "The file type of the image. Examples 'image/jpeg', 'image/png', 'image/svg', etc",
+                    "pattern": "image/.*",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "observationDbIds": {
+                    "description": "A list of observation Ids this image is associated with, if applicable.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "observationUnitDbId": {
+                    "description": "The related observation unit identifier, if relevent.",
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                }
+            },
+            "title": "image",
+            "type": "object"
+        }
+    },
+    "required": [
+        "result"
+    ],
+    "title": "putImagesImagedbidImagecontentResponse",
+    "type": "object"
+}

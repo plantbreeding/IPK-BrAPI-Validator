@@ -1,0 +1,97 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+        "metadata": {
+            "properties": {
+                "datafiles": {
+                    "description": "The datafiles key contains a list of file paths, which can be relative or complete URLs. These files contain additional information related to the returned object and can be retrieved by a subsequent call. The empty list should be returned if no additional data files are present.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
+                "pagination": {
+                    "description": "The pagination object is applicable only when the payload contains a \"data\" key. It describes the pagination of the data contained in the \"data\" array, as a way to identify which subset of data is being returned. Pages are zero indexed, so the first page will be page 0 (zero).",
+                    "properties": {
+                        "currentPage": {
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        },
+                        "pageSize": {
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        },
+                        "totalCount": {
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        },
+                        "totalPages": {
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        }
+                    },
+                    "type": [
+                        "null",
+                        "object"
+                    ]
+                },
+                "status": {
+                    "description": "The status field contains a list of informational status messages from the server. If no status is reported, an empty list should be returned. See Error Reporting for more information.",
+                    "items": {
+                        "properties": {
+                            "code": {
+                                "description": "DEPRECATED in v1.3 - see Error Handling best practice documentation",
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "message": {
+                                "description": "A short message concerning the status of this request/response",
+                                "type": "string"
+                            },
+                            "messageType": {
+                                "description": "The logging level for the attached message",
+                                "enum": [
+                                    "DEBUG",
+                                    "ERROR",
+                                    "WARNING",
+                                    "INFO"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "message",
+                            "messageType"
+                        ],
+                        "title": "status",
+                        "type": "object"
+                    },
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                }
+            },
+            "title": "metadata",
+            "type": "object"
+        }
+    },
+    "required": [
+        "metadata"
+    ],
+    "title": "metadata",
+    "type": "object"
+}
