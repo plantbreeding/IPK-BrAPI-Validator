@@ -24,7 +24,6 @@ $(function() {
         timestamp: ''
     }
 
-
     function median(values) {
 
         values.sort( function(a,b) {return a - b;} );
@@ -43,6 +42,7 @@ $(function() {
         var fullUrlDiv = $("#fullUrl");
 
         var version = $("#brapiversion").val();
+        var authorizationMethod = $("#authorizationMethod").val();
         var res = '/calls';
         if(version && version.startsWith('v2')){
         	res = '/serverinfo';
@@ -54,9 +54,6 @@ $(function() {
         $("#multiURL").html("");
     }
 
-
-
-
     // Calculate the full url given a resource.
     function getFullUrl(res) {
         var url = $("#serverurl").val();
@@ -66,7 +63,6 @@ $(function() {
 
         return url + res;
     }
-
 
     function generateStats(data) {
         var time = [];
@@ -562,11 +558,12 @@ $(function() {
         // Listeners
         $("#serverurl").on("input", updateFullUrl);
         $("#brapiversion").on("change", updateFullUrl);
-
+        $("#authorizationMethod").on("change", updateFullUrl);
 
         updateFullUrl();
         $("body").on('click', '.statusbtn', function() {
             currentResource = $(this).data('id');
+            console.log(currentResource) ;
             $("#resTable > tbody > tr").removeClass("table-active");
             $("#row-" + currentResource).addClass("table-active");
             customReport.name = resourcesData[$(this).data('id')].name;
