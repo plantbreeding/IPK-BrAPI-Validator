@@ -12,4 +12,4 @@ Here you find the following modules for the application
   regular validation of endpoints.
 * gradle - The gradle wrapper for building, installing the modules
 * [web](web/README.md) - A simple web application (an alternative to the Angular BRAVA app) 
-* that makes use of the spring API using thymeleaf templates
+that makes use of the spring API using thymeleaf templates
