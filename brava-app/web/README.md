@@ -2,6 +2,8 @@
 
 A simple web application for running validations on a server
 
+Depends on only the [core](../core/README.md) module.
+
 ## Use Gradle to run the app
 
 In Windows

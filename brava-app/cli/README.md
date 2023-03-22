@@ -1,8 +1,8 @@
 # BrAPI Validator (BRAVA) - Command Line Interface (CLI)
 
-A Command line iknterface for running BRAVA on your computer without the needs to run an web services or have a database connection.
+A Command line interface for running BRAVA on your computer without the needs to run a web services or have a database connection.
 
-Depends only the the [core](core) module.
+Depends on only the [core](../core/README.md) module.
 
 ## Compiling and installing the CLI
 
@@ -52,11 +52,11 @@ In Linux or MacOS
 ./gradle cli:jar
 ```
 
-This will create the executeable JAR in the cli/build/libs directory
+This will create the executable JAR in the cli/build/libs directory
 
 ## Using Docker
 
-You can create a Docker version of the application, which might help you over come some dependacy issues.
+You can create a Docker version of the application, which might help you overcome some dependency issues.
 
 You will need [https://www.docker.com/](docker) installed for this to work
 
@@ -83,4 +83,4 @@ In Linux or MacOS
 ./gradle cli:run  --args="-h"
 ```
 
-Remember to replace the '-h' argments with your required options. The '-h' option will give you a list of the available options.
+Remember to replace the '-h' arguments with your required options. The '-h' option will give you a list of the available options.
