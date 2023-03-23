@@ -36,11 +36,11 @@ public class CallSuiteValidator implements SuiteValidator {
      * @return The Validation Report for the collection
      */
     public SuiteReport validate(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod) {
-        SuiteReport testSuiteReport = new SuiteReport(id, resource);
+        SuiteReport suiteReport = new SuiteReport(resource);
         CollectionValidator collectionValidator = new CollectionValidator(resource, collection, advancedMode);
         CollectionReport tcr = collectionValidator.validateAll(allowAdditional, singleTest, authorizationMethod);
-        testSuiteReport.addCollectionReport(tcr);
-        return testSuiteReport;
+        suiteReport.addCollectionReport(tcr);
+        return suiteReport;
     }
 
     /**

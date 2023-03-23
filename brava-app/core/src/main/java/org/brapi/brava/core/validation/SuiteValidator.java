@@ -7,28 +7,19 @@ import org.brapi.brava.core.reports.SuiteReport;
 public interface SuiteValidator {
 
     /**
-     * Run the tests
+     * Run the validation
      *
      * @return Test report
      */
     public SuiteReport validate(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod);
 
     /**
-     * @return the id
-     */
-    public String getId();
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id);
-    /**
-     * @return the url
+     * @return the url that was validated
      */
     public String getUrl();
 
     /**
-     * @param url the url to set
+     * @param resource the resource that was validated
      */
     public void setResource(Resource resource);
 

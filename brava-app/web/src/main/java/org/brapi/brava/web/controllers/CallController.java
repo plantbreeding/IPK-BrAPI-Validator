@@ -1,13 +1,12 @@
 package org.brapi.brava.web.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
-import org.brapi.brava.core.reports.SuiteReport;
+import org.brapi.brava.core.reports.ValidationReport;
 import org.brapi.brava.core.validation.AuthorizationMethod;
-import org.brapi.brava.web.CallReport;
 import org.brapi.brava.web.ValidationService;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,11 +29,11 @@ public class CallController {
     }
 
     @GetMapping("/call")
-    public CallReport validate(@RequestParam("url") String url,
-                               @RequestParam Optional<String> accessToken,
-                               @RequestParam("brapiversion") Optional<String> version,
-                               @RequestParam Optional<Boolean> strict,
-                               @RequestParam Optional<String> authorizationMethod) {
+    public ValidationReport validate(@RequestParam("url") String url,
+                                     @RequestParam Optional<String> accessToken,
+                                     @RequestParam("brapiversion") Optional<String> version,
+                                     @RequestParam Optional<Boolean> strict,
+                                     @RequestParam Optional<String> authorizationMethod) {
 
         log.debug("New GET /call call.");
 
@@ -49,7 +48,7 @@ public class CallController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid version %s", collectionName));
             }
 
-            return new CallReport(url, validationService.validate(
+            return new ValidationReport(url, validationService.validate(
                     url,
                     accessToken.orElse(null),
                     version.orElse(validationService.getDefaultCollectionName()),
@@ -64,6 +63,9 @@ public class CallController {
         }  catch (IllegalArgumentException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, String.format("The authorization method '%s' is unknown please use one of %s", url, Arrays.toString(AuthorizationMethod.values())), e);
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Can not convert the report to json", e);
         }
     }
 }

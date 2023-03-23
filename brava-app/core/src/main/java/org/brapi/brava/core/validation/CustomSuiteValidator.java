@@ -17,7 +17,6 @@ import org.brapi.brava.core.reports.SuiteReport;
 @AllArgsConstructor
 public class CustomSuiteValidator implements SuiteValidator {
 
-    private String id;
     private Resource resource;
     private Collection collection;
 
@@ -33,7 +32,7 @@ public class CustomSuiteValidator implements SuiteValidator {
      * @return The Validation Report for the collection
      */
     public SuiteReport validate(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod) {
-        SuiteReport suiteReport = new SuiteReport(id, resource);
+        SuiteReport suiteReport = new SuiteReport(resource);
         CollectionValidator collectionValidator = new CollectionValidator(resource, collection, advancedMode) ;
         CollectionReport collectionReport = collectionValidator.validate(allowAdditional, authorizationMethod);
         suiteReport.addCollectionReport(collectionReport);

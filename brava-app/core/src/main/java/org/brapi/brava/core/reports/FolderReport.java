@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Homologous of config.Folder, groups Test results
+ * Homologous of config.Folder, groups Item reports
  */
 @Getter
 @Setter

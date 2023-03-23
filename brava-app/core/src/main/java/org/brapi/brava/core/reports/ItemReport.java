@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains information about one config. Item collection of tests (ExecReports). Mostly test results and
+ * Contains information about one config Item collection of tests (ExecReports). Mostly test results and
  * some information about the request.
  */
 @Getter

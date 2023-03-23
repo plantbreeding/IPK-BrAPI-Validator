@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class CSVSuiteReportWriter extends AbstractReportWriter<SuiteReport> {
 
     private static final String[] HEADERS = {
-            "Report Id",
             "Collection Name",
             "Collection URL",
             "Folder Name",
@@ -81,7 +80,6 @@ public class CSVSuiteReportWriter extends AbstractReportWriter<SuiteReport> {
 
         ArrayList<String> line = new ArrayList<>() ;
 
-        line.add(suiteReport.getId()) ;
         line.add(collectionReport.getName()) ;
         line.add(collectionReport.getUrl()) ;
         line.add(folderReport.getName()) ;
