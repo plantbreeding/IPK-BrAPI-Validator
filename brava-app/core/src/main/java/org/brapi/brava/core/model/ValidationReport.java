@@ -1,10 +1,13 @@
-package org.brapi.brava.core.reports;
+package org.brapi.brava.core.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.brapi.brava.core.reports.MiniReport;
+import org.brapi.brava.core.reports.SuiteReport;
+
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;

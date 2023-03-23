@@ -3,7 +3,7 @@ package org.brapi.brava.web.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
-import org.brapi.brava.core.reports.ValidationReport;
+import org.brapi.brava.core.model.ValidationReport;
 import org.brapi.brava.core.validation.AuthorizationMethod;
 import org.brapi.brava.web.ValidationService;
 import org.springframework.http.HttpStatus;

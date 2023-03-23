@@ -1,5 +1,6 @@
 package org.brapi.brava.core.reports;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -30,6 +31,7 @@ public class SuiteReport implements Report {
         this.collections.add(tc);
     }
 
+    @JsonIgnore
     public Map<String, Map<String, Object>> getShortReport() {
         Map<String, Map<String, Object>> shortReport = new LinkedHashMap<>();
 
@@ -42,6 +44,7 @@ public class SuiteReport implements Report {
         return shortReport;
     }
 
+    @JsonIgnore
     public MiniReport getMiniReport() {
         return new MiniReport(getShortReport()) ;
     }
