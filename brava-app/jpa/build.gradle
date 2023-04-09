@@ -1,0 +1,20 @@
+plugins {
+    id 'brava.spring-conventions'
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+    archiveClassifier = '' //use empty string
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.h2database:h2:1.4.200'
+    implementation project(':core')
+    implementation project(':data')
+}

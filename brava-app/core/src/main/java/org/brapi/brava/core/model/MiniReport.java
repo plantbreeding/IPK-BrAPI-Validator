@@ -1,4 +1,4 @@
-package org.brapi.brava.core.reports;
+package org.brapi.brava.core.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,11 +11,11 @@ import java.util.*;
  * Summary information on the Suite Report
  */
 public class MiniReport {
-	double time;
-	List<String> totalTests;
-	List<String> passedTests;
-	List<String> failedTests;
-	List<String> warningTests;
+	private double time;
+	private List<String> totalTests;
+	private List<String> passedTests;
+	private List<String> failedTests;
+	private List<String> warningTests;
 
 	public MiniReport (Map<String, Map<String, Object>> shortReport) {
 		List<Integer> time = new ArrayList<Integer>();

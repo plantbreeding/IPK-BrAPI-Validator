@@ -1,31 +1,36 @@
 package org.brapi.brava.api ;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
 import org.brapi.brava.core.model.Resource;
-import org.brapi.brava.core.reports.SuiteReport;
+import org.brapi.brava.core.model.ValidationReport;
+import org.brapi.brava.core.service.ValidationService;
 import org.brapi.brava.core.validation.AuthorizationMethod;
+import org.brapi.brava.data.service.ValidationReportService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class ValidationController {
 
-    @Value("${org.brapi.brava.api.advancedMode}")
+    @Value("${org.brapi.brava.advancedMode}")
     boolean advancedMode ;
 
     private final ValidationService validationService ;
 
-    public ValidationController(ValidationService validationService) {
+    private final ValidationReportService validationReportService ;
+
+    public ValidationController(ValidationService validationService,
+                                ValidationReportService validationReportService) {
         this.validationService = validationService;
+        this.validationReportService = validationReportService;
+
     }
 
     @GetMapping("collectionNames")
@@ -34,18 +39,22 @@ public class ValidationController {
     }
 
     @GetMapping("validate")
-    public SuiteReport validate(String url,
+    public ValidationReport validate(String url,
                                 Optional<String> accessToken,
                                 Optional<String> collectionName,
                                 Optional<Boolean> strict,
                                 Optional<String> authorizationMethod) {
 
         try {
-            return validationService.validate(new Resource(url, accessToken.orElse(null)),
+
+            Resource resource = new Resource(url, accessToken.orElse(null)) ;
+
+            return validationReportService.save(validationService.validate(resource,
                     collectionName.orElse(validationService.getDefaultCollectionName()),
                     strict.orElse(false),
                     advancedMode,
-                    authorizationMethod.map(AuthorizationMethod::valueOf)) ;
+                    authorizationMethod.map(AuthorizationMethod::valueOf))) ;
+
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, String.format("The provided URL '%s' was Malformed!", url), e);
@@ -55,6 +64,9 @@ public class ValidationController {
         } catch (CollectionNotFound e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, String.format("Unknown collection '%s', must be one of %s", url, validationService.getCollectionNames()), e);
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Can not convert the report to json", e);
         }
     }
 }

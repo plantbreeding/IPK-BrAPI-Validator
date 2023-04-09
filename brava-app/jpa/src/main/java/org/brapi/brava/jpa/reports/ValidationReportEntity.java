@@ -1,10 +1,10 @@
-package org.brapi.brava.database.reports;
+package org.brapi.brava.jpa.reports;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.brapi.brava.jpa.resources.ResourceEntity;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,14 +13,16 @@ import java.util.UUID;
 @Setter
 @Entity
 public class ValidationReportEntity {
-    @Setter(AccessLevel.NONE)
     @NonNull
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID reportId ;
+    private UUID id ;
+    @ManyToOne
+    private ResourceEntity resource ;
     @NonNull
-    private String resourceUrl ;
+    private String url ;
     @NonNull
+    @Lob
     private String reportJson ;
     @NonNull
     private Date date;

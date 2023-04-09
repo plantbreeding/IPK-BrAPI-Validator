@@ -6,18 +6,20 @@ import lombok.Setter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 
 /**
- * Resource - contains the information related
+ * Creates simple resource - contains the information related
  * to one endpoint (url, and user it belongs to).
  */
 @Getter
 @Setter
 @NoArgsConstructor
 public class Resource {
+
+	private String id;
 	private String url;
 	private String accessToken;
-
 	public Resource(String url, String accessToken) throws MalformedURLException {
 		setUrl(url) ;
 		setAccessToken(accessToken);

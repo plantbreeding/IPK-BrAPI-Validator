@@ -13,7 +13,6 @@ import java.util.UUID;
  * Extends Resource providing more details
  */
 public class DetailedResource extends Resource implements Comparable<DetailedResource> {
-    private UUID id;
     private String v1url;
     private String v2url;
     private String crop;
@@ -58,10 +57,6 @@ public class DetailedResource extends Resource implements Comparable<DetailedRes
         this.setUrl(url);
         this.setEmail(email);
         this.setFrequency(frequency);
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     public void setUrl(String url) throws MalformedURLException {

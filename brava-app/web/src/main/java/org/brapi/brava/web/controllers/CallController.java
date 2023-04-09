@@ -1,11 +1,16 @@
 package org.brapi.brava.web.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
+import org.brapi.brava.core.model.Resource;
 import org.brapi.brava.core.model.ValidationReport;
+import org.brapi.brava.core.reports.SuiteReport;
+import org.brapi.brava.core.service.ValidationService;
+import org.brapi.brava.core.utils.ReportParser;
 import org.brapi.brava.core.validation.AuthorizationMethod;
-import org.brapi.brava.web.ValidationService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +20,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @Slf4j
 @RequestMapping("/api/test")
 public class CallController {
 
+    @Value("${org.brapi.brava.advancedMode}")
+    boolean advancedMode ;
     private final ValidationService validationService ;
 
     public CallController(ValidationService validationService) {
@@ -48,12 +57,13 @@ public class CallController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid version %s", collectionName));
             }
 
-            return new ValidationReport(url, validationService.validate(
-                    url,
-                    accessToken.orElse(null),
+            Resource resource = new Resource(url, accessToken.orElse(null)) ;
+
+            return validationService.validate(resource,
                     version.orElse(validationService.getDefaultCollectionName()),
                     strict.orElse(false),
-                    authorizationMethod.map(AuthorizationMethod::valueOf)));
+                    advancedMode,
+                    authorizationMethod.map(AuthorizationMethod::valueOf)) ;
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, String.format("The provided URL '%s' was Malformed!", url), e);

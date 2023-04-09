@@ -47,10 +47,10 @@ public class ValidateSubCommand implements Runnable {
     @CommandLine.Option(names = { "-o", "--output" }, fallbackValue = "JSON", description = "The format of the Output. Possible options are: ${COMPLETION-CANDIDATES}. Default is ${DEFAULT_FORMAT}")
     OutputFormat outputFormat;
 
-    @CommandLine.Option(names = { "-f", "--file" }, description = "The path of the output file for the result. If omitted the output will be on the standard out")
+    @CommandLine.Option(names = { "-f", "--file" }, description = "The path of the output file for the result. If omitted the output will be written to the standard out")
     Path outputPath;
 
-    @CommandLine.Option(names = { "-m", "--authorizationMethod" }, fallbackValue = "JSON", description = "The method by which the access token is sent to the server. Possible options are: ${COMPLETION-CANDIDATES}. Default is ${DEFAULT_AUTHORIZATION_METHOD}")
+    @CommandLine.Option(names = { "-m", "--authorizationMethod" }, fallbackValue = "NONE", description = "The method by which the access token is sent to the server. Possible options are: ${COMPLETION-CANDIDATES}. Default is ${DEFAULT_AUTHORIZATION_METHOD}")
     AuthorizationMethod authorizationMethod;
 
     @Override
@@ -64,7 +64,6 @@ public class ValidateSubCommand implements Runnable {
         try {
 
             CallSuiteValidator validator = new CallSuiteValidator(
-                    UUID.randomUUID().toString(),
                     new Resource(url, accessToken),
                     collectionFactory.getCollection(collectionName),
                     advancedMode);

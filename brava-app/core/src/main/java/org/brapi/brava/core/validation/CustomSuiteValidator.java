@@ -28,7 +28,7 @@ public class CustomSuiteValidator implements SuiteValidator {
      * @param allowAdditional
      * @param singleTest          <code>true</code> if the validation is part of a single test,
      *                            or <code>false</code> if part of a suite of tests
-     * @param authorizationMethod
+     * @param authorizationMethod The method by which the accessToken is sent to the server
      * @return The Validation Report for the collection
      */
     public SuiteReport validate(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod) {

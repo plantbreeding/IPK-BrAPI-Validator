@@ -1,24 +1,30 @@
-package org.brapi.brava.api;
+package org.brapi.brava.core.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.brapi.brava.core.config.CollectionFactory;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
 import org.brapi.brava.core.model.Resource;
+import org.brapi.brava.core.model.ValidationReport;
 import org.brapi.brava.core.reports.SuiteReport;
+import org.brapi.brava.core.utils.ReportParser;
 import org.brapi.brava.core.validation.AuthorizationMethod;
 import org.brapi.brava.core.validation.CallSuiteValidator;
-import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
 public class ValidationService {
 
     private final CollectionFactory collectionFactory ;
 
-    public ValidationService(CollectionFactory collectionFactory) {
+    private final ReportParser reportParser ;
+
+    public ValidationService(CollectionFactory collectionFactory,
+                             ReportParser reportParser) {
         this.collectionFactory = collectionFactory;
+        this.reportParser = reportParser;
     }
 
     public String getDefaultCollectionName() {
@@ -29,19 +35,28 @@ public class ValidationService {
         return collectionFactory.getCollectionNames() ;
     }
 
-    public SuiteReport validate(Resource resource,
+    public ValidationReport validate(Resource resource,
                                 String collectionName,
                                 boolean advancedMode,
                                 boolean strict,
-                                Optional<AuthorizationMethod> authorizationMethod) throws CollectionNotFound {
+                                Optional<AuthorizationMethod> authorizationMethod) throws CollectionNotFound, JsonProcessingException {
         CallSuiteValidator validator = new CallSuiteValidator(
-                UUID.randomUUID().toString(),
                 resource,
                 collectionFactory.getCollection(collectionName),
                 advancedMode);
 
         boolean allowAdditional = !strict;
 
-        return validator.validate(allowAdditional, true, authorizationMethod.orElse(AuthorizationMethod.BEARER_HEADER));
+        SuiteReport suiteReport =
+                validator.validate(allowAdditional, true, authorizationMethod.orElse(AuthorizationMethod.BEARER_HEADER));
+
+        return new ValidationReport(
+                UUID.randomUUID().toString(),
+                resource.getId(),
+                resource.getUrl(),
+                reportParser.writeAsString(suiteReport),
+                suiteReport.getShortReport(),
+                suiteReport.getMiniReport(),
+                new Date());
     }
 }

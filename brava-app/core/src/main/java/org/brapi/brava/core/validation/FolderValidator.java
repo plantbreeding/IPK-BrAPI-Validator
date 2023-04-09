@@ -32,7 +32,7 @@ public class FolderValidator {
      * @param accessToken         the authorisation access token
      * @param singleTest          <code>true</code> if the validation is part of a single test,
      *                            or <code>false</code> if part of a suite of tests
-     * @param authorizationMethod
+     * @param authorizationMethod The method by which the accessToken is sent to the server
      * @return FolderReport         The results of the validation
      */
     public FolderReport validate(VariableStorage variables,
