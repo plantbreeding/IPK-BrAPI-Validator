@@ -1,17 +1,9 @@
 plugins {
-    id 'brava.spring-conventions'
-}
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
-    archiveClassifier = '' //use empty string
+    id 'brava.java-conventions'
+    id 'io.spring.dependency-management'
 }
 
 dependencies {
-    implementation project(':core')
-    implementation 'org.springframework.data:spring-data-commons'
+    api(project(':core'))
+    implementation 'org.springframework.data:spring-data-commons:3.0.4'
 }

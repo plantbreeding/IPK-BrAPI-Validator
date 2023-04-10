@@ -1,4 +1,4 @@
-package org.brapi.brava.web;
+package org.brapi.brava.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.brapi.brava.core.config.CollectionFactory;
@@ -8,16 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Config {
+public class APIConfig {
 
     @Bean
     public ValidationService validationService(CollectionFactory collectionFactory, ReportParser reportParser) {
         return new ValidationService(collectionFactory, reportParser) ;
     }
-
     @Bean
     public CollectionFactory collectionFactory() {
-        return new CollectionFactory() ;
+       return new CollectionFactory() ;
     }
 
     @Bean

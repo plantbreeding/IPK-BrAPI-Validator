@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ValidationReportEntity {
     @NonNull
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id ;
     @ManyToOne
     private ResourceEntity resource ;

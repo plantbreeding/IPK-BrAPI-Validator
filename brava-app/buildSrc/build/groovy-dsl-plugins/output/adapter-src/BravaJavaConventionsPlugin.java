@@ -17,7 +17,7 @@ public class BravaJavaConventionsPlugin implements org.gradle.api.Plugin<org.gra
             pluginsBlockScript.setScriptSource(scriptSource(pluginsBlockClass));
             pluginsBlockScript.init(target, target.getServices());
             pluginsBlockScript.run();
-            target.getPluginManager().apply("java");
+            target.getPluginManager().apply("java-library");
 
 
             Class<? extends BasicScript> precompiledScriptClass = Class.forName("precompiled_BravaJavaConventions").asSubclass(BasicScript.class);

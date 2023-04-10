@@ -18,7 +18,6 @@ public class BravaSpringConventionsPlugin implements org.gradle.api.Plugin<org.g
             pluginsBlockScript.init(target, target.getServices());
             pluginsBlockScript.run();
             target.getPluginManager().apply("brava.java-conventions");
-            target.getPluginManager().apply("org.springframework.boot");
             target.getPluginManager().apply("io.spring.dependency-management");
 
 

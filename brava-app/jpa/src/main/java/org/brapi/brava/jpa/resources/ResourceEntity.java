@@ -14,7 +14,7 @@ public class ResourceEntity {
     @Setter(AccessLevel.NONE)
     @NonNull
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id ;
     @NonNull
     private String url ;
