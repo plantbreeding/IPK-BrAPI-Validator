@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.brapi.brava.core.model.Collection;
-import org.brapi.brava.core.model.Resource;
 import org.brapi.brava.core.reports.CollectionReport;
 import org.brapi.brava.core.reports.SuiteReport;
 
@@ -17,7 +16,7 @@ import org.brapi.brava.core.reports.SuiteReport;
 @AllArgsConstructor
 public class CallSuiteValidator implements SuiteValidator {
     @NonNull
-    private Resource resource;
+    private String url;
     @NonNull
     private Collection collection;
 
@@ -30,21 +29,15 @@ public class CallSuiteValidator implements SuiteValidator {
      * @param singleTest          <code>true</code> if the validation is part of a single test,
      *                            or <code>false</code> if part of a suite of tests
      * @param authorizationMethod The method by which the accessToken is sent to the server
+     * @param accessToken the access token if authorizationMethod is not {{@link AuthorizationMethod#NONE}}
+     *
      * @return The Validation Report for the collection
      */
-    public SuiteReport validate(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod) {
-        SuiteReport suiteReport = new SuiteReport(resource);
-        CollectionValidator collectionValidator = new CollectionValidator(resource, collection, advancedMode);
-        CollectionReport tcr = collectionValidator.validateAll(allowAdditional, singleTest, authorizationMethod);
+    public SuiteReport validate(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod, String accessToken) {
+        SuiteReport suiteReport = new SuiteReport(url);
+        CollectionValidator collectionValidator = new CollectionValidator(url, collection, advancedMode);
+        CollectionReport tcr = collectionValidator.validateAll(allowAdditional, singleTest, authorizationMethod, accessToken);
         suiteReport.addCollectionReport(tcr);
         return suiteReport;
-    }
-
-    /**
-     * @return the url from the resource
-     */
-    @Override
-    public String getUrl() {
-        return resource.getUrl();
     }
 }

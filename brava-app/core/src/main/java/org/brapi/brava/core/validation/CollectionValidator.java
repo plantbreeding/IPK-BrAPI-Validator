@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.brapi.brava.core.model.Collection;
 import org.brapi.brava.core.model.Folder;
-import org.brapi.brava.core.model.Resource;
 import org.brapi.brava.core.reports.CollectionReport;
 import org.brapi.brava.core.reports.FolderReport;
 import org.brapi.brava.core.reports.VariableStorage;
@@ -21,7 +20,7 @@ import java.util.List;
 public class CollectionValidator {
 
     @NonNull
-    private Resource resource;
+    private String url;
     @NonNull
     private Collection collection;
     private boolean advancedMode;
@@ -30,14 +29,14 @@ public class CollectionValidator {
      * Runs the validation specified in the Validation Collection
      * @param allowAdditional
      * @param authorizationMethod The method by which the accessToken is sent to the server
+     * @param accessToken the access token if authorizationMethod is not {{@link AuthorizationMethod#NONE}}
      *
      * @return The Validation Report for the collection
      */
-    public CollectionReport validate(boolean allowAdditional, AuthorizationMethod authorizationMethod) {
+    public CollectionReport validate(boolean allowAdditional, AuthorizationMethod authorizationMethod, String accessToken) {
         String name = collection.getInfo().getName();
-        CollectionReport collectionReport = new CollectionReport(name, resource.getUrl());
-        String baseUrl = resource.getUrl().replaceAll("/$", "");
-        String accessToken = resource.getAccessToken();
+        CollectionReport collectionReport = new CollectionReport(name, url);
+        String baseUrl = url.replaceAll("/$", "");
         VariableStorage variables = new VariableStorage(baseUrl);
         List<Folder> folderList = collection.getItem();
         folderList.forEach(folder -> {
@@ -49,11 +48,10 @@ public class CollectionValidator {
         return collectionReport;
     }
 
-	public CollectionReport validateAll(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod) {
+	public CollectionReport validateAll(boolean allowAdditional, Boolean singleTest, AuthorizationMethod authorizationMethod, String accessToken) {
         String name = collection.getInfo().getName();
-        CollectionReport tcr = new CollectionReport(name, resource.getUrl());
-        String baseUrl = resource.getUrl().replaceAll("/$", "");
-        String accessToken = resource.getAccessToken();
+        CollectionReport tcr = new CollectionReport(name, url);
+        String baseUrl = url.replaceAll("/$", "");
         VariableStorage variables = new VariableStorage(baseUrl);
         
         List<Folder> folderList = collection.getItem();

@@ -40,7 +40,7 @@ public class CSVSuiteReportWriter extends AbstractReportWriter<SuiteReport> {
 
     @Override
     public void write(SuiteReport suiteReport) throws ReportWriterException {
-        log.debug("Validation suiteReport for {}", suiteReport.getResource().getUrl());
+        log.debug("Validation suiteReport for {}", suiteReport.getUrl());
 
         csvWriter = new CSVWriter(getWriter());
 

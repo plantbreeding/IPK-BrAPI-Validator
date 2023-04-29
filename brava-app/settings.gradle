@@ -5,4 +5,7 @@ include 'core'
 include 'cli'
 include 'data'
 include 'jpa'
+include 'mongodb'
 include 'web'
+
+

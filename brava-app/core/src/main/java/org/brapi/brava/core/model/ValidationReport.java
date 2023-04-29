@@ -15,17 +15,16 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ValidationReport {
-    @NonNull
     private String reportId ;
     private String resourceId ;
     @NonNull
     private String resourceUrl ;
-    @NonNull
+    private String collectionName ;
     private String reportJson ;
-    @NonNull
     private Map<String, Map<String, Object>> shortReport ;
-    @NonNull
     private MiniReport miniReport ;
-    @NonNull
     private Date date;
+    @NonNull
+    private ValidationReportStatus status;
+    private String executionError;
 }

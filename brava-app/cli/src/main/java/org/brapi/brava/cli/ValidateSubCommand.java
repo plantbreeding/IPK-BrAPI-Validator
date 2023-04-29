@@ -3,7 +3,6 @@ package org.brapi.brava.cli;
 import org.brapi.brava.core.config.CollectionFactory;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
 import org.brapi.brava.core.exceptions.ReportWriterException;
-import org.brapi.brava.core.model.Resource;
 import org.brapi.brava.core.reports.SuiteReport;
 import org.brapi.brava.core.reports.io.CSVSuiteReportWriter;
 import org.brapi.brava.core.reports.io.JSONSuiteReportWriter;
@@ -18,7 +17,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
 
 @CommandLine.Command(
   name = "validate", mixinStandardHelpOptions = true
@@ -64,7 +62,7 @@ public class ValidateSubCommand implements Runnable {
         try {
 
             CallSuiteValidator validator = new CallSuiteValidator(
-                    new Resource(url, accessToken),
+                    url,
                     collectionFactory.getCollection(collectionName),
                     advancedMode);
 
@@ -72,7 +70,7 @@ public class ValidateSubCommand implements Runnable {
 
             AuthorizationMethod authMethod = authorizationMethod != null ? authorizationMethod : DEFAULT_AUTHORIZATION_METHOD;
 
-            SuiteReport report = validator.validate(allowAdditional, true, authMethod);
+            SuiteReport report = validator.validate(allowAdditional, true, authMethod, accessToken);
 
             ReportWriter<SuiteReport> reportWriter;
 

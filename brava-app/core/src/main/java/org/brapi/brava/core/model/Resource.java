@@ -1,34 +1,59 @@
 package org.brapi.brava.core.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
+import org.brapi.brava.core.validation.AuthorizationMethod;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
-/**
- * Creates simple resource - contains the information related
- * to one endpoint (url, and user it belongs to).
- */
 @Getter
 @Setter
-@NoArgsConstructor
-public class Resource {
+/**
+ * A resource containing the information related
+ * to one endpoint (url, and user it belongs to).
+ */
+public class Resource implements Comparable<Resource> {
 
-	private String id;
-	private String url;
-	private String accessToken;
-	public Resource(String url, String accessToken) throws MalformedURLException {
-		setUrl(url) ;
-		setAccessToken(accessToken);
-	}
+    @NonNull
+    private String id;
+    @NonNull
+    private String url;
+    @NonNull
+    private AuthorizationMethod authorizationMethod ;
 
-	public void setUrl(String url) throws MalformedURLException {
-		URL u = new URL(url);
+    private String crop;
+    private String collectionName ;
+    private String email;
 
-		this.url = url ;
-	}
+    private ValidationFrequency frequency = null;
+    private boolean confirmed = false;
+    private boolean isPublic = false;
+    private String name ;
+    private String description ;
+    private Provider provider;
+    private String certificate ;
+    private String logo ;
 
+    public Resource(String url) throws MalformedURLException {
+        this(UUID.randomUUID().toString(), url);
+    }
+
+    public Resource(String id, String url) throws MalformedURLException {
+        setId(id);
+        setUrl(url);
+    }
+
+    public void setUrl(String url) throws MalformedURLException {
+        URL u = new URL(url); // check if valid URL
+
+        this.url = url ;
+    }
+
+    @Override
+    public int compareTo(Resource other) {
+        return this.name.compareTo(other.name); //Sort alphabetically by name.
+    }
 }

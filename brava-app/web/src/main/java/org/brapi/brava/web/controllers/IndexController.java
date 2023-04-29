@@ -1,7 +1,6 @@
 package org.brapi.brava.web.controllers;
 
 import org.brapi.brava.core.config.CollectionFactory;
-import org.brapi.brava.core.service.ValidationService;
 import org.brapi.brava.core.validation.AuthorizationMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,26 +1,31 @@
 package org.brapi.brava.api ;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.brapi.brava.core.exceptions.CollectionNotFound;
-import org.brapi.brava.core.model.Resource;
 import org.brapi.brava.core.model.ValidationReport;
 import org.brapi.brava.core.service.ValidationService;
 import org.brapi.brava.core.validation.AuthorizationMethod;
+import org.brapi.brava.data.exceptions.EntityNotFoundException;
+import org.brapi.brava.data.service.ValidationException;
 import org.brapi.brava.data.service.ValidationReportService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
-import java.util.*;
+import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ValidationController {
 
     @Value("${org.brapi.brava.advancedMode}")
     boolean advancedMode ;
+
+    @Value("${org.brapi.brava.asyncDefault}")
+    boolean asyncDefault ;
+
+    boolean strictDefault ;
 
     private final ValidationService validationService ;
 
@@ -38,35 +43,60 @@ public class ValidationController {
         return validationService.getCollectionNames() ;
     }
 
-    @GetMapping("validate")
-    public ValidationReport validate(String url,
-                                Optional<String> accessToken,
-                                Optional<String> collectionName,
-                                Optional<Boolean> strict,
-                                Optional<String> authorizationMethod) {
+    @PostMapping("validate")
+    public ValidationReport executeValidation(@RequestBody URLValidationRequest request) {
 
         try {
+            new URL(request.getUrl()) ; // check if valid URL
 
-            Resource resource = new Resource(url, accessToken.orElse(null)) ;
-
-            return validationReportService.save(validationService.validate(resource,
-                    collectionName.orElse(validationService.getDefaultCollectionName()),
-                    strict.orElse(false),
-                    advancedMode,
-                    authorizationMethod.map(AuthorizationMethod::valueOf))) ;
+            if (request.getAsync() != null ? request.getAsync() : asyncDefault) {
+                return validationReportService.submitValidation(request.getUrl(),
+                        request.getCollectionName() != null ? request.getCollectionName() : validationService.getDefaultCollectionName(),
+                        advancedMode,
+                        request.getStrict() != null ? request.getStrict() : strictDefault,
+                        request.getAuthorizationMethod() != null ? AuthorizationMethod.valueOf(request.getAuthorizationMethod()) : AuthorizationMethod.NONE,
+                        request.getAccessToken() != null ? request.getAccessToken() : null);
+            } else {
+                return validationReportService.executeValidation(request.getUrl(),
+                        request.getCollectionName() != null ? request.getCollectionName() : validationService.getDefaultCollectionName(),
+                        advancedMode,
+                        request.getStrict() != null ? request.getStrict() : strictDefault,
+                        request.getAuthorizationMethod() != null ? AuthorizationMethod.valueOf(request.getAuthorizationMethod()) : AuthorizationMethod.NONE,
+                        request.getAccessToken() != null ? request.getAccessToken() : null);
+            }
 
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, String.format("The provided URL '%s' was Malformed!", url), e);
+                    HttpStatus.BAD_REQUEST, String.format("The provided URL '%s' was Malformed!", request.getUrl()), e);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, String.format("The authorization method '%s' is unknown please use one of %s", url, Arrays.toString(AuthorizationMethod.values())), e);
-        } catch (CollectionNotFound e) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, String.format("Unknown collection '%s', must be one of %s", url, validationService.getCollectionNames()), e);
-        } catch (JsonProcessingException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Can not convert the report to json", e);
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
+    }
+
+    @PostMapping("/resources/{resourceId}/validate")
+    public ValidationReport validateResource(@PathVariable String resourceId,
+                                             @RequestBody Optional<ValidationRequest> request) {
+
+        try {
+            if (request.map(ValidationRequest::getAsync).orElse(asyncDefault)) {
+                return validationReportService.submitValidation(resourceId,
+                        advancedMode,
+                        request.map(ValidationRequest::getStrict).orElse(strictDefault),
+                        request.map(ValidationRequest::getAccessToken).orElse(null)) ;
+            } else {
+                return validationReportService.executeValidation(resourceId,
+                        advancedMode,
+                        request.map(ValidationRequest::getStrict).orElse(strictDefault),
+                        request.map(ValidationRequest::getAccessToken).orElse(null)) ;
+            }
+
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 }

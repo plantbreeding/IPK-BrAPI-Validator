@@ -3,9 +3,11 @@ package org.brapi.brava.core.reports;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.brapi.brava.core.model.MiniReport;
-import org.brapi.brava.core.model.Resource;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 public class SuiteReport implements Report {
 
     @NonNull
-    private Resource resource;
+    private String url;
 
     @Setter(AccessLevel.NONE)
     private List<CollectionReport> collections = new ArrayList<>();

@@ -1,18 +1,16 @@
-package org.brapi.brava.core.model;
+package org.brapi.brava.data.dto;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * A provider instance contains the information related to one resource provider
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @RequiredArgsConstructor
-public class Provider {
-    @NonNull
+public class ProviderDTO {
+
     private String id;
     @NonNull
     private String name;

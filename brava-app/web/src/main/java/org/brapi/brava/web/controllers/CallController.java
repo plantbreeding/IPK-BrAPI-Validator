@@ -1,14 +1,10 @@
 package org.brapi.brava.web.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.brapi.brava.core.exceptions.CollectionNotFound;
-import org.brapi.brava.core.model.Resource;
 import org.brapi.brava.core.model.ValidationReport;
-import org.brapi.brava.core.reports.SuiteReport;
 import org.brapi.brava.core.service.ValidationService;
-import org.brapi.brava.core.utils.ReportParser;
 import org.brapi.brava.core.validation.AuthorizationMethod;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.Date;
+import java.net.URL;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -51,19 +45,21 @@ public class CallController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing or invalid url parameter");
             }
 
+            new URL(url) ; // check if valid URL
+
             String collectionName = version.orElse(validationService.getDefaultCollectionName()) ;
 
             if (!validationService.getCollectionNames().contains(collectionName)) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid version %s", collectionName));
             }
 
-            Resource resource = new Resource(url, accessToken.orElse(null)) ;
-
-            return validationService.validate(resource,
-                    version.orElse(validationService.getDefaultCollectionName()),
+            return validationService.validate(null,
+                    url,
+                    version.orElse(version.orElse(validationService.getDefaultCollectionName())),
                     strict.orElse(false),
                     advancedMode,
-                    authorizationMethod.map(AuthorizationMethod::valueOf)) ;
+                    authorizationMethod.map(AuthorizationMethod::valueOf).orElse(AuthorizationMethod.NONE),
+                    accessToken.orElse(null)) ;
         } catch (MalformedURLException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, String.format("The provided URL '%s' was Malformed!", url), e);
@@ -72,7 +68,7 @@ public class CallController {
                     HttpStatus.BAD_REQUEST, String.format("Unknown collection '%s', must be one of %s", url, validationService.getCollectionNames()), e);
         }  catch (IllegalArgumentException e) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, String.format("The authorization method '%s' is unknown please use one of %s", url, Arrays.toString(AuthorizationMethod.values())), e);
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, "Can not convert the report to json", e);
