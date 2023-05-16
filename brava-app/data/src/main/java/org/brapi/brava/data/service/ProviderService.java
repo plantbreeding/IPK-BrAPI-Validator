@@ -17,4 +17,6 @@ public interface ProviderService {
     Provider findProvider(String id) throws EntityNotFoundException ;
 
     Provider createProvider(ProviderDTO providerDTO);
+
+    Provider deleteProvider(String id) throws EntityNotFoundException;
 }

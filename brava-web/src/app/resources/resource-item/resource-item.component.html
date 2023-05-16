@@ -1,0 +1,132 @@
+<div class="main-container">
+    <h1 class="mat-h1">Resource</h1>
+    <div *ngIf="loadError">
+        <h2>Could not load resource due to</h2> <app-error-message [error]="loadError"></app-error-message>
+    </div>
+    <mat-spinner *ngIf="loading" diameter="32"></mat-spinner>
+    <div *ngIf="resource && !loadError && !loading">
+        <div class="action-buttons" align="right">
+            <button mat-fab color="primary" aria-label="Validate resource" [disabled]="!loading"
+                (click)="validateResource()">
+                <mat-icon>start</mat-icon>
+            </button>
+            <button mat-fab color="primary" aria-label="Delete resource" [disabled]="!canDelete && !loading"
+                (click)="deleteResource()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a Name for the resource" formControlName="name">
+                            <mat-error *ngIf="formGroup.value.name">You must provide a name</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>URL</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a valid URL for the resource" formControlName="url">
+                            <mat-error *ngIf="formGroup.value.url">You must provide a valid URL!</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>AuthorizationMethod</td>
+                    <td>
+                        <mat-select formControlName="authorizationMethod">
+                            <mat-option *ngFor="let enum of AuthorizationMethod | keyvalue"
+                                [value]="enum.key">{{enum.value}}</mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a Description for the resource"
+                                formControlName="description">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Crop</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a crop for the resource" formControlName="crop">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Version</td>
+                    <td>
+                        <mat-select formControlName="collectionName">
+                            <mat-option *ngFor="let collectionName  of (collectionNames$ | async)"
+                                [value]="collectionName">{{collectionName}}</mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a valid email for the provider"
+                                formControlName="email">
+                            <mat-error *ngIf="formGroup.value.email">Must be a valid email!</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Validation Frequency</td>
+                    <td>
+                        <mat-select formControlName="frequency">
+                            <mat-option *ngFor="let enum of ValidationFrequency | keyvalue"
+                                [value]="enum.key">{{enum.value}}</mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Is confirmed</td>
+                    <td>
+                        <mat-checkbox formControlName="confirmed" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Is public</td>
+                    <td>
+                        <mat-checkbox formControlName="isPublic" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Crop</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a certificate for the resource"
+                                formControlName="certificate">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Logo</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a valid Logo URL for the resource"
+                                formControlName="logo">
+                            <mat-error *ngIf="formGroup.value.logo">Must be a valid URL!</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="form-element">
+                <button mat-raised-button color="primary" type="submit" class="button"
+                    [disabled]="!(needsSaving && formGroup.valid)">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div *ngIf="executingError"><h2>Could not run validation due to: </h2> <app-error-message [error]="executingError"></app-error-message></div>
+<mat-spinner *ngIf="executing" diameter="32"></mat-spinner>
+<div *ngIf="!executing">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+        <mat-form-field appearance="fill">
+            <mat-label>URL</mat-label>
+            <input matInput placeholder="Provide a URL to be validated" formControlName="url">
+            <mat-error *ngIf="formGroup.value.url">You must provide a valid URL!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" placeholder="Provide choose a BrAPI version. If not selected the default is used.">
+            <mat-label>Version</mat-label>
+            <mat-select formControlName="collectionName">
+                <mat-option *ngFor="let collectionName  of (collectionNames$ | async)" [value]="collectionName">{{collectionName}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.value.collectionName">You must provide a version!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" placeholder="Provide choose an Authorization Method">
+            <mat-label>Authorization Method</mat-label>
+            <mat-select formControlName="authorizationMethod">
+                <mat-option *ngFor="let enum of AuthorizationMethod | keyvalue" [value]="enum.key">{{enum.value}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.value.authorizationMethod">You must provide an Authorization Method!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" placeholder="Provide the Authorization Token">
+            <mat-label>Authorization Token</mat-label>
+            <textarea matInput formControlName="accessToken"></textarea>
+        </mat-form-field>
+        <mat-checkbox formControlName="strict">Strict Mode</mat-checkbox>
+        <mat-checkbox formControlName="async">Run in the backgroud</mat-checkbox>
+        <div class="form-element">
+            <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit Form</button>
+        </div>
+    </form>
+</div>

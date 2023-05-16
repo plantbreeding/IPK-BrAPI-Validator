@@ -1,22 +1,28 @@
-<div class="grid-container">
+<div class="main-container">
   <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="1" rowHeight="350px">
-    <mat-grid-tile>
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            Introduction
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>The BrAPI Validator can be used to validate BrAPI compliance. 
-            From the <a mat-list-item routerLink="/reports">Reports</a> page you can review previous
-          validation reports or start a new validation. 
-          The <a mat-list-item routerLink="/resources">Reosurce</a> page list those BrAPI resources known
-          to this application, review previous report for each resource and start or schedule new validations
-          for a resource. </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title>
+        Introduction
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+      <div>The BrAPI Validator can be used to validate BrAPI compliance.
+        From the <a mat-list-item routerLink="/reports">Reports</a> page you can review previous
+        validation reports or start a new validation.
+        The <a mat-list-item routerLink="/resources">Reosurce</a> page list those BrAPI resources known
+        to this application, review previous report for each resource and start or schedule new validations
+        for a resource. </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title>
+        Validate a BrAPI server
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+      <app-validation-request></app-validation-request>
+    </mat-card-content>
+  </mat-card>
 </div>

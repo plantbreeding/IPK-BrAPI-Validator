@@ -57,4 +57,17 @@ public class ProviderController {
                     HttpStatus.BAD_REQUEST, String.format("Provider is not valid due to %s", e.getMessage()), e);
         }
     }
+
+    @DeleteMapping(path = "/providers/{id}")
+    public Provider deleteProvider(@PathVariable String id) {
+        try {
+            return providerService.deleteProvider(id);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, String.format("Provider is not valid due to %s", e.getMessage()), e);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, String.format(e.getMessage()));
+        }
+    }
 }

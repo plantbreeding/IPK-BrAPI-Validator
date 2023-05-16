@@ -76,6 +76,10 @@
               "browserTarget": "brava-web:build:development"
             }
           },
+          "options": {
+            "browserTarget": "brava-web:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

@@ -18,4 +18,6 @@ public interface ResourceService {
     Resource findResource(String id) throws EntityNotFoundException;
 
     Resource createResource(ResourceDTO resourceDTO) throws EntityNotValidException ;
+
+    Resource deleteResource(String id) throws EntityNotFoundException;
 }

@@ -59,4 +59,17 @@ public class ResourceController {
                     HttpStatus.BAD_REQUEST, String.format("Resource is not valid due to %s", e.getMessage()), e);
         }
     }
+
+    @DeleteMapping(path = "/resources/{id}")
+    public Resource deleteResource(@PathVariable String id) {
+        try {
+            return resourceService.deleteResource(id);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, String.format("Resource is not valid due to %s", e.getMessage()), e);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, String.format(e.getMessage()));
+        }
+    }
 }

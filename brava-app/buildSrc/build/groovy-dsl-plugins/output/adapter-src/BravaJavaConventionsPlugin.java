@@ -1,10 +1,9 @@
 //CHECKSTYLE:OFF
-
+import org.gradle.util.GradleVersion;
 import org.gradle.groovy.scripts.BasicScript;
 import org.gradle.groovy.scripts.ScriptSource;
 import org.gradle.groovy.scripts.TextResourceScriptSource;
 import org.gradle.internal.resource.StringTextResource;
-import org.gradle.util.GradleVersion;
 /**
  * Precompiled brava.java-conventions script plugin.
  **/

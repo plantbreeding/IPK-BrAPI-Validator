@@ -18,6 +18,7 @@ import org.brapi.brava.data.service.ValidationReportService;
 import org.brapi.brava.jpa.reports.ValidationReportEntity;
 import org.brapi.brava.jpa.reports.ValidationReportRepository;
 import org.brapi.brava.jpa.resources.ResourceRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * JPA implementation of the ValidationReportService
  */
+@Profile("jpa")
 @Service
 public class JPAValidationReportService implements ValidationReportService {
 
@@ -94,12 +96,23 @@ public class JPAValidationReportService implements ValidationReportService {
 
     @Override
     public Page<ValidationReport> findAllReports(Pageable pageable) {
-        return validationReportRepository.findAll(pageable).map(this::convertToDTO) ;
+        return validationReportRepository.findAll(pageable).map(this::convertToModel) ;
     }
 
     @Override
     public ValidationReport findReport(String id) {
-        return convertToDTO(validationReportRepository.findById(UUID.fromString(id)).orElseThrow( () -> new EntityNotFoundRuntimeException(String.format("Can not find Report with id : %s ", id)))) ;
+        return convertToModel(validationReportRepository.findById(UUID.fromString(id)).orElseThrow( () -> new EntityNotFoundRuntimeException(String.format("Can not find Report with id : %s ", id)))) ;
+    }
+
+    @Override
+    public ValidationReport deleteReport(String id) throws EntityNotFoundException {
+        try {
+            ValidationReportEntity entity = validationReportRepository.findById(UUID.fromString(id)).orElseThrow(() -> new EntityNotFoundRuntimeException(String.format("Can not find Report with id : %s ", id))) ;
+            validationReportRepository.delete(entity) ;
+            return convertToModel(entity) ;
+        } catch (EntityNotFoundRuntimeException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
     private ValidationReport executeValidation(String resourceId,
@@ -110,7 +123,7 @@ public class JPAValidationReportService implements ValidationReportService {
                                                AuthorizationMethod authorizationMethod,
                                                String accessToken) throws ValidationException {
         try {
-            return convertToDTO(validationReportRepository.save(convertToEntity(validationService.validate(resourceId, url, collectionName, advancedMode, strict, authorizationMethod, accessToken)))) ;
+            return convertToModel(validationReportRepository.save(convertToEntity(validationService.validate(resourceId, url, collectionName, advancedMode, strict, authorizationMethod, accessToken)))) ;
         } catch (CollectionNotFound e) {
             throw new ValidationException(String.format("Unknown collection '%s', must be one of %s", collectionName, validationService.getCollectionNames()), e);
         } catch (JsonProcessingException e) {
@@ -150,10 +163,10 @@ public class JPAValidationReportService implements ValidationReportService {
 
         executorService.submit(new ValidationRunnable(entity.getId(), resourceId, url, collectionName, advancedMode, strict, authorizationMethod, accessToken)) ;
 
-        return convertToDTO(entity) ;
+        return convertToModel(entity) ;
     }
 
-    private ValidationReport convertToDTO(ValidationReportEntity entity) {
+    private ValidationReport convertToModel(ValidationReportEntity entity) {
         ValidationReport report = new ValidationReport() ;
 
         report.setReportId(entity.getId().toString());

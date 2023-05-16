@@ -29,5 +29,7 @@ public interface ValidationReportService {
     ValidationReport submitValidation(String resourceId, boolean advancedMode, Boolean strict, String accessToken) throws ValidationException, EntityNotFoundException;
 
     Page<ValidationReport> findAllReports(Pageable pageable);
-    ValidationReport findReport(String id);
+    ValidationReport findReport(String id) throws EntityNotFoundException;
+
+    ValidationReport deleteReport(String id) throws EntityNotFoundException;
 }

@@ -1,19 +1,17 @@
 package org.brapi.brava.jpa.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.brapi.brava.core.model.Provider;
 import org.brapi.brava.core.model.Resource;
-import org.brapi.brava.core.utils.ReportParser;
 import org.brapi.brava.data.dto.ResourceDTO;
 import org.brapi.brava.data.exceptions.EntityNotFoundException;
 import org.brapi.brava.data.exceptions.EntityNotFoundRuntimeException;
-import org.brapi.brava.data.exceptions.EntityNotValidException;
 import org.brapi.brava.data.exceptions.EntityNotValidRuntimeException;
 import org.brapi.brava.data.service.ResourceService;
-import org.brapi.brava.jpa.resources.ProviderEntity;
-import org.brapi.brava.jpa.resources.ProviderRepository;
+import org.brapi.brava.jpa.providers.ProviderEntity;
+import org.brapi.brava.jpa.providers.ProviderRepository;
 import org.brapi.brava.jpa.resources.ResourceEntity;
 import org.brapi.brava.jpa.resources.ResourceRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,20 +20,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
-@Slf4j
+@Profile("jpa")
 @Service
 public class JPAResourceService implements ResourceService {
 
     private final ResourceRepository resourceRepository ;
     private final ProviderRepository providerRepository ;
-    private final ReportParser reportParser ;
 
     public JPAResourceService(ResourceRepository resourceRepository,
-                              ProviderRepository providerRepository,
-                              ReportParser reportParser) {
+                              ProviderRepository providerRepository) {
         this.resourceRepository = resourceRepository;
         this.providerRepository = providerRepository;
-        this.reportParser = reportParser;
     }
 
     @Override
@@ -63,12 +58,23 @@ public class JPAResourceService implements ResourceService {
     }
 
     @Override
-    public Resource createResource(ResourceDTO dto) throws EntityNotValidException {
+    public Resource createResource(ResourceDTO dto) {
         ResourceEntity entity = new ResourceEntity() ;
 
         updateResource(entity, dto) ;
 
         return convertToModel(resourceRepository.save(entity)) ;
+    }
+
+    @Override
+    public Resource deleteResource(String id) throws EntityNotFoundException {
+        try {
+            ResourceEntity entity = resourceRepository.findById(UUID.fromString(id)).orElseThrow(() -> new EntityNotFoundRuntimeException(String.format("Can not find Resource with id : %s ", id))) ;
+            resourceRepository.delete(entity) ;
+            return convertToModel(entity) ;
+        } catch (EntityNotFoundRuntimeException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
     private Resource updateResourceAndSave(ResourceEntity entity, ResourceDTO dto)  {

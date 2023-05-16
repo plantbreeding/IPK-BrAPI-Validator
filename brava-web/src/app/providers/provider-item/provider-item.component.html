@@ -1,0 +1,62 @@
+<div class="main-container">
+    <h1 class="mat-h1">Provider</h1>
+    <div *ngIf="loadError">
+        <h2>Could not load provider due to</h2> <app-error-message [error]="loadError"></app-error-message>
+    </div>
+    <mat-spinner *ngIf="loading" diameter="32"></mat-spinner>
+    <div *ngIf="provider && !loadError && !loading">
+        <div class="action-buttons" align="right">
+            <button mat-fab color="primary" aria-label="Delete provider" [disabled]="!canDelete"
+                (click)="deleteProvider()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a Name for the provider" formControlName="name">
+                            <mat-error *ngIf="formGroup.value.name">You must provide a name!</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a Description for the provider"
+                                formControlName="description">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a valid email for the provider"
+                                formControlName="email">
+                            <mat-error *ngIf="formGroup.value.email">Must be a valid email!</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Logo</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                            <input matInput placeholder="Provide a valid Logo URL for the provider"
+                                formControlName="logo">
+                            <mat-error *ngIf="formGroup.value.email">Must be a valid URL!</mat-error>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="form-element">
+                <button mat-raised-button color="primary" type="submit" class="button"
+                    [disabled]="!(needsSaving && formGroup.valid)">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

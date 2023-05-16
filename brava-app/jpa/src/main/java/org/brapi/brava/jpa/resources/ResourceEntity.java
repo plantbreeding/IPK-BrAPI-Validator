@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.brapi.brava.core.model.ValidationFrequency;
 import org.brapi.brava.core.validation.AuthorizationMethod;
+import org.brapi.brava.jpa.providers.ProviderEntity;
 
 import java.util.UUID;
 

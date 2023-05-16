@@ -7,20 +7,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from './shared/shared.module'
+import { HttpClientModule } from '@angular/common/http';
+import { ReportService } from './services/report.service';
+import { ConfigService } from './services/config.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ValidationRequestComponent } from './validation-request/validation-request.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    DashboardComponent
+    DashboardComponent,
+    ValidationRequestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    HttpClientModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ReportService, ConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
