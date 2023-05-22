@@ -45,6 +45,20 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Provider</td>
+                    <td>
+                        <mat-select [formControl]="providers" placeholder="Bank">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="providersSearch" [searching]="searchingForProviders"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let provider of filteredProviders | async" [value]="provider">
+                                {{provider.name}}
+                            </mat-option>
+                        </mat-select>
+                    </td>
+                </tr>
+
+                <tr>
                     <td>Description</td>
                     <td>
                         <mat-form-field appearance="fill">
@@ -84,6 +98,7 @@
                     <td>Validation Frequency</td>
                     <td>
                         <mat-select formControlName="frequency">
+                            <mat-option>None</mat-option>
                             <mat-option *ngFor="let enum of ValidationFrequency | keyvalue"
                                 [value]="enum.key">{{enum.value}}</mat-option>
                         </mat-select>

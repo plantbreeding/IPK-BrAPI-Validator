@@ -26,6 +26,13 @@ export class ValidationService {
     );
   }
 
+  getDefaultCollectionName(): Observable<string | undefined> {
+    const url = this.configService.config.url.validate.collectionNames;
+    return this.http.get(url).pipe(
+      map(raw => raw ? raw as string : undefined)
+    );
+  }
+
   getCollectionNames(): Observable<string[]> {
     const url = this.configService.config.url.validate.collectionNames;
     return this.http.get(url).pipe(

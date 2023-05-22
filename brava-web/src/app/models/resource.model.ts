@@ -1,10 +1,12 @@
 import { AuthorizationMethod } from "./authorization-method.model";
+import { createProvider, Provider } from "./provider.model";
 import { ValidationFrequency } from "./validation-frequency.model";
 
 export interface Resource {
     id: string ;
     url: string ;
     authorizationMethod: AuthorizationMethod ;
+    provider: Provider ;
     crop: string ;
     collectionName: string ;
     email: string ;
@@ -22,6 +24,7 @@ export function createResource(raw:any) : Resource {
     id: raw.id,
     url: raw.url,
     authorizationMethod: <keyof typeof AuthorizationMethod> raw.authorizationMethod as string,
+    provider: createProvider(raw.provider),
     crop: raw.crop,
     collectionName: raw.collectionName,
     email: raw.email,

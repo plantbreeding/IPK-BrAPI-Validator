@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { filter, map, mergeMap, tap, of, Observable } from 'rxjs';
+import { filter, map, mergeMap, tap, of, Observable, first, Subject, takeUntil, debounceTime, delay, ReplaySubject } from 'rxjs';
 import { Resource, createNewResource, isResourceEqual } from '../../models/resource.model';
 import { ResourceService } from 'src/app/services/resource.service';
 import { environment } from '../../../environments/environment';
@@ -11,13 +11,17 @@ import { ValidationFrequency } from 'src/app/models/validation-frequency.model';
 import { ValidationService } from 'src/app/services/validation.service';
 import { ValidationRequest } from 'src/app/models/validation-requeest.model';
 import { Report } from 'src/app/models/report.model';
+import { Provider } from 'src/app/models/provider.model';
+import { ProviderService } from 'src/app/services/provider.service';
+import { Page } from 'src/app/models/spring-data.model';
+import { SearchRequest } from 'src/app/models/search-request';
 
 @Component({
   selector: 'app-resource-item',
   templateUrl: './resource-item.component.html',
   styleUrls: ['./resource-item.component.scss']
 })
-export class ResourceItemComponent {
+export class ResourceItemComponent implements OnInit, OnDestroy {
   public AuthorizationMethod = AuthorizationMethod;
   public ValidationFrequency = ValidationFrequency;
   loadError: HttpErrorResponse | undefined;
@@ -25,16 +29,23 @@ export class ResourceItemComponent {
   needsSaving = false ;
   resource$: Resource | undefined;
   formGroup: FormGroup;
+  defaultCollectionName$ : Observable<string | undefined> | undefined
   collectionNames$ : Observable<string[]> | undefined
   isNew$ = false ;
   canDelete$ = false ;
+  public searchingForProviders = false;
+  protected _onDestroy = new Subject<void>();
+  public  filteredProviders: ReplaySubject<Provider[]> = new ReplaySubject<Provider[]>(1);
   
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, 
-      private resourceService: ResourceService, private validationService: ValidationService, private router: Router) {
+      private resourceService: ResourceService, private validationService: ValidationService, private providerService: ProviderService,  
+      private router: Router) {
     this.formGroup = this.formBuilder.group({
       'name': [null, Validators.required],
       'url': [null, [Validators.required, Validators.pattern(environment.urlRegex)]],
       'authorizationMethod': [AuthorizationMethod.NONE, Validators.required],
+      'provider': null,
+      'providersSearch': '',
       'description': null,
       'crop': null,
       'collectionName': null,
@@ -56,7 +67,47 @@ export class ResourceItemComponent {
 
   ngOnInit(): void {
     this.getResourceFromRoute();
+    this.defaultCollectionName$ = this.validationService.getDefaultCollectionName() ;
+    if (this.defaultCollectionName$) {
+      this.defaultCollectionName$.subscribe({
+          next: (defaultCollectionName : string | undefined) => {
+            if (this.formGroup.get('collectionName') != null) {
+              this.formGroup.get('collectionName')?.setValue(defaultCollectionName);
+           }
+          }
+        }
+      )
+    }
     this.collectionNames$ = this.validationService.getCollectionNames() ;
+
+    this.formGroup.get('provider')?.valueChanges
+    .pipe(
+      filter(search => !!search),
+      tap(() => this.searchingForProviders = true),
+      takeUntil(this._onDestroy),
+      debounceTime(200),
+      mergeMap((search: string) => {
+        return this.providerService.search(new SearchRequest(search))
+      }),
+      delay(500),
+      takeUntil(this._onDestroy)
+    )
+    .subscribe({
+      next: (providers: Page<Provider>) => {
+        this.searchingForProviders = false;
+        this.filteredProviders.next(providers.content);
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        this.resource = undefined;
+        this.searchingForProviders = false;
+        this.loadError = errorResponse;
+      }
+    }) ;
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
   }
   
   get isNew() : boolean {
@@ -78,6 +129,7 @@ export class ResourceItemComponent {
       this.formGroup.get('name')?.setValue(this.resource$.name);
       this.formGroup.get('url')?.setValue(this.resource$.name);
       this.formGroup.get('authorizationMethod')?.setValue(this.resource$.authorizationMethod);
+      this.formGroup.get('provider')?.setValue(this.resource$.provider.name);
       this.formGroup.get('description')?.setValue(this.resource$.description);
       this.formGroup.get('crop')?.setValue(this.resource$.crop);
       this.formGroup.get('collectionName')?.setValue(this.resource$.collectionName);

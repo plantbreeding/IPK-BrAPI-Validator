@@ -3,6 +3,10 @@
 A web application for running and scheduling validations of BrAPI endpoints. Reports from previous runs
 can also be reviewed. 
 
+## Requirements
+
+Requires node, npm and @angular/cli. See https://angular.io/guide/setup-local. Then run npm install from this directory. 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

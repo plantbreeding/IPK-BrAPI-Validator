@@ -21,6 +21,7 @@ export class ConfigService {
       validate: {
         url: '/proxy-local/brava/validate',
         resource: '/proxy-local/brava/resources/{id}/validate',
+        defaultCollectionName: '/proxy-local/brava/defaultCollectionName',
         collectionNames: '/proxy-local/brava/collectionNames'
       }
     }

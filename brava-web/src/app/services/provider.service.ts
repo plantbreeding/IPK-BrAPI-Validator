@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Page, PageRequest } from '../models/spring-data.model';
 import { Provider, createProvider } from './../models/provider.model';
 import { Observable, map } from 'rxjs';
+import { SearchRequest } from '../models/search-request';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,20 @@ export class ProviderService {
         map(createProvider)
     );
   }
+
+  search(searchRequest: SearchRequest): Observable<Page<Provider>> {
+    return this.http.get(this.configService.config.url.resource.list, {
+      params: searchRequest.toHttpParams() }).pipe(
+      map((responseData: any) => {
+        const data = Array.isArray(responseData.content) ? responseData.content.map((raw: any) => createProvider(raw)) : [];
+        return <Page<Provider>>{
+          ...responseData,
+          data: data
+        };
+      })
+    );
+  }
+
 
   save(provider: Provider): Observable<Provider> {
     const url = this.configService.config.url.provider.get.replace('{id}', provider.id);
