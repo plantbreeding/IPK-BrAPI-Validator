@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @RestController
 public class ProviderController {
     private final ProviderService providerService;
@@ -19,8 +21,8 @@ public class ProviderController {
     }
 
     @GetMapping(path = "/providers")
-    public Page<Provider> getAllProviders(Pageable pageable) {
-        return providerService.findAllProviders(pageable);
+    public Page<Provider> getProviders(Optional<String> search, Pageable pageable) {
+        return search.map(name -> providerService.findByNameContainingIgnoreCase(name, pageable)).orElse(providerService.findAllProviders(pageable)) ;
     }
 
     @GetMapping(path = "/providers/{id}")

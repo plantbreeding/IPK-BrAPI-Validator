@@ -14,6 +14,8 @@ public interface ProviderService {
 
     Page<Provider> findAllProviders(Pageable pageable);
 
+    Page<Provider> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
     Provider findProvider(String id) throws EntityNotFoundException ;
 
     Provider createProvider(ProviderDTO providerDTO);

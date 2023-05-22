@@ -38,6 +38,11 @@ public class ValidationController {
 
     }
 
+    @GetMapping("defaultCollectionName")
+    public String defaultCollectionName() {
+        return validationService.getDefaultCollectionName() ;
+    }
+
     @GetMapping("collectionNames")
     public List<String> collectionNames() {
         return validationService.getCollectionNames() ;

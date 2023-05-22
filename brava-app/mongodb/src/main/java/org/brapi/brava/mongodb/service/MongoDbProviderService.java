@@ -30,6 +30,11 @@ public class MongoDbProviderService implements ProviderService {
     }
 
     @Override
+    public Page<Provider> findByNameContainingIgnoreCase(String name, Pageable pageable) {
+        return providerRepository.findByNameContainingIgnoreCase(name, pageable).map(this::convertToModel) ;
+    }
+
+    @Override
     public Provider findProvider(String id) throws EntityNotFoundException {
         try {
             return convertToModel(providerRepository.findById(UUID.fromString(id)).orElseThrow( () -> new EntityNotFoundRuntimeException(String.format("Can not find Provider with id : %s ", id)))) ;
