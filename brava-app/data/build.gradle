@@ -1,9 +1,8 @@
 plugins {
-    id 'brava.java-conventions'
-    id 'io.spring.dependency-management'
+    id 'brava.spring-conventions'
 }
 
 dependencies {
-    api(project(':core'))
-    implementation 'org.springframework.data:spring-data-commons:3.0.4'
+    api project(':core')
+    implementation 'org.springframework.data:spring-data-commons:3.1.2'
 }

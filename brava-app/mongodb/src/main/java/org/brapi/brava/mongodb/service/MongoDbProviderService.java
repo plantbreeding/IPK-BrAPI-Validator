@@ -7,14 +7,12 @@ import org.brapi.brava.data.exceptions.EntityNotFoundRuntimeException;
 import org.brapi.brava.data.service.ProviderService;
 import org.brapi.brava.mongodb.providers.ProviderDocument;
 import org.brapi.brava.mongodb.providers.ProviderDocumentRepository;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Profile("mongodb")
 @Service
 public class MongoDbProviderService implements ProviderService {
 

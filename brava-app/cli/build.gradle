@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(':core')
+    api project(':core')
     implementation 'info.picocli:picocli:4.7.0'
     runtimeOnly 'ch.qos.logback:logback-classic:1.4.6'
 }

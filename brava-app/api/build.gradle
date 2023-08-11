@@ -2,10 +2,23 @@ plugins {
     id 'brava.spring-boot-conventions'
 }
 
+def currentProfile;
+
+if (project.hasProperty('mongodb')) {
+    currentProfile = 'mongodb';
+    apply from: rootProject.file('build_mongodb.gradle');
+
+} else if (project.hasProperty('jpa')) {
+    currentProfile = 'jpa';
+    apply from: rootProject.file('build_jpa.gradle');
+} else {
+    currentProfile = 'default jpa';
+    apply from: rootProject.file('build_jpa.gradle');
+}
+println 'Current profile: "' + currentProfile + '"' ;
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.data:spring-data-commons'
     implementation 'org.modelmapper:modelmapper:1.1.0'
-    api project(':jpa')
-    //api project(':mongodb')
 }

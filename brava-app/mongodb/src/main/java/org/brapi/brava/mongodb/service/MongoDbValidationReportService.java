@@ -20,7 +20,6 @@ import org.brapi.brava.mongodb.reports.ValidationReportDocumentRepository;
 import org.brapi.brava.mongodb.resources.ResourceDocument;
 import org.brapi.brava.mongodb.resources.ResourceDocumentRepository;
 import org.bson.json.JsonObject;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,6 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 
-@Profile("mongodb")
 @Service
 public class MongoDbValidationReportService implements ValidationReportService {
 

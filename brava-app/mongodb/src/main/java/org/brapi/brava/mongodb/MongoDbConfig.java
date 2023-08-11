@@ -6,8 +6,6 @@ import com.mongodb.ServerAddress;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertCallback;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -25,7 +23,6 @@ import static java.lang.Integer.parseInt;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
-@Profile("mongodb")
 @Configuration
 @EnableMongoRepositories
 public class MongoDbConfig extends AbstractMongoClientConfiguration {

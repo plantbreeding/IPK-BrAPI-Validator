@@ -7,14 +7,12 @@ import org.brapi.brava.data.exceptions.EntityNotFoundRuntimeException;
 import org.brapi.brava.data.service.ProviderService;
 import org.brapi.brava.jpa.providers.ProviderEntity;
 import org.brapi.brava.jpa.providers.ProviderRepository;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Profile("jpa")
 @Service
 public class JPAProviderService implements ProviderService {
     private final ProviderRepository providerRepository ;

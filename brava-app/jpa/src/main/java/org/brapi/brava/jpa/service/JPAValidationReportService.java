@@ -18,7 +18,6 @@ import org.brapi.brava.data.service.ValidationReportService;
 import org.brapi.brava.jpa.reports.ValidationReportEntity;
 import org.brapi.brava.jpa.reports.ValidationReportRepository;
 import org.brapi.brava.jpa.resources.ResourceRepository;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,6 @@ import java.util.concurrent.ExecutorService;
 /**
  * JPA implementation of the ValidationReportService
  */
-@Profile("jpa")
 @Service
 public class JPAValidationReportService implements ValidationReportService {
 

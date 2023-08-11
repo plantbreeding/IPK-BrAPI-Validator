@@ -11,7 +11,6 @@ import org.brapi.brava.mongodb.providers.ProviderDocument;
 import org.brapi.brava.mongodb.providers.ProviderDocumentRepository;
 import org.brapi.brava.mongodb.resources.ResourceDocument;
 import org.brapi.brava.mongodb.resources.ResourceDocumentRepository;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
-@Profile("mongodb")
 @Service
 public class MongoDbResourceService implements ResourceService {
 
