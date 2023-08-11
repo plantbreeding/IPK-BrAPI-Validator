@@ -46,18 +46,14 @@
                 </tr>
                 <tr>
                     <td>Provider</td>
-                    <td>
-                        <mat-select [formControl]="providers" placeholder="Bank">
-                            <mat-option>
-                                <ngx-mat-select-search [formControl]="providersSearch" [searching]="searchingForProviders"></ngx-mat-select-search>
-                            </mat-option>
+                    <td>w
+                        <mat-select formControlName="provider" placeholder="Provider">
                             <mat-option *ngFor="let provider of filteredProviders | async" [value]="provider">
                                 {{provider.name}}
                             </mat-option>
                         </mat-select>
                     </td>
                 </tr>
-
                 <tr>
                     <td>Description</td>
                     <td>

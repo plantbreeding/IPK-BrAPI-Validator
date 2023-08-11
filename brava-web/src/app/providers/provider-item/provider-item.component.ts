@@ -125,7 +125,6 @@ export class ProviderItemComponent {
   }
 
   providerChanged(provider: Provider) {
-    console.log(provider)
     if (this.provider$ && this.provider$.id) {
       this.needsSaving = this.provider$ && !isProviderEqual(this.provider$ , provider) ;
     } else {

@@ -34,6 +34,7 @@ export class ProviderService {
   }
 
   search(searchRequest: SearchRequest): Observable<Page<Provider>> {
+    console.log(searchRequest)
     return this.http.get(this.configService.config.url.resource.list, {
       params: searchRequest.toHttpParams() }).pipe(
       map((responseData: any) => {

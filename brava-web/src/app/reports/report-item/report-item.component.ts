@@ -59,7 +59,6 @@ export class ReportItemComponent implements OnInit {
   }
 
   deleteReport() {
-    console.log(this.report)
     if (this.report && this.report.reportId) {
       this.reportService.delete(this.report.reportId).subscribe({
         next: (report: Report) => {

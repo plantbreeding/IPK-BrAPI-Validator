@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, mergeMap, tap, of, Observable, first, Subject, takeUntil, debounceTime, delay, ReplaySubject } from 'rxjs';
 import { Resource, createNewResource, isResourceEqual } from '../../models/resource.model';
@@ -13,7 +13,7 @@ import { ValidationRequest } from 'src/app/models/validation-requeest.model';
 import { Report } from 'src/app/models/report.model';
 import { Provider } from 'src/app/models/provider.model';
 import { ProviderService } from 'src/app/services/provider.service';
-import { Page } from 'src/app/models/spring-data.model';
+import { Page, PageRequest } from 'src/app/models/spring-data.model';
 import { SearchRequest } from 'src/app/models/search-request';
 
 @Component({
@@ -35,7 +35,7 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
   canDelete$ = false ;
   public searchingForProviders = false;
   protected _onDestroy = new Subject<void>();
-  public  filteredProviders: ReplaySubject<Provider[]> = new ReplaySubject<Provider[]>(1);
+  public filteredProviders: ReplaySubject<Provider[]> = new ReplaySubject<Provider[]>(1);
   
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, 
       private resourceService: ResourceService, private validationService: ValidationService, private providerService: ProviderService,  
@@ -45,7 +45,6 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
       'url': [null, [Validators.required, Validators.pattern(environment.urlRegex)]],
       'authorizationMethod': [AuthorizationMethod.NONE, Validators.required],
       'provider': null,
-      'providersSearch': '',
       'description': null,
       'crop': null,
       'collectionName': null,
@@ -80,19 +79,7 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
     }
     this.collectionNames$ = this.validationService.getCollectionNames() ;
 
-    this.formGroup.get('provider')?.valueChanges
-    .pipe(
-      filter(search => !!search),
-      tap(() => this.searchingForProviders = true),
-      takeUntil(this._onDestroy),
-      debounceTime(200),
-      mergeMap((search: string) => {
-        return this.providerService.search(new SearchRequest(search))
-      }),
-      delay(500),
-      takeUntil(this._onDestroy)
-    )
-    .subscribe({
+    this.providerService.findAll(new PageRequest()).subscribe({
       next: (providers: Page<Provider>) => {
         this.searchingForProviders = false;
         this.filteredProviders.next(providers.content);
@@ -103,6 +90,23 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
         this.loadError = errorResponse;
       }
     }) ;
+
+
+   /* this.formGroup.get('providerSearch')?.valueChanges
+    .pipe(
+      filter(search => !!search),
+      tap(() => this.searchingForProviders = true),
+      takeUntil(this._onDestroy),
+      debounceTime(200),
+      mergeMap((search: string) => {
+        console.log(search)
+        return this.providerService.search(new SearchRequest(search))
+      }),
+      delay(500),
+      takeUntil(this._onDestroy)
+    )
+*/
+    
   }
 
   ngOnDestroy() {
@@ -129,7 +133,7 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
       this.formGroup.get('name')?.setValue(this.resource$.name);
       this.formGroup.get('url')?.setValue(this.resource$.name);
       this.formGroup.get('authorizationMethod')?.setValue(this.resource$.authorizationMethod);
-      this.formGroup.get('provider')?.setValue(this.resource$.provider.name);
+      this.formGroup.get('provider')?.setValue(this.resource$.provider ? this.resource$.provider.name : null);
       this.formGroup.get('description')?.setValue(this.resource$.description);
       this.formGroup.get('crop')?.setValue(this.resource$.crop);
       this.formGroup.get('collectionName')?.setValue(this.resource$.collectionName);
@@ -180,7 +184,6 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(resource: Resource) {
-    console.log(resource)
     if (this.isNew) {
       this.resourceService.new(resource).subscribe({
         next: (resource: Resource) => {
@@ -204,7 +207,7 @@ export class ResourceItemComponent implements OnInit, OnDestroy {
   }
 
   resourceChanged(resource: Resource) {
-    console.log(resource)
+
     if (this.resource$ && this.resource$.id) {
       this.needsSaving = this.resource$ && !isResourceEqual(this.resource$ , resource) ;
     } else {
