@@ -169,7 +169,7 @@ public class MongoDbValidationReportService implements ValidationReportService {
         ValidationReport report = new ValidationReport() ;
 
         report.setReportId(document.getId().toString());
-        report.setResourceId(document.getResourceId().toString());
+        report.setResourceId(document.getResourceId() != null ? document.getResourceId().toString() : null);
 
         report.setResourceUrl(document.getUrl());
         report.setCollectionName(document.getCollectionName());
@@ -221,7 +221,7 @@ public class MongoDbValidationReportService implements ValidationReportService {
 
                 document.setStatus(ValidationReportStatus.COMPLETED);
 
-                document.setReportJson(new JsonObject(report.getReportJson()));
+                document.setReportJson(report.getReportJson() != null ? new JsonObject(report.getReportJson()) : "No report");
                 document.setDate(report.getDate());
                 document.setStatus(report.getStatus());
                 document.setExecutionError(null);

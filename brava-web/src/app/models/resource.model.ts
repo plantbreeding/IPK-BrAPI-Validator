@@ -24,7 +24,7 @@ export function createResource(raw:any) : Resource {
     id: raw.id,
     url: raw.url,
     authorizationMethod: <keyof typeof AuthorizationMethod> raw.authorizationMethod as string,
-    provider: createProvider(raw.provider),
+    provider: raw.provider ? createProvider(raw.provider) : undefined,
     crop: raw.crop,
     collectionName: raw.collectionName,
     email: raw.email,
