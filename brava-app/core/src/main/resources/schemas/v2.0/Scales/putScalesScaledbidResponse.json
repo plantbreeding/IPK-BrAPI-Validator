@@ -6,7 +6,7 @@
             "properties": {
                 "additionalInfo": {
                     "additionalProperties": {
-                        "type": "string"
+                        "type": ["null", "object", "boolean", "number", "array", "string"]
                     },
                     "description": "Additional arbitrary info",
                     "type": [

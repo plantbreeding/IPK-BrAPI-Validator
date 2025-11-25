@@ -12,10 +12,8 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-/* Used to expose a port for debugging backend
 tasks.named("bootRun") {
     jvmArgs = [
             "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
     ]
 }
-*/

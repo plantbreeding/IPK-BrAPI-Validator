@@ -22,7 +22,7 @@
                             },
                             "additionalInfo": {
                                 "additionalProperties": {
-                                    "type": "string"
+                                    "type": ["string", "null", "number", "array", "object",  "boolean"]
                                 },
                                 "description": "Additional arbitrary info",
                                 "type": [
