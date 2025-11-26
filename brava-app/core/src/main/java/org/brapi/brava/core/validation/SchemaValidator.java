@@ -1,14 +1,19 @@
 package org.brapi.brava.core.validation;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jackson.JsonNodeReader;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import org.brapi.brava.core.exceptions.CollectionNotFound;
+import org.brapi.brava.core.model.Collection;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
@@ -16,12 +21,9 @@ import java.nio.charset.Charset;
  */
 public class SchemaValidator {
 
-    private JsonSchemaFactory validator;
+    private static final JsonSchemaFactory validator = JsonSchemaFactory.byDefault();
     private static final JsonNodeReader NODE_READER = new JsonNodeReader();
-
-    public SchemaValidator() {
-        this.validator = JsonSchemaFactory.byDefault();
-    }
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Validate an instance with a schema
@@ -32,12 +34,21 @@ public class SchemaValidator {
      * @throws IOException         Thrown when reading the schema is not possible.
      * @throws ProcessingException Thrown when validating the instance.
      */
-    public ProcessingReport validate(String path, String instanceString) throws ProcessingException, IOException {
+    public static ProcessingReport validate(String path, String instanceString) throws ProcessingException, IOException, CollectionNotFound {
 
         JsonNode instance = NODE_READER.fromInputStream(new ByteArrayInputStream(instanceString.getBytes(Charset.defaultCharset())));
-        final JsonSchema schemaNode = validator.getJsonSchema(path);
 
-        return schemaNode.validateUnchecked(instance, true); //Unchecked, deepCheck
+        InputStream resource = SchemaValidator.class.getClassLoader().getResourceAsStream(path);
+
+        if (resource != null) {
+            final JsonSchema schemaNode = validator.getJsonSchema(mapper.readTree(resource));
+
+            return schemaNode.validateUnchecked(instance, true);
+            //Unchecked, deepCheck
+        }
+        else {
+            throw new CollectionNotFound("No resource found with path: " + path);
+        }
     }
 
 }

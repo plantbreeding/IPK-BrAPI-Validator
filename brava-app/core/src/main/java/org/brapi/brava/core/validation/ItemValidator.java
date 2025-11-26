@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.ConnectionClosedException;
+import org.brapi.brava.core.exceptions.CollectionNotFound;
 import org.brapi.brava.core.model.Item;
 import org.brapi.brava.core.model.Param;
 import org.brapi.brava.core.reports.ExecReport;
@@ -378,9 +379,9 @@ public class ItemValidator {
         execReport.setSchema(schemaPath);
         try {
         	String jsonString = validatableResponse.extract().response().asString();
-            SchemaValidator schemaValidator = new SchemaValidator();
 
-            ProcessingReport r = schemaValidator.validate(schemaPath, jsonString);
+            ProcessingReport r = SchemaValidator.validate(schemaPath, jsonString);
+
             r.forEach(message -> {
                 if( ! (allowAdditional && "\"additionalProperties\"".equals(String.valueOf(message.asJson().get("keyword"))))) {
                     execReport.addError(message.asJson());
@@ -407,6 +408,10 @@ public class ItemValidator {
             log.info("== cause ==");
             log.info(e1.getMessage());
             execReport.addMessage(e1.getMessage());
+            return execReport;
+        } catch (CollectionNotFound e2) {
+            log.info("Collection not found");
+            execReport.addMessage(e2.getMessage());
             return execReport;
         }
 
@@ -481,11 +486,11 @@ public class ItemValidator {
         try {
         	boolean passed = false;
         	if(statusCode == 200) {
-        		testReports.add(schemaMatch(validatableResponse, "/schemas" + schemaPath + ".json", allowAdditional));
+        		testReports.add(schemaMatch(validatableResponse, "schemas" + schemaPath + ".json", allowAdditional));
         		passed = true;
         	}else if(statusCode == 202) {
         		testReports.add(saveVariable(validatableResponse, variables, "/result/searchResultsDbId", searchResultVariableName));
-        		testReports.add(schemaMatch(validatableResponse, "/schemas" + schemaPath + "202.json", allowAdditional));
+        		testReports.add(schemaMatch(validatableResponse, "schemas" + schemaPath + "202.json", allowAdditional));
         		passed = true;
         	}
 
