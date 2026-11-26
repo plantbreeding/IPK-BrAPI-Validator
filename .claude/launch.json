@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "brava-python",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "--directory", "python", "brava", "serve", "--port", "8765"],
+      "port": 8765
+    }
+  ]
+}
