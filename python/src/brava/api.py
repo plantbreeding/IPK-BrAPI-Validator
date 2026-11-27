@@ -348,8 +348,11 @@ async def update_providers(state: State) -> Response[dict[str, Any]]:
 
 def _index_html(settings: Settings) -> str:
     html = (settings.frontend_dir / "index.html").read_text(encoding="utf-8")
-    return html.replace("${buildDate}", settings.build_date or "-").replace(
-        "${git.commit.id.abbrev}", settings.build_version or package_version("brava")
+    return (
+        html.replace("${buildDate}", settings.build_date or "-")
+        .replace("${git.commit.id.abbrev}", settings.build_version or package_version("brava"))
+        # Lets the frontend hide features that need advanced mode (resource list, reports, scheduling).
+        .replace("${advancedMode}", "true" if settings.advanced_mode else "false")
     )
 
 

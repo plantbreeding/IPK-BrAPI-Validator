@@ -170,7 +170,9 @@ def settings(
 ) -> Iterator[config.Settings]:
     frontend = tmp_path / "frontend"
     frontend.mkdir()
-    (frontend / "index.html").write_text("<html>build ${buildDate} ${git.commit.id.abbrev}</html>")
+    (frontend / "index.html").write_text(
+        "<html>build ${buildDate} ${git.commit.id.abbrev} advanced=${advancedMode}</html>"
+    )
     (frontend / "app.js").write_text("// js")
     env = {
         "BRAVA_RESOURCES_DIR": str(resources_dir),

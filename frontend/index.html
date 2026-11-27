@@ -9,6 +9,8 @@
     <!-- Filled in by the backend (Python _index_html / Maven resource filtering). -->
     <meta name="brava-build-date" content="${buildDate}" />
     <meta name="brava-build-version" content="${git.commit.id.abbrev}" />
+    <!-- "false" hides the resource list, saved reports and scheduling (Python backend in simple mode). -->
+    <meta name="brava-advanced-mode" content="${advancedMode}" />
   </head>
   <body>
     <div id="app"></div>

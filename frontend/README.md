@@ -35,7 +35,9 @@ BRAVA_BACKEND=http://localhost:8080/brapivalidator npm run dev
 
 `dist/` uses relative URLs, so it works under any context path. The `${buildDate}` and
 `${git.commit.id.abbrev}` placeholders in `index.html` (meta tags read by the footer) are
-filled in by the backend.
+filled in by the backend. So is `${advancedMode}`: the Python backend sets it to `false` in simple
+mode, and the app then shows only "Test your own" (no resource list, saved reports or scheduling,
+which need the database). An unfilled placeholder (dev server, Java backend) counts as advanced mode.
 
 - Python backend: `BRAVA_FRONTEND_DIR=../frontend/dist uv run brava serve`
 - Java backend: still serves the vanilla frontend; `pom.xml` is unchanged.

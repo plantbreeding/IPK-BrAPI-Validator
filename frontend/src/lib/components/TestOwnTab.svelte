@@ -6,7 +6,8 @@
   import ReportView from './ReportView.svelte';
   import Spinner from './Spinner.svelte';
 
-  let { onschedule }: { onschedule: (url: string) => void } = $props();
+  // Without onschedule (backend in simple mode) the "Schedule a periodic test" button is hidden.
+  let { onschedule }: { onschedule?: (url: string) => void } = $props();
 
   let url = $state('');
   let versions = $state<string[]>([]);
@@ -106,7 +107,9 @@
         {#if running}
           <button type="button" class="btn" onclick={() => controller?.abort()}>Cancel</button>
         {/if}
-        <button type="button" class="btn schedule" onclick={() => onschedule(url)}>Schedule a periodic test</button>
+        {#if onschedule}
+          <button type="button" class="btn schedule" onclick={() => onschedule(url)}>Schedule a periodic test</button>
+        {/if}
       </div>
     </form>
   </section>

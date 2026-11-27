@@ -37,6 +37,7 @@ async def client(settings, sent) -> AsyncIterator[AsyncTestClient[Any]]:
 async def test_frontend_and_static(client) -> None:
     r = await client.get("/brapivalidator/")
     assert r.status_code == 200 and "build 2026-11-26" in r.text and "${" not in r.text
+    assert "advanced=true" in r.text
     r = await client.get("/brapivalidator", follow_redirects=False)
     assert r.status_code in (301, 302, 307, 308) and r.headers["location"].endswith("/brapivalidator/")
     assert (await client.get("/brapivalidator/app.js")).status_code == 200
@@ -183,6 +184,7 @@ async def test_simple_mode(monkeypatch, settings) -> None:
 
     get_settings.cache_clear()
     async with AsyncTestClient(create_app()) as c:
+        assert "advanced=false" in (await c.get("/brapivalidator/")).text
         assert (await c.get(f"{API}/public/resources")).status_code == 501
         assert (await c.get(f"{API}/testreport/x")).status_code == 501
         assert (await c.post(f"{API}/ci/resources", json={})).status_code in (404, 405)

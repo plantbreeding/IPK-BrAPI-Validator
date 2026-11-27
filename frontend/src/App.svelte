@@ -7,27 +7,30 @@
 
   type Tab = 'resources' | 'testyourown' | 'report';
 
-  // ?report=<id> links (from report emails) open the saved report tab.
-  const reportId = new URLSearchParams(location.search).get('report');
+  // Build info and mode injected into index.html by the backend; placeholders stay as-is in dev.
+  function meta(name: string, fallback: string) {
+    const v = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)?.content ?? '';
+    return !v || v.startsWith('${') ? fallback : v;
+  }
+  const buildDate = meta('brava-build-date', 'dev');
+  const buildVersion = meta('brava-build-version', 'dev');
+  // The resource list, saved reports and scheduling need the database (advanced mode). Only an
+  // explicit "false" hides them, so dev servers and backends that don't fill the tag keep everything.
+  const advanced = meta('brava-advanced-mode', 'true') !== 'false';
 
-  let tab = $state<Tab>(reportId ? 'report' : 'resources');
+  // ?report=<id> links (from report emails) open the saved report tab.
+  const reportId = advanced ? new URLSearchParams(location.search).get('report') : null;
+
+  let tab = $state<Tab>(reportId ? 'report' : advanced ? 'resources' : 'testyourown');
   let helpOpen = $state(false);
   let scheduleOpen = $state(false);
   let scheduleUrl = $state('');
 
   const tabs: { id: Tab; label: string }[] = [
-    { id: 'resources', label: 'BrAPI Resources' },
+    ...(advanced ? [{ id: 'resources' as Tab, label: 'BrAPI Resources' }] : []),
     { id: 'testyourown', label: 'Test your own' },
     ...(reportId ? [{ id: 'report' as Tab, label: 'Saved report' }] : []),
   ];
-
-  // Build info injected into index.html by the backend; placeholders stay as-is in dev.
-  function meta(name: string) {
-    const v = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)?.content ?? '';
-    return v.startsWith('${') ? 'dev' : v;
-  }
-  const buildDate = meta('brava-build-date');
-  const buildVersion = meta('brava-build-version');
 
   function onTabKey(e: KeyboardEvent, index: number) {
     const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
@@ -72,15 +75,19 @@
 
   <main>
     <!-- Panels stay mounted (hidden) so state like a running test survives switching tabs. -->
-    <div role="tabpanel" id="panel-resources" aria-labelledby="tab-resources" hidden={tab !== 'resources'}>
-      <ResourcesTab />
-    </div>
+    {#if advanced}
+      <div role="tabpanel" id="panel-resources" aria-labelledby="tab-resources" hidden={tab !== 'resources'}>
+        <ResourcesTab />
+      </div>
+    {/if}
     <div role="tabpanel" id="panel-testyourown" aria-labelledby="tab-testyourown" hidden={tab !== 'testyourown'}>
       <TestOwnTab
-        onschedule={(url) => {
-          scheduleUrl = url;
-          scheduleOpen = true;
-        }}
+        onschedule={advanced
+          ? (url) => {
+              scheduleUrl = url;
+              scheduleOpen = true;
+            }
+          : undefined}
       />
     </div>
     {#if reportId}
@@ -115,7 +122,9 @@
 </footer>
 
 <HelpModal bind:open={helpOpen} />
-<ScheduleModal bind:open={scheduleOpen} bind:url={scheduleUrl} />
+{#if advanced}
+  <ScheduleModal bind:open={scheduleOpen} bind:url={scheduleUrl} />
+{/if}
 
 <style>
   .page {
