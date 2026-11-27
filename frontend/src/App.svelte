@@ -26,6 +26,8 @@
   let scheduleOpen = $state(false);
   let scheduleUrl = $state('');
 
+  const year = new Date().getFullYear();
+
   const tabs: { id: Tab; label: string }[] = [
     ...(advanced ? [{ id: 'resources' as Tab, label: 'BrAPI Resources' }] : []),
     { id: 'testyourown', label: 'Test your own' },
@@ -97,7 +99,11 @@
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-text">
-      <p>&copy; 2022 | IPK-Gatersleben. Site licensed under the MIT License.</p>
+      <p>
+        &copy; {year} | IPK-Gatersleben. |
+        <a href="https://www.ipk-gatersleben.de/en/imprint" target="_blank" rel="noopener">Imprint</a> |
+        <a href="https://www.ipk-gatersleben.de/en/data-protection-policy" target="_blank" rel="noopener">Data Protection Policy</a>
+      </p>
       <p>
         <small
           >Last build on {buildDate} UTC with version {buildVersion} | Send any issues/requests to the

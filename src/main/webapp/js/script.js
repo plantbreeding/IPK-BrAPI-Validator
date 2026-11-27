@@ -7,6 +7,8 @@ var statusBtn3 = '" style="display: inline-block;float: right;"><i class="fa fa-
 
 $(function() {
 
+    $('#copyrightYear').text(new Date().getFullYear());
+
     //List of parameters for the current test.
     var paramList = [];
     //For the endpoint table.
