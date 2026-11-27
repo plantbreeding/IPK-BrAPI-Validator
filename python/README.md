@@ -26,7 +26,8 @@ The schema is managed by Alembic and upgraded on startup (`uv run brava upgrade-
 Database drivers: SQLite is included; install the `oracle`, `postgres` or `mysql` extra for the others.
 
 While the database holds no public resource, startup imports the list from `BRAVA_RESOURCE_JSON_URL`
-(default: brapi.org) in the background; `BRAVA_AUTO_IMPORT_RESOURCES=false` turns this off.
+(default: brapi.org) and then tests every resource like the weekly run does (strict,
+`BRAVA_TESTED_VERSION`), all in the background; `BRAVA_AUTO_IMPORT_RESOURCES=false` turns this off.
 `/api/admin/updateproviders` refreshes the list later, and `/api/admin/testallpublic?version=v2.1`
 tests all public resources without waiting for the weekly run.
 

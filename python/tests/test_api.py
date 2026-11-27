@@ -181,32 +181,37 @@ async def test_admin(client, fake_server, monkeypatch) -> None:
     assert "email" not in test
 
 
-async def _public_names_after_startup() -> list[str]:
+async def _public_after_startup() -> list[tuple[str, int]]:
+    """Name and number of test reports of each public resource once the startup tasks are done."""
     async with AsyncTestClient(create_app()) as c:
         async with asyncio.timeout(10):
             # The tasks run on the app's event loop, so they cannot be awaited here.
             while c.app.state.tasks:  # noqa: ASYNC110
                 await asyncio.sleep(0.01)
-        return [r["name"] for r in (await c.get(f"{API}/public/resources")).json()]
+        resources = (await c.get(f"{API}/public/resources")).json()
+        return [(r["name"], len(r["lastTestReports"])) for r in resources]
 
 
-async def test_startup_imports_resources_only_when_empty(monkeypatch, settings, fake_server) -> None:
+async def test_startup_imports_and_tests_resources_only_when_empty(
+    monkeypatch, settings, fake_server
+) -> None:
     monkeypatch.setenv("BRAVA_AUTO_IMPORT_RESOURCES", "true")
     get_settings.cache_clear()
     provider = {"name": "IPK", "resources": [{"name": "Test", "v2-url": BASE}]}
     route = fake_server.get(RESOURCE_LIST).respond(500)
 
     # an unavailable list does not stop the app; the next start tries again
-    assert await _public_names_after_startup() == []
+    assert await _public_after_startup() == []
     route.respond(json=[provider])
-    assert await _public_names_after_startup() == ["Test"]
-    assert await _public_names_after_startup() == ["Test"]
+    assert await _public_after_startup() == [("Test", 1)]
+    # with resources present, a restart neither imports nor tests again
+    assert await _public_after_startup() == [("Test", 1)]
     assert route.call_count == 2
 
 
 async def test_startup_import_can_be_disabled(client, fake_server) -> None:
     route = fake_server.get(RESOURCE_LIST).respond(json=[])
-    assert await _public_names_after_startup() == []
+    assert await _public_after_startup() == []
     assert not route.called
 
 

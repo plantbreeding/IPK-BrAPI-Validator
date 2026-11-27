@@ -413,7 +413,7 @@ def create_app(settings: Settings | None = None) -> Litestar:
             scheduler.start()
             if settings.auto_import_resources:
                 # In the background, so an unreachable resource list does not delay startup.
-                task = asyncio.create_task(jobs.import_providers_if_empty(app.state.sessions))
+                task = asyncio.create_task(jobs.import_and_test_if_empty(app.state.sessions))
                 app.state.tasks.add(task)
                 task.add_done_callback(app.state.tasks.discard)
         try:
