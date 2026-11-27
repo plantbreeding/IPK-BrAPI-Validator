@@ -1,4 +1,4 @@
-"""Validation against the real schema trees in src/main/resources/schemas."""
+"""Validation against the real schema trees in resources/schemas."""
 
 from __future__ import annotations
 

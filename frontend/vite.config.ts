@@ -3,7 +3,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 // During `npm run dev`, /api and /schemas are proxied to a running BRAVA backend.
 // Python (`uv run brava serve --port 8765`): http://localhost:8765/brapivalidator (default)
-// Java   (`mvn jetty:run`):      http://localhost:8080/brapivalidator
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const backend = (env.BRAVA_BACKEND || 'http://localhost:8765/brapivalidator').replace(/\/$/, '');

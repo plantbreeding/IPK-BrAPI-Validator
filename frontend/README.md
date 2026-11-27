@@ -1,15 +1,11 @@
 # BRAVA frontend (Svelte 5)
 
-Svelte 5 + TypeScript + Vite port of the vanilla-JS/jQuery frontend in
-`../src/main/webapp/advanced`. Both frontends live side by side so they can be compared. They
-talk to the same backend API (`api/test/call`, `api/public/resources`, `api/testreport/{id}`,
-`api/ci/resources`, ...).
+Svelte 5 + TypeScript + Vite web UI of BRAVA. It talks to the API (`api/test/call`,
+`api/public/resources`, `api/testreport/{id}`, `api/ci/resources`, ...) of the Python backend in
+`../python`.
 
-Differences from the vanilla version:
-
-- No jQuery, Bootstrap, FooTable, spin.js or Font Awesome. It uses custom CSS (`src/app.css`
-  plus scoped component styles), inline SVG icons, native `<dialog>` and `<details>`, and
-  supports dark mode.
+- Custom CSS (`src/app.css` plus scoped component styles), inline SVG icons, native `<dialog>` and
+  `<details>`, dark mode.
 - The schedule dialog is pre-filled with the URL from the test form.
 - A running test can be cancelled. Switching tabs keeps the form and its result.
 - The resource table sorts by name, provider, crop and status. Description and base URL move into an
@@ -25,10 +21,10 @@ npm run build   # production build in dist/
 ```
 
 The dev proxy targets `http://localhost:8765/brapivalidator` (Python: `uv run brava serve --port 8765`).
-To use another backend, set `BRAVA_BACKEND`, e.g. for Java (`mvn jetty:run`):
+To use another backend, set `BRAVA_BACKEND`, e.g. a deployed container:
 
 ```
-BRAVA_BACKEND=http://localhost:8080/brapivalidator npm run dev
+BRAVA_BACKEND=http://localhost:10000/brapivalidator npm run dev
 ```
 
 ## Serving the build
@@ -37,10 +33,10 @@ BRAVA_BACKEND=http://localhost:8080/brapivalidator npm run dev
 `${git.commit.id.abbrev}` placeholders in `index.html` (meta tags read by the footer) are
 filled in by the backend. So is `${advancedMode}`: the Python backend sets it to `false` in simple
 mode, and the app then shows only "Test your own" (no resource list, saved reports or scheduling,
-which need the database). An unfilled placeholder (dev server, Java backend) counts as advanced mode.
+which need the database). An unfilled placeholder (dev server) counts as advanced mode.
 
-- Python backend: `BRAVA_FRONTEND_DIR=../frontend/dist uv run brava serve`
-- Java backend: still serves the vanilla frontend; `pom.xml` is unchanged.
+The Python backend serves `frontend/dist` by default (`uv run brava serve` in `../python`);
+`BRAVA_FRONTEND_DIR` points it to another directory.
 
 ## Layout
 
@@ -48,7 +44,7 @@ which need the database). An unfilled placeholder (dev server, Java backend) cou
 |---|---|
 | `src/App.svelte` | page shell: header, tabs, footer, modals |
 | `src/lib/api.ts` | backend calls and error messages |
-| `src/lib/report.ts` | outcome classification, stats, median (same rules as the vanilla `script.js`) |
+| `src/lib/report.ts` | outcome classification, stats, median |
 | `src/lib/types.ts` | API/report types |
 | `src/lib/components/ResourcesTab.svelte` | public resource table + report of the selected resource |
 | `src/lib/components/TestOwnTab.svelte` | test form and its result |

@@ -17,8 +17,8 @@ class Settings(BaseSettings):
     # General
     advanced_mode: bool = False
     base_path: str = "/brapivalidator"
-    resources_dir: Path = _REPO_ROOT / "src" / "main" / "resources"
-    frontend_dir: Path = _REPO_ROOT / "src" / "main" / "webapp" / "advanced"
+    resources_dir: Path = _REPO_ROOT / "resources"
+    frontend_dir: Path = _REPO_ROOT / "frontend" / "dist"
     available_versions: list[str] | None = None
     tested_version: str = "v2.1"
     build_date: str = ""
