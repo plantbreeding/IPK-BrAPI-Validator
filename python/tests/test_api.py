@@ -157,9 +157,7 @@ async def test_admin(client, fake_server, monkeypatch) -> None:
     provider = {"name": "IPK", "description": "d", "resources": [{"name": "Test", "v2-url": BASE}]}
     r = await client.post(f"{API}/admin/providers", json=provider, headers=ADMIN)
     assert r.status_code == 202 and r.json()["code"] == 2102
-    r = await client.post(
-        f"{API}/admin/resources", json={"name": "Other", "url": BASE + "x", "provider": "IPK"}, headers=ADMIN
-    )
+    r = await client.post(f"{API}/admin/resources", json={"name": "Other", "url": BASE + "x"}, headers=ADMIN)
     assert r.status_code == 202
 
     # updateproviders upserts (no duplicates on repeated runs)
@@ -179,6 +177,36 @@ async def test_admin(client, fake_server, monkeypatch) -> None:
     assert len(test["lastTestReports"]) == 1
     assert test["lastTestReports"][0]["shortReport"]["Server Info"]["GET /serverinfo"]["testStatus"] == []
     assert "email" not in test
+
+
+async def test_updateproviders_follows_the_list(client, fake_server) -> None:
+    v1, v2 = "https://srv.example.org/brapi/v1", "https://srv.example.org/brapi/v2"
+    resource = {"name": "Srv", "v1-url": v1, "description": "d", "badges": ["brapi-v1"]}
+    provider = {"name": "IPK", "logo": "/images/x.png", "description": "p", "resources": [resource]}
+    route = fake_server.get(RESOURCE_LIST)
+
+    async def update() -> list[dict[str, Any]]:
+        r = await client.get(f"{API}/admin/updateproviders", headers=ADMIN)
+        assert r.status_code == 200
+        return (await client.get(f"{API}/public/resources")).json()
+
+    # relative logos are resolved against the list's URL
+    route.respond(json=[provider])
+    [public] = await update()
+    assert public["provider"]["logo"] == "https://brapi.org/images/x.png"
+    assert public["url"] == v1 and public["v2-url"] is None
+
+    # a new v2-url updates the same row instead of adding a second one
+    route.respond(json=[{**provider, "resources": [{**resource, "v2-url": v2}]}])
+    [updated] = await update()
+    assert updated["id"] == public["id"]
+    assert updated["url"] == v2 and updated["v1-url"] == v1 and updated["v2-url"] == v2
+
+    # a resource that left the list is no longer public, and its id is no subscription
+    route.respond(json=[{**provider, "resources": []}])
+    assert await update() == []
+    r = await client.get(f"{API}/ci/confirmation", params={"key": public["id"]})
+    assert r.status_code == 404
 
 
 async def _public_after_startup() -> list[tuple[str, int]]:

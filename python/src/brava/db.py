@@ -235,3 +235,19 @@ async def public_resource_by_url(session: AsyncSession, provider_id: uuid.UUID, 
         .where(Resource.provider_id == provider_id, Resource.url == url, Resource.is_public)
         .limit(1)
     )
+
+
+async def public_resource_by_name(
+    session: AsyncSession, provider_id: uuid.UUID, name: str
+) -> Resource | None:
+    return await session.scalar(
+        select(Resource)
+        .where(Resource.provider_id == provider_id, Resource.name == name, Resource.is_public)
+        .limit(1)
+    )
+
+
+async def public_resources_of(session: AsyncSession, provider_id: uuid.UUID) -> Sequence[Resource]:
+    return (
+        await session.scalars(select(Resource).where(Resource.provider_id == provider_id, Resource.is_public))
+    ).all()

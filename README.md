@@ -191,8 +191,9 @@ and `deploy.sh` prints a warning. To use Oracle, PostgreSQL or MySQL instead of 
 **Public resource list:** while the database holds no public resource, BRAVA imports the list from
 brapi.org on startup (`BRAVA_RESOURCE_JSON_URL`) and tests every resource in the background;
 results appear one by one (disable with `BRAVA_AUTO_IMPORT_RESOURCES=false`). Later tests run
-weekly (Mondays 08:00). To refresh the list or to test all public resources right away, e.g. if a
-restart interrupted the first run, run on the server:
+weekly (Mondays 08:00). A refresh updates resources by provider and name and takes resources that
+left the list off the public list. To refresh the list or to test all public resources right away,
+e.g. if a restart interrupted the first run, run on the server:
 
 ```
 key=$(sed -n 's/^BRAVA_ADMIN_KEY=//p' ~/.config/brava/brava.env)
