@@ -29,6 +29,10 @@ There are **no unit tests** (no `src/test`). JUnit is a dependency only. To veri
 
 `src/main/webapp/` (simple) and `src/main/webapp/advanced/` (advanced) are two separate frontends, each with its own `WEB-INF/web.xml`, `index.html`, `js/script.js` and CSS. `pom.xml` chooses one through `<warSourceDirectory>` in maven-war-plugin and `<webAppSourceDirectory>` in jetty-maven-plugin; both currently point to `${webappHome}/advanced`. Jetty always uses `src/main/webapp/WEB-INF/web.xml` as its descriptor. A frontend change usually has to be made in both trees, and a `web.xml` change in both `web.xml` files.
 
+### Svelte frontend (`frontend/`)
+
+A Svelte 5 + TypeScript + Vite port of the advanced frontend lives in `frontend/` (see `frontend/README.md`). It is kept side by side with the vanilla frontend for comparison, so a UI change usually belongs in both. In `frontend/`, run `npm run dev`, which proxies `/api` and `/schemas` to `BRAVA_BACKEND` (default `http://localhost:8765/brapivalidator`). `npm run check` runs svelte-check and `npm run build` writes `dist/`. The Python backend serves the build with `BRAVA_FRONTEND_DIR=../frontend/dist`; the Java WAR still ships the vanilla frontend.
+
 ## Architecture
 
 Package root: `de.ipk_gatersleben.bit.bi.bridge.brapicomp`.
@@ -52,6 +56,8 @@ Package root: `de.ipk_gatersleben.bit.bi.bridge.brapicomp`.
 ## Python backend (`python/`)
 
 A Python 3.14 / Litestar port of the whole backend lives in `python/` (see `python/README.md`). It runs side by side with the Java code until parity is confirmed. It reuses `src/main/resources/{collections,schemas}` and the frontend in `src/main/webapp/advanced` (paths configurable via `BRAVA_RESOURCES_DIR` / `BRAVA_FRONTEND_DIR`), so changes there affect both backends. Config comes from `BRAVA_*` env vars or `python/.env`. Run `uv run pytest` and `uv run ruff check .` in `python/`; `uv run brava serve` starts the app at `/brapivalidator/`.
+
+Deployment (`deploy/`, documented in the root `README.md`): `deploy/Containerfile` builds Python backend + Svelte frontend into one simple-mode image; `make-bundle.sh` → `copy-to-server.sh` → `build-image.sh` (podman, on the server) → `deploy.sh` installs the quadlet `brava.container` as rootless systemd user service `brava.service` on host port 10000. Files in `deploy/` and `*.sh` must keep LF line endings (`.gitattributes`).
 
 ## Adding or supporting a BrAPI version
 

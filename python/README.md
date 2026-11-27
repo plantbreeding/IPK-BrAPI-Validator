@@ -9,7 +9,7 @@ collections and JSON schemas (`../src/main/resources/{collections,schemas}`).
 ```
 uv sync
 cp .env.example .env            # adjust; every key is optional
-uv run brava serve --port 8000  # http://localhost:8000/brapivalidator/
+uv run brava serve --port 8765  # http://localhost:8765/brapivalidator/
 ```
 
 Headless test of a server (same options as the Java CLI):

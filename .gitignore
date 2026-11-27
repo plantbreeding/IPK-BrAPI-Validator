@@ -20,3 +20,6 @@ src/main/resources/config.properties
 
 .idea/
 src/main/java/de/ipk_gatersleben/bit/bi/bridge/brapicomp/apiresources/DebugResource.java
+
+# deployment bundles (deploy/make-bundle.sh)
+/build/
