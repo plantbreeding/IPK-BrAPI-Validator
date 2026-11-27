@@ -164,3 +164,20 @@ async def update_providers(sessions: async_sessionmaker[AsyncSession]) -> int:
                     setattr(resource, key, value)
                 count += 1
     return count
+
+
+async def import_and_test_if_empty(sessions: async_sessionmaker[AsyncSession]) -> None:
+    """Fill the public resource list of a new database and test every resource on it."""
+    try:
+        async with sessions() as session:
+            if await db.all_public(session):
+                return
+        count = await update_providers(sessions)
+    except Exception:  # runs in the background: the app works without the list
+        log.exception(
+            "Importing public resources from %s failed; restart or call /api/admin/updateproviders",
+            get_settings().resource_json_url,
+        )
+        return
+    log.info("Imported %d public resources", count)
+    await run_public(sessions)

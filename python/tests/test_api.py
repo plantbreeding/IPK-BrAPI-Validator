@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import base64
 import re
 from collections.abc import AsyncIterator
@@ -10,9 +11,11 @@ from litestar.testing import AsyncTestClient
 
 from brava import jobs, mailer
 from brava.api import create_app
+from brava.config import get_settings
 from tests.conftest import BASE, VERSION
 
 API = "/brapivalidator/api"
+RESOURCE_LIST = "https://brapi.org/json/brapi-resources.json"
 ADMIN = {"Authorization": "Basic " + base64.b64encode(b"admin:secret").decode()}
 
 
@@ -160,7 +163,7 @@ async def test_admin(client, fake_server, monkeypatch) -> None:
     assert r.status_code == 202
 
     # updateproviders upserts (no duplicates on repeated runs)
-    fake_server.get("https://brapi.org/json/brapi-resources.json").respond(json=[provider])
+    fake_server.get(RESOURCE_LIST).respond(json=[provider])
     for _ in range(2):
         r = await client.get(f"{API}/admin/updateproviders", headers=ADMIN)
         assert r.json() == {"status": 200, "message": "1 resources updated.", "code": 2000}
@@ -178,10 +181,37 @@ async def test_admin(client, fake_server, monkeypatch) -> None:
     assert "email" not in test
 
 
+async def _public_names_after_startup() -> list[str]:
+    async with AsyncTestClient(create_app()) as c:
+        async with asyncio.timeout(10):
+            # The tasks run on the app's event loop, so they cannot be awaited here.
+            while c.app.state.tasks:  # noqa: ASYNC110
+                await asyncio.sleep(0.01)
+        return [r["name"] for r in (await c.get(f"{API}/public/resources")).json()]
+
+
+async def test_startup_imports_resources_only_when_empty(monkeypatch, settings, fake_server) -> None:
+    monkeypatch.setenv("BRAVA_AUTO_IMPORT_RESOURCES", "true")
+    get_settings.cache_clear()
+    provider = {"name": "IPK", "resources": [{"name": "Test", "v2-url": BASE}]}
+    route = fake_server.get(RESOURCE_LIST).respond(500)
+
+    # an unavailable list does not stop the app; the next start tries again
+    assert await _public_names_after_startup() == []
+    route.respond(json=[provider])
+    assert await _public_names_after_startup() == ["Test"]
+    assert await _public_names_after_startup() == ["Test"]
+    assert route.call_count == 2
+
+
+async def test_startup_import_can_be_disabled(client, fake_server) -> None:
+    route = fake_server.get(RESOURCE_LIST).respond(json=[])
+    assert await _public_names_after_startup() == []
+    assert not route.called
+
+
 async def test_simple_mode(monkeypatch, settings) -> None:
     monkeypatch.setenv("BRAVA_ADVANCED_MODE", "false")
-    from brava.config import get_settings
-
     get_settings.cache_clear()
     async with AsyncTestClient(create_app()) as c:
         assert "advanced=false" in (await c.get("/brapivalidator/")).text

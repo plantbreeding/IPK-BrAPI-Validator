@@ -411,13 +411,21 @@ def create_app(settings: Settings | None = None) -> Litestar:
             app.state.sessions = db.make_sessionmaker(engine)
             scheduler = jobs.create_scheduler(app.state.sessions)
             scheduler.start()
+            if settings.auto_import_resources:
+                # In the background, so an unreachable resource list does not delay startup.
+                task = asyncio.create_task(jobs.import_providers_if_empty(app.state.sessions))
+                app.state.tasks.add(task)
+                task.add_done_callback(app.state.tasks.discard)
         try:
             yield
         finally:
             if scheduler:
                 scheduler.shutdown(wait=False)
-            for task in list(app.state.tasks):
+            tasks = list(app.state.tasks)
+            for task in tasks:
                 task.cancel()
+            # Let cancelled tasks release their database connections before the engine goes.
+            await asyncio.gather(*tasks, return_exceptions=True)
             if engine:
                 await engine.dispose()
 

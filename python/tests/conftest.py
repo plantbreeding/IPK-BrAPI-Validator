@@ -183,6 +183,7 @@ def settings(
         "BRAVA_BASE_DOMAIN": "http://brava.test/brapivalidator/",
         "BRAVA_TESTED_VERSION": VERSION,
         "BRAVA_BUILD_DATE": "2026-11-26",
+        "BRAVA_AUTO_IMPORT_RESOURCES": "false",  # no requests to brapi.org on app startup
     }
     for key, value in env.items():
         monkeypatch.setenv(key, value)

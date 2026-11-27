@@ -188,6 +188,18 @@ server (`BRAVA_SMTP_HOST` etc.) — without it, registration confirmations and r
 and `deploy.sh` prints a warning. To use Oracle, PostgreSQL or MySQL instead of SQLite, set
 `BRAVA_DATABASE_URL` (examples in the file); the schema is created/upgraded on startup.
 
+**Public resource list:** while the database holds no public resource, BRAVA imports the list from
+brapi.org on startup (`BRAVA_RESOURCE_JSON_URL`; disable with `BRAVA_AUTO_IMPORT_RESOURCES=false`).
+Test results appear after the weekly run (Mondays 08:00). To refresh the list or to test all public
+resources right away, run on the server:
+
+```
+key=$(sed -n 's/^BRAVA_ADMIN_KEY=//p' ~/.config/brava/brava.env)
+api=http://localhost:10000/brapivalidator/api/admin
+curl -u "admin:$key" "$api/updateproviders"
+curl -u "admin:$key" "$api/testallpublic?version=v2.1"
+```
+
 **Lingering:** a user service only keeps running after logout and starts at boot when lingering
 is enabled for the user. `deploy.sh` tries `loginctl enable-linger` (allowed without root on most
 systems) and prints a warning otherwise; then an admin has to run `loginctl enable-linger <user>` once.

@@ -25,6 +25,11 @@ scheduled tests (daily 08:00, Mondays 08:00 plus all public resources, 1st of th
 The schema is managed by Alembic and upgraded on startup (`uv run brava upgrade-db` does it by hand).
 Database drivers: SQLite is included; install the `oracle`, `postgres` or `mysql` extra for the others.
 
+While the database holds no public resource, startup imports the list from `BRAVA_RESOURCE_JSON_URL`
+(default: brapi.org) in the background; `BRAVA_AUTO_IMPORT_RESOURCES=false` turns this off.
+`/api/admin/updateproviders` refreshes the list later, and `/api/admin/testallpublic?version=v2.1`
+tests all public resources without waiting for the weekly run.
+
 Copy the data of the Java version once:
 
 ```

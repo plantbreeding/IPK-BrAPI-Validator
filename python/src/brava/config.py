@@ -36,6 +36,8 @@ class Settings(BaseSettings):
     contact_email: str = ""
     sender_name: str = "The BRAVA team"
     resource_json_url: str = "https://brapi.org/json/brapi-resources.json"
+    # Load that list on startup while the database holds no public resource.
+    auto_import_resources: bool = True
     keep_reports: int = 3
     timezone: str | None = None
     scheduler_concurrency: int = 4
