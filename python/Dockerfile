@@ -1,5 +1,6 @@
 # Build from the repository root:  docker build -f python/Dockerfile -t brava .
-FROM ghcr.io/astral-sh/uv:0.12-python3.14-bookworm-slim AS build
+FROM docker.io/library/python:3.14-slim-trixie AS build
+COPY --from=ghcr.io/astral-sh/uv:0.12 /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=never
 WORKDIR /app
 COPY python/pyproject.toml python/uv.lock python/README.md ./
@@ -7,7 +8,7 @@ RUN uv sync --locked --no-dev --no-install-project --extra oracle --extra postgr
 COPY python/src ./src
 RUN uv sync --locked --no-dev --extra oracle --extra postgres --extra mysql
 
-FROM python:3.14-slim-bookworm
+FROM docker.io/library/python:3.14-slim-trixie
 RUN useradd --create-home --uid 1000 brava
 WORKDIR /app
 COPY --from=build /app /app
