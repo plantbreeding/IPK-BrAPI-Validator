@@ -1,8 +1,8 @@
 # BRAVA – Python backend
 
-Python 3.14 / [Litestar](https://litestar.dev) port of the BRAVA (BrAPI Validator) backend.
-It serves the existing frontend (`../src/main/webapp/advanced`) and uses the existing test
-collections and JSON schemas (`../src/main/resources/{collections,schemas}`).
+Python 3.14 / [Litestar](https://litestar.dev) backend of BRAVA (BrAPI Validator).
+It serves the built Svelte frontend (`../frontend/dist`, see `../frontend/README.md`) and uses the
+test collections and JSON schemas in `../resources/{collections,schemas}`.
 
 ## Quick start
 
@@ -12,7 +12,7 @@ cp .env.example .env            # adjust; every key is optional
 uv run brava serve --port 8765  # http://localhost:8765/brapivalidator/
 ```
 
-Headless test of a server (same options as the Java CLI):
+Headless test of a server:
 
 ```
 uv run brava test -u https://test-server.brapi.org/brapi/v2 -v v2.1 [--json] [--csv] [-o DIR] [-s] [-t TOKEN] [--fail-on-error]
@@ -59,7 +59,6 @@ uv run brava migrate-legacy --from "oracle+oracledb://user:pass@host:1521/?servi
 ```
 uv run pytest
 uv run ruff check . && uv run ruff format --check .
-uv run python tools/compare_reports.py --java http://localhost:8080/brapivalidator --url <server> --version v2.1
 ```
 
-Docker (build from the repository root): `docker build -f python/Dockerfile -t brava .`
+Container image (Python backend + Svelte frontend): `../deploy/Containerfile`, see the root `README.md`.

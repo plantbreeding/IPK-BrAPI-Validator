@@ -11,7 +11,7 @@
       "name": "brava-python-svelte-simple",
       "runtimeExecutable": "uv",
       "runtimeArgs": ["run", "--directory", "python", "brava", "serve", "--port", "8766"],
-      "env": { "BRAVA_ADVANCED_MODE": "false", "BRAVA_FRONTEND_DIR": "../frontend/dist" },
+      "env": { "BRAVA_ADVANCED_MODE": "false" },
       "port": 8766
     },
     {

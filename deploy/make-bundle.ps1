@@ -67,8 +67,8 @@ try {
             '--exclude', 'frontend/.env*',
             'python',
             'frontend',
-            'src/main/resources/collections',
-            'src/main/resources/schemas',
+            'resources/collections',
+            'resources/schemas',
             'deploy',
             '-C', $tmp, 'BUNDLE_INFO'
         )

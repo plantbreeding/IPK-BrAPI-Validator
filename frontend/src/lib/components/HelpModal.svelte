@@ -22,7 +22,7 @@
     </p>
     <p>
       We created the JSON schemas using the official BrAPI specifications. They are
-      <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/src/main/resources/schemas" target="_blank" rel="noopener"
+      <a href="https://github.com/plantbreeding/IPK-BrAPI-Validator/tree/master/resources/schemas" target="_blank" rel="noopener"
         >available here</a
       >, feel free to check them and use them in your own tests. They may differ from the official specifications because we
       update them manually. Let us know of any inconsistencies in the

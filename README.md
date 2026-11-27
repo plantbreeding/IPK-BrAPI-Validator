@@ -10,11 +10,11 @@ The application consists of
 |---|---|---|
 | Python backend (Python 3.14, Litestar) | `python/` | API, test engine, optional database/scheduler (see `python/README.md`) |
 | Svelte frontend (Svelte 5, TypeScript, Vite) | `frontend/` | web UI (see `frontend/README.md`) |
-| Test collections and JSON schemas | `src/main/resources/{collections,schemas}` | shared by all backends |
+| Test collections and JSON schemas | `resources/{collections,schemas}` | read by the backend, schemas also served at `/schemas` |
 | Deployment (podman, quadlet) | `deploy/` | image build, bundle, server install |
 
-The original Java backend (`pom.xml`, `src/main/java`, vanilla frontend in `src/main/webapp`) is
-still in the repository; see `CLAUDE.md` for its build commands.
+The original Java backend and its vanilla-JS frontend were removed; they are in the git history
+before this change.
 
 ## Development
 
@@ -30,8 +30,8 @@ cp .env.example .env              # optional, every key has a default
 uv run brava serve --port 8765    # http://localhost:8765/brapivalidator/
 ```
 
-Without further settings the backend serves the vanilla frontend from `src/main/webapp/advanced`.
-To serve a built Svelte frontend instead: `BRAVA_FRONTEND_DIR=../frontend/dist uv run brava serve --port 8765`.
+The backend serves the built Svelte frontend from `frontend/dist` (run `npm run build` in
+`frontend/` first; without a build it serves only the API). `BRAVA_FRONTEND_DIR` points it elsewhere.
 
 Tests and lint:
 
@@ -57,7 +57,7 @@ npm run dev       # http://localhost:5173, proxies /api and /schemas to the back
 ```
 
 The dev server proxies to `http://localhost:8765/brapivalidator`; set `BRAVA_BACKEND` to use another
-backend, e.g. `BRAVA_BACKEND=http://localhost:8080/brapivalidator npm run dev`.
+backend, e.g. `BRAVA_BACKEND=http://localhost:10000/brapivalidator npm run dev`.
 
 ```
 npm run check     # svelte-check (types, a11y)
@@ -111,7 +111,7 @@ deploy/copy-to-server.sh user@server
 
 This creates a new bundle (or use `-b <bundle.tar.gz>`), sends it to `~/brava` on the server
 (`-d <dir>` for another directory) and extracts it there, replacing the previous `python/`,
-`frontend/`, `src/` and `deploy/`. Extra ssh options: `SSH_OPTS="-p 2222 -i ~/.ssh/key"`.
+`frontend/`, `resources/` and `deploy/`. Extra ssh options: `SSH_OPTS="-p 2222 -i ~/.ssh/key"`.
 
 Everything runs over a single ssh connection, so the password is asked once. To avoid the prompt
 completely, use an ssh key: `ssh-keygen -t ed25519` once, then append `~/.ssh/id_ed25519.pub`
@@ -242,15 +242,15 @@ Example: `/api/test/call?url=https://test-server.brapi.org/brapi/v2&brapiversion
 
 ## Test collections
 
-Test behaviour lives in `src/main/resources/collections/CompleteBrapiTest.<version>.json`; the
-schemas are in `src/main/resources/schemas/<version>/`. The collections roughly follow Postman's
+Test behaviour lives in `resources/collections/CompleteBrapiTest.<version>.json`; the
+schemas are in `resources/schemas/<version>/`. The collections roughly follow Postman's
 format, but use a few simple commands instead of JavaScript tests:
 
 | Command  | Description  | Example  |
 |---|---|---|
 |StatusCode:{int} | Check the status code of the response  | StatusCode:200 |
 |ContentType:{String} | Check the Content Type of the response  | ContentType:application/json |
-|Schema:{path} | Check the response against a schema in `src/main/resources/schemas` | Schema:/metadata |
+|Schema:{path} | Check the response against a schema in `resources/schemas` | Schema:/metadata |
 |GetValue:{jsonpointer}:{variableName} | Stores the value of the response at the pointer location | GetValue:/result/data/0/germplasmDbId:germplasmDbId |
 |IsEqual:{jsonpointer}:{variableName} | Compares the value at the pointer location with a stored variable |IsEqual:/result/germplasmDbId:germplasmDbId |
 |{command}:{value}:breakiffalse | Stops testing the current endpoint if the check fails | StatusCode:200:breakiffalse |

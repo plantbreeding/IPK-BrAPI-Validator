@@ -23,7 +23,7 @@ done
 [[ -f "$bundle" ]] || { echo "Bundle not found: $(pwd)/$bundle" >&2; exit 1; }
 
 # Replace the previous bundle contents, but only what a bundle brings along.
-rm -rf python frontend src deploy BUNDLE_INFO
+rm -rf python frontend resources src deploy BUNDLE_INFO  # src: layout of bundles before resources/ moved
 tar -xzf "$bundle"
 chmod +x deploy/*.sh
 # Keep the 3 most recent bundle archives.

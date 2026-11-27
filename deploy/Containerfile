@@ -29,8 +29,8 @@ FROM docker.io/library/python:3.14-slim-trixie
 RUN useradd --create-home --uid 1000 brava
 WORKDIR /app
 COPY --from=backend /app /app
-COPY src/main/resources/collections /data/resources/collections
-COPY src/main/resources/schemas /data/resources/schemas
+COPY resources/collections /data/resources/collections
+COPY resources/schemas /data/resources/schemas
 COPY --from=frontend /frontend/dist /data/frontend
 ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \

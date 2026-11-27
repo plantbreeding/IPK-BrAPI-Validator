@@ -28,7 +28,7 @@ if ! command -v podman >/dev/null 2>&1; then
     echo "podman is not installed or not on PATH" >&2
     exit 1
 fi
-for path in deploy/Containerfile python/pyproject.toml frontend/package.json src/main/resources/collections; do
+for path in deploy/Containerfile python/pyproject.toml frontend/package.json resources/collections; do
     [[ -e "$path" ]] || { echo "Missing $ROOT/$path - is this a complete repository/bundle?" >&2; exit 1; }
 done
 
