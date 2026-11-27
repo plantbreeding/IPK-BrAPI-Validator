@@ -83,7 +83,10 @@ Server requirements: Linux with systemd, podman ≥ 4.4, network access to the c
 | File | Purpose |
 |---|---|
 | `deploy/make-bundle.sh` | creates a source bundle `build/brava-bundle-<date>-<commit>.tar.gz` |
-| `deploy/copy-to-server.sh` | copies the bundle via ssh/scp to the server and extracts it |
+| `deploy/make-bundle.ps1` | the same for Windows PowerShell |
+| `deploy/copy-to-server.sh` | sends the bundle over one ssh connection and unpacks it on the server (optionally deploys) |
+| `deploy/copy-to-server.ps1`, `.cmd` | the same for Windows PowerShell (`.cmd` = wrapper that ignores the execution policy) |
+| `deploy/unpack-bundle.sh` | server side of the copy scripts (unpack, optionally build and deploy) |
 | `deploy/build-image.sh` | builds the image `localhost/brava:latest` with podman (`deploy/Containerfile`) |
 | `deploy/brava.container` | quadlet: runs the image as `brava.service`, port mapping `10000:8000` |
 | `deploy/deploy.sh` | installs the quadlet for the current user and (re)starts the service |
@@ -97,7 +100,8 @@ deploy/make-bundle.sh
 
 The bundle contains `python/`, `frontend/`, the collections and schemas and `deploy/` — without
 `.venv`, `.env`, local databases, `node_modules` or `frontend/dist`. Uncommitted changes are included
-(the file name then ends in `-dirty`). On Windows run the scripts in Git Bash.
+(the file name then ends in `-dirty`). On Windows use Git Bash or `deploy\make-bundle.ps1`
+(see [From Windows](#from-windows-powershell) below).
 
 ### 2. Copy it to the server
 
@@ -105,9 +109,15 @@ The bundle contains `python/`, `frontend/`, the collections and schemas and `dep
 deploy/copy-to-server.sh user@server
 ```
 
-This creates a new bundle (or use `-b <bundle.tar.gz>`), copies it to `~/brava` on the server
+This creates a new bundle (or use `-b <bundle.tar.gz>`), sends it to `~/brava` on the server
 (`-d <dir>` for another directory) and extracts it there, replacing the previous `python/`,
 `frontend/`, `src/` and `deploy/`. Extra ssh options: `SSH_OPTS="-p 2222 -i ~/.ssh/key"`.
+
+Everything runs over a single ssh connection, so the password is asked once. To avoid the prompt
+completely, use an ssh key: `ssh-keygen -t ed25519` once, then append `~/.ssh/id_ed25519.pub`
+to `~/.ssh/authorized_keys` on the server (`ssh-copy-id user@server` in Git Bash). A warning about a
+missing "post-quantum key exchange" comes from the server's older OpenSSH version and does not
+stop the deployment.
 
 With `--deploy` it also runs steps 3 and 4 on the server:
 
@@ -115,6 +125,38 @@ With `--deploy` it also runs steps 3 and 4 on the server:
 deploy/copy-to-server.sh --deploy user@server                 # advanced mode
 deploy/copy-to-server.sh --deploy --mode simple user@server   # simple mode
 ```
+
+#### From Windows (PowerShell)
+
+Without Git Bash, use the PowerShell scripts. They need only tools built into Windows 10/11:
+`tar.exe` and the OpenSSH client (Settings > System > Optional features > OpenSSH Client).
+
+```powershell
+.\deploy\copy-to-server.ps1 user@server -Deploy                 # advanced mode
+.\deploy\copy-to-server.ps1 user@server -Deploy -Mode simple    # simple mode
+.\deploy\copy-to-server.ps1 user@server                         # copy and unpack only
+```
+
+Further options: `-Bundle <file>` (default: new bundle from `make-bundle.ps1`), `-RemoteDir <dir>`
+(default `brava`), `-SshArgs @('-p', '2222', '-i', "$HOME\.ssh\id_ed25519")`; `Get-Help
+.\deploy\copy-to-server.ps1 -Detailed` shows all. If script execution is disabled on the PC, use the
+wrapper, which starts PowerShell with `-ExecutionPolicy Bypass` for this script only:
+
+```powershell
+deploy\copy-to-server.cmd user@server -Deploy
+```
+
+For a non-default ssh port or key, an entry in `%USERPROFILE%\.ssh\config` works for all scripts:
+
+```
+Host brava-server
+    HostName server.example.org
+    User myuser
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+Then deploy with `.\deploy\copy-to-server.ps1 brava-server -Deploy`.
 
 ### 3. Build the image (server)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copy a BRAVA source bundle to a server via ssh/scp and extract it there.
+# Copy a BRAVA source bundle to a server over a single ssh connection and unpack it there.
 #
 # Usage: deploy/copy-to-server.sh [-b BUNDLE] [-d REMOTE_DIR] [--deploy [--mode advanced|simple]] USER@HOST
 #   -b, --bundle FILE      bundle to copy (default: create a new one with make-bundle.sh)
@@ -8,7 +8,7 @@
 #                          (runs deploy/build-image.sh and deploy/deploy.sh remotely)
 #   --mode MODE            with --deploy: advanced (default) or simple, passed to deploy.sh
 #
-# Extra ssh/scp options can be passed via SSH_OPTS, e.g. SSH_OPTS="-p 2222 -i ~/.ssh/id_ed25519".
+# Extra ssh options can be passed via SSH_OPTS, e.g. SSH_OPTS="-p 2222 -i ~/.ssh/id_ed25519".
 set -euo pipefail
 
 BUNDLE=""
@@ -43,33 +43,18 @@ fi
 [[ -f "$BUNDLE" ]] || { echo "Bundle not found: $BUNDLE" >&2; exit 1; }
 
 read -r -a SSH_ARGS <<< "${SSH_OPTS:-}"
-bundle_dir="$(cd "$(dirname "$BUNDLE")" && pwd)"
 bundle_name="$(basename "$BUNDLE")"
+for v in "$REMOTE_DIR" "$bundle_name"; do
+    [[ "$v" != *\'* ]] || { echo "Single quotes are not allowed in: $v" >&2; exit 1; }
+done
+unpack_args="--mode $MODE"
+[[ $DEPLOY -eq 1 ]] && unpack_args="--deploy $unpack_args"
 
-echo "Copying $bundle_name to $TARGET:$REMOTE_DIR/"
-ssh ${SSH_ARGS[@]+"${SSH_ARGS[@]}"} "$TARGET" "mkdir -p '$REMOTE_DIR'"
-# scp from inside the bundle directory: a "C:/..." source path would be taken as a host name.
-(cd "$bundle_dir" && scp ${SSH_ARGS[@]+"${SSH_ARGS[@]}"} "$bundle_name" "$TARGET:$REMOTE_DIR/")
-
-echo "Extracting on $TARGET"
-ssh ${SSH_ARGS[@]+"${SSH_ARGS[@]}"} "$TARGET" bash -s -- "$REMOTE_DIR" "$bundle_name" "$DEPLOY" "$MODE" <<'REMOTE'
-set -euo pipefail
-dir="$1"; bundle="$2"; deploy="$3"; mode="$4"
-cd "$dir"
-# Replace the previous bundle contents, but only what a bundle brings along.
-rm -rf python frontend src deploy BUNDLE_INFO
-tar -xzf "$bundle"
-chmod +x deploy/*.sh
-# Keep the 3 most recent bundle archives.
-ls -1t brava-bundle-*.tar.gz 2>/dev/null | tail -n +4 | xargs -r rm -f
-echo "Extracted into $(pwd):"
-cat BUNDLE_INFO
-if [[ "$deploy" == 1 ]]; then
-    deploy/build-image.sh
-    deploy/deploy.sh --mode "$mode"
-else
-    echo
-    echo "Next steps on the server:"
-    echo "  cd $(pwd) && deploy/build-image.sh && deploy/deploy.sh --mode $mode"
-fi
-REMOTE
+# One ssh connection (one password prompt): the bundle goes over stdin, then the server unpacks
+# it with deploy/unpack-bundle.sh taken from the bundle itself.
+echo "Copying $bundle_name to $TARGET:$REMOTE_DIR/ and unpacking it there"
+ssh ${SSH_ARGS[@]+"${SSH_ARGS[@]}"} "$TARGET" \
+    "set -e; mkdir -p '$REMOTE_DIR'; cd '$REMOTE_DIR'; cat > '$bundle_name'; \
+     tar -xzf '$bundle_name' -O deploy/unpack-bundle.sh > .unpack-bundle.sh; \
+     bash .unpack-bundle.sh '$bundle_name' $unpack_args" \
+    < "$BUNDLE"
