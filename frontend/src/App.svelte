@@ -41,10 +41,6 @@
   }
 </script>
 
-<div class="ribbon-clip">
-  <a class="ribbon" href="https://github.com/plantbreeding/IPK-BrAPI-Validator" target="_blank" rel="noopener">Fork me on GitHub</a>
-</div>
-
 <div class="page">
   <header class="hero">
     <h1><a href="./">BRAVA</a></h1>
@@ -196,38 +192,6 @@
   .tabs button:focus-visible {
     outline: 2px solid var(--accent);
   }
-  .ribbon {
-    position: absolute;
-    top: 2.2rem;
-    right: -3.2rem;
-    width: 13rem;
-    transform: rotate(45deg);
-    background: #aa0000;
-    color: #fff;
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.3rem 0;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
-    z-index: 10;
-  }
-  .ribbon:hover {
-    text-decoration: none;
-    background: #c00;
-  }
-  .ribbon-clip {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 9rem;
-    height: 9rem;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 10;
-  }
-  .ribbon-clip .ribbon {
-    pointer-events: auto;
-  }
   .footer {
     background: var(--surface-2);
     border-top: 1px solid var(--border);
@@ -260,9 +224,6 @@
     .help {
       position: static;
       margin-top: 0.5rem;
-    }
-    .ribbon-clip {
-      display: none;
     }
   }
 </style>
