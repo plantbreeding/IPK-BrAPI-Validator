@@ -57,7 +57,7 @@ Package root: `de.ipk_gatersleben.bit.bi.bridge.brapicomp`.
 
 A Python 3.14 / Litestar port of the whole backend lives in `python/` (see `python/README.md`). It runs side by side with the Java code until parity is confirmed. It reuses `src/main/resources/{collections,schemas}` and the frontend in `src/main/webapp/advanced` (paths configurable via `BRAVA_RESOURCES_DIR` / `BRAVA_FRONTEND_DIR`), so changes there affect both backends. Config comes from `BRAVA_*` env vars or `python/.env`. Run `uv run pytest` and `uv run ruff check .` in `python/`; `uv run brava serve` starts the app at `/brapivalidator/`.
 
-Deployment (`deploy/`, documented in the root `README.md`): `deploy/Containerfile` builds Python backend + Svelte frontend into one simple-mode image; `make-bundle.sh` → `copy-to-server.sh` → `build-image.sh` (podman, on the server) → `deploy.sh` installs the quadlet `brava.container` as rootless systemd user service `brava.service` on host port 10000. Files in `deploy/` and `*.sh` must keep LF line endings (`.gitattributes`).
+Deployment (`deploy/`, documented in the root `README.md`): `deploy/Containerfile` builds Python backend + Svelte frontend into one image; `make-bundle.sh` → `copy-to-server.sh` → `build-image.sh` (podman, on the server) → `deploy.sh` installs the quadlet `brava.container` as rootless systemd user service `brava.service` on host port 10000. `deploy.sh --mode advanced|simple` (default advanced, SQLite in podman volume `brava-data`) sets `BRAVA_ADVANCED_MODE` in the installed quadlet. Files in `deploy/` and `*.sh` must keep LF line endings (`.gitattributes`).
 
 ## Adding or supporting a BrAPI version
 

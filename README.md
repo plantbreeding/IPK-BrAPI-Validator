@@ -66,10 +66,16 @@ npm run build     # production build in frontend/dist
 
 ## Deployment with podman
 
-The deployment runs the Python backend with the Svelte frontend in one container (simple mode:
-no database, no scheduled tests), as a rootless podman **quadlet**, i.e. a systemd *user* service
-(`systemctl --user`). No root/sudo is needed on the server. The app is published on **host port
-10000**: `http://<server>:10000/brapivalidator/`.
+The deployment runs the Python backend with the Svelte frontend in one container, as a rootless
+podman **quadlet**, i.e. a systemd *user* service (`systemctl --user`). No root/sudo is needed on
+the server. The app is published on **host port 10000**: `http://<server>:10000/brapivalidator/`.
+
+Two modes, chosen with `--mode` of `deploy.sh` / `copy-to-server.sh` (same image for both):
+
+| Mode | Features |
+|---|---|
+| `advanced` (default) | database (SQLite in the podman volume `brava-data`), public resource list, saved reports, registration of resources, scheduled tests (08:00 daily/weekly/monthly), emails, `/api/admin` |
+| `simple` | on-demand tests only ("Test your own"); no database |
 
 Server requirements: Linux with systemd, podman ≥ 4.4, network access to the container registries
 (docker.io, ghcr.io) and npm/PyPI during the image build.
@@ -81,7 +87,7 @@ Server requirements: Linux with systemd, podman ≥ 4.4, network access to the c
 | `deploy/build-image.sh` | builds the image `localhost/brava:latest` with podman (`deploy/Containerfile`) |
 | `deploy/brava.container` | quadlet: runs the image as `brava.service`, port mapping `10000:8000` |
 | `deploy/deploy.sh` | installs the quadlet for the current user and (re)starts the service |
-| `deploy/brava.env.example` | optional settings, installed as `~/.config/brava/brava.env` |
+| `deploy/brava.env.example` | settings template, installed as `~/.config/brava/brava.env` |
 
 ### 1. Create the bundle (local machine)
 
@@ -106,7 +112,8 @@ This creates a new bundle (or use `-b <bundle.tar.gz>`), copies it to `~/brava` 
 With `--deploy` it also runs steps 3 and 4 on the server:
 
 ```
-deploy/copy-to-server.sh --deploy user@server
+deploy/copy-to-server.sh --deploy user@server                 # advanced mode
+deploy/copy-to-server.sh --deploy --mode simple user@server   # simple mode
 ```
 
 ### 3. Build the image (server)
@@ -121,11 +128,23 @@ Tags the image as `localhost/brava:latest` and `localhost/brava:<timestamp>`. Op
 ### 4. Install and start the service (server)
 
 ```
-deploy/deploy.sh            # or: deploy/deploy.sh --build  (runs build-image.sh first)
+deploy/deploy.sh                  # advanced mode (default)
+deploy/deploy.sh --mode simple    # simple mode
+deploy/deploy.sh --build          # runs build-image.sh first
 ```
 
-The script copies `brava.container` to `~/.config/containers/systemd/`, creates
-`~/.config/brava/brava.env` if it does not exist, reloads systemd and restarts `brava.service`.
+The script installs `brava.container` to `~/.config/containers/systemd/` with the chosen mode,
+creates `~/.config/brava/brava.env` if it does not exist, reloads systemd and restarts
+`brava.service`. Instead of `--mode` the environment variable `BRAVA_MODE=advanced|simple` works too.
+Running `deploy.sh` again with the other mode switches the mode; the database volume is kept.
+
+In advanced mode, `deploy.sh` appends these settings to `brava.env` when they are missing:
+`BRAVA_ADMIN_KEY` (random key for `/api/admin`, HTTP basic auth with the key as password),
+`BRAVA_BASE_DOMAIN` (`http://<hostname>:10000/brapivalidator`, used for links in emails) and
+`BRAVA_TIMEZONE=Europe/Berlin` (time zone of the scheduled tests). Check them, and set the mail
+server (`BRAVA_SMTP_HOST` etc.) — without it, registration confirmations and reports are not sent
+and `deploy.sh` prints a warning. To use Oracle, PostgreSQL or MySQL instead of SQLite, set
+`BRAVA_DATABASE_URL` (examples in the file); the schema is created/upgraded on startup.
 
 **Lingering:** a user service only keeps running after logout and starts at boot when lingering
 is enabled for the user. `deploy.sh` tries `loginctl enable-linger` (allowed without root on most
@@ -140,11 +159,18 @@ systemctl --user stop brava
 journalctl --user -u brava -f
 ```
 
-Settings (proxy for outgoing requests, TLS verification, offered BrAPI versions, ...) go into
-`~/.config/brava/brava.env`; restart the service afterwards.
+Settings (mail, admin key, proxy for outgoing requests, TLS verification, offered BrAPI versions,
+...) go into `~/.config/brava/brava.env`; restart the service afterwards.
+
+The SQLite database lives in the podman volume `brava-data` and survives image updates. Backup:
+
+```
+podman volume export brava-data > brava-data-backup.tar
+```
 
 **Update:** repeat steps 1–4 (or `copy-to-server.sh --deploy user@server`).
-**Uninstall:** `deploy/deploy.sh --uninstall` (keeps the image and the env file).
+**Uninstall:** `deploy/deploy.sh --uninstall` (keeps the image, the data volume and the env file;
+remove the data with `podman volume rm brava-data`).
 
 Old image tags can be removed with `podman image prune` / `podman rmi localhost/brava:<timestamp>`.
 

@@ -12,8 +12,11 @@ Image=localhost/brava:latest
 ContainerName=brava
 # host port 10000 -> container port 8000
 PublishPort=10000:8000
-Environment=BRAVA_ADVANCED_MODE=false
-# Optional overrides (proxy, TLS verification, ...); created by deploy.sh if missing.
+# @MODE@ is replaced by deploy.sh: "true" (advanced, default) or "false" (simple, deploy.sh --mode simple).
+Environment=BRAVA_ADVANCED_MODE=@MODE@
+# SQLite database of advanced mode; survives image updates and container re-creation.
+Volume=brava-data:/data/db
+# Settings (admin key, mail, ...); created by deploy.sh if missing.
 EnvironmentFile=%h/.config/brava/brava.env
 
 [Service]
