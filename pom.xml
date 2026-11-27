@@ -166,12 +166,12 @@
 
 		<!--  Uncomment the database driver(s) you need to run BRAVA -->
 
-		<!-- If you use Oracle database
+		<!-- If you use Oracle database -->
 		<dependency>
 			<groupId>com.oracle.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<version>12.1.0.1</version>
-		</dependency> -->
+		</dependency>
 		 
 		<!-- If you use mysql/mariadb
 		<dependency>
@@ -300,11 +300,15 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <!--<version>3.3.0</version>-->
+				<version>3.4.5</version>
                 <configuration>
                     <from>
-                        <image>tomcat:10.0.26-jdk11-corretto-al2@sha256:d63eeeb62d9402cf703d97385bd8e91117d217ad0bda33a8f8507cbb5d4c83b6</image>
+                        <!--<image>tomcat:10.0.26-jdk11-corretto-al2@sha256:d63eeeb62d9402cf703d97385bd8e91117d217ad0bda33a8f8507cbb5d4c83b6</image>-->
+						<!--<image>registry-1.docker.io/library/tomcat:10.1.40-jdk11-temurin-jammy@sha256:f2832115b37185aa985da4bab92c1568afaa4634234857637c36fc259a31d825</image>-->
+						<image>registry-1.docker.io/library/tomcat:10.0.26-jre17@sha256:6fc3e50bad90bdc73d82e92a0b133790c14912a05cba2ae5f3c0174fac2e1b9c</image>
                     </from>
+                    <!-- Registry credentials come from a <server> with id "registry-1.docker.io" in ~/.m2/settings.xml -->
                     <to>
                         <image>brapivalidator</image>
                     </to>

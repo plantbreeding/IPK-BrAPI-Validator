@@ -1,0 +1,6 @@
+# Shell scripts and deployment files run on Linux servers: keep LF line endings.
+*.sh text eol=lf
+deploy/* text eol=lf
+# Windows scripts
+*.ps1 text eol=crlf
+*.cmd text eol=crlf

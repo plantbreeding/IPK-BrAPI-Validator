@@ -14,9 +14,14 @@ buildNumber.properties
 .settings/
 .directory
 src/main/resources/config.properties
+# local copy in the repository root, holds credentials
+/config.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
 .idea/
 src/main/java/de/ipk_gatersleben/bit/bi/bridge/brapicomp/apiresources/DebugResource.java
+
+# deployment bundles (deploy/make-bundle.sh)
+/build/

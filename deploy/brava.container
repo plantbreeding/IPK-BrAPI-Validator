@@ -1,0 +1,27 @@
+# Podman quadlet for BRAVA (rootless, systemd user service "brava.service").
+# Installed by deploy/deploy.sh to ~/.config/containers/systemd/brava.container.
+# The app is reachable at http://<host>:10000/brapivalidator/
+
+[Unit]
+Description=BRAVA - BrAPI Validator
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=localhost/brava:latest
+ContainerName=brava
+# host port 10000 -> container port 8000
+PublishPort=10000:8000
+# @MODE@ is replaced by deploy.sh: "true" (advanced, default) or "false" (simple, deploy.sh --mode simple).
+Environment=BRAVA_ADVANCED_MODE=@MODE@
+# SQLite database of advanced mode; survives image updates and container re-creation.
+Volume=brava-data:/data/db
+# Settings (admin key, mail, ...); created by deploy.sh if missing.
+EnvironmentFile=%h/.config/brava/brava.env
+
+[Service]
+Restart=always
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target

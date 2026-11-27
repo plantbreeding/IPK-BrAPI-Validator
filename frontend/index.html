@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BRAVA - Breeding API Validator</title>
+    <meta name="description" content="Breeding API Validator" />
+    <meta name="author" content="IPK Gatersleben" />
+    <!-- Filled in by the backend (Python _index_html / Maven resource filtering). -->
+    <meta name="brava-build-date" content="${buildDate}" />
+    <meta name="brava-build-version" content="${git.commit.id.abbrev}" />
+    <!-- "false" hides the resource list, saved reports and scheduling (Python backend in simple mode). -->
+    <meta name="brava-advanced-mode" content="${advancedMode}" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+    <!-- Matomo -->
+    <script>
+      var _paq = (window._paq = window._paq || []);
+      _paq.push(['setDocumentTitle', document.domain + '/' + document.title]);
+      _paq.push(['setCookieDomain', '*.webapps.ipk-gatersleben.de']);
+      _paq.push(['setDomains', ['*.webapps.ipk-gatersleben.de/brapivalidator', '*.webapps.ipk-gatersleben.de/brapivalidator']]);
+      _paq.push(['setDoNotTrack', true]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function () {
+        var u = '//webstats.ipk-gatersleben.de/';
+        _paq.push(['setTrackerUrl', u + 'piwik.php']);
+        _paq.push(['setSiteId', '9']);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <noscript><p><img src="//webstats.ipk-gatersleben.de/piwik.php?idsite=9&rec=1" style="border: 0" alt="" /></p></noscript>
+    <!-- End Matomo Code -->
+  </body>
+</html>

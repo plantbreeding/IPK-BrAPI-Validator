@@ -1,0 +1,24 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "brava-python",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "--directory", "python", "brava", "serve", "--port", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "brava-python-svelte-simple",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "--directory", "python", "brava", "serve", "--port", "8766"],
+      "env": { "BRAVA_ADVANCED_MODE": "false", "BRAVA_FRONTEND_DIR": "../frontend/dist" },
+      "port": 8766
+    },
+    {
+      "name": "frontend-svelte",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "frontend", "run", "dev", "--", "--port", "5173", "--strictPort"],
+      "port": 5173
+    }
+  ]
+}

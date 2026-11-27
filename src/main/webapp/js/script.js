@@ -7,6 +7,8 @@ var statusBtn3 = '" style="display: inline-block;float: right;"><i class="fa fa-
 
 $(function() {
 
+    $('#copyrightYear').text(new Date().getFullYear());
+
     //List of parameters for the current test.
     var paramList = [];
     //For the endpoint table.
@@ -73,6 +75,10 @@ $(function() {
         var totalTests = 0;
         var warningTests = 0;
         var passedTests = 0;
+        if (!data || !data.shortReport) {
+            // Resource without any stored report yet.
+            return {total: 0, passed: 0, warning: 0, respTime: '-'};
+        }
         var folders = Object.keys(data.shortReport);
         // Iterate through folders
         for (var i = 0; i < folders.length; i++) {
@@ -99,7 +105,7 @@ $(function() {
 
                         for (var k = 0; k < test.testStatus.length; k++) {
                             if (test.testStatus[k] == 'wrong status code' ||
-                                test.testStatus[k] == 'wrong contentType' ||
+                                test.testStatus[k] == 'wrong ContentType' ||
                                 test.testStatus[k] == "can't connect") {
                                 failed = true;
                             }
@@ -229,7 +235,7 @@ $(function() {
                 spinner.stop();
                 $("#modalFailure").show();
                 if (a.responseJSON) {
-                    $(".modalMessage").text(a.responseJSON.message);
+                    $("#modalMessage").text(a.responseJSON.message);
                 }
 
             }
@@ -264,7 +270,7 @@ $(function() {
                         id : d.id,
                         name: d.name,
                         desc: d.description || '',
-                        provider: d.provider.name || '',
+                        provider: (d.provider && d.provider.name) || '',
                         crop: d.crop || '',
                         url: d['base-url'],
                         shortUrl: shortUrl,
@@ -493,7 +499,7 @@ $(function() {
                         var failed = false;
                         for (var k = 0; k < folder[test].testStatus.length; k++) {
                             if (folder[test].testStatus[k] == 'wrong status code' ||
-                                folder[test].testStatus[k] == 'wrong contentType' ||
+                                folder[test].testStatus[k] == 'wrong ContentType' ||
                                 folder[test].testStatus[k] == "can't connect") {
                                 failed = true;
                             }

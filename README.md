@@ -1,185 +1,255 @@
 # BRAVA: IPK BrAPI Validator
 
-Test suite for BrAPI servers. Test your server at [http://webapps.ipk-gatersleben.de/brapivalidator/](http://webapps.ipk-gatersleben.de/brapivalidator/).
+Test suite for BrAPI servers. BRAVA sends requests to a BrAPI server and validates the responses
+against the BrAPI JSON schemas. Public instance:
+[http://webapps.ipk-gatersleben.de/brapivalidator/](http://webapps.ipk-gatersleben.de/brapivalidator/).
 
-**Please note:** This tool is under development and not fully tested. If you find any errors or bugs, please report them as an issue!
+The application consists of
 
-BRAVA currently has two execution modes, simple and advanced mode. Simple mode contains the basic functionality: you can test any BrAPI server and get every endpoint defined in /calls tested.
+| Part | Path | Notes |
+|---|---|---|
+| Python backend (Python 3.14, Litestar) | `python/` | API, test engine, optional database/scheduler (see `python/README.md`) |
+| Svelte frontend (Svelte 5, TypeScript, Vite) | `frontend/` | web UI (see `frontend/README.md`) |
+| Test collections and JSON schemas | `src/main/resources/{collections,schemas}` | shared by all backends |
+| Deployment (podman, quadlet) | `deploy/` | image build, bundle, server install |
 
-The advanced mode requires a database (it can be an H2 database) to store test results and resource information. It includes a public repository list and the possibility to register resources to be tested periodically.
+The original Java backend (`pom.xml`, `src/main/java`, vanilla frontend in `src/main/webapp`) is
+still in the repository; see `CLAUDE.md` for its build commands.
 
-## Running BRAVA
+## Development
 
-### Using the Docker image from Dockerhub
+Prerequisites: [uv](https://docs.astral.sh/uv/) (installs Python 3.14 if needed) and
+Node.js ≥ 20.19 with npm.
 
-You can run BRAVA by using the ready-to-go Docker image on Dockerhub: https://hub.docker.com/r/ipkbit/brapi-validator
-
-Execute following commands in your linux shell (you need to have Docker installed):
-
-```
-$  docker pull ipkbit/brapi-validator
-$  docker run -d --rm -p 8080:8080 ipkbit/brapi-validator
-```
-BRAVA will then be available at the following URL: http://localhost:8080
-
-To change the published port to something else than 8080 you have to change the first port value in the -p Parameter.
-
-Example for mapping to port 80 instead of 8080 on the host:
-```
-$  docker run -d --rm -p 80:8080 ipkbit/brapi-validator
-```
-BRAVA will then be available at the following URL: http://localhost
-
-(For details about the Docker port mapping please refer the Docker documentation: https://docs.docker.com/config/containers/container-networking/#published-ports )
-
-
-### Running BRAVA by compiling the source code on your machine
-
-It is a bit of an awkward process right now. We'll migrate to Gradle and make things smoother in the future.
-
-For now, you need to install Maven on your system.
-
-To start up the *simple* version for testing of BrAPI endpoints without support for scheduled testing:
-
-1. Create an empty file named `config.properties` in src/main/resources based on `config.properties.example` in the same folder.
-
-2. If your network requires use of an HTTP(s) proxy, then set the two proxy properties in your `config.properties` file:
-```
-http.proxyHost=
-http.proxyPort=
-```
-
-3. Run it locally for the first time with:
-```
-mvn -U clean package jetty:run
-```
-
-This will start jetty on port 8080, accessible at http://localhost:8080/brapivalidator.
-
-
-### Running BRAVA in advanced mode
-
-Running BRAVA in *advanced* mode provides a public repository list and scheduled testing.
-
-WARNING: This procedure is highly dependent on your environment and it hasn't been tested thoroughly. Something is likely to go wrong. DON'T PANIC and create an issue.
-
-1. In pom.xml search for this line:
-```
-<warSourceDirectory>${webappHome}</warSourceDirectory>
-```
-and replace it with:
-```
-<warSourceDirectory>${webappHome}/advanced</warSourceDirectory>
-```
-
-2. Go to `src/main/resources` and rename `config.properties.example` to `config.properties`. Fill the fields with configuration relevant to your database connection:
-
-
-```properties
-## Database username
-dbuser=
-# Database password
-dbpass=
-# JDBC connect string to your database
-dbpath=
-## mysql
-# dbpath=jdbc:mysql://localhost/brava
-```
-
-3. Make sure the required JDBC driver is on the classpath by updating the `pom.xml` file:
-
-Uncomment relevant XML block in `pom.xml`:
-
-```xml
+### Python backend
 
 ```
-
-
-
-3. Run it locally with:
-```
-mvn -U clean package jetty:run
-```
-This will start up BRAVA and create the database tables required for BRAVA to operate.
-
-
-### Jetty and Tomcat
-
-To start BRAVA locally use:
-
-```
-mvn jetty:run
+cd python
+uv sync
+cp .env.example .env              # optional, every key has a default
+uv run brava serve --port 8765    # http://localhost:8765/brapivalidator/
 ```
 
-To deploy to a local Tomcat instance use:
+Without further settings the backend serves the vanilla frontend from `src/main/webapp/advanced`.
+To serve a built Svelte frontend instead: `BRAVA_FRONTEND_DIR=../frontend/dist uv run brava serve --port 8765`.
+
+Tests and lint:
 
 ```
-mvn tomcat7:deploy
+uv run pytest
+uv run ruff check . && uv run ruff format --check .
 ```
 
-The tomcat server location must be defined as maven parameters. For example as a profile in settings.xml:
+Headless test of a BrAPI server from the command line:
 
 ```
-<profile>
-  <id>profileid</id>
-  <activation>
-    <activeByDefault>true</activeByDefault>
-  </activation>
-  <properties>
-    <appserver.name>production_server</appserver.name>
-    <appserver.url>http://website.com:1234/manager/text</appserver.url>
-    <appserver.path>/brapivalidator</appserver.path>
-  </properties>
-</profile>
-
-```
-Also remember to add the server user and encrypted password to settings.xml.
-
-
-## Docs
-
-### API
-
-You can send GET requests to the server to test other servers easily, and get a JSON report:
-```
-/api/test/call?url={serverURL}&brapiversion={brapiVersion}
-```
-For example:
-```
-/api/test/call?url=http://brapi.org/server&brapiversion=v1.1
+uv run brava test -u https://test-server.brapi.org/brapi/v2 -v v2.1 [--json] [--csv] [-o DIR]
 ```
 
-You can also get a report generated by the scheduled report system (either public or private) by using its id:
+### Svelte frontend
+
+Start the Python backend on port 8765 first (see above), then in a second terminal:
+
 ```
-/api/testreport/{reportID}
+cd frontend
+npm install
+npm run dev       # http://localhost:5173, proxies /api and /schemas to the backend
 ```
 
-### Testing
+The dev server proxies to `http://localhost:8765/brapivalidator`; set `BRAVA_BACKEND` to use another
+backend, e.g. `BRAVA_BACKEND=http://localhost:8080/brapivalidator npm run dev`.
 
-This testing suite uses RestAssured for testing.
+```
+npm run check     # svelte-check (types, a11y)
+npm run build     # production build in frontend/dist
+```
 
-To validate the responses, JsonSchema is used. All schemas are located in src/test/resources/schemas.
+## Deployment with podman
 
-The test configurations are stored in two ways. For the 'simple' tests, where one resource is tested for status code, content type and response schema, are stored in tests.json.
+The deployment runs the Python backend with the Svelte frontend in one container, as a rootless
+podman **quadlet**, i.e. a systemd *user* service (`systemctl --user`). No root/sudo is needed on
+the server. The app is published on **host port 10000**: `http://<server>:10000/brapivalidator/`.
 
-The complex tests (Test Collections) are stored in the collections/ folder. They roughly follow Postman's collections format. Instead of using JavaScript for the tests, we define them using a few simple commands.
+Two modes, chosen with `--mode` of `deploy.sh` / `copy-to-server.sh` (same image for both):
+
+| Mode | Features |
+|---|---|
+| `advanced` (default) | database (SQLite in the podman volume `brava-data`), public resource list, saved reports, registration of resources, scheduled tests (08:00 daily/weekly/monthly), emails, `/api/admin` |
+| `simple` | on-demand tests only ("Test your own"); no database |
+
+Server requirements: Linux with systemd, podman ≥ 4.4, network access to the container registries
+(docker.io, ghcr.io) and npm/PyPI during the image build.
+
+| File | Purpose |
+|---|---|
+| `deploy/make-bundle.sh` | creates a source bundle `build/brava-bundle-<date>-<commit>.tar.gz` |
+| `deploy/make-bundle.ps1` | the same for Windows PowerShell |
+| `deploy/copy-to-server.sh` | sends the bundle over one ssh connection and unpacks it on the server (optionally deploys) |
+| `deploy/copy-to-server.ps1`, `.cmd` | the same for Windows PowerShell (`.cmd` = wrapper that ignores the execution policy) |
+| `deploy/unpack-bundle.sh` | server side of the copy scripts (unpack, optionally build and deploy) |
+| `deploy/build-image.sh` | builds the image `localhost/brava:latest` with podman (`deploy/Containerfile`) |
+| `deploy/brava.container` | quadlet: runs the image as `brava.service`, port mapping `10000:8000` |
+| `deploy/deploy.sh` | installs the quadlet for the current user and (re)starts the service |
+| `deploy/brava.env.example` | settings template, installed as `~/.config/brava/brava.env` |
+
+### 1. Create the bundle (local machine)
+
+```
+deploy/make-bundle.sh
+```
+
+The bundle contains `python/`, `frontend/`, the collections and schemas and `deploy/` — without
+`.venv`, `.env`, local databases, `node_modules` or `frontend/dist`. Uncommitted changes are included
+(the file name then ends in `-dirty`). On Windows use Git Bash or `deploy\make-bundle.ps1`
+(see [From Windows](#from-windows-powershell) below).
+
+### 2. Copy it to the server
+
+```
+deploy/copy-to-server.sh user@server
+```
+
+This creates a new bundle (or use `-b <bundle.tar.gz>`), sends it to `~/brava` on the server
+(`-d <dir>` for another directory) and extracts it there, replacing the previous `python/`,
+`frontend/`, `src/` and `deploy/`. Extra ssh options: `SSH_OPTS="-p 2222 -i ~/.ssh/key"`.
+
+Everything runs over a single ssh connection, so the password is asked once. To avoid the prompt
+completely, use an ssh key: `ssh-keygen -t ed25519` once, then append `~/.ssh/id_ed25519.pub`
+to `~/.ssh/authorized_keys` on the server (`ssh-copy-id user@server` in Git Bash). A warning about a
+missing "post-quantum key exchange" comes from the server's older OpenSSH version and does not
+stop the deployment.
+
+With `--deploy` it also runs steps 3 and 4 on the server:
+
+```
+deploy/copy-to-server.sh --deploy user@server                 # advanced mode
+deploy/copy-to-server.sh --deploy --mode simple user@server   # simple mode
+```
+
+#### From Windows (PowerShell)
+
+Without Git Bash, use the PowerShell scripts. They need only tools built into Windows 10/11:
+`tar.exe` and the OpenSSH client (Settings > System > Optional features > OpenSSH Client).
+
+```powershell
+.\deploy\copy-to-server.ps1 user@server -Deploy                 # advanced mode
+.\deploy\copy-to-server.ps1 user@server -Deploy -Mode simple    # simple mode
+.\deploy\copy-to-server.ps1 user@server                         # copy and unpack only
+```
+
+Further options: `-Bundle <file>` (default: new bundle from `make-bundle.ps1`), `-RemoteDir <dir>`
+(default `brava`), `-SshArgs @('-p', '2222', '-i', "$HOME\.ssh\id_ed25519")`; `Get-Help
+.\deploy\copy-to-server.ps1 -Detailed` shows all. If script execution is disabled on the PC, use the
+wrapper, which starts PowerShell with `-ExecutionPolicy Bypass` for this script only:
+
+```powershell
+deploy\copy-to-server.cmd user@server -Deploy
+```
+
+For a non-default ssh port or key, an entry in `%USERPROFILE%\.ssh\config` works for all scripts:
+
+```
+Host brava-server
+    HostName server.example.org
+    User myuser
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+Then deploy with `.\deploy\copy-to-server.ps1 brava-server -Deploy`.
+
+### 3. Build the image (server)
+
+```
+cd ~/brava
+deploy/build-image.sh
+```
+
+Tags the image as `localhost/brava:latest` and `localhost/brava:<timestamp>`. Options: `-t TAG`, `--no-cache`.
+
+### 4. Install and start the service (server)
+
+```
+deploy/deploy.sh                  # advanced mode (default)
+deploy/deploy.sh --mode simple    # simple mode
+deploy/deploy.sh --build          # runs build-image.sh first
+```
+
+The script installs `brava.container` to `~/.config/containers/systemd/` with the chosen mode,
+creates `~/.config/brava/brava.env` if it does not exist, reloads systemd and restarts
+`brava.service`. Instead of `--mode` the environment variable `BRAVA_MODE=advanced|simple` works too.
+Running `deploy.sh` again with the other mode switches the mode; the database volume is kept.
+
+In advanced mode, `deploy.sh` appends these settings to `brava.env` when they are missing:
+`BRAVA_ADMIN_KEY` (random key for `/api/admin`, HTTP basic auth with the key as password),
+`BRAVA_BASE_DOMAIN` (`http://<hostname>:10000/brapivalidator`, used for links in emails) and
+`BRAVA_TIMEZONE=Europe/Berlin` (time zone of the scheduled tests). Check them, and set the mail
+server (`BRAVA_SMTP_HOST` etc.) — without it, registration confirmations and reports are not sent
+and `deploy.sh` prints a warning. To use Oracle, PostgreSQL or MySQL instead of SQLite, set
+`BRAVA_DATABASE_URL` (examples in the file); the schema is created/upgraded on startup.
+
+**Public resource list:** while the database holds no public resource, BRAVA imports the list from
+brapi.org on startup (`BRAVA_RESOURCE_JSON_URL`) and tests every resource in the background;
+results appear one by one (disable with `BRAVA_AUTO_IMPORT_RESOURCES=false`). Later tests run
+weekly (Mondays 08:00). To refresh the list or to test all public resources right away, e.g. if a
+restart interrupted the first run, run on the server:
+
+```
+key=$(sed -n 's/^BRAVA_ADMIN_KEY=//p' ~/.config/brava/brava.env)
+api=http://localhost:10000/brapivalidator/api/admin
+curl -u "admin:$key" "$api/updateproviders"
+curl -u "admin:$key" "$api/testallpublic?version=v2.1"
+```
+
+**Lingering:** a user service only keeps running after logout and starts at boot when lingering
+is enabled for the user. `deploy.sh` tries `loginctl enable-linger` (allowed without root on most
+systems) and prints a warning otherwise; then an admin has to run `loginctl enable-linger <user>` once.
+
+### Operating the service
+
+```
+systemctl --user status brava
+systemctl --user restart brava
+systemctl --user stop brava
+journalctl --user -u brava -f
+```
+
+Settings (mail, admin key, proxy for outgoing requests, TLS verification, offered BrAPI versions,
+...) go into `~/.config/brava/brava.env`; restart the service afterwards.
+
+The SQLite database lives in the podman volume `brava-data` and survives image updates. Backup:
+
+```
+podman volume export brava-data > brava-data-backup.tar
+```
+
+**Update:** repeat steps 1–4 (or `copy-to-server.sh --deploy user@server`).
+**Uninstall:** `deploy/deploy.sh --uninstall` (keeps the image, the data volume and the env file;
+remove the data with `podman volume rm brava-data`).
+
+Old image tags can be removed with `podman image prune` / `podman rmi localhost/brava:<timestamp>`.
+
+## API
+
+```
+/api/test/call?url={serverURL}&brapiversion={brapiVersion}[&accessToken=...][&strict=on]
+/api/test/brapiversions
+/api/testreport/{reportID}         (advanced mode)
+```
+
+Example: `/api/test/call?url=https://test-server.brapi.org/brapi/v2&brapiversion=v2.1`
+
+## Test collections
+
+Test behaviour lives in `src/main/resources/collections/CompleteBrapiTest.<version>.json`; the
+schemas are in `src/main/resources/schemas/<version>/`. The collections roughly follow Postman's
+format, but use a few simple commands instead of JavaScript tests:
 
 | Command  | Description  | Example  |
 |---|---|---|
 |StatusCode:{int} | Check the status code of the response  | StatusCode:200 |
 |ContentType:{String} | Check the Content Type of the response  | ContentType:application/json |
-|Schema:{path} | Check the response against a Schema located in src/main/resources/schemas | Schema:/metadata |
-|GetValue:{jsonpointer}:{variableName} | Stores the value of the response in the pointer location | GetValue:/result/data/0/germplasmDbId:germplasmDbId |
-|IsEqual:{jsonpointer}:{variableName} | Checks the value of the response in the pointer location with a stored variable |IsEqual:/result/germplasmDbId:germplasmDbId |
-|{command}:{value}:breakiffalse | This flag stops the current endpoint testing if the test is failed. | StatusCode:200:breakiffalse |
-
-## Adding tests
-
-* Edit test collection found in /collections/
-
-## Building a Docker Image by your own
-
-You can use the included Dockerfile to build a Docker Image of the BRAVA application that includes a Tomcat server. The Tomcat server will only have the BRAVA application. To use this with your own BRAPI application you can start the Docker Image and use the local test ("Test your own" tab in the BRAVA frontend) to point it to your machine. You can use `host.docker.internal` in the URL, localhost  will resolve to the BRAVA servercontainer and can thus not be used.
-
-To build you can use `docker build --build-arg HTTPS_PROXY=<[http|https]://proxyserver:port> --build-arg HTTP_PROXY=<[http|https]://proxyserver:port  -t brava .` and you can run it using `docker run -d --rm -p 8080:8080 brava`. You can now access the BRAVA application at http://localhost:8080/ and use for example http://host.docker.internal:5000/brapi/v1 as the url that needs to be tested.
-
+|Schema:{path} | Check the response against a schema in `src/main/resources/schemas` | Schema:/metadata |
+|GetValue:{jsonpointer}:{variableName} | Stores the value of the response at the pointer location | GetValue:/result/data/0/germplasmDbId:germplasmDbId |
+|IsEqual:{jsonpointer}:{variableName} | Compares the value at the pointer location with a stored variable |IsEqual:/result/germplasmDbId:germplasmDbId |
+|{command}:{value}:breakiffalse | Stops testing the current endpoint if the check fails | StatusCode:200:breakiffalse |
