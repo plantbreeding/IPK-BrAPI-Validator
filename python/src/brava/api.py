@@ -231,7 +231,8 @@ async def register_resource(data: Body, session: Session) -> Response[dict[str, 
 
 async def _private_resource(session: AsyncSession, key: str | None, code: int) -> db.Resource:
     resource = await session.get(db.Resource, _parse_id(key, code))
-    if resource is None or resource.is_public:
+    # Without an email it is not a subscription: e.g. a public resource that left the list.
+    if resource is None or resource.is_public or not resource.email:
         raise ApiError(404, "endpoint not found", code)
     return resource
 

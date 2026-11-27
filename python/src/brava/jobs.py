@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from typing import Any
+from urllib.parse import urljoin
 
 import httpx
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -118,7 +119,12 @@ def create_scheduler(sessions: async_sessionmaker[AsyncSession]) -> AsyncIOSched
 # --- provider list from brapi.org ------------------------------------------------------------
 
 
-def _resource_fields(entry: dict[str, Any]) -> dict[str, Any]:
+def _absolute(url: str, base: str | None) -> str:
+    """``url`` resolved against ``base`` (the list serves logos like ``/images/x.png``)."""
+    return urljoin(base, url) if url and base else url
+
+
+def _resource_fields(entry: dict[str, Any], base: str | None = None) -> dict[str, Any]:
     v1, v2 = entry.get("v1-url"), entry.get("v2-url")
     return {
         "url": entry.get("url") or v2 or v1 or "",
@@ -127,13 +133,17 @@ def _resource_fields(entry: dict[str, Any]) -> dict[str, Any]:
         "name": entry.get("name") or "",
         "description": entry.get("description") or "",
         "certificate": entry.get("certificate") or "",
-        "logo": entry.get("logo") or "",
+        "logo": _absolute(entry.get("logo") or "", base),
         "crop": entry.get("crop"),
     }
 
 
 async def update_providers(sessions: async_sessionmaker[AsyncSession]) -> int:
-    """Upsert providers and their public resources from ``BRAVA_RESOURCE_JSON_URL``."""
+    """Sync providers and their public resources with ``BRAVA_RESOURCE_JSON_URL``.
+
+    Resources are matched by provider and name, so a new ``v2-url`` updates the existing row.
+    Public resources of a listed provider that are no longer in the list stop being public.
+    """
     s = get_settings()
     async with httpx.AsyncClient(proxy=s.http_proxy or None, timeout=60, follow_redirects=True) as client:
         response = await client.get(s.resource_json_url)
@@ -150,19 +160,34 @@ async def update_providers(sessions: async_sessionmaker[AsyncSession]) -> int:
                 provider = db.Provider(name=p["name"])
                 session.add(provider)
             provider.description = p.get("description") or ""
-            provider.logo = p.get("logo") or ""
+            provider.logo = _absolute(p.get("logo") or "", s.resource_json_url)
             await session.flush()
+            listed: set[Any] = set()
             for entry in p.get("resources") or []:
-                fields = _resource_fields(entry)
+                if not isinstance(entry, dict):
+                    continue
+                fields = _resource_fields(entry, s.resource_json_url)
                 if not fields["url"]:
                     continue
-                resource = await db.public_resource_by_url(session, provider.id, fields["url"])
+                resource = None
+                if fields["name"]:
+                    resource = await db.public_resource_by_name(session, provider.id, fields["name"])
+                if resource is None:  # rows imported before resources were matched by name
+                    resource = await db.public_resource_by_url(session, provider.id, fields["url"])
                 if resource is None:
                     resource = db.Resource(provider_id=provider.id, is_public=True, confirmed=False)
                     session.add(resource)
                 for key, value in fields.items():
                     setattr(resource, key, value)
+                await session.flush()
+                listed.add(resource.id)
                 count += 1
+            for resource in await db.public_resources_of(session, provider.id):
+                if resource.id not in listed:
+                    log.info(
+                        "Resource %s (%s) left the list; it is no longer public", resource.name, resource.url
+                    )
+                    resource.is_public = False
     return count
 
 

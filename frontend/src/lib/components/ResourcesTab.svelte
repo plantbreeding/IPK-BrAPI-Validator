@@ -97,8 +97,8 @@
       <span class="card-title">
         <Icon name="table" /> BrAPI Resources
         <small class="muted"
-          >taken from the <a href="https://github.com/plantbreeding/API/blob/master/brapi-resources.json" target="_blank" rel="noopener"
-            >BrAPI repository</a
+          >taken from the <a href="https://brapi.org/json/brapi-resources.json" target="_blank" rel="noopener"
+            >brapi.org</a
           ></small
         >
       </span>
