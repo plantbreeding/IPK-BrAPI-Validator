@@ -14,6 +14,8 @@ buildNumber.properties
 .settings/
 .directory
 src/main/resources/config.properties
+# local copy in the repository root, holds credentials
+/config.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
